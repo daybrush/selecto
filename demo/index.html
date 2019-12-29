@@ -28,6 +28,8 @@
 
 </body>
 <script src="../dist/selecto.pkgd.js"></script>
+<script src="https://daybrush.com/keycon/release/latest/dist/keycon.pkgd.min.js"></script>
+
 
 <div class="hi"></div>
 <script>
@@ -42,6 +44,14 @@ const selecto = new Selecto({
     e.removed.forEach(el => {
         el.classList.remove("selected");
     });
+    console.log(e.selected, e.added, e.removed);
+});
+
+
+keycon.global.keydown("shift", () => {
+    selecto.continueSelect = true;
+}).keyup("shift", () => {
+    selecto.continueSelect = false;
 });
 </script>
 </html>

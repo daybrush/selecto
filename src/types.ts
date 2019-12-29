@@ -5,7 +5,8 @@ export interface SelectoOptions {
     target: HTMLElement | null;
     container: HTMLElement | null;
     selectableTargets: Array<HTMLElement | string>;
-    selectAfterDrag: boolean;
+    selectByClick: boolean;
+    selectOutside: boolean;
     continueSelect: boolean;
     hitRate: number;
 }
@@ -25,4 +26,4 @@ export interface Rect {
     right: number;
 }
 
-export type SelectoProperties = { [P in typeof PROPERTIES[number]]: SelectoOptions[P] }
+export type SelectoProperties = { [P in typeof PROPERTIES[number]]: SelectoOptions[P] };

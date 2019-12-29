@@ -3,7 +3,7 @@ import Dragger, { OnDragStart, OnDrag, OnDragEnd } from "@daybrush/drag";
 import styled, { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { isObject } from "@daybrush/utils";
-import ChildrenDiffer, { diff } from "@egjs/children-differ";
+import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
 import { createElement, h } from "./utils";
 import { SelectoOptions, Rect, SelectoProperties } from "./types";
 import { PROPERTIES } from "./consts";
@@ -37,6 +37,7 @@ export default class Selecto extends Component {
     private dragger!: Dragger;
     private injectResult!: InjectResult;
     private selectedTargets: Array<HTMLElement | SVGElement> = [];
+    private differ = new ChildrenDiffer<HTMLElement | SVGElement>();
     constructor(
         options: Partial<SelectoOptions> = {},
     ) {
@@ -47,9 +48,10 @@ export default class Selecto extends Component {
             target: null,
             container: null,
             selectableTargets: [],
-            selectAfterDrag: false,
+            selectByClick: true,
+            selectOutside: false,
             hitRate: 100,
-            continueSelect: true,
+            continueSelect: false,
             ...options,
         };
         this.initElement();
@@ -82,10 +84,18 @@ export default class Selecto extends Component {
 
         this.injectResult = injector.inject(target);
     }
-    private hitTest(selectRect: Rect, targets: Array<HTMLElement | SVGElement>, rects: Rect[]) {
+    private hitTest(
+        selectRect: Rect,
+        clientX: number,
+        clientY: number,
+        targets: Array<HTMLElement | SVGElement>,
+        rects: Rect[],
+    ) {
+        const selectByClick = this.options.selectByClick;
         const { left, top, right, bottom } = selectRect;
         const hitRate = this.options.hitRate;
         const passedTargets: Array<HTMLElement | SVGElement> = [];
+
         rects.forEach((rect, i) => {
             const {
                 left: rectLeft,
@@ -93,12 +103,21 @@ export default class Selecto extends Component {
                 right: rectRight,
                 bottom: rectBottom,
             } = rect;
+            const isStart
+                = rectLeft <= clientX
+                && clientX <= rectRight
+                && rectTop <= clientY
+                && clientY <= rectBottom;
             const rectSize = (rectRight - rectLeft) * (rectBottom - rectTop);
             const testLeft = Math.max(rectLeft, left);
             const testRight = Math.min(rectRight, right);
             const testTop = Math.max(rectTop, top);
             const testBottom = Math.min(rectBottom, bottom);
 
+            if (selectByClick && isStart) {
+                passedTargets.push(targets[i]);
+                return;
+            }
             if (testRight < testLeft || testBottom < testTop) {
                 return;
             }
@@ -112,21 +131,21 @@ export default class Selecto extends Component {
         return passedTargets;
     }
     private getSelectableTargets() {
-        const selectTargets: Array<HTMLElement | SVGElement> = [];
+        const selectableTargets: Array<HTMLElement | SVGElement> = [];
 
         this.options.selectableTargets.forEach(target => {
             if (isObject(target)) {
-                selectTargets.push(target);
+                selectableTargets.push(target);
             } else {
                 const elements = [].slice.call(document.querySelectorAll(target));
 
                 elements.forEach(el => {
-                    selectTargets.push(el);
+                    selectableTargets.push(el);
                 });
             }
         });
 
-        return selectTargets;
+        return selectableTargets;
     }
     private getSelectedTargets(passedTargets: Array<HTMLElement | SVGElement>) {
         const {
@@ -134,19 +153,13 @@ export default class Selecto extends Component {
             prevList,
             added,
             removed,
-        } = diff(this.selectedTargets, passedTargets);
+        } = diff(this.selectedTargets, passedTargets) as ChildrenDiffResult<HTMLElement | SVGElement>;
 
         return added.map(index => list[index]).concat(removed.map(index => prevList[index]));
     }
     private onDragStart = ({ datas, clientX, clientY }: OnDragStart) => {
-        const selectTargets = this.getSelectableTargets();
-
-        if (!this.options.continueSelect) {
-            this.selectedTargets = [];
-        }
-        datas.childrenDiffer = new ChildrenDiffer(this.selectedTargets);
-        datas.selectTargets = selectTargets;
-        datas.selectRects = selectTargets.map(target => {
+        const selectableTargets = this.getSelectableTargets();
+        const selectableRects =  selectableTargets.map(target => {
             const rect = target.getBoundingClientRect();
             const { left, top, width, height } = rect;
 
@@ -157,9 +170,26 @@ export default class Selecto extends Component {
                 bottom: top + height,
             };
         });
+        datas.selectableTargets = selectableTargets;
+        datas.selectableRects = selectableRects;
+        datas.startSelectedTargets = this.selectedTargets;
+
+        let firstPassedTargets = this.hitTest({
+            left: clientX,
+            top: clientY,
+            right: clientX,
+            bottom: clientY,
+        }, clientX, clientY, selectableTargets, selectableRects);
+
+        if (!this.options.continueSelect) {
+            this.selectedTargets = [];
+        } else {
+            firstPassedTargets = this.getSelectedTargets(firstPassedTargets);
+        }
+        this.select(firstPassedTargets);
         datas.startX = clientX;
         datas.startY = clientY;
-        datas.selectedTargets = this.selectedTargets;
+        datas.selectedTargets = firstPassedTargets;
         this.target.style.cssText += `left:${clientX}px;top:${clientY}px`;
     }
     private onDrag = ({
@@ -185,16 +215,19 @@ export default class Selecto extends Component {
             top,
             right: left + width,
             bottom: top + height,
-        }, datas.selectTargets, datas.selectRects);
+        }, datas.startX, datas.startY, datas.selectableTargets, datas.selectableRects);
         const selectedTargets = this.getSelectedTargets(passedTargets);
 
-        const childrenDiffer: ChildrenDiffer = datas.childrenDiffer;
+        this.select(selectedTargets);
+        datas.selectedTargets = selectedTargets;
+    }
+    private select(selectedTargets: Array<HTMLElement | SVGElement>) {
         const {
             added,
             removed,
             prevList,
             list,
-        } = childrenDiffer.update(selectedTargets);
+        } = this.differ.update(selectedTargets);
 
         if (added.length || removed.length) {
             this.trigger("select", {
@@ -203,8 +236,6 @@ export default class Selecto extends Component {
                 removed: removed.map(index => prevList[index]),
             });
         }
-
-        datas.selectedTargets = selectedTargets;
     }
     private onDragEnd = (e: OnDragEnd) => {
         this.target.style.cssText += "display: none;";
