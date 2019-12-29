@@ -1,6 +1,6 @@
 {
   "name": "selecto",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "new project",
   "main": "./dist/selecto.cjs.js",
   "module": "./dist/selecto.esm.js",
@@ -28,7 +28,9 @@
   "dependencies": {
     "@daybrush/drag": "^0.11.1",
     "@daybrush/utils": "^0.10.1",
-    "@egjs/component": "^2.1.2"
+    "@egjs/component": "^2.1.2",
+    "css-styled": "^0.1.6",
+    "framework-utils": "^0.2.1"
   },
   "devDependencies": {
     "@daybrush/builder": "^0.1.2",
