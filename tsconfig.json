@@ -12,8 +12,10 @@
       "es2015",
       "dom"
     ],
+    "jsx": "react",
+    "jsxFactory": "h"
   },
   "include": [
-    "./src/**/*.ts"
+    "./src/**/*.ts", "src/Selecto.tsx"
   ]
 }
