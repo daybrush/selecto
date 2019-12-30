@@ -157,6 +157,39 @@ export default class Selecto extends Component {
 
         return added.map(index => list[index]).concat(removed.map(index => prevList[index]));
     }
+    private select(selectedTargets: Array<HTMLElement | SVGElement>) {
+        const {
+            added,
+            removed,
+            prevList,
+            list,
+        } = this.differ.update(selectedTargets);
+
+        if (added.length || removed.length) {
+            this.trigger("select", {
+                selected: selectedTargets,
+                added: added.map(index => list[index]),
+                removed: removed.map(index => prevList[index]),
+            });
+        }
+    }
+    private selecteEnd(
+        startSelectedTargets: Array<HTMLElement | SVGElement>,
+        selectedTargets: Array<HTMLElement | SVGElement>,
+    ) {
+        const {
+            added,
+            removed,
+            prevList,
+            list,
+        } = diff(startSelectedTargets, selectedTargets);
+
+        this.trigger("selectEnd", {
+            selected: selectedTargets,
+            added: added.map(index => list[index]),
+            removed: removed.map(index => prevList[index]),
+        });
+    }
     private onDragStart = ({ datas, clientX, clientY }: OnDragStart) => {
         const selectableTargets = this.getSelectableTargets();
         const selectableRects =  selectableTargets.map(target => {
@@ -221,25 +254,11 @@ export default class Selecto extends Component {
         this.select(selectedTargets);
         datas.selectedTargets = selectedTargets;
     }
-    private select(selectedTargets: Array<HTMLElement | SVGElement>) {
-        const {
-            added,
-            removed,
-            prevList,
-            list,
-        } = this.differ.update(selectedTargets);
-
-        if (added.length || removed.length) {
-            this.trigger("select", {
-                selected: selectedTargets,
-                added: added.map(index => list[index]),
-                removed: removed.map(index => prevList[index]),
-            });
-        }
-    }
-    private onDragEnd = (e: OnDragEnd) => {
+    private onDragEnd = ({ datas }: OnDragEnd) => {
         this.target.style.cssText += "display: none;";
-        this.selectedTargets = e.datas.selectedTargets;
+        this.selectedTargets = datas.selectedTargets;
+
+        this.selecteEnd(datas.startSelectedTargets, datas.selectedTargets);
     }
 
 }
