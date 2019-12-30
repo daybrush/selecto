@@ -15,6 +15,13 @@
     "release": "npm run build && npm run doc && release --dirs=dist,doc",
     "release:init": "npm run build && npm run doc && release -i --dirs=dist,doc"
   },
+  "keywords": [
+      "select",
+      "selecto",
+      "selection",
+      "selectable",
+      "moveable"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daybrush/selecto.git"
