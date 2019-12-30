@@ -298,9 +298,8 @@ export default class Selecto extends Component {
     }
     private onDragEnd = ({ datas, inputEvent }: OnDragEvent) => {
         this.target.style.cssText += "display: none;";
-        this.selectedTargets = datas.selectedTargets;
-
         this.selecteEnd(datas.startSelectedTargets, datas.selectedTargets, inputEvent);
+        this.selectedTargets = datas.selectedTargets;
     }
 
 }
