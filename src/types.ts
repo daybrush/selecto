@@ -37,6 +37,7 @@ export interface OnSelect {
 export interface OnSelectEnd extends OnSelect {
     afterAdded: Array<HTMLElement | SVGElement>;
     afterRemoved: Array<HTMLElement | SVGElement>;
+    isDragStart: boolean;
 }
 
 export interface OnDragEvent {

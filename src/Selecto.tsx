@@ -211,13 +211,15 @@ export default class Selecto extends Component {
             prevList: afterPrevList,
             list: afterList,
         } = diff(this.selectedTargets, selectedTargets);
-
+        const type = inputEvent.type;
+        const isDragStart = type === "mousedown" || type === "touchstart";
         this.trigger("selectEnd", {
             selected: selectedTargets,
             added: added.map(index => list[index]),
             removed: removed.map(index => prevList[index]),
             afterAdded: afterAdded.map(index => afterList[index]),
             afterRemoved: afterRemoved.map(index => afterPrevList[index]),
+            isDragStart,
             inputEvent,
         });
     }
