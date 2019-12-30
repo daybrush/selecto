@@ -256,6 +256,14 @@ export default class Selecto extends Component {
         } else {
             firstPassedTargets = this.getSelectedTargets(firstPassedTargets);
         }
+
+        const type = inputEvent.type;
+        const isTrusted = type === "mousedown" || type === "touchstart";
+        const result = isTrusted ? this.trigger("dragStart", e) : true;
+
+        if (!result) {
+            return false;
+        }
         this.select(firstPassedTargets, inputEvent, true);
         datas.startX = clientX;
         datas.startY = clientY;

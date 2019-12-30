@@ -5,6 +5,7 @@ export const PROPERTIES = [
 ] as const;
 
 export const EVENTS = [
+    "dragStart",
     "selectStart",
     "select",
     "selectEnd",
