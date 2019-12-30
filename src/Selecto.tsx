@@ -1,5 +1,5 @@
 import Component from "@egjs/component";
-import Dragger, { OnDragStart, OnDrag, OnDragEnd } from "@daybrush/drag";
+import Dragger, { OnDrag } from "@daybrush/drag";
 import styled, { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { isObject } from "@daybrush/utils";
@@ -47,6 +47,7 @@ export default class Selecto extends Component {
         this.options = {
             target: null,
             container: null,
+            dragContainer: null,
             selectableTargets: [],
             selectByClick: true,
             selectOutside: false,
@@ -87,7 +88,7 @@ export default class Selecto extends Component {
 
         const target = this.target;
 
-        this.dragger = new Dragger(this.target.parentElement, {
+        this.dragger = new Dragger(this.options.dragContainer || this.target.parentElement, {
             container: window,
             dragstart: this.onDragStart,
             drag: this.onDrag,

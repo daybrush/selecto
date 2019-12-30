@@ -45,7 +45,7 @@ export function createElement(
             elStyle[name] = style[name];
         }
     }
-    if (container) {
+    if (!prevTarget && container) {
         container.appendChild(el);
     }
     return el;

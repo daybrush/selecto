@@ -4,6 +4,7 @@ import { PROPERTIES } from "./consts";
 export interface SelectoOptions {
     target: HTMLElement | null;
     container: HTMLElement | null;
+    dragContainer: Element;
     selectableTargets: Array<HTMLElement | string>;
     selectByClick: boolean;
     selectOutside: boolean;
