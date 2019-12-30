@@ -15,9 +15,25 @@
         .target.selected {
             border: 4px solid #f55;
         }
+        .button {
+            position: absolute;
+            left: 500px;
+            top: 50px;
+            background: #eee;
+            padding: 15px 40px;
+            display: inline-block;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #444;
+        }
+        .button.selected {
+            color: #fff;
+            background: #66d;
+        }
     </style>
 
 <body>
+    <div class="button"> Shift </div>
     <div class="target" style="top: 50px; left: 50px; width: 50px; height: 50px"></div>
     <div class="target" style="top: 50px; left: 150px; width: 150px; height: 50px"></div>
     <div class="target" style="top: 150px; left: 50px; width: 100px; height: 50px"></div>
@@ -38,21 +54,31 @@ const selecto = new Selecto({
     hitRate: 40,
     selectableTargets: [".target"],
     selectOutside: true,
-}).on("selectEnd", e => {
+}).on("selectStart", e => {
+    console.log("start", e);
     e.added.forEach(el => {
         el.classList.add("selected");
     });
     e.removed.forEach(el => {
         el.classList.remove("selected");
     });
-    console.log(e.selected, e.added, e.removed);
+}).on("selectEnd", e => {
+    console.log("end", e);
+    e.afterAdded.forEach(el => {
+        el.classList.add("selected");
+    });
+    e.afterRemoved.forEach(el => {
+        el.classList.remove("selected");
+    });
 });
 
 
 keycon.global.keydown("shift", () => {
     selecto.continueSelect = true;
+    document.querySelector(".button").classList.add("selected");
 }).keyup("shift", () => {
     selecto.continueSelect = false;
+    document.querySelector(".button").classList.remove("selected");
 });
 </script>
 </html>
