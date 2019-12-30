@@ -24,7 +24,35 @@ $ npm install selecto
 ```
 
 ## 🚀 How to use
-code
+```js
+import Selecto from "selecto";
+
+const selecto = new Selecto({
+    // The container to add a selection element
+    container: document.body,
+    // The area to drag selection element (default: container)
+    dragContainer: Element,
+    // Targets to select. You can register a queryselector or an Element.
+    selectableTargets: [".target", document.querySelector(".target2")],
+    // Whether to select by click (default: true)
+    selectByClick: true,
+    // Whether to select from the target inside (default: true)
+    selectFromInside: true,
+    // After the select, whether to select the next target with the selected target (deselected if the target is selected again).
+    continueSelect: false;
+    // The rate at which the target overlaps the drag area to be selected. (default: 100)
+    hitRate: number;
+});
+
+selecto.on("select", e => {
+    e.added.forEach(el => {
+        el.classList.add("selected");
+    });
+    e.removed.forEach(el => {
+        el.classList.remove("selected");
+    });
+});
+```
 
 ## ⭐️ Show Your Support
 Please give a ⭐️ if this project helped you!
