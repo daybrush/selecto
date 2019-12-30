@@ -37,6 +37,7 @@ const selecto = new Selecto({
     container: document.body,
     hitRate: 40,
     selectableTargets: [".target"],
+    selectOutside: true,
 }).on("selectEnd", e => {
     e.added.forEach(el => {
         el.classList.add("selected");

@@ -3,3 +3,8 @@ export const PROPERTIES = [
     "continueSelect",
     "hitRate",
 ] as const;
+
+export const EVENTS = [
+    "select",
+    "selectEnd",
+] as const;

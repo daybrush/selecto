@@ -26,4 +26,17 @@ export interface Rect {
     right: number;
 }
 
+export interface OnSelect {
+    selected: Array<HTMLElement | SVGElement>;
+    added: Array<HTMLElement | SVGElement>;
+    removed: Array<HTMLElement | SVGElement>;
+    inputEvent: any;
+}
+
+export interface OnDragEvent {
+    datas: IObject<any>;
+    clientX: number;
+    clientY: number;
+    inputEvent: any;
+}
 export type SelectoProperties = { [P in typeof PROPERTIES[number]]: SelectoOptions[P] };

@@ -1,6 +1,22 @@
 import { Hypertext } from "./types";
 import { IObject, addClass, hasClass } from "@daybrush/utils";
 
+export function getClient(e: MouseEvent | TouchEvent) {
+    if ("touches" in e) {
+        const touch = e.touches[0];
+
+        return {
+            clientX: touch.clientX,
+            clientY: touch.clientY,
+        };
+    } else {
+        return {
+            clientX: e.clientX,
+            clientY: e.clientY,
+        };
+    }
+}
+
 export function createElement(
     jsx: Hypertext,
     prevTarget?: HTMLElement | SVGElement,

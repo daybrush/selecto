@@ -4,8 +4,8 @@ import styled, { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { isObject } from "@daybrush/utils";
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
-import { createElement, h } from "./utils";
-import { SelectoOptions, Rect, SelectoProperties } from "./types";
+import { createElement, h, getClient } from "./utils";
+import { SelectoOptions, Rect, SelectoProperties, OnDragEvent } from "./types";
 import { PROPERTIES } from "./consts";
 
 const injector = styled(`
@@ -66,6 +66,18 @@ export default class Selecto extends Component {
         this.container = null;
         this.options = null;
     }
+    public click(e: MouseEvent | TouchEvent) {
+        const { clientX, clientY } = getClient(e);
+        const dragEvent: OnDragEvent = {
+            datas: {},
+            clientX,
+            clientY,
+            inputEvent: e,
+        };
+        if (this.onDragStart(dragEvent)) {
+            this.onDragEnd(dragEvent);
+        }
+    }
     private initElement() {
         this.target = createElement(
             <div className={"selecto-selection " + injector.className}></div> as any,
@@ -75,7 +87,7 @@ export default class Selecto extends Component {
 
         const target = this.target;
 
-        this.dragger = new Dragger(document.body, {
+        this.dragger = new Dragger(this.target.parentElement, {
             container: window,
             dragstart: this.onDragStart,
             drag: this.onDrag,
@@ -157,7 +169,7 @@ export default class Selecto extends Component {
 
         return added.map(index => list[index]).concat(removed.map(index => prevList[index]));
     }
-    private select(selectedTargets: Array<HTMLElement | SVGElement>) {
+    private select(selectedTargets: Array<HTMLElement | SVGElement>, inputEvent: any) {
         const {
             added,
             removed,
@@ -170,12 +182,14 @@ export default class Selecto extends Component {
                 selected: selectedTargets,
                 added: added.map(index => list[index]),
                 removed: removed.map(index => prevList[index]),
+                inputEvent,
             });
         }
     }
     private selecteEnd(
         startSelectedTargets: Array<HTMLElement | SVGElement>,
         selectedTargets: Array<HTMLElement | SVGElement>,
+        inputEvent: any,
     ) {
         const {
             added,
@@ -188,9 +202,12 @@ export default class Selecto extends Component {
             selected: selectedTargets,
             added: added.map(index => list[index]),
             removed: removed.map(index => prevList[index]),
+            inputEvent,
         });
     }
-    private onDragStart = ({ datas, clientX, clientY }: OnDragStart) => {
+    private onDragStart = (e: OnDragEvent) => {
+        const { datas, clientX, clientY, inputEvent } = e;
+        const { continueSelect, selectOutside } = this.options;
         const selectableTargets = this.getSelectableTargets();
         const selectableRects =  selectableTargets.map(target => {
             const rect = target.getBoundingClientRect();
@@ -214,21 +231,29 @@ export default class Selecto extends Component {
             bottom: clientY,
         }, clientX, clientY, selectableTargets, selectableRects);
 
-        if (!this.options.continueSelect) {
+        if (!continueSelect) {
             this.selectedTargets = [];
         } else {
             firstPassedTargets = this.getSelectedTargets(firstPassedTargets);
         }
-        this.select(firstPassedTargets);
+        this.select(firstPassedTargets, inputEvent);
         datas.startX = clientX;
         datas.startY = clientY;
         datas.selectedTargets = firstPassedTargets;
         this.target.style.cssText += `left:${clientX}px;top:${clientY}px`;
+
+        if (selectOutside && firstPassedTargets.length) {
+            this.onDragEnd(e);
+            return false;
+        } else {
+            return true;
+        }
     }
     private onDrag = ({
         distX,
         distY,
         datas,
+        inputEvent,
     }: OnDrag) => {
         const { startX, startY } = datas;
         const tx = Math.min(0, distX);
@@ -251,14 +276,14 @@ export default class Selecto extends Component {
         }, datas.startX, datas.startY, datas.selectableTargets, datas.selectableRects);
         const selectedTargets = this.getSelectedTargets(passedTargets);
 
-        this.select(selectedTargets);
+        this.select(selectedTargets, inputEvent);
         datas.selectedTargets = selectedTargets;
     }
-    private onDragEnd = ({ datas }: OnDragEnd) => {
+    private onDragEnd = ({ datas, inputEvent }: OnDragEvent) => {
         this.target.style.cssText += "display: none;";
         this.selectedTargets = datas.selectedTargets;
 
-        this.selecteEnd(datas.startSelectedTargets, datas.selectedTargets);
+        this.selecteEnd(datas.startSelectedTargets, datas.selectedTargets, inputEvent);
     }
 
 }
