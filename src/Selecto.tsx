@@ -18,6 +18,11 @@ const injector = styled(`
 }
 `);
 
+/**
+ * Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.
+ * @sort 1
+ * @extends eg.Component
+ */
 @Properties(PROPERTIES as any, (prototype, property) => {
     Object.defineProperty(prototype, property, {
         get() {
@@ -30,7 +35,7 @@ const injector = styled(`
         configurable: true,
     });
 })
-export default class Selecto extends Component {
+class Selecto extends Component {
     public options: SelectoOptions;
     private target!: HTMLElement | SVGElement;
     private container!: HTMLElement;
@@ -38,6 +43,9 @@ export default class Selecto extends Component {
     private injectResult!: InjectResult;
     private selectedTargets: Array<HTMLElement | SVGElement> = [];
     private differ = new ChildrenDiffer<HTMLElement | SVGElement>();
+    /**
+     *
+     */
     constructor(
         options: Partial<SelectoOptions> = {},
     ) {
@@ -57,11 +65,18 @@ export default class Selecto extends Component {
         };
         this.initElement();
     }
-    public setSelectedTargets(selectedTargets: Array<HTMLElement | SVGElement>) {
+    /**
+     *
+     */
+    public setSelectedTargets(selectedTargets: Array<HTMLElement | SVGElement>): void {
         this.selectedTargets = selectedTargets;
         this.differ = new ChildrenDiffer(selectedTargets);
     }
-    public destroy() {
+
+    /**
+     *
+     */
+    public destroy(): void {
         this.dragger.unset();
         this.injectResult.destroy();
 
@@ -71,7 +86,11 @@ export default class Selecto extends Component {
         this.container = null;
         this.options = null;
     }
-    public click(e: MouseEvent | TouchEvent, clickedTarget?: Element) {
+
+    /**
+     *
+     */
+    public click(e: MouseEvent | TouchEvent, clickedTarget?: Element): void {
         const { clientX, clientY } = getClient(e);
         const dragEvent: OnDragEvent = {
             datas: {},
@@ -321,4 +340,6 @@ export default class Selecto extends Component {
 
 }
 
-export default interface Selecto extends Component, SelectoProperties { }
+interface Selecto extends Component, SelectoProperties { }
+
+export default Selecto;
