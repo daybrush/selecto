@@ -10,3 +10,8 @@ export const EVENTS = [
     "select",
     "selectEnd",
 ] as const;
+
+export const METHODS = [
+    "click",
+    "setSelectedTargets",
+] as const;

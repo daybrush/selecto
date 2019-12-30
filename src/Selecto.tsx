@@ -57,6 +57,10 @@ export default class Selecto extends Component {
         };
         this.initElement();
     }
+    public setSelectedTargets(selectedTargets: Array<HTMLElement | SVGElement>) {
+        this.selectedTargets = selectedTargets;
+        this.differ = new ChildrenDiffer(selectedTargets);
+    }
     public destroy() {
         this.dragger.unset();
         this.injectResult.destroy();

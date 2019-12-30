@@ -1,5 +1,6 @@
 import { IObject } from "@daybrush/utils";
-import { PROPERTIES } from "./consts";
+import { PROPERTIES, METHODS } from "./consts";
+import Selecto from "./Selecto";
 
 export interface SelectoOptions {
     target: HTMLElement | null;
@@ -47,3 +48,4 @@ export interface OnDragEvent {
     inputEvent: any;
 }
 export type SelectoProperties = { [P in typeof PROPERTIES[number]]: SelectoOptions[P] };
+export type SelectoMethods = { [P in typeof METHODS[number]]: Selecto[P] };
