@@ -67,7 +67,7 @@ export default class Selecto extends Component {
         this.container = null;
         this.options = null;
     }
-    public click(e: MouseEvent | TouchEvent) {
+    public click(e: MouseEvent | TouchEvent, clickedTarget?: Element) {
         const { clientX, clientY } = getClient(e);
         const dragEvent: OnDragEvent = {
             datas: {},
@@ -75,7 +75,7 @@ export default class Selecto extends Component {
             clientY,
             inputEvent: e,
         };
-        if (this.onDragStart(dragEvent)) {
+        if (this.onDragStart(dragEvent, clickedTarget)) {
             this.onDragEnd(dragEvent);
         }
     }
@@ -221,7 +221,7 @@ export default class Selecto extends Component {
             inputEvent,
         });
     }
-    private onDragStart = (e: OnDragEvent) => {
+    private onDragStart = (e: OnDragEvent, clickedTarget?: Element) => {
         const { datas, clientX, clientY, inputEvent } = e;
         const { continueSelect, selectOutside } = this.options;
         const selectableTargets = this.getSelectableTargets();
@@ -240,7 +240,7 @@ export default class Selecto extends Component {
         datas.selectableRects = selectableRects;
         datas.startSelectedTargets = this.selectedTargets;
 
-        const pointTarget = document.elementFromPoint(clientX, clientY);
+        const pointTarget = clickedTarget || document.elementFromPoint(clientX, clientY);
         let firstPassedTargets = this.hitTest({
             left: clientX,
             top: clientY,
