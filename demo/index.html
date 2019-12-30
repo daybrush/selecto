@@ -54,7 +54,7 @@ const selecto = new Selecto({
     container: document.body,
     hitRate: 40,
     selectableTargets: [".target"],
-    selectOutside: true,
+    selectFromInside: true,
 }).on("selectStart", e => {
     console.log("start", e);
     e.added.forEach(el => {

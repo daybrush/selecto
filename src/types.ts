@@ -8,7 +8,7 @@ export interface SelectoOptions {
     dragContainer: Element;
     selectableTargets: Array<HTMLElement | string>;
     selectByClick: boolean;
-    selectOutside: boolean;
+    selectFromInside: boolean;
     continueSelect: boolean;
     hitRate: number;
 }

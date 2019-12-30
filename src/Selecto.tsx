@@ -50,7 +50,7 @@ export default class Selecto extends Component {
             dragContainer: null,
             selectableTargets: [],
             selectByClick: true,
-            selectOutside: false,
+            selectFromInside: true,
             hitRate: 100,
             continueSelect: false,
             ...options,
@@ -229,7 +229,7 @@ export default class Selecto extends Component {
     }
     private onDragStart = (e: OnDragEvent, clickedTarget?: Element) => {
         const { datas, clientX, clientY, inputEvent } = e;
-        const { continueSelect, selectOutside } = this.options;
+        const { continueSelect, selectFromInside } = this.options;
         const selectableTargets = this.getSelectableTargets();
         const selectableRects =  selectableTargets.map(target => {
             const rect = target.getBoundingClientRect();
@@ -276,7 +276,7 @@ export default class Selecto extends Component {
         datas.selectedTargets = firstPassedTargets;
         this.target.style.cssText += `left:${clientX}px;top:${clientY}px`;
 
-        if (selectOutside && hasInsideTargets) {
+        if (!selectFromInside && hasInsideTargets) {
             this.onDragEnd(e);
             return false;
         } else {
