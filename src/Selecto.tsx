@@ -103,9 +103,8 @@ export default class Selecto extends Component {
         targets: Array<HTMLElement | SVGElement>,
         rects: Rect[],
     ) {
-        const selectByClick = this.options.selectByClick;
+        const { hitRate, selectByClick } = this.options;
         const { left, top, right, bottom } = selectRect;
-        const hitRate = this.options.hitRate;
         const passedTargets: Array<HTMLElement | SVGElement> = [];
 
         rects.forEach((rect, i) => {
@@ -240,12 +239,15 @@ export default class Selecto extends Component {
         datas.selectableRects = selectableRects;
         datas.startSelectedTargets = this.selectedTargets;
 
+        const pointTarget = document.elementFromPoint(clientX, clientY);
         let firstPassedTargets = this.hitTest({
             left: clientX,
             top: clientY,
             right: clientX,
             bottom: clientY,
-        }, clientX, clientY, selectableTargets, selectableRects);
+        }, clientX, clientY, selectableTargets, selectableRects).filter(
+            target => target === pointTarget || target.contains(pointTarget),
+        );
 
         const hasInsideTargets = firstPassedTargets.length > 0;
         if (!continueSelect) {
