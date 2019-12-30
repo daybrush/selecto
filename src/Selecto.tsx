@@ -169,7 +169,7 @@ export default class Selecto extends Component {
 
         return added.map(index => list[index]).concat(removed.map(index => prevList[index]));
     }
-    private select(selectedTargets: Array<HTMLElement | SVGElement>, inputEvent: any) {
+    private select(selectedTargets: Array<HTMLElement | SVGElement>, inputEvent: any, isStart?: boolean) {
         const {
             added,
             removed,
@@ -177,6 +177,14 @@ export default class Selecto extends Component {
             list,
         } = this.differ.update(selectedTargets);
 
+        if (isStart) {
+            this.trigger("selectStart", {
+                selected: selectedTargets,
+                added: added.map(index => list[index]),
+                removed: removed.map(index => prevList[index]),
+                inputEvent,
+            });
+        }
         if (added.length || removed.length) {
             this.trigger("select", {
                 selected: selectedTargets,
@@ -197,11 +205,19 @@ export default class Selecto extends Component {
             prevList,
             list,
         } = diff(startSelectedTargets, selectedTargets);
+        const {
+            added: afterAdded,
+            removed: afterRemoved,
+            prevList: afterPrevList,
+            list: afterList,
+        } = diff(this.selectedTargets, selectedTargets);
 
         this.trigger("selectEnd", {
             selected: selectedTargets,
             added: added.map(index => list[index]),
             removed: removed.map(index => prevList[index]),
+            afterAdded: afterAdded.map(index => afterList[index]),
+            afterRemoved: afterRemoved.map(index => afterPrevList[index]),
             inputEvent,
         });
     }
@@ -231,18 +247,19 @@ export default class Selecto extends Component {
             bottom: clientY,
         }, clientX, clientY, selectableTargets, selectableRects);
 
+        const hasInsideTargets = firstPassedTargets.length > 0;
         if (!continueSelect) {
             this.selectedTargets = [];
         } else {
             firstPassedTargets = this.getSelectedTargets(firstPassedTargets);
         }
-        this.select(firstPassedTargets, inputEvent);
+        this.select(firstPassedTargets, inputEvent, true);
         datas.startX = clientX;
         datas.startY = clientY;
         datas.selectedTargets = firstPassedTargets;
         this.target.style.cssText += `left:${clientX}px;top:${clientY}px`;
 
-        if (selectOutside && firstPassedTargets.length) {
+        if (selectOutside && hasInsideTargets) {
             this.onDragEnd(e);
             return false;
         } else {

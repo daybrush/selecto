@@ -33,6 +33,11 @@ export interface OnSelect {
     inputEvent: any;
 }
 
+export interface OnSelectEnd extends OnSelect {
+    afterAdded: Array<HTMLElement | SVGElement>;
+    afterRemoved: Array<HTMLElement | SVGElement>;
+}
+
 export interface OnDragEvent {
     datas: IObject<any>;
     clientX: number;
