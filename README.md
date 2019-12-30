@@ -1,12 +1,12 @@
 
 <p align="middle" >Logo</p>
-<h2 align="middle">Selecto</h2>
+<h2 align="middle">Selecto.js</h2>
 <p align="middle">
 <a href="https://www.npmjs.com/package/selecto" target="_blank"><img src="https://img.shields.io/npm/v/selecto.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
 <img src="https://img.shields.io/badge/language-typescript-blue.svg?style=flat-square"/>
 <a href="https://github.com/daybrush/selecto/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/daybrush/selecto.svg?style=flat-square&label=license&color=08CE5D"/></a>
 </p>
-<p align="middle">Selecto is a component that allows you to select elements in the drag area using the mouse or touch.</p>
+<p align="middle">Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.</p>
 
 ## 📄 API Documents
 * [API documentation](https://daybrush.com/selecto/release/latest/doc/)
