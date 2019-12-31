@@ -1,0 +1,56 @@
+{
+  "name": "react-selecto",
+  "version": "0.0.1",
+  "description": "A React Component that allows you to select elements in the drag area using the mouse or touch.",
+  "main": "./dist/selecto.cjs.js",
+  "module": "./dist/selecto.esm.js",
+  "sideEffects": false,
+  "types": "declaration/index.d.ts",
+  "scripts": {
+    "lint": "tslint -c tslint.json 'src/react-selecto/**/*.ts' 'src/react-selecto/**/*.tsx'",
+    "start": "react-scripts start",
+    "build": "rollup -c && npm run declaration && print-sizes ./dist ",
+    "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json"
+  },
+  "keywords": [
+    "select",
+    "selecto",
+    "selection",
+    "selectable",
+    "moveable",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daybrush/selecto/blob/master/packages/react-selecto"
+  },
+  "author": "Daybrush",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daybrush/selecto/issues"
+  },
+  "homepage": "https://daybrush.com/selecto",
+  "devDependencies": {
+    "print-sizes": "0.0.4",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.0.1",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "selecto": "0.0.10"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
