@@ -1,7 +1,7 @@
 import { IObject } from "@daybrush/utils";
 import { PROPERTIES, METHODS } from "./consts";
 import Selecto from "./Selecto";
-import { OnDragStart } from "@daybrush/drag";
+import { OnDragStart as OnParentDragStart } from "@daybrush/drag";
 
 /**
  * @memberof Selecto
@@ -79,12 +79,23 @@ export interface OnDragEvent {
     clientY: number;
     inputEvent: any;
 }
+export interface OnKeyEvent {
+    datas: IObject<any>;
+    clientX: number;
+    clientY: number;
+    inputEvent: any;
+}
 
+export interface OnDragStart extends OnParentDragStart {
+    stop(): void;
+}
 export interface SelectoEvents {
     dragStart: OnDragStart;
     selectStart: OnSelect;
     select: OnSelect;
     selectEnd: OnSelectEnd;
+    keydown: OnKeyEvent;
+    keyup: OnKeyEvent;
 }
 export type SelectoProperties = { [P in typeof PROPERTIES[number]]: SelectoOptions[P] };
 export type SelectoMethods = { [P in typeof METHODS[number]]: Selecto[P] };

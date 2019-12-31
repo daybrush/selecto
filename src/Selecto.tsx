@@ -6,7 +6,7 @@ import { isObject, camelize, IObject } from "@daybrush/utils";
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
 import KeyController from "keycon";
 import { createElement, h, getClient, diffValue } from "./utils";
-import { SelectoOptions, Rect, SelectoProperties, OnDragEvent } from "./types";
+import { SelectoOptions, Rect, SelectoProperties, OnDragEvent, SelectoEvents } from "./types";
 import { PROPERTIES } from "./consts";
 
 const injector = styled(`
@@ -34,11 +34,11 @@ const injector = styled(`
     };
     const setter = camelize(`set ${property}`);
     if (prototype[setter]) {
-        attributes.set = function (value) {
+        attributes.set = function(value) {
             this[setter](value);
         };
     } else {
-        attributes.set = function (value) {
+        attributes.set = function(value) {
             this.options[property] = value;
         };
     }
@@ -263,6 +263,36 @@ class Selecto extends Component {
         } = this.differ.update(selectedTargets);
 
         if (isStart) {
+            /**
+             * When the select(drag) starts, the selectStart event is called.
+             * @memberof Selecto
+             * @event selectStart
+             * @param {Selecto.OnSelect} - Parameters for the selectStart event
+             * @example
+             * import Selecto from "selecto";
+             *
+             * const selecto = new Selecto({
+             *   container: document.body,
+             *   selectByClick: true,
+             *   selectFromInside: false,
+             * });
+             *
+             * selecto.on("selectStart", e => {
+             *   e.added.forEach(el => {
+             *     el.classList.add("selected");
+             *   });
+             *   e.removed.forEach(el => {
+             *     el.classList.remove("selected");
+             *   });
+             * }).on("selectEnd", e => {
+             *   e.afterAdded.forEach(el => {
+             *     el.classList.add("selected");
+             *   });
+             *   e.afterRemoved.forEach(el => {
+             *     el.classList.remove("selected");
+             *   });
+             * });
+             */
             this.trigger("selectStart", {
                 selected: selectedTargets,
                 added: added.map(index => list[index]),
@@ -271,6 +301,29 @@ class Selecto extends Component {
             });
         }
         if (added.length || removed.length) {
+            /**
+             * When the select in real time, the select event is called.
+             * @memberof Selecto
+             * @event select
+             * @param {Selecto.OnSelect} - Parameters for the select event
+             * @example
+             * import Selecto from "selecto";
+             *
+             * const selecto = new Selecto({
+             *   container: document.body,
+             *   selectByClick: true,
+             *   selectFromInside: false,
+             * });
+             *
+             * selecto.on("select", e => {
+             *   e.added.forEach(el => {
+             *     el.classList.add("selected");
+             *   });
+             *   e.removed.forEach(el => {
+             *     el.classList.remove("selected");
+             *   });
+             * });
+             */
             this.trigger("select", {
                 selected: selectedTargets,
                 added: added.map(index => list[index]),
@@ -298,6 +351,37 @@ class Selecto extends Component {
         } = diff(this.selectedTargets, selectedTargets);
         const type = inputEvent.type;
         const isDragStart = type === "mousedown" || type === "touchstart";
+
+        /**
+         * When the select(dragEnd or click) ends, the selectEnd event is called.
+         * @memberof Selecto
+         * @event selectEnd
+         * @param {Selecto.OnSelectEnd} - Parameters for the selectEnd event
+         * @example
+         * import Selecto from "selecto";
+         *
+         * const selecto = new Selecto({
+         *   container: document.body,
+         *   selectByClick: true,
+         *   selectFromInside: false,
+         * });
+         *
+         * selecto.on("selectStart", e => {
+         *   e.added.forEach(el => {
+         *     el.classList.add("selected");
+         *   });
+         *   e.removed.forEach(el => {
+         *     el.classList.remove("selected");
+         *   });
+         * }).on("selectEnd", e => {
+         *   e.afterAdded.forEach(el => {
+         *     el.classList.add("selected");
+         *   });
+         *   e.afterRemoved.forEach(el => {
+         *     el.classList.remove("selected");
+         *   });
+         * });
+         */
         this.trigger("selectEnd", {
             selected: selectedTargets,
             added: added.map(index => list[index]),
@@ -346,6 +430,34 @@ class Selecto extends Component {
 
         const type = inputEvent.type;
         const isTrusted = type === "mousedown" || type === "touchstart";
+        /**
+         * When the drag starts, the dragStart event is called.
+         * Call the stop () function if you have a specific element or don't want to raise a select
+         * @memberof Selecto
+         * @event dragStart
+         * @param {OnDragStart} - Parameters for the dragStart event
+         * @example
+         * import Selecto from "selecto";
+         *
+         * const selecto = new Selecto({
+         *   container: document.body,
+         *   selectByClick: true,
+         *   selectFromInside: false,
+         * });
+         *
+         * selecto.on("dragStart", e => {
+         *   if (e.inputEvent.target.tagName === "SPAN") {
+         *     e.stop();
+         *   }
+         * }).on("select", e => {
+         *   e.added.forEach(el => {
+         *     el.classList.add("selected");
+         *   });
+         *   e.removed.forEach(el => {
+         *     el.classList.remove("selected");
+         *   });
+         * });
+         */
         const result = isTrusted ? this.trigger("dragStart", e) : true;
 
         if (!result) {
@@ -401,15 +513,71 @@ class Selecto extends Component {
     }
     private onKeyDown = () => {
         this.continueSelect = true;
+        /**
+         * When you keydown the key you specified in toggleContinueSelect, the keydown event is called.
+         * @memberof Selecto
+         * @event keydown
+         * @example
+         * import Selecto from "selecto";
+         *
+         * const selecto = new Selecto({
+         *   container: document.body,
+         *   toggleContinueSelect: "shift";
+         *   keyContainer: window,
+         * });
+         *
+         * selecto.on("keydown", () => {
+         *   document.querySelector(".button").classList.add("selected");
+         * }).on("keyup", () => {
+         *   document.querySelector(".button").classList.remove("selected");
+         * }).on("select", e => {
+         *   e.added.forEach(el => {
+         *     el.classList.add("selected");
+         *   });
+         *   e.removed.forEach(el => {
+         *     el.classList.remove("selected");
+         *   });
+         * });
+         */
         this.trigger("keydown", {});
     }
     private onKeyUp = () => {
         this.continueSelect = false;
+        /**
+         * When you keyup the key you specified in toggleContinueSelect, the keyup event is called.
+         * @memberof Selecto
+         * @event keyup
+         * @example
+         * import Selecto from "selecto";
+         *
+         * const selecto = new Selecto({
+         *   container: document.body,
+         *   toggleContinueSelect: "shift";
+         *   keyContainer: window,
+         * });
+         *
+         * selecto.on("keydown", () => {
+         *   document.querySelector(".button").classList.add("selected");
+         * }).on("keyup", () => {
+         *   document.querySelector(".button").classList.remove("selected");
+         * }).on("select", e => {
+         *   e.added.forEach(el => {
+         *     el.classList.add("selected");
+         *   });
+         *   e.removed.forEach(el => {
+         *     el.classList.remove("selected");
+         *   });
+         * });
+         */
         this.trigger("keyup", {});
     }
 
 }
 
-interface Selecto extends Component, SelectoProperties { }
+interface Selecto extends Component, SelectoProperties {
+    on<T extends keyof SelectoEvents>(eventName: T, handlerToAttach: (event: SelectoEvents[T]) => any): this;
+    on(eventName: string, handlerToAttach: (event: { [key: string]: any }) => any): this;
+    on(events: { [key: string]: (event: { [key: string]: any }) => any }): this;
+}
 
 export default Selecto;

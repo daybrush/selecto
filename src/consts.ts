@@ -6,6 +6,7 @@ export const PROPERTIES = [
     "continueSelect",
     "hitRate",
 ] as const;
+
 /**
  * @memberof Selecto
  */
@@ -14,7 +15,10 @@ export const EVENTS = [
     "selectStart",
     "select",
     "selectEnd",
+    "keydown",
+    "keyup",
 ] as const;
+
 /**
  * @memberof Selecto
  */
