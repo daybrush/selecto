@@ -1,3 +1,20 @@
+import styled from "css-styled";
+
+export const injector = styled(`
+:host {
+    position: absolute;
+    display: none;
+    border: 1px solid #4af;
+    background: rgba(68, 170, 255, 0.5);
+    z-index: 100;
+}
+`);
+
+/**
+ * @memberof Selecto
+ */
+export const CLASS_NAME = `selecto-selection ${injector.className}`;
+
 /**
  * @memberof Selecto
  */

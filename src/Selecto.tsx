@@ -1,23 +1,13 @@
 import Component from "@egjs/component";
 import Dragger, { OnDrag } from "@daybrush/drag";
-import styled, { InjectResult } from "css-styled";
+import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { isObject, camelize, IObject } from "@daybrush/utils";
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
 import KeyController from "keycon";
 import { createElement, h, getClient, diffValue } from "./utils";
 import { SelectoOptions, Rect, SelectoProperties, OnDragEvent, SelectoEvents } from "./types";
-import { PROPERTIES } from "./consts";
-
-const injector = styled(`
-:host {
-    position: absolute;
-    display: none;
-    border: 1px solid #4af;
-    background: rgba(68, 170, 255, 0.5);
-    z-index: 100;
-}
-`);
+import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 
 /**
  * Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.
@@ -166,7 +156,7 @@ class Selecto extends Component {
     }
     private initElement() {
         this.target = createElement(
-            <div className={"selecto-selection " + injector.className}></div> as any,
+            <div className={CLASS_NAME}></div> as any,
             this.target,
             this.container,
         );
