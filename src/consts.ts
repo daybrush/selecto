@@ -1,9 +1,26 @@
 /**
  * @memberof Selecto
  */
-export const PROPERTIES = [
+export const OPTIONS = [
+    // ignore target, container,
+    "dragContainer",
     "selectableTargets",
+    "selectByClick",
+    "selectFromInside",
     "continueSelect",
+    "toggleContinueSelect",
+    "keyContainer",
+    "hitRate",
+] as const;
+
+export const PROPERTIES = [
+    "dragContainer",
+    "selectableTargets",
+    "selectByClick",
+    "selectFromInside",
+    "continueSelect",
+    "toggleContinueSelect",
+    "keyContainer",
     "hitRate",
 ] as const;
 
