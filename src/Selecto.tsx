@@ -2,9 +2,10 @@ import Component from "@egjs/component";
 import Dragger, { OnDrag } from "@daybrush/drag";
 import styled, { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
-import { isObject } from "@daybrush/utils";
+import { isObject, camelize, IObject } from "@daybrush/utils";
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
-import { createElement, h, getClient } from "./utils";
+import KeyController from "keycon";
+import { createElement, h, getClient, diffValue } from "./utils";
 import { SelectoOptions, Rect, SelectoProperties, OnDragEvent } from "./types";
 import { PROPERTIES } from "./consts";
 
@@ -24,16 +25,24 @@ const injector = styled(`
  * @extends eg.Component
  */
 @Properties(PROPERTIES as any, (prototype, property) => {
-    Object.defineProperty(prototype, property, {
+    const attributes: IObject<any> = {
+        enumerable: true,
+        configurable: true,
         get() {
             return this.options[property];
         },
-        set(value) {
+    };
+    const setter = camelize(`set ${property}`);
+    if (prototype[setter]) {
+        attributes.set = function (value) {
+            this[setter](value);
+        };
+    } else {
+        attributes.set = function (value) {
             this.options[property] = value;
-        },
-        enumerable: true,
-        configurable: true,
-    });
+        };
+    }
+    Object.defineProperty(prototype, property, attributes);
 })
 class Selecto extends Component {
     public options: SelectoOptions;
@@ -43,6 +52,7 @@ class Selecto extends Component {
     private injectResult!: InjectResult;
     private selectedTargets: Array<HTMLElement | SVGElement> = [];
     private differ = new ChildrenDiffer<HTMLElement | SVGElement>();
+    private keycon!: KeyController;
     /**
      *
      */
@@ -61,25 +71,50 @@ class Selecto extends Component {
             selectFromInside: true,
             hitRate: 100,
             continueSelect: false,
+            toggleContinueSelect: null,
+            keyContainer: null,
             ...options,
         };
         this.initElement();
+        this.setKeyController();
     }
     /**
-     *
+     * You can set the currently selected targets.
      */
     public setSelectedTargets(selectedTargets: Array<HTMLElement | SVGElement>): void {
         this.selectedTargets = selectedTargets;
         this.differ = new ChildrenDiffer(selectedTargets);
     }
 
+    public setKeyContainer(keyContainer: HTMLElement | Document | Window) {
+        const options = this.options;
+
+        diffValue(options.keyContainer, keyContainer, () => {
+            options.keyContainer = keyContainer;
+
+            this.setKeyController();
+        });
+    }
+    public setToggleContinueSelect(toggleContinueSelect: string[] | string) {
+        const options = this.options;
+
+        diffValue(options.toggleContinueSelect, toggleContinueSelect, () => {
+            options.toggleContinueSelect = toggleContinueSelect;
+
+            this.setKeyEvent();
+        });
+    }
+
     /**
-     *
+     * Destroy elements, properties, and events.
      */
     public destroy(): void {
+        this.off();
+        this.keycon && this.keycon.destroy();
         this.dragger.unset();
         this.injectResult.destroy();
 
+        this.keycon = null;
         this.dragger = null;
         this.injectResult = null;
         this.target = null;
@@ -100,6 +135,33 @@ class Selecto extends Component {
         };
         if (this.onDragStart(dragEvent, clickedTarget)) {
             this.onDragEnd(dragEvent);
+        }
+    }
+    private setKeyController() {
+        const { keyContainer, toggleContinueSelect } = this.options;
+
+        if (this.keycon) {
+            this.keycon.destroy();
+            this.keycon = null;
+        }
+        if (toggleContinueSelect) {
+            this.keycon = new KeyController(keyContainer || window);
+        }
+        this.setKeyEvent();
+    }
+    private setKeyEvent() {
+        const { toggleContinueSelect } = this.options;
+        if (!this.keycon) {
+            this.setKeyController();
+            return;
+        } else {
+            this.keycon.off();
+        }
+
+        if (toggleContinueSelect) {
+            this.keycon
+                .keydown(toggleContinueSelect, this.onKeyDown)
+                .keyup(toggleContinueSelect, this.onKeyUp);
         }
     }
     private initElement() {
@@ -250,7 +312,7 @@ class Selecto extends Component {
         const { datas, clientX, clientY, inputEvent } = e;
         const { continueSelect, selectFromInside } = this.options;
         const selectableTargets = this.getSelectableTargets();
-        const selectableRects =  selectableTargets.map(target => {
+        const selectableRects = selectableTargets.map(target => {
             const rect = target.getBoundingClientRect();
             const { left, top, width, height } = rect;
 
@@ -336,6 +398,14 @@ class Selecto extends Component {
         this.target.style.cssText += "display: none;";
         this.selecteEnd(datas.startSelectedTargets, datas.selectedTargets, inputEvent);
         this.selectedTargets = datas.selectedTargets;
+    }
+    private onKeyDown = () => {
+        this.continueSelect = true;
+        this.trigger("keydown", {});
+    }
+    private onKeyUp = () => {
+        this.continueSelect = false;
+        this.trigger("keyup", {});
     }
 
 }

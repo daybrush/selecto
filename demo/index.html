@@ -45,8 +45,6 @@
 
 </body>
 <script src="../dist/selecto.pkgd.js"></script>
-<script src="https://daybrush.com/keycon/release/latest/dist/keycon.pkgd.min.js"></script>
-
 
 <div class="hi"></div>
 <script>
@@ -54,7 +52,8 @@ const selecto = new Selecto({
     container: document.body,
     hitRate: 40,
     selectableTargets: [".target"],
-    selectFromInside: true,
+    selectFromInside: false,
+    toggleContinueSelect: "shift",
 }).on("selectStart", e => {
     console.log("start", e);
     e.added.forEach(el => {
@@ -71,15 +70,11 @@ const selecto = new Selecto({
     e.afterRemoved.forEach(el => {
         el.classList.remove("selected");
     });
-});
-
-
-keycon.global.keydown("shift", () => {
-    selecto.continueSelect = true;
+}).on("keydown", () => {
     document.querySelector(".button").classList.add("selected");
-}).keyup("shift", () => {
-    selecto.continueSelect = false;
+}).on("keyup", () => {
     document.querySelector(".button").classList.remove("selected");
 });
+
 </script>
 </html>

@@ -16,11 +16,11 @@
     "release:init": "npm run build && npm run doc && release -i --dirs=dist,doc"
   },
   "keywords": [
-      "select",
-      "selecto",
-      "selection",
-      "selectable",
-      "moveable"
+    "select",
+    "selecto",
+    "selection",
+    "selectable",
+    "moveable"
   ],
   "repository": {
     "type": "git",
@@ -38,7 +38,8 @@
     "@egjs/children-differ": "^1.0.0",
     "@egjs/component": "^2.1.2",
     "css-styled": "^0.1.6",
-    "framework-utils": "^0.2.1"
+    "framework-utils": "^0.2.1",
+    "keycon": "^0.7.1"
   },
   "devDependencies": {
     "@daybrush/builder": "^0.1.2",

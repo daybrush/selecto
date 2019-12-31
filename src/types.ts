@@ -13,6 +13,8 @@ import { OnDragStart } from "@daybrush/drag";
  * @property - Whether to select by click (default: true)
  * @property - Whether to select from the target inside (default: true)
  * @property - After the select, whether to select the next target with the selected target (deselected if the target is selected again). (default: false)
+ * @property - Determines which key to continue selecting the next target via keydown and keyup.
+ * @property - The container for keydown and keyup events
  * @property - The rate at which the target overlaps the drag area to be selected. (default: 100)
  */
 export interface SelectoOptions {
@@ -23,6 +25,8 @@ export interface SelectoOptions {
     selectByClick: boolean;
     selectFromInside: boolean;
     continueSelect: boolean;
+    toggleContinueSelect: string[] | string | null;
+    keyContainer: Document | HTMLElement | Window | null;
     hitRate: number;
 }
 

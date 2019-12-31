@@ -68,3 +68,9 @@ export function h(
         children,
     };
 }
+
+export function diffValue<T>(prev: T, cur: T, func: (prev: T, cur: T) => void) {
+    if (prev !== cur) {
+        func(prev, cur);
+    }
+}
