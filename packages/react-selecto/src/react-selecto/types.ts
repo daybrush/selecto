@@ -8,7 +8,7 @@ export interface ReactSelectoEventNames {
     onKeydown: "keydown";
     onKeyup: "keyup";
 }
-export type ReactSelectoEvents = {
+export type SelectoEventProps = {
     [key in keyof ReactSelectoEventNames]: (e: SelectoEvents[ReactSelectoEventNames[key]]) => any;
 };
-export type SelectoProps = SelectoOptions & ReactSelectoEvents;
+export type SelectoProps = SelectoOptions & SelectoEventProps;

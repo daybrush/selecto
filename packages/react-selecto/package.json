@@ -31,6 +31,7 @@
   },
   "homepage": "https://daybrush.com/selecto",
   "devDependencies": {
+    "@daybrush/builder": "^0.1.2",
     "@types/react-dom": "^16.9.4",
     "print-sizes": "0.0.4",
     "react": "^16.8.6",
@@ -40,7 +41,7 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
-    "selecto": "0.0.11"
+    "selecto": "0.0.12"
   },
   "browserslist": {
     "production": [

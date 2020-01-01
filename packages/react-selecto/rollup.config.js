@@ -9,14 +9,14 @@ export default builder([
         ...defaultOptions,
         input: "src/react-selecto/index.ts",
         output: "./dist/selecto.esm.js",
-        visualizer: true,
         format: "es",
-        exports: "default",
+        exports: "named",
     },
     {
         ...defaultOptions,
         input: "src/react-selecto/index.umd.ts",
         output: "./dist/selecto.cjs.js",
         format: "cjs",
+        exports: "default",
     },
 ]);
