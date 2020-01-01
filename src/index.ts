@@ -8,4 +8,5 @@ export {
     METHODS,
     CLASS_NAME,
 } from "./consts";
+
 export * from "./types";
