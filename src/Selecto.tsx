@@ -136,8 +136,8 @@ class Selecto extends Component {
         }
         if (toggleContinueSelect) {
             this.keycon = new KeyController(keyContainer || window);
+            this.setKeyEvent();
         }
-        this.setKeyEvent();
     }
     private setKeyEvent() {
         const { toggleContinueSelect } = this.options;
