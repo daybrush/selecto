@@ -4,7 +4,7 @@ import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { isObject, camelize, IObject } from "@daybrush/utils";
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
-import KeyController from "keycon";
+import KeyController, { getCombi } from "keycon";
 import { createElement, h, getClient, diffValue } from "./utils";
 import { SelectoOptions, Rect, SelectoProperties, OnDragEvent, SelectoEvents } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
@@ -136,23 +136,15 @@ class Selecto extends Component {
         }
         if (toggleContinueSelect) {
             this.keycon = new KeyController(keyContainer || window);
-            this.setKeyEvent();
+            this.keycon.keydown(this.onKeyDown).keyup(this.onKeyUp);
         }
     }
     private setKeyEvent() {
         const { toggleContinueSelect } = this.options;
-        if (!this.keycon) {
-            this.setKeyController();
+        if (!toggleContinueSelect || this.keycon) {
             return;
-        } else {
-            this.keycon.off();
         }
-
-        if (toggleContinueSelect) {
-            this.keycon
-                .keydown(toggleContinueSelect, this.onKeyDown)
-                .keyup(toggleContinueSelect, this.onKeyUp);
-        }
+        this.setKeyController();
     }
     private initElement() {
         this.target = createElement(
@@ -501,7 +493,15 @@ class Selecto extends Component {
         this.selecteEnd(datas.startSelectedTargets, datas.selectedTargets, inputEvent);
         this.selectedTargets = datas.selectedTargets;
     }
-    private onKeyDown = () => {
+    private sameCombiKey(e: any) {
+        const toggleContinueSelect = [].concat(this.options.toggleContinueSelect);
+        const combi = getCombi(e.inputEvent, e.key);
+        return toggleContinueSelect.every(key => combi.indexOf(key) > -1);
+    }
+    private onKeyDown = (e: any) => {
+        if (!this.sameCombiKey(e)) {
+            return;
+        }
         this.continueSelect = true;
         /**
          * When you keydown the key you specified in toggleContinueSelect, the keydown event is called.
@@ -531,7 +531,10 @@ class Selecto extends Component {
          */
         this.trigger("keydown", {});
     }
-    private onKeyUp = () => {
+    private onKeyUp = (e: any) => {
+        if (!this.sameCombiKey(e)) {
+            return;
+        }
         this.continueSelect = false;
         /**
          * When you keyup the key you specified in toggleContinueSelect, the keyup event is called.
@@ -561,7 +564,6 @@ class Selecto extends Component {
          */
         this.trigger("keyup", {});
     }
-
 }
 
 interface Selecto extends Component, SelectoProperties {
