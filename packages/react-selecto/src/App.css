@@ -1,0 +1,29 @@
+html,body {
+    position: relative;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.target, .target2 {
+    position: absolute;
+    background: #faa;
+    box-sizing: border-box;
+}
+.target.selected {
+    border: 4px solid #f55;
+}
+.button {
+    position: absolute;
+    left: 500px;
+    top: 50px;
+    background: #eee;
+    padding: 15px 40px;
+    display: inline-block;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #444;
+}
+.button.selected {
+    color: #fff;
+    background: #66d;
+}

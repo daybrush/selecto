@@ -5,11 +5,14 @@ import VanillaSelecto, {
     SelectoOptions,
     PROPERTIES,
     SelectoProperties,
+    EVENTS,
 } from "selecto";
 import { ref } from "framework-utils";
 import { IObject } from "@daybrush/utils";
+import { SelectoProps } from "./types";
+import { REACT_EVENTS } from "./consts";
 
-export default class Selecto extends React.PureComponent<Partial<SelectoOptions>> {
+export default class Selecto extends React.PureComponent<Partial<SelectoProps>> {
     private selecto!: VanillaSelecto;
     private selectionElement!: HTMLElement;
     public render() {
@@ -18,7 +21,6 @@ export default class Selecto extends React.PureComponent<Partial<SelectoOptions>
     public componentDidMount() {
         const props = this.props;
         const options: Partial<SelectoOptions> = {};
-        const events: IObject<any> = {};
 
         OPTIONS.forEach(name => {
             if (name in props) {
@@ -28,6 +30,17 @@ export default class Selecto extends React.PureComponent<Partial<SelectoOptions>
         this.selecto = new VanillaSelecto({
             ...options,
             target: this.selectionElement,
+        });
+
+        EVENTS.forEach((name, i) => {
+            this.selecto.on(name, (e: any) => {
+                const selfProps = this.props as any;
+                const result = selfProps[REACT_EVENTS[i]] && selfProps[REACT_EVENTS[i]](e);
+
+                if (result === false) {
+                    e.stop();
+                }
+            });
         });
     }
     public componentDidUpdate(prevProps: Partial<SelectoProperties>) {
