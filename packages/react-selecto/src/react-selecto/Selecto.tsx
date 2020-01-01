@@ -8,7 +8,6 @@ import VanillaSelecto, {
     EVENTS,
 } from "selecto";
 import { ref } from "framework-utils";
-import { IObject } from "@daybrush/utils";
 import { SelectoProps } from "./types";
 import { REACT_EVENTS } from "./consts";
 
