@@ -6,12 +6,15 @@ import VanillaSelecto, {
     PROPERTIES,
     SelectoProperties,
     EVENTS,
+    SelectoMethods,
+    METHODS,
 } from "selecto";
-import { ref } from "framework-utils";
+import { ref, MethodInterface, withMethods } from "framework-utils";
 import { SelectoProps } from "./types";
 import { REACT_EVENTS } from "./consts";
 
 export default class Selecto extends React.PureComponent<Partial<SelectoProps>> {
+    @withMethods(METHODS as any)
     private selecto!: VanillaSelecto;
     private selectionElement!: HTMLElement;
     public render() {
@@ -56,3 +59,4 @@ export default class Selecto extends React.PureComponent<Partial<SelectoProps>> 
         this.selecto.destroy();
     }
 }
+export default interface Selecto extends MethodInterface<SelectoMethods, VanillaSelecto, Selecto> {}

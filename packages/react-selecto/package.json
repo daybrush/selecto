@@ -1,7 +1,7 @@
 {
   "name": "react-selecto",
-  "version": "0.0.1",
-  "description": "A React Component that allows you to select elements in the drag area using the mouse or touch.",
+  "version": "0.0.2",
+  "description": "A React Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
   "main": "./dist/selecto.cjs.js",
   "module": "./dist/selecto.esm.js",
   "sideEffects": false,
@@ -41,7 +41,7 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
-    "selecto": "0.0.12"
+    "selecto": "0.0.15"
   },
   "browserslist": {
     "production": [
