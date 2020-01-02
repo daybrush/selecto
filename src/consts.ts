@@ -2,7 +2,7 @@ import styled from "css-styled";
 
 export const injector = styled(`
 :host {
-    position: absolute;
+    position: fixed;
     display: none;
     border: 1px solid #4af;
     background: rgba(68, 170, 255, 0.5);

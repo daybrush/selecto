@@ -1,6 +1,6 @@
 {
   "name": "selecto",
-  "version": "0.0.16",
+  "version": "0.0.18",
   "description": "Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.",
   "main": "./dist/selecto.cjs.js",
   "module": "./dist/selecto.esm.js",
@@ -14,7 +14,7 @@
     "prerelease": "npm run build && prerelease --dirs=dist,doc",
     "release": "npm run build && npm run doc && release --dirs=dist,doc",
     "release:init": "npm run build && npm run doc && release -i --dirs=dist,doc",
-    "packages": "pvu --path=packages --packages=react-selecto"
+    "packages": "pvu --path=packages --packages=react-selecto,ngx-selecto/projects/ngx-selecto"
   },
   "keywords": [
     "select",
