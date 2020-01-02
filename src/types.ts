@@ -20,7 +20,7 @@ import { OnDragStart as OnParentDragStart } from "@daybrush/drag";
 export interface SelectoOptions {
     target: HTMLElement | null;
     container: HTMLElement | null;
-    dragContainer: Element;
+    dragContainer: Element | Window;
     selectableTargets: Array<HTMLElement | string>;
     selectByClick: boolean;
     selectFromInside: boolean;

@@ -37,7 +37,7 @@ import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 class Selecto extends Component {
     public options: SelectoOptions;
     private target!: HTMLElement | SVGElement;
-    private dragContainer!: Element;
+    private dragContainer!: Element | Window;
     private container!: HTMLElement;
     private dragger!: Dragger;
     private injectResult!: InjectResult;
@@ -158,7 +158,7 @@ class Selecto extends Component {
         const target = this.target;
 
         this.dragContainer = this.options.dragContainer || this.target.parentElement;
-        this.dragger = new Dragger(this.dragContainer, {
+        this.dragger = new Dragger(this.dragContainer as any, {
             container: window,
             preventDefault: false,
             dragstart: this.onDragStart,
@@ -579,7 +579,12 @@ class Selecto extends Component {
         if (!this.dragger.isFlag()) {
             return;
         }
-        if (this.dragContainer === e.target || this.dragContainer.contains(e.target)) {
+        let dragContainer = this.dragContainer as any;
+
+        if (dragContainer === window) {
+            dragContainer = document.documentElement;
+        }
+        if (dragContainer === e.target || dragContainer.contains(e.target)) {
             e.preventDefault();
             return;
         }
