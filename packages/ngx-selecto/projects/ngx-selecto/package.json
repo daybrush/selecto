@@ -1,0 +1,11 @@
+{
+  "name": "ngx-selecto",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14"
+  },
+  "dependencies": {
+    "selecto": "0.0.16"
+  }
+}
