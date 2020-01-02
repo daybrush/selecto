@@ -31,7 +31,6 @@ export const OPTIONS = [
 ] as const;
 
 export const PROPERTIES = [
-    "dragContainer",
     "selectableTargets",
     "selectByClick",
     "selectFromInside",

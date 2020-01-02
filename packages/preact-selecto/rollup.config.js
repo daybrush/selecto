@@ -10,7 +10,7 @@ const defaultOptions = {
         "preact": "Preact",
         "preact/compat": "preact/compat",
         "preact-compat": "preact-compat",
-        "preact-css-styled": "preact-css-styled",
+        "css-styled": "css-styled",
         "preact-ruler": "preact-ruler",
         "framework-utils": "framework-utils",
         "selecto": "selecto",
@@ -25,7 +25,6 @@ const defaultOptions = {
             noReactIs: false,
             usePreactX: true,
             aliasModules: {
-                "react-css-styled": "preact-css-styled",
                 "react-ruler": "preact-ruler",
             },
         }),

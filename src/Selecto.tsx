@@ -2,7 +2,7 @@ import Component from "@egjs/component";
 import Dragger, { OnDrag } from "@daybrush/drag";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
-import { isObject, camelize, IObject } from "@daybrush/utils";
+import { isObject, camelize, IObject, addEvent, removeEvent } from "@daybrush/utils";
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
 import KeyController, { getCombi } from "keycon";
 import { createElement, h, getClient, diffValue } from "./utils";
@@ -37,6 +37,7 @@ import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 class Selecto extends Component {
     public options: SelectoOptions;
     private target!: HTMLElement | SVGElement;
+    private dragContainer!: Element;
     private container!: HTMLElement;
     private dragger!: Dragger;
     private injectResult!: InjectResult;
@@ -103,6 +104,7 @@ class Selecto extends Component {
         this.keycon && this.keycon.destroy();
         this.dragger.unset();
         this.injectResult.destroy();
+        removeEvent(document, "selectstart", this.onDocumentSelectStart);
 
         this.keycon = null;
         this.dragger = null;
@@ -136,7 +138,7 @@ class Selecto extends Component {
         }
         if (toggleContinueSelect) {
             this.keycon = new KeyController(keyContainer || window);
-            this.keycon.keydown(this.onKeyDown).keyup(this.onKeyUp);
+            this.keycon.keydown(this.onKeyDown).keyup(this.onKeyUp).on("blur", this.onBlur);
         }
     }
     private setKeyEvent() {
@@ -155,12 +157,15 @@ class Selecto extends Component {
 
         const target = this.target;
 
-        this.dragger = new Dragger(this.options.dragContainer || this.target.parentElement, {
+        this.dragContainer = this.options.dragContainer || this.target.parentElement;
+        this.dragger = new Dragger(this.dragContainer, {
             container: window,
+            preventDefault: false,
             dragstart: this.onDragStart,
             drag: this.onDrag,
             dragend: this.onDragEnd,
         });
+        addEvent(document, "selectstart", this.onDocumentSelectStart);
 
         this.injectResult = injector.inject(target);
     }
@@ -453,6 +458,7 @@ class Selecto extends Component {
 
         if (!selectFromInside && hasInsideTargets) {
             this.onDragEnd(e);
+            inputEvent.preventDefault();
             return false;
         } else {
             return true;
@@ -563,6 +569,20 @@ class Selecto extends Component {
          * });
          */
         this.trigger("keyup", {});
+    }
+    private onBlur = () => {
+        if (this.toggleContinueSelect && this.continueSelect) {
+            this.trigger("keyup", {});
+        }
+    }
+    private onDocumentSelectStart = (e: any) => {
+        if (!this.dragger.isFlag()) {
+            return;
+        }
+        if (this.dragContainer === e.target || this.dragContainer.contains(e.target)) {
+            e.preventDefault();
+            return;
+        }
     }
 }
 
