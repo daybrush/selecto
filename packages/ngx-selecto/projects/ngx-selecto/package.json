@@ -6,6 +6,6 @@
     "@angular/core": "^8.2.14"
   },
   "dependencies": {
-    "selecto": "0.0.16"
+    "selecto": "0.0.18"
   }
 }

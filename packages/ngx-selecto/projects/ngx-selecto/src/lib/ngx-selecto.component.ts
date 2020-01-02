@@ -11,7 +11,7 @@ import { NgxSelectoEvents } from './types';
 @Component({
   selector: 'ngx-selecto',
   template: `
-    <div class="${CLASS_NAME}" #el></div>
+    <div [class]="selectionClassName" #el></div>
   `,
   styles: []
 })
@@ -35,6 +35,7 @@ export class NgxSelectoComponent
   @Output() selectEnd: NgxSelectoEvents['selectEnd'];
   @Output() keydown: NgxSelectoEvents['keydown'];
   @Output() keyup: NgxSelectoEvents['keyup'];
+  public selectionClassName = CLASS_NAME;
 
   constructor() {
     super();
