@@ -1,0 +1,49 @@
+{
+  "name": "svelte-selecto",
+  "version": "0.0.1",
+  "description": "A Svelte Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
+  "main": "./dist/selecto.cjs.js",
+  "module": "./dist/selecto.esm.js",
+  "types": "src/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup -c rollup.build.config.js && print-sizes ./dist",
+    "dev": "rollup -c -w",
+    "start": "sirv public",
+    "build:dev": "rollup -c"
+  },
+  "keywords": [
+    "select",
+    "selecto",
+    "selection",
+    "selectable",
+    "moveable",
+    "svelte"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daybrush/selecto/blob/master/packages/svelte-selecto"
+  },
+  "author": "Daybrush",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daybrush/selecto/issues"
+  },
+  "homepage": "https://daybrush.com/selecto",
+  "devDependencies": {
+    "@daybrush/builder": "^0.1.2",
+    "print-sizes": "^0.1.0",
+    "rollup": "^1.20.0",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-svelte": "^5.0.3",
+    "rollup-plugin-terser": "^5.1.2",
+    "sirv-cli": "^0.4.5",
+    "svelte": "^3.16.7",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "selecto": "0.0.18"
+  }
+}
