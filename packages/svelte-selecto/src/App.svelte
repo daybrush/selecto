@@ -1,5 +1,13 @@
 <script>
-  import Selecto from "./svelte-selecto/Selecto.svelte";
+  import Selecto from "./svelte-selecto";
+  // import {
+  //   onMount,
+  // } from "svelte";
+
+  // let a;
+  // onMount(() => {
+  //   window.a = a;
+  // })
 </script>
 
 <style>

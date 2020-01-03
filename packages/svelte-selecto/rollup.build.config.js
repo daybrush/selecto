@@ -3,7 +3,7 @@ import svelte from 'rollup-plugin-svelte';
 
 const defaultOptions = {
     tsconfig: "",
-    input: './src/svelte-selecto/index.ts',
+    input: './src/svelte-selecto/index.js',
     commonjs: true,
     external: {
         "svelte": "svelte",

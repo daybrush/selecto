@@ -3,19 +3,24 @@
     OPTIONS,
     PROPERTIES,
     EVENTS,
-    CLASS_NAME,
+    CLASS_NAME
   } from "selecto";
 
   import {
     onMount,
     onDestroy,
     createEventDispatcher,
-    beforeUpdate,
+    beforeUpdate
   } from "svelte";
 
   const dispatch = createEventDispatcher();
-  export let selecto;
+
+  let selecto;
   let el;
+
+  export function getInstance() {
+    return selecto;
+  }
 
   beforeUpdate(() => {
     if (!selecto) {
@@ -25,7 +30,7 @@
     PROPERTIES.forEach(name => {
       selecto[name] = $$props[name];
     });
-  })
+  });
   onMount(() => {
     const options = [];
 
@@ -36,15 +41,15 @@
     });
     selecto = new VanillaSelecto({
       ...options,
-      target: el,
+      target: el
     });
-     EVENTS.forEach((name, i) => {
+    EVENTS.forEach((name, i) => {
       selecto.on(name, e => {
-          const result = dispatch(name, e);
+        const result = dispatch(name, e);
 
-          if (result === false) {
-              e.stop();
-          }
+        if (result === false) {
+          e.stop();
+        }
       });
     });
   });
@@ -52,4 +57,5 @@
     selecto.destroy();
   });
 </script>
-<div className={CLASS_NAME} bind:this={el}></div>;
+
+<div className={CLASS_NAME} bind:this={el} />
