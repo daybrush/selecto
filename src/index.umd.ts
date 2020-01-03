@@ -1,4 +1,4 @@
-import Selecto, * as modules from "./Selecto";
+import Selecto, * as modules from "./index";
 
 for (const name in modules) {
     (Selecto as any)[name] = modules[name];
