@@ -36,7 +36,7 @@ export default builder([
     {
         input: "src/index.umd.ts",
         output: "./dist/selecto.cjs.js",
-        exports: "named",
+        exports: "default",
         format: "cjs",
     },
 ]);
