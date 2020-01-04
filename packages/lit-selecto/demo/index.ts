@@ -2,7 +2,6 @@ import { html } from "lit-element";
 import { render } from "lit-html";
 import "../src/LitSelecto";
 
-const container = document.querySelector(".container");
 render(html`
 <lit-selecto
     .hitRate=${40}
@@ -35,5 +34,4 @@ render(html`
     }}
     @keyup=${() => {
         document.querySelector(".button").classList.remove("selected");
-    }}></lit-selecto>
-}`, container);
+    }}></lit-selecto>`, document.body);

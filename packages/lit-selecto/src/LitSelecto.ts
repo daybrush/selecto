@@ -3,25 +3,23 @@ import VanillaSelecto, { SelectoOptions, OPTIONS, CLASS_NAME, EVENTS, PROPERTIES
 import { Properties } from "framework-utils";
 
 @Properties(OPTIONS as any, (prototype, name) => {
+    const type = OPTION_TYPES[name];
     property()(prototype, name);
 })
 @customElement("lit-selecto")
 export class LitSelecto extends LitElement {
     private selecto!: VanillaSelecto;
-    private selectionElement!: HTMLElement;
-    public render() {
-        return html`<div className="${CLASS_NAME}" />`;
-    }
     public firstUpdated() {
         const options: Partial<SelectoOptions> = {};
 
         OPTIONS.forEach(name => {
             options[name as any] = this[name];
         });
-        this.selectionElement = this.shadowRoot.children[0] as HTMLElement;
+
         this.selecto = new VanillaSelecto({
             ...options,
-            target: this.selectionElement,
+            target: this,
+            dragContainer: options.dragContainer || this.parentElement as any,
         });
 
         const selecto = this.selecto;
@@ -32,6 +30,7 @@ export class LitSelecto extends LitElement {
                     detail: { ...e },
                 }));
 
+                console.log(result);
                 if (result === false) {
                     (e as any).stop();
                 }

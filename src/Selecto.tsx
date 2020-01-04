@@ -157,7 +157,7 @@ class Selecto extends Component {
 
         const target = this.target;
 
-        this.dragContainer = this.options.dragContainer || this.target.parentElement;
+        this.dragContainer = this.options.dragContainer || this.target.parentNode as any;
         this.dragger = new Dragger(this.dragContainer as any, {
             container: window,
             preventDefault: false,

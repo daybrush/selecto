@@ -1,4 +1,5 @@
 import styled from "css-styled";
+import { SelectoOptions } from "./types";
 
 export const injector = styled(`
 :host {
@@ -29,6 +30,19 @@ export const OPTIONS = [
     "keyContainer",
     "hitRate",
 ] as const;
+
+export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
+    target: null,
+    container: null,
+    dragContainer: null,
+    selectableTargets: Array,
+    selectByClick: Boolean,
+    selectFromInside: Boolean,
+    continueSelect: Boolean,
+    toggleContinueSelect: Array,
+    keyContainer: null,
+    hitRate: Number,
+};
 
 export const PROPERTIES = [
     "selectableTargets",
