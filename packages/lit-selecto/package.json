@@ -1,0 +1,40 @@
+{
+    "name": "lit-selecto",
+    "version": "0.1.0",
+    "types": "declaration/index.d.ts",
+    "main": "dist/selecto.cjs.js",
+    "module": "dist/selecto.esm.js",
+    "sideEffects": false,
+    "keywords": [
+        "select",
+        "selecto",
+        "selection",
+        "selectable",
+        "moveable",
+        "preact"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/daybrush/selecto/blob/master/packages/preact-selecto"
+    },
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/selecto/issues"
+    },
+    "homepage": "https://daybrush.com/selecto",
+    "scripts": {
+        "start": "rollup -c rollup.demo.config.js -w",
+        "build": "rollup -c && npm run declaration",
+        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json"
+    },
+    "devDependencies": {
+        "@daybrush/builder": "^0.1.2",
+        "lit-element": "^2.2.1",
+        "tslint": "^5.20.1",
+        "typescript": "3.6.4"
+    },
+    "dependencies": {
+        "selecto": "0.0.21"
+    }
+}
