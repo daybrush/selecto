@@ -1,0 +1,44 @@
+{
+    "name": "vue-selecto",
+    "version": "0.0.1",
+    "types": "declaration/index.d.ts",
+    "main": "dist/selecto.cjs.js",
+    "module": "dist/selecto.esm.js",
+    "sideEffects": false,
+    "scripts": {
+        "serve": "vue-cli-service serve demo",
+        "build": "rm -rf dist && rollup -c && npm run declaration",
+        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
+        "lint": "vue-cli-service lint --no-fix"
+    },
+    "keywords": [
+        "select",
+        "selecto",
+        "selection",
+        "selectable",
+        "moveable",
+        "vue"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/daybrush/selecto/blob/master/packages/vue-selecto"
+    },
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/selecto/issues"
+    },
+    "homepage": "https://daybrush.com/selecto",
+    "dependencies": {
+        "selecto": "0.0.23",
+        "vue-property-decorator": "^8.1.0"
+    },
+    "devDependencies": {
+        "@daybrush/builder": "^0.1.2",
+        "@vue/cli-plugin-typescript": "^3.12.0",
+        "@vue/cli-service": "^3.12.0",
+        "typescript": "^3.4.3",
+        "vue": "^2.6.11",
+        "vue-template-compiler": "^2.6.10"
+    }
+}
