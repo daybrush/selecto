@@ -1,7 +1,7 @@
 const buildHelper = require("@daybrush/builder");
 
 const defaultOptions = {
-  input: "./src/LitSelecto.ts",
+  input: "./src/index.ts",
   tsconfig: "tsconfig.build.json",
   sourcemap: true,
 };

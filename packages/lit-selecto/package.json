@@ -35,6 +35,6 @@
         "typescript": "3.6.4"
     },
     "dependencies": {
-        "selecto": "0.0.22"
+        "selecto": "0.0.23"
     }
 }

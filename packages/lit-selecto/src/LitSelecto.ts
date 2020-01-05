@@ -1,10 +1,9 @@
 import { LitElement, html, customElement, property } from "lit-element";
-import VanillaSelecto, { SelectoOptions, OPTIONS, CLASS_NAME, EVENTS, PROPERTIES } from "selecto";
+import VanillaSelecto, { SelectoOptions, OPTIONS, OPTION_TYPES, EVENTS, PROPERTIES } from "selecto";
 import { Properties } from "framework-utils";
 
 @Properties(OPTIONS as any, (prototype, name) => {
-    const type = OPTION_TYPES[name];
-    property()(prototype, name);
+    property({ type: OPTION_TYPES[name] })(prototype, name);
 })
 @customElement("lit-selecto")
 export class LitSelecto extends LitElement {
@@ -30,7 +29,6 @@ export class LitSelecto extends LitElement {
                     detail: { ...e },
                 }));
 
-                console.log(result);
                 if (result === false) {
                     (e as any).stop();
                 }
