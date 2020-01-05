@@ -14,7 +14,7 @@
     "prerelease": "npm run build && prerelease --dirs=dist,doc",
     "release": "npm run build && npm run doc && release --dirs=dist,doc",
     "release:init": "npm run build && npm run doc && release -i --dirs=dist,doc",
-    "packages": "pvu --path=packages --packages=react-selecto,ngx-selecto/projects/ngx-selecto,svelte-selecto"
+    "packages": "pvu --path=packages --packages=react-selecto,ngx-selecto/projects/ngx-selecto,svelte-selecto,lit-selecto"
   },
   "keywords": [
     "select",
