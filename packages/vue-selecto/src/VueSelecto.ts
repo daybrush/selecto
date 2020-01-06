@@ -1,13 +1,13 @@
-import VanillaSelecto, { SelectoOptions, OPTIONS, OPTION_TYPES, EVENTS, PROPERTIES, CLASS_NAME } from 'selecto';
+import VanillaSelecto, { SelectoOptions, OPTIONS, EVENTS, PROPERTIES, CLASS_NAME } from 'selecto';
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { CreateElement, VNodeData } from 'vue';
+import { CreateElement } from 'vue';
 import { Properties } from 'framework-utils';
 
 
-@Properties(OPTIONS as any, (prototype, name) => {
-    Prop({ type: (OPTION_TYPES as any)[name], required: false })(prototype, name);
-})
 @Component({})
+@Properties(OPTIONS as any, (prototype, name) => {
+    Prop()(prototype, name);
+})
 export default class VueSelecto extends Vue {
     private selecto!: VanillaSelecto;
     public render(h: CreateElement) {

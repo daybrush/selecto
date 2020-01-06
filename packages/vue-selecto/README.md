@@ -1,4 +1,4 @@
-# vue-deview-infinite
+# vue-selecto
 
 ## Project setup
 ```
