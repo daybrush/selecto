@@ -1,4 +1,4 @@
-import VanillaSelecto, { SelectoOptions, OPTIONS, OPTION_TYPES, EVENTS, PROPERTIES } from 'selecto';
+import VanillaSelecto, { SelectoOptions, OPTIONS, OPTION_TYPES, EVENTS, PROPERTIES, CLASS_NAME } from 'selecto';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { CreateElement, VNodeData } from 'vue';
 import { Properties } from 'framework-utils';
@@ -11,7 +11,10 @@ import { Properties } from 'framework-utils';
 export default class VueSelecto extends Vue {
     private selecto!: VanillaSelecto;
     public render(h: CreateElement) {
-        return h('div', {});
+        return h('div', {
+            class: CLASS_NAME,
+            ref: 'target',
+        });
     }
     public mounted() {
         const options: Partial<SelectoOptions> = {};
@@ -34,6 +37,14 @@ export default class VueSelecto extends Vue {
         });
     }
     public updated() {
+        const props = this.$props;
+        const selecto = this.selecto;
+
+        PROPERTIES.forEach((name) => {
+            if (selecto[name] !== props[name]) {
+                (selecto as any)[name] = props[name];
+            }
+        });
     }
     public beforeDestroy() {
         this.selecto.destroy();

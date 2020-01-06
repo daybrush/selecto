@@ -2,21 +2,19 @@ const buildHelper = require("@daybrush/builder");
 
 
 const defaultOptions = {
-  sourcemap: true,
+    sourcemap: true,
+    input: "./src/index.ts",
+    exports: "named",
 };
 export default buildHelper([
-  {
-    ...defaultOptions,
-    format: "es",
-    input: "./src/index.ts",
-    output: "./dist/selecto.esm.js",
-    exports: "named",
-  },
-  {
-    ...defaultOptions,
-    format: "cjs",
-    input: "./src/index.ts",
-    output: "./dist/selecto.cjs.js",
-    exports: "named",
-  },
+    {
+        ...defaultOptions,
+        format: "es",
+        output: "./dist/selecto.esm.js",
+    },
+    {
+        ...defaultOptions,
+        format: "cjs",
+        output: "./dist/selecto.cjs.js",
+    },
 ]);
