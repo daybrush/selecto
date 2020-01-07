@@ -1,15 +1,30 @@
 
-<p align="middle" >Logo</p>
+<p align="middle" ><img src="./demo/images/logo.png" /></p>
 <h2 align="middle">Selecto.js</h2>
 <p align="middle">
 <a href="https://www.npmjs.com/package/selecto" target="_blank"><img src="https://img.shields.io/npm/v/selecto.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
 <img src="https://img.shields.io/badge/language-typescript-blue.svg?style=flat-square"/>
 <a href="https://github.com/daybrush/selecto/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/daybrush/selecto.svg?style=flat-square&label=license&color=08CE5D"/></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/react-selecto" target="_blank"><img alt="React" src="https://img.shields.io/static/v1.svg?label=&message=React&style=flat-square&color=61daeb"></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/preact-selecto" target="_blank"><img alt="Preact" src="https://img.shields.io/static/v1.svg?label=&message=Preact&style=flat-square&color=673ab8"></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/ngx-selecto" target="_blank"><img alt="Angular" src="https://img.shields.io/static/v1.svg?label=&message=Angular&style=flat-square&color=C82B38"></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/vue-selecto" target="_blank"><img
+    alt="Vue"
+    src="https://img.shields.io/static/v1.svg?label=&message=Vue&style=flat-square&color=3fb984"></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/svelte-selecto" target="_blank"><img
+    alt="Svelte"
+    src="https://img.shields.io/static/v1.svg?label=&message=Svelte&style=flat-square&color=C82B38"></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/lit-selecto" target="_blank"><img
+    alt="Lit"
+    src="https://img.shields.io/static/v1.svg?label=&message=Lit&style=flat-square&color=4E8EE0"></a>
 </p>
 <p align="middle">Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.</p>
 
-## 📄 API Documents
-* [API documentation](https://daybrush.com/selecto/release/latest/doc/)
+<p align="middle">
+    <a href="https://daybrush.com/selecto" target="_blank"><strong>Demo</strong></a> /
+    <a href="https://daybrush.com/selecto/release/latest/doc/" target="_blank"><strong>API</strong></a> /
+    <a href="https://github.com/daybrush/scenejs-editor" target="_blank"><strong>Main Project</strong></a>
+</p>
 
 ## ⚙️ Installation
 ### npm
@@ -45,7 +60,7 @@ const selecto = new Selecto({
     // The container for keydown and keyup events
     keyContainer: window,
     // The rate at which the target overlaps the drag area to be selected. (default: 100)
-    hitRate: number;
+    hitRate: 100;
 });
 
 selecto.on("select", e => {
