@@ -74,7 +74,7 @@ selecto.on("select", e => {
 ```
 
 ## 📦 Packages
-|Package&nbsp;Name|Version|Description|
+|Package&nbsp;Name|Version&nbsp;&nbsp;|Description|
 |---|---|---|
 |[**react-selecto**](https://github.com/daybrush/selecto/tree/master/packages/react-selecto)|[![](https://img.shields.io/npm/v/react-selecto.svg?style=flat-square)](https://npmjs.com/package/react-selecto)|A React Selecto Component that allows you to select elements in the drag area using the mouse or touch.|
 |[**ngx-selecto**](https://github.com/daybrush/selecto/tree/master/packages/ngx-selecto)|[![](https://img.shields.io/npm/v/ngx-selecto.svg?style=flat-square)](https://npmjs.com/package/ngx-selecto)|An Angular Selecto Component that allows you to select elements in the drag area using the mouse or touch.|
