@@ -52,7 +52,7 @@
     "@types/react-dom": "^16.9.4",
     "daybrush-jsdoc-template": "^1.6.0",
     "print-sizes": "^0.1.0",
-    "pvu": "^0.3.1-rc",
+    "pvu": "^0.3.1",
     "tslint": "^5.20.1",
     "typescript": "^3.7.4"
   }
