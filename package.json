@@ -14,7 +14,8 @@
     "prerelease": "npm run build && prerelease --dirs=dist,doc",
     "release": "npm run build && npm run doc && release --dirs=dist,doc",
     "release:init": "npm run build && npm run doc && release -i --dirs=dist,doc",
-    "packages": "pvu --update=react-selecto,ngx-selecto/projects/ngx-selecto,svelte-selecto,lit-selecto",
+    "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
+    "packages:update": "pvu --update=react-selecto,ngx-selecto/projects/ngx-selecto,svelte-selecto,lit-selecto",
     "packages:build": "pvu --build=react-selecto,ngx-selecto,svelte-selecto,lit-selecto",
     "packages:publish": "pvu --build=react-selecto,ngx-selecto/dist/ngx-selecto,svelte-selecto,lit-selecto"
   },
@@ -41,8 +42,14 @@
     "@egjs/children-differ": "^1.0.0",
     "@egjs/component": "^2.1.2",
     "css-styled": "^0.1.7",
-    "framework-utils": "^0.3.0",
+    "framework-utils": "^0.3.3",
     "keycon": "^0.8.0"
+  },
+  "peerDependencies": {
+    "framework-utils": ">=0.3.3",
+    "keycon": ">=0.8.0",
+    "css-styled": ">=0.1.7",
+    "@daybrush/drag": ">=0.12.0"
   },
   "devDependencies": {
     "@daybrush/builder": "^0.1.2",
