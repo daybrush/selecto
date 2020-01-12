@@ -1,13 +1,13 @@
 import { LitElement, html, customElement, property } from "lit-element";
 import VanillaSelecto, { SelectoOptions, OPTIONS, OPTION_TYPES, EVENTS, PROPERTIES, SelectoMethods, METHODS } from "selecto";
-import { Properties, withMethods } from "framework-utils";
+import { Properties, withMethods, MethodInterface } from "framework-utils";
 
 @Properties(OPTIONS as any, (prototype, name) => {
     property({ type: OPTION_TYPES[name] })(prototype, name);
 })
 @customElement("lit-selecto")
 export class LitSelecto extends LitElement {
-    @withMethods(METHODS as any)
+    @withMethods(METHODS as any, { click: "clickSelecto" })
     private selecto!: VanillaSelecto;
     public firstUpdated() {
         const options: Partial<SelectoOptions> = {};
@@ -49,7 +49,7 @@ export class LitSelecto extends LitElement {
         this.selecto.destroy();
     }
 }
-export interface LitSelecto extends SelectoOptions, SelectoMethods {}
+export interface LitSelecto extends SelectoOptions, MethodInterface<SelectoMethods, VanillaSelecto, LitSelecto, { "click": "clickSelecto" }> { }
 
 declare global {
     interface HTMLElementTagNameMap {
