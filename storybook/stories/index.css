@@ -1,17 +1,22 @@
-html, body {
+html, body, #root {
     position: relative;
     margin: 0;
     padding: 0;
     height: 100%;
+    color: #333;
 }
 .app {
     position: relative;
-    height: 100%;
-    padding: 10px;
+    min-height: 100%;
+    padding: 10px 20px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
 body {
-    background: #f5f5f5;
+    background: #fff;
 }
 .logo {
     position: relative;
@@ -27,7 +32,8 @@ body {
     width: 40px;
     height: 40px;
     margin: 4px;
-    background: #ccc;
+    background: #eee;
+    --color: #4af;
 }
 .selection {
     position: absolute;
@@ -73,4 +79,82 @@ h1, .description {
 .button:hover {
     background: #333;
     color: white;
+}
+.elements {
+    margin-top: 40px;
+}
+.element {
+    position: relative;
+    display: inline-block;
+    border-radius: 3px;
+    width: 70px;
+    height: 70px;
+    margin: 5px;
+    background: #f5f5f5;
+    color: var(--color);
+    cursor: pointer;
+}
+.element .symbol {
+    position: absolute;
+    top: 43%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: 25px;
+}
+.element .name {
+    position: absolute;
+    top: 76%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+}
+.selecto-area .selected, .selecto-area .selected a {
+    color: #fff;
+    background: var(--color);
+}
+.react {
+    --color: #44aaff;
+}
+.angular {
+    --color: #dd0031;
+}
+.preact {
+    --color: #673ab8;
+}
+.vue {
+    --color: #3fb984;
+}
+.svelte {
+    --color: #ff6644;
+}
+.lit {
+    --color: #4E8EE0;
+}
+.scenejs {
+    --color: #333;
+}
+.moveable {
+    --color: #4af;
+}
+.drag {
+    --color: #555;
+}
+.guides {
+    --color: #f55;
+}
+.examples ol {
+    text-align: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.examples li, .examples li a {
+    color: #555;
+}
+.examples li {
+    padding: 10px;
+    margin: 5px 0px;
+    --color: #333;
+    font-weight: bold;
 }
