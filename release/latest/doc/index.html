@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="description" content="Home - Documentation"/>
+
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h2 class="custom"><a href="https://github.com/daybrush/selecto" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><div class="search"><div class="input-area"><input type="text"/></div><button></button></div><ul class="classes"><li file="selecto" class="parent"><a href="Selecto.html">Selecto</a><h4><a href="Selecto.html#static members">Static Members</a></h4><ul class='static members'><li data-type='member'><a href="Selecto.html#.CLASS_NAME">CLASS_NAME</a></li><li data-type='member'><a href="Selecto.html#.EVENTS">EVENTS</a></li><li data-type='member'><a href="Selecto.html#.METHODS">METHODS</a></li><li data-type='member'><a href="Selecto.html#.OPTIONS">OPTIONS</a></li></ul><h4><a href="Selecto.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="Selecto.html#click">click</a></li><li data-type='method'><a href="Selecto.html#destroy">destroy</a></li><li data-type='method'><a href="Selecto.html#hasOn">hasOn</a></li><li data-type='method'><a href="Selecto.html#off">off</a></li><li data-type='method'><a href="Selecto.html#on">on</a></li><li data-type='method'><a href="Selecto.html#once">once</a></li><li data-type='method'><a href="Selecto.html#setSelectedTargets">setSelectedTargets</a></li><li data-type='method'><a href="Selecto.html#trigger">trigger</a></li></ul><h4><a href="Selecto.html#events">Events</a></h4><ul class='events'><li data-type='event'><a href="Selecto.html#.event:dragStart">dragStart</a></li><li data-type='event'><a href="Selecto.html#.event:keydown">keydown</a></li><li data-type='event'><a href="Selecto.html#.event:keyup">keyup</a></li><li data-type='event'><a href="Selecto.html#.event:select">select</a></li><li data-type='event'><a href="Selecto.html#.event:selectEnd">selectEnd</a></li><li data-type='event'><a href="Selecto.html#.event:selectStart">selectStart</a></li></ul><h4><a href="Selecto.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Selecto.html#.OnSelect">OnSelect</a></li><li data-type='typddef'><a href="Selecto.html#.OnSelectEnd">OnSelectEnd</a></li><li data-type='typddef'><a href="Selecto.html#.SelectoOptions">SelectoOptions</a></li></ul></li><li file="component" class="parent"><a href="eg.Component.html">eg.Component</a><h4><a href="eg.Component.html#static members">Static Members</a></h4><ul class='static members'><li data-type='member'><a href="eg.Component.html#.VERSION">VERSION</a></li></ul><h4><a href="eg.Component.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="eg.Component.html#hasOn">hasOn</a></li><li data-type='method'><a href="eg.Component.html#off">off</a></li><li data-type='method'><a href="eg.Component.html#on">on</a></li><li data-type='method'><a href="eg.Component.html#once">once</a></li><li data-type='method'><a href="eg.Component.html#trigger">trigger</a></li></ul></li></ul><ul class="global"><li file="global"  class="parent"><a href="global.html">Global</a><h4><a href="global.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="global.html#isUndefined">isUndefined</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><p align="middle" ><img src="./demo/images/logo.png" /></p>
+<h2 align="middle">Selecto.js</h2>
+<p align="middle">
+<a href="https://www.npmjs.com/package/selecto" target="_blank"><img src="https://img.shields.io/npm/v/selecto.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
+<img src="https://img.shields.io/badge/language-typescript-blue.svg?style=flat-square"/>
+<a href="https://github.com/daybrush/selecto/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/daybrush/selecto.svg?style=flat-square&label=license&color=08CE5D"/></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/react-selecto" target="_blank"><img alt="React" src="https://img.shields.io/static/v1.svg?label=&message=React&style=flat-square&color=61daeb"></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/preact-selecto" target="_blank"><img alt="Preact" src="https://img.shields.io/static/v1.svg?label=&message=Preact&style=flat-square&color=673ab8"></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/ngx-selecto" target="_blank"><img alt="Angular" src="https://img.shields.io/static/v1.svg?label=&message=Angular&style=flat-square&color=C82B38"></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/vue-selecto" target="_blank"><img
+    alt="Vue"
+    src="https://img.shields.io/static/v1.svg?label=&message=Vue&style=flat-square&color=3fb984"></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/svelte-selecto" target="_blank"><img
+    alt="Svelte"
+    src="https://img.shields.io/static/v1.svg?label=&message=Svelte&style=flat-square&color=C82B38"></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/lit-selecto" target="_blank"><img
+    alt="Lit"
+    src="https://img.shields.io/static/v1.svg?label=&message=Lit&style=flat-square&color=4E8EE0"></a>
+</p>
+<p align="middle">Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.</p>
+<p align="middle">
+    <a href="https://daybrush.com/selecto" target="_blank"><strong>Demo</strong></a> /
+    <a href="https://daybrush.com/selecto/release/latest/doc/" target="_blank"><strong>API</strong></a> /
+    <a href="https://github.com/daybrush/scena" target="_blank"><strong>Main Project</strong></a>
+</p>
+<h2>⚙️ Installation</h2>
+<h3>npm</h3>
+<pre class="prettyprint source lang-bash"><code>$ npm install selecto
+</code></pre>
+<h3>scripts</h3>
+<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;//daybrush.com/selecto/release/latest/dist/selecto.pkgd.min.js&quot;>&lt;/script>
+</code></pre>
+<h2>🚀 How to use</h2>
+<pre class="prettyprint source lang-js"><code>import Selecto from &quot;selecto&quot;;
+
+const selecto = new Selecto({
+    // The container to add a selection element
+    container: document.body,
+    // The area to drag selection element (default: container)
+    dragContainer: Element,
+    // Targets to select. You can register a queryselector or an Element.
+    selectableTargets: [&quot;.target&quot;, document.querySelector(&quot;.target2&quot;)],
+    // Whether to select by click (default: true)
+    selectByClick: true,
+    // Whether to select from the target inside (default: true)
+    selectFromInside: true,
+    // After the select, whether to select the next target with the selected target (deselected if the target is selected again).
+    continueSelect: false;
+    // Determines which key to continue selecting the next target via keydown and keyup.
+    toggleContinueSelect: &quot;shift&quot;,
+    // The container for keydown and keyup events
+    keyContainer: window,
+    // The rate at which the target overlaps the drag area to be selected. (default: 100)
+    hitRate: 100;
+});
+
+selecto.on(&quot;select&quot;, e => {
+    e.added.forEach(el => {
+        el.classList.add(&quot;selected&quot;);
+    });
+    e.removed.forEach(el => {
+        el.classList.remove(&quot;selected&quot;);
+    });
+});
+</code></pre>
+<h2>📦 Packages</h2>
+<table>
+<thead>
+<tr>
+<th>Package Name</th>
+<th> Version </th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/daybrush/selecto/tree/master/packages/react-selecto"><strong>react-selecto</strong></a></td>
+<td><a href="https://npmjs.com/package/react-selecto"><img src="https://img.shields.io/npm/v/react-selecto.svg?style=flat-square" alt=""></a></td>
+<td>A React Selecto Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/daybrush/selecto/tree/master/packages/ngx-selecto"><strong>ngx-selecto</strong></a></td>
+<td><a href="https://npmjs.com/package/ngx-selecto"><img src="https://img.shields.io/npm/v/ngx-selecto.svg?style=flat-square" alt=""></a></td>
+<td>An Angular Selecto Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/daybrush/selecto/tree/master/packages/vue-selecto"><strong>vue-selecto</strong></a></td>
+<td><a href="https://npmjs.com/package/vue-selecto"><img src="https://img.shields.io/npm/v/vue-selecto.svg?style=flat-square" alt=""></a></td>
+<td>A Vue Selecto Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/daybrush/selecto/tree/master/packages/preact-selecto"><strong>preact-selecto</strong></a></td>
+<td><a href="https://npmjs.com/package/preact-selecto"><img src="https://img.shields.io/npm/v/preact-selecto.svg?style=flat-square" alt=""></a></td>
+<td>A Preact Selecto Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/daybrush/selecto/tree/master/packages/svelte-selecto"><strong>svelte-selecto</strong></a></td>
+<td><a href="https://npmjs.com/package/svelte-selecto"><img src="https://img.shields.io/npm/v/svelte-selecto.svg?style=flat-square" alt=""></a></td>
+<td>A Svelte Selecto Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/daybrush/selecto/tree/master/packages/lit-selecto"><strong>lit-selecto</strong></a></td>
+<td><a href="https://npmjs.com/package/lit-selecto"><img src="https://img.shields.io/npm/v/lit-selecto.svg?style=flat-square" alt=""></a></td>
+<td>A Lit Selecto Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+</tbody>
+</table>
+<h2>⭐️ Show Your Support</h2>
+<p>Please give a ⭐️ if this project helped you!</p>
+<h2>👏 Contributing</h2>
+<p>If you have any questions or requests or want to contribute to <code>selecto</code> or other packages, please write the <a href="https://github.com/daybrush/selecto/issues">issue</a> or give me a Pull Request freely.</p>
+<h2>🐞 Bug Report</h2>
+<p>If you find a bug, please report to us opening a new <a href="https://github.com/daybrush/selecto/issues">Issue</a> on GitHub.</p>
+<h2>📝 License</h2>
+<p>This project is <a href="https://github.com/daybrush/selecto/blob/master/LICENSE">MIT</a> licensed.</p>
+<pre class="prettyprint source"><code>MIT License
+
+Copyright (c) 2019 Daybrush
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</code></pre></article>
+    </section>
+
+
+
+
+
+
+
+<style>
+
+nav>.search+ul li:first-child:after {
+    display: none;
+}
+nav>.search+ul li:first-child h4, nav>.search+ul li:first-child ul {
+    display: block;
+}
+
+
+nav li[file="home"]:after {
+    display: none;
+}
+nav li[file="home"] h4, nav li[file="home"] ul {
+    display: block;
+}
+</style>
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/daybrush/jsdoc">JSDoc 0.3.7</a> on Wed Jan 22 2020 16:07:16 GMT+0900 (GMT+09:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/utils.min.js"></script>
+<script src="scripts/search.js"></script>
+<script src="scripts/custom.js"></script>
+</body>
+</html>
