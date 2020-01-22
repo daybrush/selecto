@@ -15,6 +15,9 @@ html, body, #root {
     justify-content: center;
     box-sizing: border-box;
 }
+.container {
+    max-width: 800px;;
+}
 body {
     background: #fff;
 }
@@ -93,6 +96,7 @@ h1, .description {
     background: #f5f5f5;
     color: var(--color);
     cursor: pointer;
+    transition: all ease 0.2s;
 }
 .element .symbol {
     position: absolute;
@@ -143,18 +147,30 @@ h1, .description {
 .guides {
     --color: #f55;
 }
-.examples ol {
-    text-align: left;
+.ruler {
+    --color: #E9C545;
+}
+.elements ul, .elements ol {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-.examples li, .examples li a {
+.elements li, .elements li a {
     color: #555;
 }
-.examples li {
+.elements li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
     padding: 10px;
     margin: 5px 0px;
     --color: #333;
     font-weight: bold;
+}
+.elements li strong {
+    padding: 3px 5px;
+    border: 1px solid #333;
+}
+.elements li.selected strong {
+    border-color: #fff;
 }
