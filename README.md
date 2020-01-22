@@ -1,5 +1,5 @@
 
-<p align="middle" ><img src="./demo/images/logo.png" /></p>
+<p align="middle" ><img src="https://daybrush.com/selecto/images/logo.png" /></p>
 <h2 align="middle">Selecto.js</h2>
 <p align="middle">
 <a href="https://www.npmjs.com/package/selecto" target="_blank"><img src="https://img.shields.io/npm/v/selecto.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
