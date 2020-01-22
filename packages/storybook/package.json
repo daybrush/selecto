@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build": "build-storybook -o ../../demo/storybook"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "react-scenejs": "^1.1.0",
     "react-selecto": "0.0.10",
     "storybook-addon-preview": "^0.8.1"
   },

@@ -1,0 +1,13 @@
+html, body {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body {
+    background: #f5f5f5;
+}
+.logo {
+    width: 200px;
+    height: 200px;
+}
