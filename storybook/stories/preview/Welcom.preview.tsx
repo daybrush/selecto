@@ -1,14 +1,12 @@
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { action } from "@storybook/addon-actions";
-import { withKnobs, number } from "@storybook/addon-knobs";
-import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
-import Selecto from "react-selecto";
-import { Scene } from "react-scenejs";
-import "./index.css";
-import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from './preview/Welcom.preview';
+export {
+    default as WELCOME_CSS_PREVIEW,
+} from "!!raw-loader!../index.css";
 
-const story = storiesOf("Selecto", module).addParameters(withPreview);
+export const WELCOME_REACT_PREVIEW = `
+import * as React from "react";
+import { Scene } from "react-scenejs";
+import Selecto from "react-selecto";
+
 const keyframes = {
     "#logo .selection": {
         0: {
@@ -46,12 +44,7 @@ const keyframes = {
         },
     }
 };
-story.add("Welcome", () => {
-    const cubes: number[] = [];
-
-    for (let i = 0; i < 48; ++i) {
-        cubes.push(i);
-    }
+export default function App() {
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">
@@ -75,7 +68,7 @@ story.add("Welcome", () => {
             </div>
             <Selecto
                 dragContainer={window}
-                selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
+                selectableTargets={["#selecto2 .element", "#selecto3 li"]}
                 onSelect={e => {
                     e.added.forEach(el => {
                         el.classList.add("selected");
@@ -89,27 +82,23 @@ story.add("Welcome", () => {
                 selectByClick={false}
                 toggleContinueSelect={"shift"}
             ></Selecto>
-             <div className="elements selecto-area" id="selecto1">
-                <h2>◼️ Select Anything.</h2>
-                {cubes.map(i => <div className="cube" key={i}></div>)}
-            </div>
             <div className="elements selecto-area" id="selecto2">
                 <h2>📦 Select Packages.</h2>
-                <a className="element react" href="https://github.com/daybrush/selecto/tree/master/packages/react-selecto" target="_blank"><span className="symbol">R</span><span className="name">React</span></a>
-                <a className="element angular" href="https://github.com/daybrush/selecto/tree/master/packages/ngx-selecto" target="_blank"><span className="symbol">Ng</span><span className="name">Angular</span></a>
-                <a className="element preact" href="https://github.com/daybrush/selecto/tree/master/packages/preact-selecto" target="_blank"><span className="symbol">Pr</span><span className="name">Preact</span></a>
-                <a className="element vue" href="https://github.com/daybrush/selecto/tree/master/packages/vue-selecto" target="_blank"><span className="symbol">V</span><span className="name">Vue</span></a>
-                <a className="element svelte" href="https://github.com/daybrush/selecto/tree/master/packages/svelte-selecto" target="_blank"><span className="symbol">Sv</span><span className="name">Svelte</span></a>
-                <a className="element lit" href="https://github.com/daybrush/selecto/tree/master/packages/lit-selecto" target="_blank"><span className="symbol">L</span><span className="name">Lit</span></a>
+                <a className="element react" href="https://github.com/daybrush/selecto/tree/master/packages/react-selecto" target="_blank"><div className="symbol">R</div><div className="name">React</div></a>
+                <div className="element angular"><div className="symbol">Ng</div><div className="name">Angular</div></div>
+                <div className="element preact"><div className="symbol">Pr</div><div className="name">Preact</div></div>
+                <div className="element vue"><div className="symbol">V</div><div className="name">Vue</div></div>
+                <div className="element svelte"><div className="symbol">Sv</div><div className="name">Svelte</div></div>
+                <div className="element lit"><div className="symbol">L</div><div className="name">Lit</div></div>
             </div>
             <div className="elements selecto-area" id="selecto2">
                 <h2>🔥 Select Projects.</h2>
-                <a className="element scenejs" href="https://github.com/daybrush/scenejs" target="_blank"><span className="symbol">Sn</span><span className="name">Scene.js</span></a>
-                <a className="element moveable" href="https://github.com/daybrush/moveable" target="_blank"><span className="symbol">Mv</span><span className="name">Moveable</span></a>
-                <a className="element drag" href="https://github.com/daybrush/drag" target="_blank"><span className="symbol">Dr</span><span className="name">Drag</span></a>
-                <a className="element ruler" href="https://github.com/daybrush/ruler" target="_blank"><span className="symbol">Ru</span><span className="name">Ruler</span></a>
-                <a className="element drag" href="https://github.com/daybrush/keycon" target="_blank"><span className="symbol">K</span><span className="name">Keycon</span></a>
-                <a className="element guides" href="https://github.com/daybrush/guides" target="_blank"><span className="symbol">Gd</span><span className="name">Guides</span></a>
+                <div className="element scenejs"><div className="symbol">Sn</div><div className="name">Scene.js</div></div>
+                <div className="element moveable"><div className="symbol">Mv</div><div className="name">Moveable</div></div>
+                <div className="element drag"><div className="symbol">Dr</div><div className="name">Drag</div></div>
+                <div className="element ruler"><div className="symbol">Ru</div><div className="name">Ruler</div></div>
+                <div className="element drag"><div className="symbol">K</div><div className="name">Keycon</div></div>
+                <div className="element guides"><div className="symbol">Gd</div><div className="name">Guides</div></div>
             </div>
             <div className="elements selecto-area" id="selecto3">
                 <h2>📝 Select Codes</h2>
@@ -131,24 +120,4 @@ story.add("Welcome", () => {
             <div className="empty elements"></div>
         </div>
     </div>;
-}, {
-    preview: [
-        // {
-        //     tab: "HTML",
-        //     template: NORMAL_HTML_TEMPLATE,
-        //     language: "html",
-        // },
-        {
-            tab: "CSS",
-            template: WELCOME_CSS_PREVIEW,
-            language: "css",
-        },
-        {
-            tab: "React",
-            template: WELCOME_REACT_PREVIEW,
-            language: "tsx",
-            copy: true,
-            codesandbox: DEFAULT_REACT_CODESANDBOX(["react-selecto", "react-scenejs"]),
-        },
-    ],
-});
+}`;

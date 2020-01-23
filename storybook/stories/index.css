@@ -4,6 +4,7 @@ html, body, #root {
     padding: 0;
     height: 100%;
     color: #333;
+    background: #fdfdfd;
 }
 .app {
     position: relative;
@@ -96,6 +97,9 @@ h1, .description {
     background: #f5f5f5;
     color: var(--color);
     cursor: pointer;
+    transition: all ease 0.2s;
+}
+#selecto1 .cube {
     transition: all ease 0.2s;
 }
 .element .symbol {
