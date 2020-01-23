@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from "@storybook/addon-actions";
-import { withKnobs, number } from "@storybook/addon-knobs";
 import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import { Scene } from "react-scenejs";
 import "./index.css";
 import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from './preview/Welcom.preview';
 
-const story = storiesOf("Selecto", module).addParameters(withPreview);
+const story = storiesOf("Selecto", module).addDecorator(withPreview);
 const keyframes = {
     "#logo .selection": {
         0: {

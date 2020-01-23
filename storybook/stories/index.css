@@ -171,7 +171,7 @@ h1, .description {
     --color: #333;
     font-weight: bold;
 }
-.elements li strong {
+.elements li strong, .description strong {
     padding: 3px 5px;
     border: 1px solid #333;
 }
