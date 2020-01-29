@@ -3,12 +3,12 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs, number, boolean } from "@storybook/addon-knobs";
 import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
-import "./index.css";
-import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from './preview/Welcom.preview';
+import "../index.css";
+import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from '../preview/Welcom.preview';
 
-const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
+const story = storiesOf("Selecto With Moveable", module).addDecorator(withKnobs).addDecorator(withPreview);
 
-story.add("Only select at start and end.", () => {
+story.add("You can change the target in real time while selecting.", () => {
     const cubes: number[] = [];
 
     for (let i = 0; i < 64; ++i) {
@@ -19,25 +19,17 @@ story.add("Only select at start and end.", () => {
             <div className="logo" id="logo">
                 로고
             </div>
-            <h1>Selecto.js</h1>
-            <p className="description"><strong>selectStart</strong>와 <strong>selectEnd</strong> event를 통해 대상을 select할 수 있습니다.</p>
+            <h1>Select in real time.</h1>
+            <p className="description">The <strong>select</strong> event allows you to select a target in real time.</p>
 
             <Selecto
                 dragContainer={window}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
-                onSelectStart={e => {
+                onSelect={e => {
                     e.added.forEach(el => {
                         el.classList.add("selected");
                     });
                     e.removed.forEach(el => {
-                        el.classList.remove("selected");
-                    });
-                }}
-                onSelectEnd={e => {
-                    e.afterAdded.forEach(el => {
-                        el.classList.add("selected");
-                    });
-                    e.afterRemoved.forEach(el => {
                         el.classList.remove("selected");
                     });
                 }}

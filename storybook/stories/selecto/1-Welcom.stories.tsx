@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import { Scene } from "react-scenejs";
-import "./index.css";
-import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from './preview/Welcom.preview';
+import "../index.css";
+import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from '../preview/Welcom.preview';
 
 const story = storiesOf("Selecto", module).addDecorator(withPreview);
 const keyframes = {

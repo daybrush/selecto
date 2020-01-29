@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, number, boolean, array } from "@storybook/addon-knobs";
+import { withKnobs, number, boolean } from "@storybook/addon-knobs";
 import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
-import "./index.css";
-import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from './preview/Welcom.preview';
+import "../index.css";
+import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from '../preview/Welcom.preview';
 
-const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
+const story = storiesOf("Selecto With Moveable", module).addDecorator(withKnobs).addDecorator(withPreview);
 
-story.add("Continue to select", () => {
+story.add("You can change the target by selecting it.", () => {
     const cubes: number[] = [];
 
     for (let i = 0; i < 64; ++i) {
@@ -17,10 +17,10 @@ story.add("Continue to select", () => {
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">
-            로고
+                로고
             </div>
-            <h1>Continue to select through the toggle key.</h1>
-            <p className="description"><strong>select</strong> event를 통해 실시간으로 대상을 select할 수 있습니다.</p>
+            <h1>Select in real time.</h1>
+            <p className="description">The <strong>select</strong> event allows you to select a target in real time.</p>
 
             <Selecto
                 dragContainer={window}
@@ -36,7 +36,6 @@ story.add("Continue to select", () => {
                 hitRate={number("hitRate", 100)}
                 selectByClick={boolean("selectByClick", true)}
                 selectFromInside={boolean("selectFromInside", true)}
-                continueSelect={boolean("continueSelect", true)}
             ></Selecto>
              <div className="elements selecto-area" id="selecto1">
                 {cubes.map(i => <div className="cube" key={i}></div>)}
