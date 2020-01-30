@@ -67,6 +67,7 @@ export const EVENTS = [
     "selectEnd",
     "keydown",
     "keyup",
+    "scroll",
 ] as const;
 
 /**
