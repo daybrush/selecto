@@ -76,6 +76,7 @@ const selecto = new Selecto({
                 viewer.getScrollTop(),
             ];
         },
+        throttleTime: 20,
     },
 }).on("scroll", ({ direction }) => {
     viewer.scrollBy(direction[0] * 10, direction[1] * 10);

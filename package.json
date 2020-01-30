@@ -1,6 +1,6 @@
 {
   "name": "selecto",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.",
   "main": "./dist/selecto.cjs.js",
   "module": "./dist/selecto.esm.js",
@@ -11,9 +11,10 @@
     "build": "rollup -c && npm run declaration && print-sizes ./dist",
     "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
     "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
-    "prerelease": "npm run build && npm run doc && prerelease --dirs=dist,doc",
-    "release": "npm run build && npm run doc && release --dirs=dist,doc",
-    "release:init": "npm run build && npm run doc && release -i --dirs=dist,doc",
+    "prerelease": "npm run build && npm run doc && npm run storybook && prerelease --dirs=dist,doc",
+    "storybook": "cd storybook/ && npm run build && cd ../",
+    "release": "npm run build && npm run doc && npm run storybook && release --dirs=dist,doc",
+    "release:init": "npm run build && npm run doc && npm run storybook && release -i --dirs=dist,doc",
     "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
     "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
     "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
@@ -44,7 +45,7 @@
     "@daybrush/utils": "^0.10.1",
     "@egjs/children-differ": "^1.0.0",
     "@egjs/component": "^2.1.2",
-    "@scena/dragscroll": "^0.1.1",
+    "@scena/dragscroll": "^0.2.1",
     "css-styled": "^0.1.7",
     "framework-utils": "^0.3.4",
     "keycon": "^0.8.0"
@@ -54,7 +55,7 @@
     "keycon": ">=0.8.0",
     "css-styled": ">=0.1.7",
     "@daybrush/drag": ">=0.12.0",
-    "@scena/dragscroll": ">=0.1.1"
+    "@scena/dragscroll": ">=0.2.1"
   },
   "devDependencies": {
     "@daybrush/builder": "^0.1.2",

@@ -234,6 +234,10 @@ class Selecto extends Component {
                 rect.right -= offsetX;
             });
             this.dragger.scrollBy(offsetX, offsetY, inputEvent.inputEvent, false);
+
+            inputEvent.distX += offsetX;
+            inputEvent.distY += offsetY;
+            this.render(inputEvent);
         });
     }
     private getSelectableTargets() {
@@ -490,12 +494,11 @@ class Selecto extends Component {
             return true;
         }
     }
-    private onDrag = (e: OnDrag) => {
+    private render(e: any) {
         const {
             distX,
             distY,
             datas,
-            inputEvent,
         } = e;
         const { startX, startY } = datas;
         const tx = Math.min(0, distX);
@@ -508,7 +511,20 @@ class Selecto extends Component {
             + `left:${startX}px;top:${startY}px;`
             + `transform: translate(${tx}px, ${ty}px);`
             + `width:${width}px;height:${height}px;`;
-
+    }
+    private onDrag = (e: OnDrag) => {
+        const {
+            distX,
+            distY,
+            datas,
+            inputEvent,
+        } = e;
+        this.render(e);
+        const { startX, startY } = datas;
+        const tx = Math.min(0, distX);
+        const ty = Math.min(0, distY);
+        const width = Math.abs(distX);
+        const height = Math.abs(distY);
         const left = startX + tx;
         const top = startY + ty;
         const passedTargets = this.hitTest({
@@ -522,12 +538,12 @@ class Selecto extends Component {
         const { scrollOptions } = this.options;
         if (scrollOptions) {
             this.dragScroll.drag(e, scrollOptions);
-            this.dragScroll.dragAfter(e, scrollOptions);
         }
         this.select(selectedTargets, inputEvent);
         datas.selectedTargets = selectedTargets;
     }
     private onDragEnd = ({ datas, inputEvent }: OnDragEvent) => {
+        this.dragScroll.dragEnd();
         this.target.style.cssText += "display: none;";
         this.selecteEnd(datas.startSelectedTargets, datas.selectedTargets, inputEvent);
         this.selectedTargets = datas.selectedTargets;
