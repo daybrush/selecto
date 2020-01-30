@@ -30,6 +30,14 @@ body {
     font-size: 0;
     text-align: left;
 }
+.logo.moveable {
+    width: 320px;
+    text-align: center;
+}
+.logo img {
+    position: relative;
+    height: 100%;
+}
 .cube {
     display: inline-block;
     border-radius: 5px;

@@ -17,7 +17,7 @@ story.add("Continue to select through the toggle key.", () => {
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">
-            로고
+                <img src="https://daybrush.com/selecto/images/256x256.png" />
             </div>
             <h1>Continue to select through the toggle key.</h1>
             <p className="description">The toggle key allows you to select continuously with the currently selected target.</p>

@@ -25,21 +25,22 @@ story.add("You can change the Moveable target in real time by selecting it.", ()
     return <div className="app">
         <div className="container">
         <div className="logo" id="logo">
-                로고
-            </div>
-            <h1>You can change the Moveable target in real time by selecting it.</h1>
-            <Moveable
-                ref={moveableRef}
-                target={targets}
-                draggable={true}
-                onClickGroup={e => {
-                    selectoRef.current!.click(e.inputEvent, e.inputTarget);
-                }}
-                onDragStart={ON_DRAG_START(frameMap)}
-                onDrag={ON_DRAG(frameMap)}
-                onDragGroupStart={ON_DRAG_GROUP_START(frameMap)}
-                onDragGroup={ON_DRAG_GROUP(frameMap)}
-            />
+            <img src="https://daybrush.com/selecto/images/256x256.png" />
+        </div>
+        <h1>You can change the Moveable target in real time by selecting it.</h1>
+        <p className="description">You can drag and move targets and select them.</p>
+        <Moveable
+            ref={moveableRef}
+            target={targets}
+            draggable={true}
+            onClickGroup={e => {
+                selectoRef.current!.click(e.inputEvent, e.inputTarget);
+            }}
+            onDragStart={ON_DRAG_START(frameMap)}
+            onDrag={ON_DRAG(frameMap)}
+            onDragGroupStart={ON_DRAG_GROUP_START(frameMap)}
+            onDragGroup={ON_DRAG_GROUP(frameMap)}
+        />
         <Selecto
             ref={selectoRef}
             dragContainer={window}

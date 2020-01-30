@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "storybook": "start-storybook -p 6006",
-    "build": "npm i react-selecto && npm i react-infinite-viewer && build-storybook -o ../demo/storybook"
+    "build": "npm i react-selecto@latest react-infinite-viewer@latest && build-storybook -o ../demo/storybook"
   },
   "author": "",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "react-infinite-viewer": "^0.1.5",
     "react-moveable": "^0.16.6",
     "react-scenejs": "^1.1.0",
-    "react-selecto": "0.0.14",
+    "react-selecto": "0.0.16",
     "storybook-addon-preview": "^0.9.0"
   },
   "devDependencies": {

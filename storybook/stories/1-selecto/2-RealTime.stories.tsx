@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
 import { withKnobs, number, boolean } from "@storybook/addon-knobs";
 import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import "../index.css";
-import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from '../preview/Welcom.preview';
+import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from "../preview/Welcom.preview";
 
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
@@ -17,7 +17,7 @@ story.add("Select in real time.", () => {
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">
-                로고
+                <img src="https://daybrush.com/selecto/images/256x256.png" />
             </div>
             <h1>Select in real time.</h1>
             <p className="description">The <strong>select</strong> event allows you to select a target in real time.</p>

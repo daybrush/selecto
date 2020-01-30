@@ -16,7 +16,7 @@ story.add("Select in the scroll area.", () => {
     const viewerRef = React.useRef<InfiniteViewer>(null);
     const cubes: number[] = [];
 
-    for (let i = 0; i < 200; ++i) {
+    for (let i = 0; i < 32 * 7; ++i) {
         cubes.push(i);
     }
 
@@ -31,12 +31,17 @@ story.add("Select in the scroll area.", () => {
             },
         });
     }, []);
+
+    const throttleTime = number("Scroll's throttleTime", 30);
+    const threshold = number("Scroll's threshold", 0);
+
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">
-                로고
+                <img src="https://daybrush.com/selecto/images/256x256.png" />
             </div>
             <h1>Select in the scroll area.</h1>
+            <p className="description">Selecting the scroll area area causes scrolling.</p>
             <Selecto
                 dragContainer={window}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
@@ -51,7 +56,11 @@ story.add("Select in the scroll area.", () => {
                 onScroll={({ direction }) => {
                     viewerRef.current!.scrollBy(direction[0] * 10, direction[1] * 10);
                 }}
-                scrollOptions={scrollOptions}
+                scrollOptions={scrollOptions && {
+                    ...scrollOptions,
+                    throttleTime,
+                    threshold,
+                }}
                 hitRate={number("hitRate", 100)}
                 selectByClick={boolean("selectByClick", true)}
                 selectFromInside={boolean("selectFromInside", true)}

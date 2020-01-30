@@ -17,7 +17,7 @@ story.add("Only select at start and end.", () => {
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">
-                로고
+                <img src="https://daybrush.com/selecto/images/256x256.png" />
             </div>
             <h1>Only select at start and end.</h1>
             <p className="description">You can select the target through the <strong>selectStart</strong> and <strong>selectEnd</strong> events.</p>

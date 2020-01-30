@@ -2,54 +2,59 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
-import { Scene } from "react-scenejs";
+import Scene from "scenejs";
 import "../index.css";
 import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from '../preview/Welcom.preview';
 
 const story = storiesOf("Selecto", module).addDecorator(withPreview);
-const keyframes = {
-    "#logo .selection": {
-        0: {
-            width: "0px",
-            height: "0px",
-        },
-        1.2: {
-            width: "100px",
-            height: "100px",
-        },
-        3: {}
-    },
-    "#logo .cursor": {
-        0: {
-            transform: "translate(0px, 0px)",
-        },
-        1.2: {
-            transform: "translate(100px, 100px)",
-        },
-    },
-    "#logo .select1": {
-        0.3: {
-            "background-color": "#eee",
-        },
-        0.7: {
-            "background-color": "#4af",
-        },
-    },
-    "#logo .select2": {
-        0.8: {
-            "background-color": "#eee",
-        },
-        1.2: {
-            "background-color": "#4af",
-        },
-    }
-};
 story.add("Welcome", () => {
     const cubes: number[] = [];
 
     for (let i = 0; i < 48; ++i) {
         cubes.push(i);
     }
+
+    React.useEffect(() => {
+        new Scene({
+            "#logo .selection": {
+                0: {
+                    width: "0px",
+                    height: "0px",
+                },
+                1.2: {
+                    width: "100px",
+                    height: "100px",
+                },
+                3: {}
+            },
+            "#logo .cursor": {
+                0: {
+                    transform: "translate(0px, 0px)",
+                },
+                1.2: {
+                    transform: "translate(100px, 100px)",
+                },
+            },
+            "#logo .select1": {
+                0.3: {
+                    "background-color": "#eee",
+                },
+                0.7: {
+                    "background-color": "#4af",
+                },
+            },
+            "#logo .select2": {
+                0.8: {
+                    "background-color": "#eee",
+                },
+                1.2: {
+                    "background-color": "#4af",
+                },
+            }
+        }, {
+            selector: true,
+        }).playCSS();
+    }, []);
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">
@@ -61,10 +66,8 @@ story.add("Welcome", () => {
                 <div className="cube"></div>
                 <div className="cube"></div>
                 <div className="cube"></div>
-                <Scene iterationCount="infinite" easing={"ease-out"} keyframes={keyframes} css={true} autoplay>
-                    <div className="selection"></div>
-                    <div className="cursor"><img src="https://daybrush.com/selecto/images/cursor.png" /></div>
-                </Scene>
+                <div className="selection"></div>
+                <div className="cursor"><img src="https://daybrush.com/selecto/images/cursor.png" /></div>
             </div>
             <h1>Selecto.js</h1>
             <p className="description">Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.</p>
@@ -119,11 +122,7 @@ story.add("Welcome", () => {
             <div className="elements selecto-area" id="selecto3">
                 <h2>🚀 Select Examples</h2>
                 <ol>
-                    <li><a href="#" target="_parent">Select in real time.</a></li>
-                    <li><a href="#" target="_parent">Only select at start and end.</a></li>
-                    <li><a href="#" target="_parent">Only select at end.</a></li>
-                    <li><a href="#" target="_parent">Continue to select.</a></li>
-                    <li><a href="#" target="_parent">Continue to select through the toggle key.</a></li>
+                    <li>Press the <strong>S</strong> key or the <strong>Sidebar</strong> button to view examples.</li>
                 </ol>
             </div>
             <div className="empty elements"></div>

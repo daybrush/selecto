@@ -17,7 +17,7 @@ story.add("Continue to select", () => {
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">
-            로고
+                <img src="https://daybrush.com/selecto/images/256x256.png" />
             </div>
             <h1>Continue to select.</h1>
             <p className="description">You can continue to select with the currently selected target.</p>
