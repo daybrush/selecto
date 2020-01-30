@@ -10,6 +10,7 @@ jsdoc/
 doc/
 outjs/
 declaration/
+demo/storybook
 packages/*/dist/
 build/
 .vscode/

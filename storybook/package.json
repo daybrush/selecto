@@ -11,9 +11,10 @@
   "license": "MIT",
   "dependencies": {
     "raw-loader": "^4.0.0",
-    "react-infinite-viewer": "^0.1.3",
+    "react-infinite-viewer": "^0.1.5",
+    "react-moveable": "^0.16.6",
     "react-scenejs": "^1.1.0",
-    "react-selecto": "0.0.12",
+    "react-selecto": "0.0.14",
     "storybook-addon-preview": "^0.9.0"
   },
   "devDependencies": {
