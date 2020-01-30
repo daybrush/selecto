@@ -18,10 +18,10 @@ render(html`
     .selectFromInside=${false}
     .selectByClick=${true}
     .toggleContinueSelect=${"shift"}
-    @dragStart=${({ detail: e }) => {
+    @litDragStart=${({ detail: e }) => {
         console.log("ds", e.inputEvent.target);
     }}
-    @selectStart=${({ detail: e}) => {
+    @litSelectStart=${({ detail: e}) => {
         console.log("start", e);
         e.added.forEach(el => {
             el.classList.add("selected");
@@ -30,7 +30,7 @@ render(html`
             el.classList.remove("selected");
         });
     }}
-    @selectEnd=${({ detail: e }) => {
+    @litSelectEnd=${({ detail: e }) => {
         console.log("end", e);
         e.added.forEach(el => {
             el.classList.add("selected");
@@ -39,9 +39,9 @@ render(html`
             el.classList.remove("selected");
         });
     }}
-    @keydown=${() => {
+    @litKeydown=${() => {
         document.querySelector(".button").classList.add("selected");
     }}
-    @keyup=${() => {
+    @litKeyup=${() => {
         document.querySelector(".button").classList.remove("selected");
     }}></lit-selecto>`, document.body);

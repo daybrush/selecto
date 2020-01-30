@@ -1,6 +1,7 @@
 import { LitElement, html, customElement, property } from "lit-element";
 import VanillaSelecto, { SelectoOptions, OPTIONS, OPTION_TYPES, EVENTS, PROPERTIES, SelectoMethods, METHODS } from "selecto";
 import { Properties, withMethods, MethodInterface } from "framework-utils";
+import { camelize } from "@daybrush/utils";
 
 @Properties(OPTIONS as any, (prototype, name) => {
     property({ type: OPTION_TYPES[name] })(prototype, name);
@@ -26,7 +27,7 @@ export class LitSelecto extends LitElement {
 
         EVENTS.forEach((name, i) => {
             selecto.on(name, e => {
-                const result = this.dispatchEvent(new CustomEvent(name, {
+                const result = this.dispatchEvent(new CustomEvent(camelize(`lit ${name}`), {
                     detail: { ...e },
                 }));
 
