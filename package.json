@@ -19,7 +19,8 @@
     "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
     "packages:update": "pvu --update=react-selecto,ngx-selecto/projects/ngx-selecto,svelte-selecto,lit-selecto",
     "packages:build": "pvu --build=react-selecto,ngx-selecto,svelte-selecto,lit-selecto",
-    "packages:publish": "pvu --publish=react-selecto,ngx-selecto/dist/ngx-selecto,svelte-selecto,lit-selecto"
+    "packages:publish": "pvu --publish=react-selecto,ngx-selecto/dist/ngx-selecto,svelte-selecto,lit-selecto",
+    "packages:preact": "cd ./packages/react-selecto && npm run packages && cd ../.."
   },
   "keywords": [
     "select",

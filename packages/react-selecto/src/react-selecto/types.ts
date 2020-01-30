@@ -7,6 +7,7 @@ export interface ReactSelectoEventNames {
     onDragStart: "dragStart";
     onKeydown: "keydown";
     onKeyup: "keyup";
+    onScroll: "scroll";
 }
 export type SelectoEventProps = {
     [key in keyof ReactSelectoEventNames]: (e: SelectoEvents[ReactSelectoEventNames[key]]) => any;
