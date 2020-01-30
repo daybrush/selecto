@@ -485,7 +485,7 @@ class Selecto extends Component {
         } else {
             const { scrollOptions } = this.options;
             if (scrollOptions) {
-                this.dragScroll.dragStart(scrollOptions.container);
+                this.dragScroll.dragStart(e, scrollOptions);
             }
             return true;
         }
