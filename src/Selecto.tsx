@@ -237,7 +237,7 @@ class Selecto extends Component {
 
             inputEvent.distX += offsetX;
             inputEvent.distY += offsetY;
-            this.render(inputEvent);
+            this.check(inputEvent);
         });
     }
     private getSelectableTargets() {
@@ -488,17 +488,18 @@ class Selecto extends Component {
             return false;
         } else {
             const { scrollOptions } = this.options;
-            if (scrollOptions) {
+            if (scrollOptions && scrollOptions.container) {
                 this.dragScroll.dragStart(e, scrollOptions);
             }
             return true;
         }
     }
-    private render(e: any) {
+    private check(e: any) {
         const {
             distX,
             distY,
             datas,
+            inputEvent,
         } = e;
         const { startX, startY } = datas;
         const tx = Math.min(0, distX);
@@ -511,20 +512,7 @@ class Selecto extends Component {
             + `left:${startX}px;top:${startY}px;`
             + `transform: translate(${tx}px, ${ty}px);`
             + `width:${width}px;height:${height}px;`;
-    }
-    private onDrag = (e: OnDrag) => {
-        const {
-            distX,
-            distY,
-            datas,
-            inputEvent,
-        } = e;
-        this.render(e);
-        const { startX, startY } = datas;
-        const tx = Math.min(0, distX);
-        const ty = Math.min(0, distY);
-        const width = Math.abs(distX);
-        const height = Math.abs(distY);
+
         const left = startX + tx;
         const top = startY + ty;
         const passedTargets = this.hitTest({
@@ -535,12 +523,17 @@ class Selecto extends Component {
         }, datas.startX, datas.startY, datas.selectableTargets, datas.selectableRects);
         const selectedTargets = this.getSelectedTargets(passedTargets);
 
-        const { scrollOptions } = this.options;
-        if (scrollOptions) {
-            this.dragScroll.drag(e, scrollOptions);
-        }
         this.select(selectedTargets, inputEvent);
         datas.selectedTargets = selectedTargets;
+    }
+    private onDrag = (e: OnDrag) => {
+        const { scrollOptions } = this.options;
+        if (scrollOptions && scrollOptions.container) {
+            if (this.dragScroll.drag(e, scrollOptions)) {
+                return;
+            }
+        }
+        this.check(e);
     }
     private onDragEnd = ({ datas, inputEvent }: OnDragEvent) => {
         this.dragScroll.dragEnd();
