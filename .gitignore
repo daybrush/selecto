@@ -10,10 +10,10 @@ jsdoc/
 doc/
 outjs/
 declaration/
+packages/*/dist/
 build/
 .vscode/
 rollup-plugin-visualizer/
 statistics/
 .scene_cache
 *.mp4
-test/

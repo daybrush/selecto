@@ -4,11 +4,11 @@ import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { isObject, camelize, IObject, addEvent, removeEvent } from "@daybrush/utils";
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
+import DragScroll from "@scena/dragscroll";
 import KeyController, { getCombi } from "keycon";
 import { createElement, h, getClient, diffValue } from "./utils";
 import { SelectoOptions, Rect, SelectoProperties, OnDragEvent, SelectoEvents } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
-
 /**
  * Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.
  * @sort 1
@@ -43,6 +43,7 @@ class Selecto extends Component {
     private injectResult!: InjectResult;
     private selectedTargets: Array<HTMLElement | SVGElement> = [];
     private differ = new ChildrenDiffer<HTMLElement | SVGElement>();
+    private dragScroll: DragScroll = new DragScroll();
     private keycon!: KeyController;
     /**
      *
@@ -64,9 +65,11 @@ class Selecto extends Component {
             continueSelect: false,
             toggleContinueSelect: null,
             keyContainer: null,
+            scrollOptions: undefined,
             ...options,
         };
         this.initElement();
+        this.initDragScroll();
         this.setKeyController();
     }
     /**
@@ -213,6 +216,25 @@ class Selecto extends Component {
         });
 
         return passedTargets;
+    }
+    private initDragScroll() {
+        this.dragScroll.on("scroll", ({ container, direction }) => {
+            this.trigger("scroll", {
+                container,
+                direction,
+            });
+        }).on("move", ({ offsetX, offsetY, inputEvent }) => {
+            const datas = inputEvent.datas;
+            datas.startX -= offsetX;
+            datas.startY -= offsetY;
+            datas.selectableRects.forEach(rect => {
+                rect.top -= offsetY;
+                rect.bottom -= offsetY;
+                rect.left -= offsetX;
+                rect.right -= offsetX;
+            });
+            this.dragger.scrollBy(offsetX, offsetY, inputEvent.inputEvent, false);
+        });
     }
     private getSelectableTargets() {
         const selectableTargets: Array<HTMLElement | SVGElement> = [];
@@ -461,15 +483,20 @@ class Selecto extends Component {
             inputEvent.preventDefault();
             return false;
         } else {
+            const { scrollOptions } = this.options;
+            if (scrollOptions) {
+                this.dragScroll.dragStart(scrollOptions.container);
+            }
             return true;
         }
     }
-    private onDrag = ({
-        distX,
-        distY,
-        datas,
-        inputEvent,
-    }: OnDrag) => {
+    private onDrag = (e: OnDrag) => {
+        const {
+            distX,
+            distY,
+            datas,
+            inputEvent,
+        } = e;
         const { startX, startY } = datas;
         const tx = Math.min(0, distX);
         const ty = Math.min(0, distY);
@@ -478,6 +505,7 @@ class Selecto extends Component {
 
         this.target.style.cssText
             += `display: block;`
+            + `left:${startX}px;top:${startY}px;`
             + `transform: translate(${tx}px, ${ty}px);`
             + `width:${width}px;height:${height}px;`;
 
@@ -491,6 +519,11 @@ class Selecto extends Component {
         }, datas.startX, datas.startY, datas.selectableTargets, datas.selectableRects);
         const selectedTargets = this.getSelectedTargets(passedTargets);
 
+        const { scrollOptions } = this.options;
+        if (scrollOptions) {
+            this.dragScroll.drag(e, scrollOptions);
+            this.dragScroll.dragAfter(e, scrollOptions);
+        }
         this.select(selectedTargets, inputEvent);
         datas.selectedTargets = selectedTargets;
     }

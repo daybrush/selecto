@@ -2,6 +2,7 @@ import { IObject } from "@daybrush/utils";
 import { PROPERTIES, METHODS } from "./consts";
 import Selecto from "./Selecto";
 import { OnDragStart as OnParentDragStart } from "@daybrush/drag";
+import { DragScrollOptions } from "@scena/dragscroll";
 
 /**
  * @memberof Selecto
@@ -16,6 +17,7 @@ import { OnDragStart as OnParentDragStart } from "@daybrush/drag";
  * @property - Determines which key to continue selecting the next target via keydown and keyup.
  * @property - The container for keydown and keyup events
  * @property - The rate at which the target overlaps the drag area to be selected. (default: 100)
+ * @property - 1
  */
 export interface SelectoOptions {
     target: HTMLElement | null;
@@ -28,6 +30,7 @@ export interface SelectoOptions {
     toggleContinueSelect: string[] | string | null;
     keyContainer: Document | HTMLElement | Window | null;
     hitRate: number;
+    scrollOptions: DragScrollOptions;
 }
 
 export interface Hypertext {
@@ -85,6 +88,10 @@ export interface OnKeyEvent {
     clientY: number;
     inputEvent: any;
 }
+export interface OnScroll {
+    container: HTMLElement;
+    direction: number[];
+}
 
 export interface OnDragStart extends OnParentDragStart {
     stop(): void;
@@ -96,6 +103,7 @@ export interface SelectoEvents {
     selectEnd: OnSelectEnd;
     keydown: OnKeyEvent;
     keyup: OnKeyEvent;
+    scroll: OnScroll;
 }
 export type SelectoProperties = { [P in typeof PROPERTIES[number]]: SelectoOptions[P] };
 export type SelectoMethods = { [P in typeof METHODS[number]]: Selecto[P] };

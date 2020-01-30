@@ -29,12 +29,14 @@ export class NgxSelectoComponent
   @Input() toggleContinueSelect: SelectoOptions['toggleContinueSelect'];
   @Input() keyContainer: SelectoOptions['keyContainer'];
   @Input() hitRate: SelectoOptions['hitRate'];
+  @Input() scrollOptions: SelectoOptions['scrollOptions'];
   @Output() dragStart: NgxSelectoEvents['dragStart'];
   @Output() selectStart: NgxSelectoEvents['selectStart'];
   @Output() select: NgxSelectoEvents['select'];
   @Output() selectEnd: NgxSelectoEvents['selectEnd'];
   @Output() keydown: NgxSelectoEvents['keydown'];
   @Output() keyup: NgxSelectoEvents['keyup'];
+  @Output() scroll: NgxSelectoEvents['scroll'];
   public selectionClassName = CLASS_NAME;
 
   constructor() {

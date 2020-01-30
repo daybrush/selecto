@@ -29,6 +29,7 @@ export const OPTIONS = [
     "toggleContinueSelect",
     "keyContainer",
     "hitRate",
+    "scrollOptions",
 ] as const;
 
 export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
@@ -42,6 +43,7 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     toggleContinueSelect: Array,
     keyContainer: null,
     hitRate: Number,
+    scrollOptions: Object,
 };
 
 export const PROPERTIES = [
@@ -52,6 +54,7 @@ export const PROPERTIES = [
     "toggleContinueSelect",
     "keyContainer",
     "hitRate",
+    "scrollOptions",
 ] as const;
 
 /**
