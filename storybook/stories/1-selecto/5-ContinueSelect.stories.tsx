@@ -9,6 +9,23 @@ import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from "../preview/Welcom.pr
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
 story.add("Continue to select", () => {
+    return <App />;
+}, {
+    preview: [
+        // {
+        //     tab: "HTML",
+        //     template: NORMAL_HTML_TEMPLATE,
+        //     language: "html",
+        // },
+        {
+            tab: "CSS",
+            template: WELCOME_CSS_PREVIEW,
+            language: "css",
+        },
+    ],
+});
+
+function App() {
     const cubes: number[] = [];
 
     for (let i = 0; i < 64; ++i) {
@@ -37,23 +54,10 @@ story.add("Continue to select", () => {
                 selectFromInside={boolean("selectFromInside", true)}
                 continueSelect={boolean("continueSelect", true)}
             ></Selecto>
-             <div className="elements selecto-area" id="selecto1">
+            <div className="elements selecto-area" id="selecto1">
                 {cubes.map(i => <div className="cube" key={i}></div>)}
             </div>
             <div className="empty elements"></div>
         </div>
     </div>;
-}, {
-    preview: [
-        // {
-        //     tab: "HTML",
-        //     template: NORMAL_HTML_TEMPLATE,
-        //     language: "html",
-        // },
-        {
-            tab: "CSS",
-            template: WELCOME_CSS_PREVIEW,
-            language: "css",
-        },
-    ],
-});
+}

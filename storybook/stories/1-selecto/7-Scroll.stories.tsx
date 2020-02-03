@@ -12,6 +12,22 @@ import { DragScrollOptions } from "@scena/dragscroll";
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
 story.add("Select in the scroll area.", () => {
+    return <App />;
+}, {
+    preview: [
+        // {
+        //     tab: "HTML",
+        //     template: NORMAL_HTML_TEMPLATE,
+        //     language: "html",
+        // },
+        {
+            tab: "CSS",
+            template: WELCOME_CSS_PREVIEW,
+            language: "css",
+        },
+    ],
+});
+function App() {
     const [scrollOptions, setScrollOptions] = React.useState<DragScrollOptions>();
     const viewerRef = React.useRef<InfiniteViewer>(null);
     const cubes: number[] = [];
@@ -42,9 +58,18 @@ story.add("Select in the scroll area.", () => {
             </div>
             <h1>Select in the scroll area.</h1>
             <p className="description">Selecting the scroll area area causes scrolling.</p>
+            <button className="button" onClick={() => {
+                viewerRef.current!.scrollTo(0, 0);
+            }}>Reset Scroll</button>
             <Selecto
                 dragContainer={window}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
+                onDragStart={e => {
+                    if (e.inputEvent.target.nodeName === "BUTTON") {
+                        return false;
+                    }
+                    return true;
+                }}
                 onSelect={e => {
                     e.added.forEach(el => {
                         el.classList.add("selected");
@@ -74,17 +99,4 @@ story.add("Select in the scroll area.", () => {
             <div className="empty elements"></div>
         </div>
     </div>;
-}, {
-    preview: [
-        // {
-        //     tab: "HTML",
-        //     template: NORMAL_HTML_TEMPLATE,
-        //     language: "html",
-        // },
-        {
-            tab: "CSS",
-            template: WELCOME_CSS_PREVIEW,
-            language: "css",
-        },
-    ],
-});
+}

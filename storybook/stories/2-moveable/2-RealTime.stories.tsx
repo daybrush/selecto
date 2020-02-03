@@ -10,6 +10,13 @@ import { ON_DRAG_START, ON_DRAG, ON_DRAG_GROUP_START, ON_DRAG_GROUP } from "./ut
 const story = storiesOf("Selecto With Moveable", module).addDecorator(withKnobs).addDecorator(withPreview);
 
 story.add("You can change the Moveable target in real time by selecting it.", () => {
+    return <App />;
+}, {
+    preview: [
+    ],
+});
+
+function App() {
     const cubes: number[] = [];
 
     for (let i = 0; i < 32; ++i) {
@@ -24,61 +31,59 @@ story.add("You can change the Moveable target in real time by selecting it.", ()
 
     return <div className="app">
         <div className="container">
-        <div className="logo" id="logo">
-            <img src="https://daybrush.com/selecto/images/256x256.png" />
-        </div>
-        <h1>You can change the Moveable target in real time by selecting it.</h1>
-        <p className="description">You can drag and move targets and select them.</p>
-        <Moveable
-            ref={moveableRef}
-            target={targets}
-            draggable={true}
-            onClickGroup={e => {
-                selectoRef.current!.click(e.inputEvent, e.inputTarget);
-            }}
-            onDragStart={ON_DRAG_START(frameMap)}
-            onDrag={ON_DRAG(frameMap)}
-            onDragGroupStart={ON_DRAG_GROUP_START(frameMap)}
-            onDragGroup={ON_DRAG_GROUP(frameMap)}
-        />
-        <Selecto
-            ref={selectoRef}
-            dragContainer={window}
-            selectableTargets={[".target"]}
-            hitRate={number("hitRate", 0)}
-            selectByClick={boolean("selectByClick", true)}
-            selectFromInside={boolean("selectFromInside", false)}
-            toggleContinueSelect={array("toggleContinueSelect", ["shift"])}
-            keyContainer={window}
-            onDragStart={(e: any) => {
-                const target = e.inputEvent.target;
-                if (
-                    moveableRef.current?.isMoveableElement(target)
-                    || targets!.some(t => t === target || t.contains(target))
-                ) {
-                    return false;
-                }
-                return;
-            }}
-            onSelect={e => {
-                setTargets(e.selected);
-            }}
-            onSelectEnd={e => {
-                setTimeout(() => {
-                    if (e.isDragStart) {
-                        e.inputEvent.preventDefault();
-                        moveableRef.current?.dragStart(e.inputEvent);
-                    }
-                });
-            }}
+            <div className="logo moveable" id="logo">
+                <img src="https://daybrush.com/selecto/images/256x256.png" className="selecto" />
+                <img src="https://daybrush.com/moveable/images/256x256.png" />
+            </div>
+            <h1>You can change the Moveable target in real time by selecting it.</h1>
+            <p className="description">You can drag and move targets and select them.</p>
+            <Moveable
+                ref={moveableRef}
+                target={targets}
+                draggable={true}
+                onClickGroup={e => {
+                    selectoRef.current!.click(e.inputEvent, e.inputTarget);
+                }}
+                onDragStart={ON_DRAG_START(frameMap)}
+                onDrag={ON_DRAG(frameMap)}
+                onDragGroupStart={ON_DRAG_GROUP_START(frameMap)}
+                onDragGroup={ON_DRAG_GROUP(frameMap)}
             />
-             <div className="elements selecto-area border">
+            <Selecto
+                ref={selectoRef}
+                dragContainer={window}
+                selectableTargets={[".target"]}
+                hitRate={number("hitRate", 0)}
+                selectByClick={boolean("selectByClick", true)}
+                selectFromInside={boolean("selectFromInside", false)}
+                toggleContinueSelect={array("toggleContinueSelect", ["shift"])}
+                keyContainer={window}
+                onDragStart={(e: any) => {
+                    const target = e.inputEvent.target;
+                    if (
+                        moveableRef.current?.isMoveableElement(target)
+                        || targets!.some(t => t === target || t.contains(target))
+                    ) {
+                        return false;
+                    }
+                    return;
+                }}
+                onSelect={e => {
+                    setTargets(e.selected);
+                }}
+                onSelectEnd={e => {
+                    setTimeout(() => {
+                        if (e.isDragStart) {
+                            e.inputEvent.preventDefault();
+                            moveableRef.current?.dragStart(e.inputEvent);
+                        }
+                    });
+                }}
+            />
+            <div className="elements selecto-area border">
                 {cubes.map(i => <div className="cube target" key={i}></div>)}
             </div>
             <div className="empty elements"></div>
         </div>
     </div>;
-}, {
-    preview: [
-    ],
-});
+}

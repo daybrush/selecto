@@ -9,6 +9,23 @@ import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from "../preview/Welcom.pr
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
 story.add("Select in real time.", () => {
+    return <App />;
+}, {
+    preview: [
+        // {
+        //     tab: "HTML",
+        //     template: NORMAL_HTML_TEMPLATE,
+        //     language: "html",
+        // },
+        {
+            tab: "CSS",
+            template: WELCOME_CSS_PREVIEW,
+            language: "css",
+        },
+    ],
+});
+
+function App() {
     const cubes: number[] = [];
 
     for (let i = 0; i < 64; ++i) {
@@ -43,17 +60,4 @@ story.add("Select in real time.", () => {
             <div className="empty elements"></div>
         </div>
     </div>;
-}, {
-    preview: [
-        // {
-        //     tab: "HTML",
-        //     template: NORMAL_HTML_TEMPLATE,
-        //     language: "html",
-        // },
-        {
-            tab: "CSS",
-            template: WELCOME_CSS_PREVIEW,
-            language: "css",
-        },
-    ],
-});
+}

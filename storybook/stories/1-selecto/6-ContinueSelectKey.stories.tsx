@@ -1,14 +1,30 @@
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
 import { withKnobs, number, boolean, array } from "@storybook/addon-knobs";
-import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
+import { withPreview } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import "../index.css";
-import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from '../preview/Welcom.preview';
+import { WELCOME_CSS_PREVIEW } from "../preview/Welcom.preview";
 
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
 story.add("Continue to select through the toggle key.", () => {
+    return <App />;
+}, {
+    preview: [
+        // {
+        //     tab: "HTML",
+        //     template: NORMAL_HTML_TEMPLATE,
+        //     language: "html",
+        // },
+        {
+            tab: "CSS",
+            template: WELCOME_CSS_PREVIEW,
+            language: "css",
+        },
+    ],
+});
+function App() {
     const cubes: number[] = [];
 
     for (let i = 0; i < 64; ++i) {
@@ -44,17 +60,4 @@ story.add("Continue to select through the toggle key.", () => {
             <div className="empty elements"></div>
         </div>
     </div>;
-}, {
-    preview: [
-        // {
-        //     tab: "HTML",
-        //     template: NORMAL_HTML_TEMPLATE,
-        //     language: "html",
-        // },
-        {
-            tab: "CSS",
-            template: WELCOME_CSS_PREVIEW,
-            language: "css",
-        },
-    ],
-});
+}

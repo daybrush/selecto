@@ -50,8 +50,10 @@ story.add("Welcome", () => {
                 1.2: {
                     "background-color": "#4af",
                 },
-            }
+            },
         }, {
+            easing: "ease-in-out",
+            iterationCount: "infinite",
             selector: true,
         }).playCSS();
     }, []);

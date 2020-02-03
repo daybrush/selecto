@@ -34,9 +34,13 @@ body {
     width: 320px;
     text-align: center;
 }
+.moveable .selecto {
+    padding: 16px;
+}
 .logo img {
     position: relative;
     height: 100%;
+    box-sizing: border-box;
 }
 .cube {
     display: inline-block;
