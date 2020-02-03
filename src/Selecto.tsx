@@ -407,7 +407,7 @@ class Selecto extends Component {
     }
     private onDragStart = (e: OnDragEvent, clickedTarget?: Element) => {
         const { datas, clientX, clientY, inputEvent } = e;
-        const { continueSelect, selectFromInside } = this.options;
+        const { continueSelect, selectFromInside, selectByClick } = this.options;
         const selectableTargets = this.getSelectableTargets();
         const selectableRects = selectableTargets.map(target => {
             const rect = target.getBoundingClientRect();
@@ -435,12 +435,16 @@ class Selecto extends Component {
         );
 
         const hasInsideTargets = firstPassedTargets.length > 0;
+        const isPreventSelect = !selectFromInside && hasInsideTargets;
+
+        if (isPreventSelect && !selectByClick) {
+            return false;
+        }
         if (!continueSelect) {
             this.selectedTargets = [];
         } else {
             firstPassedTargets = this.getSelectedTargets(firstPassedTargets);
         }
-
         const type = inputEvent.type;
         const isTrusted = type === "mousedown" || type === "touchstart";
         /**
@@ -482,7 +486,7 @@ class Selecto extends Component {
         datas.selectedTargets = firstPassedTargets;
         this.target.style.cssText += `left:${clientX}px;top:${clientY}px`;
 
-        if (!selectFromInside && hasInsideTargets) {
+        if (isPreventSelect && selectByClick) {
             this.onDragEnd(e);
             inputEvent.preventDefault();
             return false;
