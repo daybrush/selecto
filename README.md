@@ -103,7 +103,7 @@ This project is [MIT](https://github.com/daybrush/selecto/blob/master/LICENSE) l
 ```
 MIT License
 
-Copyright (c) 2019 Daybrush
+Copyright (c) 2020 Daybrush
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

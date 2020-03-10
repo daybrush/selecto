@@ -769,7 +769,7 @@ var app = (function () {
     }
 
     /*
-    Copyright (c) 2019 Daybrush
+    Copyright (c) 2020 Daybrush
     name: @daybrush/drag
     license: MIT
     author: Daybrush
@@ -1240,7 +1240,7 @@ var app = (function () {
     }();
 
     /*
-    Copyright (c) 2019 Daybrush
+    Copyright (c) 2020 Daybrush
     name: framework-utils
     license: MIT
     author: Daybrush
@@ -1892,7 +1892,7 @@ var app = (function () {
           // check codes
           var foundNamedKey = codes[nameOrCode.toLowerCase()];
           if (foundNamedKey) { return foundNamedKey === keyCode; }
-        
+
           // check aliases
           var foundNamedKey = aliases[nameOrCode.toLowerCase()];
           if (foundNamedKey) { return foundNamedKey === keyCode; }
@@ -2336,7 +2336,7 @@ var app = (function () {
     }(Component);
 
     /*
-    Copyright (c) 2019 Daybrush
+    Copyright (c) 2020 Daybrush
     name: css-styled
     license: MIT
     author: Daybrush
@@ -2437,7 +2437,7 @@ var app = (function () {
     }
 
     /*
-    Copyright (c) 2019 Daybrush
+    Copyright (c) 2020 Daybrush
     name: selecto
     license: MIT
     author: Daybrush
@@ -3612,7 +3612,7 @@ var app = (function () {
     	};
 
     	$$self.$inject_state = $$props => {
-    		
+
     	};
 
     	return [func, func_1, func_2, func_3];
