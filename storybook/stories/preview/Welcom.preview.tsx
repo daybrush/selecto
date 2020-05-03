@@ -58,7 +58,7 @@ export default function App() {
                 <div className="cube"></div>
                 <Scene iterationCount="infinite" easing={"ease-out"} keyframes={keyframes} css={true} autoplay>
                     <div className="selection"></div>
-                    <div className="cursor"><img src="https://daybrush.com/selecto/images/cursor.png" /></div>
+                    <div className="cursor"><img alt="logo" src="https://daybrush.com/selecto/images/cursor.png" /></div>
                 </Scene>
             </div>
             <h1>Selecto.js</h1>

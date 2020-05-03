@@ -1,10 +1,11 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { withKnobs, number, boolean } from "@storybook/addon-knobs";
-import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
+import { withPreview, DEFAULT_REACT_CODESANDBOX, previewTemplate, raw, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import "../index.css";
 import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from "../preview/Welcom.preview";
+import { REACT_SELCTO_TEMPLATE, SELECT_START_EVENT_TEMPLATE, SELECT_END_EVENT_TEMPLATE, HTML_TEMPLATE, REACT_TEMPLATE, VANILLA_TEMPLATE } from "../../teamplate/SelectoTemlate";
 
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
@@ -12,15 +13,40 @@ story.add("Only select at start and end.", () => {
     return <App />;
 }, {
     preview: [
-        // {
-        //     tab: "HTML",
-        //     template: NORMAL_HTML_TEMPLATE,
-        //     language: "html",
-        // },
+        {
+            tab: "HTML",
+            template: HTML_TEMPLATE,
+            language: "html",
+            knobs: {
+                title: `Only select at start and end.`,
+                description: `You can select the target through the <strong>selectStart</strong> and <strong>selectEnd</strong> events.`,
+            },
+        },
         {
             tab: "CSS",
             template: WELCOME_CSS_PREVIEW,
             language: "css",
+        },
+        {
+            tab: "Vanilla",
+            template: VANILLA_TEMPLATE(
+                ["hitRate", "selectByClick", "selectFromInside"],
+                {
+                    selectStart: SELECT_START_EVENT_TEMPLATE,
+                    selectEnd: SELECT_END_EVENT_TEMPLATE,
+                },
+            ),
+            language: "js",
+            codesandbox: DEFAULT_VANILLA_CODESANDBOX(["selecto"]),
+        },
+        {
+            tab: "React",
+            template: REACT_TEMPLATE(
+                ["hitRate", "selectByClick", "selectFromInside"],
+                [SELECT_START_EVENT_TEMPLATE, SELECT_END_EVENT_TEMPLATE],
+            ),
+            language: "jsx",
+            codesandbox: DEFAULT_REACT_CODESANDBOX(["react-selecto"]),
         },
     ],
 });
@@ -34,11 +60,10 @@ function App() {
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">
-                <img src="https://daybrush.com/selecto/images/256x256.png" />
+                <img alt="logo" src="https://daybrush.com/selecto/images/256x256.png" />
             </div>
             <h1>Only select at start and end.</h1>
             <p className="description">You can select the target through the <strong>selectStart</strong> and <strong>selectEnd</strong> events.</p>
-
             <Selecto
                 dragContainer={window}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}

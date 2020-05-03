@@ -1,10 +1,11 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { withKnobs, number, boolean } from "@storybook/addon-knobs";
-import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
+import { withPreview, DEFAULT_REACT_CODESANDBOX, previewTemplate, raw, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import "../index.css";
 import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from "../preview/Welcom.preview";
+import { REACT_SELCTO_TEMPLATE, SELECT_EVENT_TEMPLATE, HTML_TEMPLATE, REACT_TEMPLATE, VANILLA_TEMPLATE } from "../../teamplate/SelectoTemlate";
 
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
@@ -12,15 +13,39 @@ story.add("Select in real time.", () => {
     return <App />;
 }, {
     preview: [
-        // {
-        //     tab: "HTML",
-        //     template: NORMAL_HTML_TEMPLATE,
-        //     language: "html",
-        // },
+        {
+            tab: "HTML",
+            template: HTML_TEMPLATE,
+            language: "html",
+            knobs: {
+                title: `Select in real time.`,
+                description: `The <strong>select</strong> event allows you to select a target in real time.`,
+            },
+        },
         {
             tab: "CSS",
             template: WELCOME_CSS_PREVIEW,
             language: "css",
+        },
+        {
+            tab: "Vanilla",
+            template: VANILLA_TEMPLATE(
+                ["hitRate", "selectByClick", "selectFromInside"],
+                {
+                    select: SELECT_EVENT_TEMPLATE,
+                },
+            ),
+            language: "js",
+            codesandbox: DEFAULT_VANILLA_CODESANDBOX(["selecto"]),
+        },
+        {
+            tab: "React",
+            template: REACT_TEMPLATE(
+                ["hitRate", "selectByClick", "selectFromInside"],
+                [SELECT_EVENT_TEMPLATE],
+            ),
+            language: "jsx",
+            codesandbox: DEFAULT_REACT_CODESANDBOX(["react-selecto"]),
         },
     ],
 });
@@ -34,7 +59,7 @@ function App() {
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">
-                <img src="https://daybrush.com/selecto/images/256x256.png" />
+                <img alt="logo" src="https://daybrush.com/selecto/images/256x256.png" />
             </div>
             <h1>Select in real time.</h1>
             <p className="description">The <strong>select</strong> event allows you to select a target in real time.</p>
@@ -54,7 +79,7 @@ function App() {
                 selectByClick={boolean("selectByClick", true)}
                 selectFromInside={boolean("selectFromInside", true)}
             ></Selecto>
-             <div className="elements selecto-area" id="selecto1">
+            <div className="elements selecto-area" id="selecto1">
                 {cubes.map(i => <div className="cube" key={i}></div>)}
             </div>
             <div className="empty elements"></div>

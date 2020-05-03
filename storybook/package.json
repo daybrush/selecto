@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "storybook": "start-storybook -p 6006",
-    "build": "npm i react-selecto@latest react-infinite-viewer@latest && build-storybook -o ../demo/storybook"
+    "build": "npm i react-selecto@latest react-infinite-viewer@latest && build-storybook -o ../demo/storybook",
+    "refresh": "npm i react-selecto@latest && npm run storybook"
   },
   "author": "",
   "license": "MIT",
@@ -13,9 +14,8 @@
     "raw-loader": "^4.0.0",
     "react-infinite-viewer": "^0.1.5",
     "react-moveable": "^0.16.6",
-    "react-scenejs": "^1.1.0",
-    "react-selecto": "0.0.16",
-    "storybook-addon-preview": "^0.9.0"
+    "react-selecto": "^0.1.0",
+    "storybook-addon-preview": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -25,13 +25,13 @@
     "@storybook/addon-links": "^5.2.6",
     "@storybook/addon-storysource": "^5.2.6",
     "@storybook/addon-viewport": "^5.2.6",
-    "@storybook/addons": "^5.2.6",
-    "@storybook/react": "^5.2.6",
+    "@storybook/addons": "^5.3.17",
+    "@storybook/react": "^5.3.17",
     "@types/node": "^12.12.7",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
     "react-docgen-typescript-loader": "^3.3.0",
-    "scenejs": "^1.1.5",
+    "scenejs": "^1.1.6",
     "storybook-addon-jsx": "^7.1.13",
     "ts-node": "^8.5.0",
     "typescript": "^3.7.2"

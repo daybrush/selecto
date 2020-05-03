@@ -1,10 +1,11 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { withKnobs, number, boolean, array } from "@storybook/addon-knobs";
-import { withPreview } from "storybook-addon-preview";
+import { withPreview, previewTemplate, DEFAULT_REACT_CODESANDBOX, raw, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import "../index.css";
 import { WELCOME_CSS_PREVIEW } from "../preview/Welcom.preview";
+import { REACT_SELCTO_TEMPLATE, SELECT_EVENT_TEMPLATE, HTML_TEMPLATE, REACT_TEMPLATE, VANILLA_TEMPLATE } from "../../teamplate/SelectoTemlate";
 
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
@@ -12,15 +13,39 @@ story.add("Continue to select through the toggle key.", () => {
     return <App />;
 }, {
     preview: [
-        // {
-        //     tab: "HTML",
-        //     template: NORMAL_HTML_TEMPLATE,
-        //     language: "html",
-        // },
+        {
+            tab: "HTML",
+            template: HTML_TEMPLATE,
+            language: "html",
+            knobs: {
+                title: `Continue to select through the toggle key.`,
+                description: `The toggle key allows you to select continuously with the currently selected target.`,
+            },
+        },
         {
             tab: "CSS",
             template: WELCOME_CSS_PREVIEW,
             language: "css",
+        },
+        {
+            tab: "Vanilla",
+            template: VANILLA_TEMPLATE(
+                ["hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect"],
+                {
+                    select: SELECT_EVENT_TEMPLATE,
+                },
+            ),
+            language: "js",
+            codesandbox: DEFAULT_VANILLA_CODESANDBOX(["selecto"]),
+        },
+        {
+            tab: "React",
+            template: REACT_TEMPLATE(
+                ["hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect"],
+                [SELECT_EVENT_TEMPLATE],
+            ),
+            language: "jsx",
+            codesandbox: DEFAULT_REACT_CODESANDBOX(["react-selecto"]),
         },
     ],
 });
@@ -33,7 +58,7 @@ function App() {
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">
-                <img src="https://daybrush.com/selecto/images/256x256.png" />
+                <img alt="logo" src="https://daybrush.com/selecto/images/256x256.png" />
             </div>
             <h1>Continue to select through the toggle key.</h1>
             <p className="description">The toggle key allows you to select continuously with the currently selected target.</p>

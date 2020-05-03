@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
 import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import Scene from "scenejs";
 import "../index.css";
-import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from '../preview/Welcom.preview';
+import { WELCOME_CSS_PREVIEW, WELCOME_REACT_PREVIEW } from "../preview/Welcom.preview";
 
 const story = storiesOf("Selecto", module).addDecorator(withPreview);
 story.add("Welcome", () => {
@@ -25,7 +25,7 @@ story.add("Welcome", () => {
                     width: "100px",
                     height: "100px",
                 },
-                3: {}
+                3: {},
             },
             "#logo .cursor": {
                 0: {
@@ -69,7 +69,7 @@ story.add("Welcome", () => {
                 <div className="cube"></div>
                 <div className="cube"></div>
                 <div className="selection"></div>
-                <div className="cursor"><img src="https://daybrush.com/selecto/images/cursor.png" /></div>
+                <div className="cursor"><img alt="logo" src="https://daybrush.com/selecto/images/cursor.png" /></div>
             </div>
             <h1>Selecto.js</h1>
             <p className="description">Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.</p>
