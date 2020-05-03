@@ -50,7 +50,7 @@ export class LitSelecto extends LitElement {
         this.selecto.destroy();
     }
 }
-export interface LitSelecto extends SelectoOptions, MethodInterface<SelectoMethods, VanillaSelecto, LitSelecto, { "click": "clickSelecto" }> { }
+export interface LitSelecto extends SelectoOptions, MethodInterface<SelectoMethods, VanillaSelecto, LitSelecto> { }
 
 declare global {
     interface HTMLElementTagNameMap {

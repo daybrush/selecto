@@ -75,9 +75,11 @@ class Selecto extends Component {
     /**
      * You can set the currently selected targets.
      */
-    public setSelectedTargets(selectedTargets: Array<HTMLElement | SVGElement>): void {
+    public setSelectedTargets(selectedTargets: Array<HTMLElement | SVGElement>): this {
         this.selectedTargets = selectedTargets;
         this.differ = new ChildrenDiffer(selectedTargets);
+
+        return this;
     }
 
     public setKeyContainer(keyContainer: HTMLElement | Document | Window) {
@@ -118,9 +120,11 @@ class Selecto extends Component {
     }
 
     /**
-     *
+     * External click or mouse events can be applied to the selecto.
+     * @params - Extenal click or mouse event
+     * @params - Specify the clicked target directly.
      */
-    public click(e: MouseEvent | TouchEvent, clickedTarget?: Element): void {
+    public clickTarget(e: MouseEvent | TouchEvent, clickedTarget?: Element): this {
         const { clientX, clientY } = getClient(e);
         const dragEvent: OnDragEvent = {
             datas: {},
@@ -131,6 +135,7 @@ class Selecto extends Component {
         if (this.onDragStart(dragEvent, clickedTarget)) {
             this.onDragEnd(dragEvent);
         }
+        return this;
     }
     private setKeyController() {
         const { keyContainer, toggleContinueSelect } = this.options;

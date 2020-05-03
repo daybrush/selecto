@@ -74,6 +74,6 @@ export const EVENTS = [
  * @memberof Selecto
  */
 export const METHODS = [
-    "click",
+    "clickTarget",
     "setSelectedTargets",
 ] as const;

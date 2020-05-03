@@ -32,7 +32,8 @@
 $ npm install lit-selecto
 ```
 
-### Template
+## 🚀 How to use
+* The event name is prefixed with **lit**.
 ```js
 import "lit-selecto";
 import { render } from "lit-html":
@@ -48,16 +49,16 @@ render(html`
     .toggleContinueSelect=${"shift"}
     .keyContainer=${window}
     .hitRate=${100}
-    @dragStart=${e => {
+    @litDragStart=${({ detail: e}) => {
         console.log(e);
     }}
-    @selectStart=${e => {
+    @litSelectStart=${({ detail: e}) => {
         console.log(e);
     }}
-    @select=${e => {
+    @litSelect=${({ detail: e}) => {
         console.log(e);
     }}
-    @selectEnd=${e => {
+    @litSelectEnd=${({ detail: e}) => {
         console.log(e);
     }}
 ></lit-selecto>
