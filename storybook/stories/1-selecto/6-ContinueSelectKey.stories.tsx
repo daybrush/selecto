@@ -3,9 +3,7 @@ import { storiesOf } from "@storybook/react";
 import { withKnobs, number, boolean, array } from "@storybook/addon-knobs";
 import { withPreview, previewTemplate, DEFAULT_REACT_CODESANDBOX, raw, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
-import "../index.css";
-import { WELCOME_CSS_PREVIEW } from "../preview/Welcom.preview";
-import { REACT_SELCTO_TEMPLATE, SELECT_EVENT_TEMPLATE, HTML_TEMPLATE, REACT_TEMPLATE, VANILLA_TEMPLATE } from "../../teamplate/SelectoTemlate";
+import { REACT_SELCTO_TEMPLATE, SELECT_EVENT_TEMPLATE, HTML_TEMPLATE, REACT_TEMPLATE, VANILLA_TEMPLATE, CSS_TEMPLATE } from "../../template/SelectoTemlate";
 
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
@@ -24,7 +22,7 @@ story.add("Continue to select through the toggle key.", () => {
         },
         {
             tab: "CSS",
-            template: WELCOME_CSS_PREVIEW,
+            template: CSS_TEMPLATE,
             language: "css",
         },
         {

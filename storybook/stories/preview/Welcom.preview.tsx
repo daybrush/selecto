@@ -1,6 +1,3 @@
-export {
-    default as WELCOME_CSS_PREVIEW,
-} from "!!raw-loader!../index.css";
 
 export const WELCOME_REACT_PREVIEW = `
 import * as React from "react";
