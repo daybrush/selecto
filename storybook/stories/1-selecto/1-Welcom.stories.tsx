@@ -3,6 +3,7 @@ import { storiesOf } from "@storybook/react";
 import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import Scene from "scenejs";
+import "../welcom.css";
 import "../../template/index.css";
 import { WELCOME_REACT_PREVIEW } from "../preview/Welcom.preview";
 import { CSS_TEMPLATE } from "../../template/SelectoTemlate";

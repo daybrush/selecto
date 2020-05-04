@@ -1,5 +1,5 @@
-import { previewTemplate, JSX_PROPS_TEMPLATE, previewFunction, CODE_TYPE, codeIndent, raw, DEFAULT_PROPS_TEMPLATE, ANGULAR_PROPS_TEMPLATE, VUE_PROPS_TEMPLATE, LIT_PROPS_TEMPLATE, convertGlobalCSS } from "storybook-addon-preview";
-import { camelize } from "@daybrush/utils";
+import { previewTemplate, JSX_PROPS_TEMPLATE, previewFunction, CODE_TYPE, codeIndent, raw, DEFAULT_PROPS_TEMPLATE, ANGULAR_PROPS_TEMPLATE, VUE_PROPS_TEMPLATE, LIT_PROPS_TEMPLATE, convertGlobalCSS, DEFAULT_VANILLA_CODESANDBOX, DEFAULT_REACT_CODESANDBOX, DEFAULT_PREACT_CODESANDBOX, DEFAULT_ANGULAR_CODESANDBOX, DEFAULT_VUE_CODESANDBOX, DEFAULT_LIT_CODESANDBOX, DEFAULT_SVELTE_CODESANDBOX } from "storybook-addon-preview";
+import { camelize, IObject } from "@daybrush/utils";
 
 import CSS_TEMPLATE from "!!raw-loader!./index.css";
 export const HTML_TEMPLATE = previewTemplate`
@@ -74,7 +74,7 @@ export const LIT_HTML_SELCTO_TEMPLATE = (props: string[], eventNames: any[], eve
                 .dragContainer=${"$"}{window}
                 .selectableTargets=${"$"}{[".selecto-area .cube"]}
 ${LIT_PROPS_TEMPLATE(props, { indent: 16 })}
-                ${eventNames.map((name, i) => `@${camelize(`lit ${name}`)}=${"$"}{${codeIndent(events[i](CODE_TYPE.CUSTOM_EVENT_ARROW, "react"), { indent : 16 })}}`).join("\n            ")}
+                ${eventNames.map((name, i) => `@${camelize(`lit ${name}`)}=${"$"}{${codeIndent(events[i](CODE_TYPE.CUSTOM_EVENT_ARROW, "react"), { indent: 16 })}}`).join("\n            ")}
                 ></lit-selecto>
 `;
 export const SVELTE_SELCTO_TEMPLATE = (props: string[], eventNames: any[], events: any[]) => previewTemplate`        <Selecto
@@ -278,10 +278,10 @@ for (let i = 0; i < 64; ++i) {
 </script>
 <style>
     ${codeIndent(convertGlobalCSS(CSS_TEMPLATE, [
-        "li.selected strong",
-        ".selected a",
-        ".selected"
-    ]), { indent: 4 })}
+    "li.selected strong",
+    ".selected a",
+    ".selected"
+]), { indent: 4 })}
 </style>
 `;
 export const SVELTE_JSX_TEMPLATE = (props: any[], eventNames: any[], events: any[]) => previewTemplate`
@@ -303,3 +303,76 @@ ${SVELTE_SELCTO_TEMPLATE(props, eventNames, events)}
 </div>
 `;
 export { CSS_TEMPLATE };
+
+
+export const PREVIEWS_TEMPLATE = (props: any[], events: IObject<any>) => {
+    const keys = Object.keys(events);
+    const values = keys.map(key => events[key]);
+
+    return [
+        {
+            tab: "Vanilla",
+            template: VANILLA_TEMPLATE(props, events),
+            language: "js",
+            codesandbox: DEFAULT_VANILLA_CODESANDBOX(["selecto"]),
+        },
+        {
+            tab: "React",
+            template: REACT_TEMPLATE(props, values),
+            language: "jsx",
+            codesandbox: DEFAULT_REACT_CODESANDBOX(["react-selecto"]),
+        },
+        {
+            tab: "Preact",
+            template: REACT_TEMPLATE(props, values, true),
+            language: "jsx",
+            codesandbox: DEFAULT_PREACT_CODESANDBOX(["preact-selecto"]),
+        },
+        {
+            tab: "Angular",
+            description: "app.component.html",
+            template: ANGULAR_HTML_TEMPLATE(props, keys),
+            language: "markup",
+            codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["ngx-selecto"]),
+        },
+        {
+            tab: "Angular",
+            description: "app.component.ts",
+            template: ANGULAR_COMPONENT_TEMPLATE(values),
+            language: "ts",
+            codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["ngx-selecto"]),
+        },
+        {
+            tab: "Angular",
+            description: "app.component.ts",
+            template: ANGULAR_MODULE_TEMPLATE,
+            language: "ts",
+            codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["ngx-selecto"]),
+        },
+        {
+            tab: "Vue",
+            template: VUE_TEMPLATE(props, keys, values),
+            language: "html",
+            codesandbox: DEFAULT_VUE_CODESANDBOX(["vue-selecto"]),
+        },
+        {
+            tab: "Lit",
+            template: LIT_TEMPLATE(props, keys, values),
+            language: "ts",
+            codesandbox: DEFAULT_LIT_CODESANDBOX(["lit-selecto"]),
+        },
+        {
+            tab: "Svelte",
+            template: SVELTE_SCRIPT_TEMPLATE,
+            language: "html",
+            codesandbox: DEFAULT_SVELTE_CODESANDBOX(["svelte-selecto"]),
+        },
+        {
+            continue: true,
+            tab: "Svelte",
+            template: SVELTE_JSX_TEMPLATE(props, keys, values),
+            language: "tsx",
+            codesandbox: DEFAULT_SVELTE_CODESANDBOX(["svelte-selecto"]),
+        },
+    ];
+}

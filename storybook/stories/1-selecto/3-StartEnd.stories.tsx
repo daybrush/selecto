@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import { withKnobs, number, boolean } from "@storybook/addon-knobs";
 import { withPreview, DEFAULT_REACT_CODESANDBOX, previewTemplate, raw, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
-import { REACT_SELCTO_TEMPLATE, SELECT_START_EVENT_TEMPLATE, SELECT_END_EVENT_TEMPLATE, HTML_TEMPLATE, REACT_TEMPLATE, VANILLA_TEMPLATE, CSS_TEMPLATE } from "../../template/SelectoTemlate";
+import { REACT_SELCTO_TEMPLATE, SELECT_START_EVENT_TEMPLATE, SELECT_END_EVENT_TEMPLATE, HTML_TEMPLATE, REACT_TEMPLATE, VANILLA_TEMPLATE, CSS_TEMPLATE, PREVIEWS_TEMPLATE } from "../../template/SelectoTemlate";
 
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
@@ -25,27 +25,13 @@ story.add("Only select at start and end.", () => {
             template: CSS_TEMPLATE,
             language: "css",
         },
-        {
-            tab: "Vanilla",
-            template: VANILLA_TEMPLATE(
-                ["hitRate", "selectByClick", "selectFromInside"],
-                {
-                    selectStart: SELECT_START_EVENT_TEMPLATE,
-                    selectEnd: SELECT_END_EVENT_TEMPLATE,
-                },
-            ),
-            language: "js",
-            codesandbox: DEFAULT_VANILLA_CODESANDBOX(["selecto"]),
-        },
-        {
-            tab: "React",
-            template: REACT_TEMPLATE(
-                ["hitRate", "selectByClick", "selectFromInside"],
-                [SELECT_START_EVENT_TEMPLATE, SELECT_END_EVENT_TEMPLATE],
-            ),
-            language: "jsx",
-            codesandbox: DEFAULT_REACT_CODESANDBOX(["react-selecto"]),
-        },
+        ...PREVIEWS_TEMPLATE(
+            ["hitRate", "selectByClick", "selectFromInside"],
+            {
+                selectStart: SELECT_START_EVENT_TEMPLATE,
+                selectEnd: SELECT_END_EVENT_TEMPLATE,
+            },
+        ),
     ],
 });
 
