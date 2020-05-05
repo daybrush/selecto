@@ -50,38 +50,32 @@ export const SELECT_ONLY_END_EVENT_TEMPLATE = previewFunction(`function onSelect
 
 export const REACT_SELCTO_TEMPLATE = (props: string[], events: any[]) => previewTemplate`            <Selecto
                 dragContainer={window}
-                selectableTargets={[".selecto-area .cube"]}
-                ${events.map(e => codeIndent(e(CODE_TYPE.REACT_ARROW, "react"), { indent: 16 })).join("\n                ")}
 ${JSX_PROPS_TEMPLATE(props, { indent: 16 })}
+                ${events.map(e => codeIndent(e(CODE_TYPE.REACT_ARROW, "react"), { indent: 16 })).join("\n                ")}
             ></Selecto>
 `;
 export const AGULAR_HTML_SELCTO_TEMPLATE = (props: string[], events: any[]) => previewTemplate`        <ngx-selecto
-            dragContainer={window}
-            selectableTargets={[".selecto-area .cube"]}
-${ANGULAR_PROPS_TEMPLATE(props, { indent: 12 })}
-            ${events.map(name => `@${name}="${camelize(`on ${name}`)}($event)"`).join("\n            ")}
-        ></ngx-selecto>
-`;
+            [dragContainer]="window"
+${ANGULAR_PROPS_TEMPLATE(props, { indent: 12, wrap: "'" })}
+            ${events.map(name => `(${name})="${camelize(`on ${name}`)}($event)"`).join("\n            ")}
+        ></ngx-selecto>`;
 
 export const VUE_HTML_SELCTO_TEMPLATE = (props: string[], events: any[]) => previewTemplate`            <vue-selecto
                 v-bind:dragContainer='window'
-                v-bind:selectableTargets='[".selecto-area .cube"]'
-${VUE_PROPS_TEMPLATE(props, { indent: 16 })}
-                ${events.map(name => `@${name}="${camelize(`on ${name}`)}"`).join("\n            ")}
+${VUE_PROPS_TEMPLATE(props, { indent: 16, wrap: "'" })}
+                ${events.map(name => `@${name}="${camelize(`on ${name}`)}"`).join("\n                ")}
                 ></vue-selecto>
 `;
 export const LIT_HTML_SELCTO_TEMPLATE = (props: string[], eventNames: any[], events: any[]) => previewTemplate`            <lit-selecto
                 .dragContainer=${"$"}{window}
-                .selectableTargets=${"$"}{[".selecto-area .cube"]}
 ${LIT_PROPS_TEMPLATE(props, { indent: 16 })}
-                ${eventNames.map((name, i) => `@${camelize(`lit ${name}`)}=${"$"}{${codeIndent(events[i](CODE_TYPE.CUSTOM_EVENT_ARROW, "react"), { indent: 16 })}}`).join("\n            ")}
+                ${eventNames.map((name, i) => `@${camelize(`lit ${name}`)}=${"$"}{${codeIndent(events[i](CODE_TYPE.CUSTOM_EVENT_ARROW, "lit"), { indent: 16 })}}`).join("\n                ")}
                 ></lit-selecto>
 `;
 export const SVELTE_SELCTO_TEMPLATE = (props: string[], eventNames: any[], events: any[]) => previewTemplate`        <Selecto
             dragContainer={window}
-            selectableTargets={[".selecto-area .cube"]}
 ${JSX_PROPS_TEMPLATE(props, { indent: 12 })}
-            ${eventNames.map((name, i) => `on:${name}={${codeIndent(events[i](CODE_TYPE.CUSTOM_EVENT_ARROW, "svelte"), { indent: 12 })}}`).join("\n                ")}
+            ${eventNames.map((name, i) => `on:${name}={${codeIndent(events[i](CODE_TYPE.CUSTOM_EVENT_ARROW, "svelte"), { indent: 12 })}}`).join("\n            ")}
         ></Selecto>
 `;
 
@@ -100,7 +94,6 @@ container.querySelector(".selecto-area").innerHTML
 const selecto = new Selecto({
     container,
     dragContainer: window,
-    selectableTargets: [".selecto-area .cube"],
 ${DEFAULT_PROPS_TEMPLATE(props, { indent: 4 })},
 });
 
@@ -165,6 +158,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class AppComponent implements OnInit {
     cubes = [];
+    window = window;
     ngOnInit() {
         const cubes = [];
 

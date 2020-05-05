@@ -18,6 +18,7 @@ story.add("Select in real time.", () => {
             knobs: {
                 title: `Select in real time.`,
                 description: `The <strong>select</strong> event allows you to select a target in real time.`,
+                selectableTargets: [".selecto-area .cube"],
             },
         },
         {
@@ -26,7 +27,7 @@ story.add("Select in real time.", () => {
             language: "css",
         },
         ...PREVIEWS_TEMPLATE(
-            ["hitRate", "selectByClick", "selectFromInside"],
+            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside"],
             {
                 select: SELECT_EVENT_TEMPLATE,
             },

@@ -18,6 +18,7 @@ story.add("Only select at end.", () => {
             knobs: {
                 title: `Only select at end.`,
                 description: `You can select the target through the <strong>selectEnd</strong> event.`,
+                selectableTargets: [".selecto-area .cube"],
             },
         },
         {
@@ -26,7 +27,7 @@ story.add("Only select at end.", () => {
             language: "css",
         },
         ...PREVIEWS_TEMPLATE(
-            ["hitRate", "selectByClick", "selectFromInside"],
+            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside"],
             {
                 selectEnd: SELECT_ONLY_END_EVENT_TEMPLATE,
             },

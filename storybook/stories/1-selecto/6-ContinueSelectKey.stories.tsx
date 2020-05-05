@@ -18,6 +18,7 @@ story.add("Continue to select through the toggle key.", () => {
             knobs: {
                 title: `Continue to select through the toggle key.`,
                 description: `The toggle key allows you to select continuously with the currently selected target.`,
+                selectableTargets: [".selecto-area .cube"],
             },
         },
         {
@@ -26,7 +27,7 @@ story.add("Continue to select through the toggle key.", () => {
             language: "css",
         },
         ...PREVIEWS_TEMPLATE(
-            ["hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect"],
+            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect"],
             {
                 select: SELECT_EVENT_TEMPLATE,
             },

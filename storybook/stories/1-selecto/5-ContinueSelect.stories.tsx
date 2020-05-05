@@ -18,6 +18,7 @@ story.add("Continue to select", () => {
             knobs: {
                 title: `Continue to select.`,
                 description: `You can continue to select with the currently selected target.`,
+                selectableTargets: [".selecto-area .cube"],
             },
         },
         {
@@ -26,7 +27,7 @@ story.add("Continue to select", () => {
             language: "css",
         },
         ...PREVIEWS_TEMPLATE(
-            ["hitRate", "selectByClick", "selectFromInside", "continueSelect"],
+            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "continueSelect"],
             {
                 select: SELECT_EVENT_TEMPLATE,
             },
