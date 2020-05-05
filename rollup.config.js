@@ -6,26 +6,15 @@ export default builder([
         name: "Selecto",
         input: "src/index.umd.ts",
         output: "./dist/selecto.js",
+        resolve: true,
     },
     {
         name: "Selecto",
         input: "src/index.umd.ts",
         output: "./dist/selecto.min.js",
+        resolve: true,
         uglify: true,
 
-    },
-    {
-        name: "Selecto",
-        input: "src/index.umd.ts",
-        output: "./dist/selecto.pkgd.js",
-        resolve: true,
-    },
-    {
-        name: "Selecto",
-        input: "src/index.umd.ts",
-        output: "./dist/selecto.pkgd.min.js",
-        resolve: true,
-        uglify: true,
     },
     {
         input: "src/index.ts",

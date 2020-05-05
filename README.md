@@ -35,7 +35,7 @@ $ npm install selecto
 ### scripts
 
 ```html
-<script src="//daybrush.com/selecto/release/latest/dist/selecto.pkgd.min.js"></script>
+<script src="//daybrush.com/selecto/release/latest/dist/selecto.min.js"></script>
 ```
 
 ## 🚀 How to use
