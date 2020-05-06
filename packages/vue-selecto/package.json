@@ -1,6 +1,6 @@
 {
     "name": "vue-selecto",
-    "version": "0.1.1",
+    "version": "1.0.0",
     "types": "declaration/index.d.ts",
     "main": "dist/selecto.cjs.js",
     "module": "dist/selecto.esm.js",
@@ -30,7 +30,7 @@
     },
     "homepage": "https://daybrush.com/selecto",
     "dependencies": {
-        "selecto": "^0.1.0",
+        "selecto": "^1.0.0",
         "vue-property-decorator": "^8.1.0"
     },
     "devDependencies": {

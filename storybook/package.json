@@ -5,16 +5,17 @@
   "main": "index.js",
   "scripts": {
     "storybook": "start-storybook -p 6006",
-    "build": "npm i react-selecto@latest react-infinite-viewer@latest && build-storybook -o ../demo/storybook",
+    "build": "npm i react-selecto@latest react-infinite-viewer@latest && npm run build:storybook",
+    "build:storybook": "build-storybook -o ../demo/storybook",
     "refresh": "npm i react-selecto@latest && npm run storybook"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "raw-loader": "^4.0.0",
-    "react-infinite-viewer": "^0.1.5",
+    "react-infinite-viewer": "^0.3.0",
     "react-moveable": "^0.16.6",
-    "react-selecto": "^0.1.0",
+    "react-selecto": "^1.0.0",
     "storybook-addon-preview": "^1.1.1-rc2"
   },
   "devDependencies": {

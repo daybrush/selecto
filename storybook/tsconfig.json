@@ -18,7 +18,6 @@
             "src",
             "stories"
         ],
-        "baseUrl": "src",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
@@ -32,11 +31,11 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },
-    // "include": [
-    //     "src/**/*"
-    // ],
+    "include": [
+        "./"
+    ],
     "exclude": [
-        "node_modules",
+        "/node_modules/",
         "build",
         "scripts"
     ]

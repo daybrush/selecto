@@ -132,24 +132,4 @@ story.add("Welcome", () => {
             <div className="empty elements"></div>
         </div>
     </div>;
-}, {
-    preview: [
-        // {
-        //     tab: "HTML",
-        //     template: NORMAL_HTML_TEMPLATE,
-        //     language: "html",
-        // },
-        {
-            tab: "CSS",
-            template: CSS_TEMPLATE,
-            language: "css",
-        },
-        {
-            tab: "React",
-            template: WELCOME_REACT_PREVIEW,
-            language: "tsx",
-            copy: true,
-            codesandbox: DEFAULT_REACT_CODESANDBOX(["react-selecto", "react-scenejs"]),
-        },
-    ],
 });

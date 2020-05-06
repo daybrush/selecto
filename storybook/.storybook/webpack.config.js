@@ -3,6 +3,7 @@ const path = require("path");
 module.exports = ({ config }) => {
     config.module.rules.push({
         test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
         use: [
             {
                 loader: require.resolve('awesome-typescript-loader'),

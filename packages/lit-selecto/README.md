@@ -34,6 +34,8 @@ $ npm install lit-selecto
 
 ## 🚀 How to use
 * The event name is prefixed with **lit**.
+* `click`, `scrollBy`, `scrollTo` method names is suffixed with **Viewer** (`clickViewer`, `scrollByViewer`, `scrollToViewer`)
+
 ```js
 import "lit-selecto";
 import { render } from "lit-html":

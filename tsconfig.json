@@ -17,5 +17,8 @@
   },
   "include": [
     "./src/**/*.ts", "src/Selecto.tsx"
+  ],
+  "exclude": [
+    "./storybook"
   ]
 }
