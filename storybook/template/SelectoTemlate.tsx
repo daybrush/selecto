@@ -1,4 +1,10 @@
-import { previewTemplate, JSX_PROPS_TEMPLATE, previewFunction, CODE_TYPE, codeIndent, raw, DEFAULT_PROPS_TEMPLATE, ANGULAR_PROPS_TEMPLATE, VUE_PROPS_TEMPLATE, LIT_PROPS_TEMPLATE, convertGlobalCSS, DEFAULT_VANILLA_CODESANDBOX, DEFAULT_REACT_CODESANDBOX, DEFAULT_PREACT_CODESANDBOX, DEFAULT_ANGULAR_CODESANDBOX, DEFAULT_VUE_CODESANDBOX, DEFAULT_LIT_CODESANDBOX, DEFAULT_SVELTE_CODESANDBOX } from "storybook-addon-preview";
+import {
+    previewTemplate, JSX_PROPS_TEMPLATE, previewFunction, CODE_TYPE,
+    codeIndent, raw, DEFAULT_PROPS_TEMPLATE, ANGULAR_PROPS_TEMPLATE, VUE_PROPS_TEMPLATE,
+    LIT_PROPS_TEMPLATE, convertGlobalCSS, DEFAULT_VANILLA_CODESANDBOX, DEFAULT_REACT_CODESANDBOX,
+    DEFAULT_PREACT_CODESANDBOX, DEFAULT_ANGULAR_CODESANDBOX,
+    DEFAULT_VUE_CODESANDBOX, DEFAULT_LIT_CODESANDBOX, DEFAULT_SVELTE_CODESANDBOX
+} from "storybook-addon-preview";
 import { camelize, IObject } from "@daybrush/utils";
 
 import CSS_TEMPLATE from "!!raw-loader!./index.css";
@@ -49,36 +55,35 @@ export const SELECT_ONLY_END_EVENT_TEMPLATE = previewFunction(`function onSelect
 }`);
 
 export const REACT_SELCTO_TEMPLATE = (props: string[], events: any[]) => previewTemplate`            <Selecto
-                dragContainer={window}
+                dragContainer={".elements"}
 ${JSX_PROPS_TEMPLATE(props, { indent: 16 })}
                 ${events.map(e => codeIndent(e(CODE_TYPE.REACT_ARROW, "react"), { indent: 16 })).join("\n                ")}
             ></Selecto>
 `;
 export const AGULAR_HTML_SELCTO_TEMPLATE = (props: string[], events: any[]) => previewTemplate`        <ngx-selecto
-            [dragContainer]="window"
+            dragContainer=".elements"
 ${ANGULAR_PROPS_TEMPLATE(props, { indent: 12, wrap: "'" })}
             ${events.map(name => `(${name})="${camelize(`on ${name}`)}($event)"`).join("\n            ")}
         ></ngx-selecto>`;
 
 export const VUE_HTML_SELCTO_TEMPLATE = (props: string[], events: any[]) => previewTemplate`            <vue-selecto
-                v-bind:dragContainer='window'
+                dragContainer=".elements"
 ${VUE_PROPS_TEMPLATE(props, { indent: 16, wrap: "'" })}
                 ${events.map(name => `@${name}="${camelize(`on ${name}`)}"`).join("\n                ")}
                 ></vue-selecto>
 `;
 export const LIT_HTML_SELCTO_TEMPLATE = (props: string[], eventNames: any[], events: any[]) => previewTemplate`            <lit-selecto
-                .dragContainer=${"$"}{window}
+                .dragContainer=${"$"}{".elements"}
 ${LIT_PROPS_TEMPLATE(props, { indent: 16 })}
                 ${eventNames.map((name, i) => `@${camelize(`lit ${name}`)}=${"$"}{${codeIndent(events[i](CODE_TYPE.CUSTOM_EVENT_ARROW, "lit"), { indent: 16 })}}`).join("\n                ")}
                 ></lit-selecto>
 `;
 export const SVELTE_SELCTO_TEMPLATE = (props: string[], eventNames: any[], events: any[]) => previewTemplate`        <Selecto
-            dragContainer={window}
+            dragContainer={".elements"}
 ${JSX_PROPS_TEMPLATE(props, { indent: 12 })}
             ${eventNames.map((name, i) => `on:${name}={${codeIndent(events[i](CODE_TYPE.CUSTOM_EVENT_ARROW, "svelte"), { indent: 12 })}}`).join("\n            ")}
         ></Selecto>
 `;
-
 
 export const VANILLA_TEMPLATE = (props: any[], events: object) => previewTemplate`
 import Selecto from "selecto";
@@ -86,15 +91,15 @@ import Selecto from "selecto";
 const container = document.querySelector(".container");
 const cubes: number[] = [];
 
-for (let i = 0; i < 64; ++i) {
+for (let i = 0; i < 60; ++i) {
     cubes.push(i);
 }
 container.querySelector(".selecto-area").innerHTML
     = cubes.map(i => ${"`"}<div class="cube"></div>${"`"}).join("");
 const selecto = new Selecto({
     container,
-    dragContainer: window,
-${DEFAULT_PROPS_TEMPLATE(props, { indent: 4 })},
+    dragContainer: ".elements",
+${DEFAULT_PROPS_TEMPLATE(props, { indent: 4 })}
 });
 
 selecto${Object.keys(events).map(name => `.on("${name}", ${events[name](CODE_TYPE.ARROW, "vanilla")})`).join("")};
@@ -111,7 +116,7 @@ import Selecto from "react-selecto";
 export default function App() {
     const cubes = [];
 
-    for (let i = 0; i < 64; ++i) {
+    for (let i = 0; i < 60; ++i) {
         cubes.push(i);
     }
     return <div className="app">
@@ -146,7 +151,6 @@ ${AGULAR_HTML_SELCTO_TEMPLATE(props, events)}
     </div>
 </div>`;
 
-
 export const ANGULAR_COMPONENT_TEMPLATE = (
     events: any[],
 ) => previewTemplate`
@@ -158,11 +162,10 @@ import { Component, OnInit } from "@angular/core";
 })
 export class AppComponent implements OnInit {
     cubes = [];
-    window = window;
     ngOnInit() {
         const cubes = [];
 
-        for (let i = 0; i < 64; ++i) {
+        for (let i = 0; i < 60; ++i) {
             cubes.push(i);
         }
         this.cubes = cubes;
@@ -184,8 +187,6 @@ import { NgxSelectoModule } from "ngx-selecto";
   bootstrap: [AppComponent]
 })
 export class AppModule {}`;
-
-
 
 export const VUE_TEMPLATE = (props: any[], eventNames: any[], events: any[]) => previewTemplate`
 <template>
@@ -217,12 +218,11 @@ export default {
     data() {
         const cubes = [];
 
-        for (let i = 0; i < 64; ++i) {
+        for (let i = 0; i < 60; ++i) {
             cubes.push(i);
         }
         return {
             cubes,
-            window,
         };
     },
     methods: {
@@ -231,15 +231,13 @@ export default {
 };
 </script>`;
 
-
-
 export const LIT_TEMPLATE = (props: any[], eventNames: any[], events: any[]) => previewTemplate`
 import { html, render } from "lit-html";
 import "lit-selecto";
 
 const cubes = [];
 
-for (let i = 0; i < 64; ++i) {
+for (let i = 0; i < 60; ++i) {
     cubes.push(i);
 }
 render(html${"`"}
@@ -258,7 +256,6 @@ ${LIT_HTML_SELCTO_TEMPLATE(props, eventNames, events)}
         </div>
     </div>${"`"}, document.querySelector("#app"));`;
 
-
 export const SVELTE_SCRIPT_TEMPLATE = `
 <script>
 import Selecto from "svelte-selecto";
@@ -266,7 +263,7 @@ import Selecto from "svelte-selecto";
 
 const cubes = [];
 
-for (let i = 0; i < 64; ++i) {
+for (let i = 0; i < 60; ++i) {
     cubes.push(i);
 }
 </script>
@@ -274,7 +271,7 @@ for (let i = 0; i < 64; ++i) {
     ${codeIndent(convertGlobalCSS(CSS_TEMPLATE, [
     "li.selected strong",
     ".selected a",
-    ".selected"
+    ".selected",
 ]), { indent: 4 })}
 </style>
 `;
@@ -297,7 +294,6 @@ ${SVELTE_SELCTO_TEMPLATE(props, eventNames, events)}
 </div>
 `;
 export { CSS_TEMPLATE };
-
 
 export const PREVIEWS_TEMPLATE = (props: any[], events: IObject<any>) => {
     const keys = Object.keys(events);
@@ -369,4 +365,4 @@ export const PREVIEWS_TEMPLATE = (props: any[], events: IObject<any>) => {
             codesandbox: DEFAULT_SVELTE_CODESANDBOX(["svelte-selecto"]),
         },
     ];
-}
+};

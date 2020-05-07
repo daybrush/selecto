@@ -49,15 +49,15 @@
     font-size: 14px;
 }
 
-.elements ul, .elements ol {
+.welcome-elements ul, .welcome-elements ol {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-.elements li, .elements li a {
+.welcome-elements li, .welcome-elements li a {
     color: #555;
 }
-.elements li {
+.welcome-elements li {
     padding: 0;
     margin: 0;
     list-style: none;
@@ -66,11 +66,11 @@
     --color: #333;
     font-weight: bold;
 }
-.elements li strong, .description strong {
+.welcome-elements li strong, .description strong {
     padding: 3px 5px;
     border: 1px solid #333;
 }
-.elements li.selected strong {
+.welcome-elements li.selected strong {
     border-color: #fff;
 }
 
@@ -110,4 +110,7 @@
 }
 .ruler {
     --color: #E9C545;
+}
+.welcome-elements {
+    border: none;
 }

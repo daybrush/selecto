@@ -38,7 +38,7 @@ story.add("Continue to select", () => {
 function App() {
     const cubes: number[] = [];
 
-    for (let i = 0; i < 64; ++i) {
+    for (let i = 0; i < 60; ++i) {
         cubes.push(i);
     }
     return <div className="app">
@@ -49,7 +49,7 @@ function App() {
             <h1>Continue to select.</h1>
             <p className="description">You can continue to select with the currently selected target.</p>
             <Selecto
-                dragContainer={window}
+                dragContainer={".elements"}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
                 onSelect={e => {
                     e.added.forEach(el => {

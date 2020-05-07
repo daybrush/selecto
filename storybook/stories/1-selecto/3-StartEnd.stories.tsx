@@ -39,7 +39,7 @@ story.add("Only select at start and end.", () => {
 function App() {
     const cubes: number[] = [];
 
-    for (let i = 0; i < 64; ++i) {
+    for (let i = 0; i < 60; ++i) {
         cubes.push(i);
     }
     return <div className="app">
@@ -50,7 +50,7 @@ function App() {
             <h1>Only select at start and end.</h1>
             <p className="description">You can select the target through the <strong>selectStart</strong> and <strong>selectEnd</strong> events.</p>
             <Selecto
-                dragContainer={window}
+                dragContainer={".elements"}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
                 onSelectStart={e => {
                     e.added.forEach(el => {

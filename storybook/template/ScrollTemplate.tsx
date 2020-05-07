@@ -1,6 +1,14 @@
-import { previewFunction, previewTemplate, raw, DEFAULT_PROPS_TEMPLATE, CODE_TYPE, DEFAULT_VANILLA_CODESANDBOX, DEFAULT_REACT_CODESANDBOX, DEFAULT_PREACT_CODESANDBOX, DEFAULT_ANGULAR_CODESANDBOX, codeIndent, DEFAULT_VUE_CODESANDBOX, DEFAULT_LIT_CODESANDBOX, convertGlobalCSS, DEFAULT_SVELTE_CODESANDBOX } from "storybook-addon-preview";
+import {
+    previewFunction, previewTemplate, raw, DEFAULT_PROPS_TEMPLATE, CODE_TYPE,
+    DEFAULT_VANILLA_CODESANDBOX, DEFAULT_REACT_CODESANDBOX, DEFAULT_PREACT_CODESANDBOX,
+    DEFAULT_ANGULAR_CODESANDBOX, codeIndent, DEFAULT_VUE_CODESANDBOX, DEFAULT_LIT_CODESANDBOX,
+    convertGlobalCSS, DEFAULT_SVELTE_CODESANDBOX,
+} from "storybook-addon-preview";
 import { IObject } from "@daybrush/utils";
-import { REACT_SELCTO_TEMPLATE, AGULAR_HTML_SELCTO_TEMPLATE, VUE_HTML_SELCTO_TEMPLATE, CSS_TEMPLATE, LIT_HTML_SELCTO_TEMPLATE, LIT_TEMPLATE, SVELTE_SELCTO_TEMPLATE } from "./SelectoTemlate";
+import {
+    REACT_SELCTO_TEMPLATE, AGULAR_HTML_SELCTO_TEMPLATE,
+    VUE_HTML_SELCTO_TEMPLATE, CSS_TEMPLATE, LIT_HTML_SELCTO_TEMPLATE, SVELTE_SELCTO_TEMPLATE,
+} from "./SelectoTemlate";
 
 export const SCROLL_EVENT_TEMPLATE = previewFunction(`function onScroll(e) {
     //react viewerRef.current.scrollBy(e.direction[0] * 10, e.direction[1] * 10);
@@ -16,7 +24,6 @@ export const SCROLL_OPTIONS_TEMPLATE = ()  => `scrollOptions={{
     throttleTime,
     threshold,
 }}`;
-
 
 export const SCROLL_HTML_TEMPLATE = previewTemplate`
 <div class="app">
@@ -34,7 +41,6 @@ export const SCROLL_HTML_TEMPLATE = previewTemplate`
     </div>
 </div>`;
 
-
 export const SCROLL_VANILLA_TEMPLATE = (props: any[], events: object) => previewTemplate`
 import Selecto from "selecto";
 import InfiniteViewer from "infinite-viewer";
@@ -43,16 +49,15 @@ const container = document.querySelector(".container");
 const viewer = document.querySelector(".infinite-viewer");
 const cubes: number[] = [];
 
-for (let i = 0; i < 32 * 7; ++i) {
+for (let i = 0; i < 30 * 7; ++i) {
     cubes.push(i);
 }
 container.querySelector(".selecto-area").innerHTML
     = cubes.map(i => ${"`"}<div class="cube"></div>${"`"}).join("");
 const selecto = new Selecto({
     container,
-    dragContainer: window,
-    selectableTargets: [".selecto-area .cube"],
-${DEFAULT_PROPS_TEMPLATE(props, { indent: 4 })},
+    dragContainer: ".elements",
+${DEFAULT_PROPS_TEMPLATE(props, { indent: 4 })}
     scrollOptions: {
         container: viewer,
         getScrollPosition: () => {
@@ -91,7 +96,7 @@ export default function App() {
     const viewerRef = React.useRef(null);
     const cubes = [];
 
-    for (let i = 0; i < 32 * 7; ++i) {
+    for (let i = 0; i < 30 * 7; ++i) {
         cubes.push(i);
     }
 
@@ -150,7 +155,6 @@ ${AGULAR_HTML_SELCTO_TEMPLATE([...props, "scrollOptions"], events)}
     </div>
 </div>`;
 
-
 export const SCROLL_ANGULAR_COMPONENT_TEMPLATE = (
     events: any[],
 ) => previewTemplate`
@@ -165,12 +169,11 @@ import { NgxInfiniteViewerComponent } from "ngx-infinite-viewer";
 export class AppComponent implements OnInit, AfterViewInit {
     @ViewChild('viewer', { static: false }) viewer: NgxInfiniteViewerComponent;
     cubes = [];
-    window = window;
     scrollOptions = {};
     ngOnInit() {
         const cubes = [];
 
-        for (let i = 0; i < 64; ++i) {
+        for (let i = 0; i < 30 * 7; ++i) {
             cubes.push(i);
         }
         this.cubes = cubes;
@@ -210,7 +213,6 @@ import { NgxInfiniteViewerModule } from "ngx-infinite-viewer";
 })
 export class AppModule {}`;
 
-
 export const SCROLL_VUE_TEMPLATE = (props: any[], eventNames: any[], events: any[]) => previewTemplate`
 <template>
     <div class="app">
@@ -246,12 +248,11 @@ export default {
     data() {
         const cubes = [];
 
-        for (let i = 0; i < 64; ++i) {
+        for (let i = 0; i < 30 * 7; ++i) {
             cubes.push(i);
         }
         return {
             cubes,
-            window,
             scrollOptions: {},
         };
     },
@@ -279,8 +280,6 @@ export default {
 };
 </script>`;
 
-
-
 export const SCROLL_LIT_TEMPLATE = (props: any[], eventNames: any[], events: any[]) => previewTemplate`
 import { html, render } from "lit-html";
 import "lit-selecto";
@@ -288,7 +287,7 @@ import "lit-infinite-viewer";
 
 const cubes = [];
 
-for (let i = 0; i < 64; ++i) {
+for (let i = 0; i < 30 * 7; ++i) {
     cubes.push(i);
 }
 let viewer;
@@ -330,7 +329,6 @@ selecto.scrollOptions = {
 };
 `;
 
-
 export const SCROLL_SVELTE_SCRIPT_TEMPLATE = previewTemplate`
 <script>
 import { onMount } from "svelte";
@@ -340,7 +338,7 @@ import InfiniteViewer from "svelte-infinite-viewer";
 
 const cubes = [];
 
-for (let i = 0; i < 64; ++i) {
+for (let i = 0; i < 30 * 7; ++i) {
     cubes.push(i);
 }
 let scrollOptions;
@@ -365,7 +363,7 @@ onMount(() => {
     "li.selected strong",
     ".selected a",
     ".infinite-viewer",
-    ".selected"
+    ".selected",
 ]), { indent: 4 })}
 </style>
 `;
@@ -463,4 +461,4 @@ export const SCROLL_PREVIEWS_TEMPLATE = (props: any[], events: IObject<any>) => 
             codesandbox: DEFAULT_SVELTE_CODESANDBOX(["svelte-selecto", "svelte-infinite-viewer"]),
         },
     ];
-}
+};

@@ -6,7 +6,10 @@ import Selecto from "react-selecto";
 import InfiniteViewer from "react-infinite-viewer";
 import { DragScrollOptions } from "@scena/dragscroll";
 import { REACT_SELCTO_TEMPLATE, SELECT_EVENT_TEMPLATE, CSS_TEMPLATE } from "../../template/SelectoTemlate";
-import { SCROLL_HTML_TEMPLATE, SCROLL_VANILLA_TEMPLATE, SCROLL_EVENT_TEMPLATE, SCROLL_OPTIONS_TEMPLATE, SCROLL_PREVIEWS_TEMPLATE } from "../../template/ScrollTemplate";
+import {
+    SCROLL_HTML_TEMPLATE, SCROLL_VANILLA_TEMPLATE,
+    SCROLL_EVENT_TEMPLATE, SCROLL_OPTIONS_TEMPLATE, SCROLL_PREVIEWS_TEMPLATE
+} from "../../template/ScrollTemplate";
 
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
@@ -43,7 +46,7 @@ function App() {
     const viewerRef = React.useRef<InfiniteViewer>(null);
     const cubes: number[] = [];
 
-    for (let i = 0; i < 32 * 7; ++i) {
+    for (let i = 0; i < 30 * 7; ++i) {
         cubes.push(i);
     }
 
@@ -73,7 +76,7 @@ function App() {
                 viewerRef.current!.scrollTo(0, 0);
             }}>Reset Scroll</button>
             <Selecto
-                dragContainer={window}
+                dragContainer={".elements"}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
                 onDragStart={e => {
                     if (e.inputEvent.target.nodeName === "BUTTON") {

@@ -31,14 +31,14 @@ story.add("Select in real time.", () => {
             {
                 select: SELECT_EVENT_TEMPLATE,
             },
-        )
+        ),
     ],
 });
 
 function App() {
     const cubes: number[] = [];
 
-    for (let i = 0; i < 64; ++i) {
+    for (let i = 0; i < 60; ++i) {
         cubes.push(i);
     }
     return <div className="app">
@@ -50,7 +50,7 @@ function App() {
             <p className="description">The <strong>select</strong> event allows you to select a target in real time.</p>
 
             <Selecto
-                dragContainer={window}
+                dragContainer={".elements"}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
                 onSelect={e => {
                     e.added.forEach(el => {

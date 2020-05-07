@@ -76,6 +76,10 @@ h1, .description {
 }
 .elements {
     margin-top: 40px;
+    border: 2px solid #eee;
+}
+.selecto-area {
+    padding: 20px;
 }
 #selecto1 .cube {
     transition: all ease 0.2s;
@@ -88,8 +92,10 @@ h1, .description {
 .infinite-viewer {
     width: 100%;
     height: 300px;
-    border: 2px solid #eee;
 }
 .infinite-viewer .viewport {
     padding-top: 10px;
+}
+.empty.elements {
+    border: none;
 }

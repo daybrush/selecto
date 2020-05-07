@@ -3,10 +3,8 @@ import { storiesOf } from "@storybook/react";
 import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import Scene from "scenejs";
-import "../welcom.css";
+import "../welcome.css";
 import "../../template/index.css";
-import { WELCOME_REACT_PREVIEW } from "../preview/Welcom.preview";
-import { CSS_TEMPLATE } from "../../template/SelectoTemlate";
 
 const story = storiesOf("Selecto", module).addDecorator(withPreview);
 story.add("Welcome", () => {
@@ -79,7 +77,7 @@ story.add("Welcome", () => {
                 <a href="https://github.com/daybrush/selecto" target="_blank"><button className="button">Github</button></a> <a href="https://daybrush.com/selecto/release/latest/doc/" target="_blank"><button className="button">API</button></a> <a href="https://github.com/daybrush/scena" target="_blank"><button className="button">Scena</button></a>
             </div>
             <Selecto
-                dragContainer={window}
+                dragContainer={".selecto-area"}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
                 onSelect={e => {
                     e.added.forEach(el => {
@@ -94,11 +92,11 @@ story.add("Welcome", () => {
                 selectByClick={false}
                 toggleContinueSelect={"shift"}
             ></Selecto>
-             <div className="elements selecto-area" id="selecto1">
+             <div className="welcome-elements selecto-area" id="selecto1">
                 <h2>◼️ Select Anything.</h2>
                 {cubes.map(i => <div className="cube" key={i}></div>)}
             </div>
-            <div className="elements selecto-area" id="selecto2">
+            <div className="welcome-elements selecto-area" id="selecto2">
                 <h2>📦 Select Packages.</h2>
                 <a className="element react" href="https://github.com/daybrush/selecto/tree/master/packages/react-selecto" target="_blank"><span className="symbol">R</span><span className="name">React</span></a>
                 <a className="element angular" href="https://github.com/daybrush/selecto/tree/master/packages/ngx-selecto" target="_blank"><span className="symbol">Ng</span><span className="name">Angular</span></a>
@@ -107,7 +105,7 @@ story.add("Welcome", () => {
                 <a className="element svelte" href="https://github.com/daybrush/selecto/tree/master/packages/svelte-selecto" target="_blank"><span className="symbol">Sv</span><span className="name">Svelte</span></a>
                 <a className="element lit" href="https://github.com/daybrush/selecto/tree/master/packages/lit-selecto" target="_blank"><span className="symbol">L</span><span className="name">Lit</span></a>
             </div>
-            <div className="elements selecto-area" id="selecto2">
+            <div className="welcome-elements selecto-area" id="selecto2">
                 <h2>🔥 Select Projects.</h2>
                 <a className="element scenejs" href="https://github.com/daybrush/scenejs" target="_blank"><span className="symbol">Sn</span><span className="name">Scene.js</span></a>
                 <a className="element moveable" href="https://github.com/daybrush/moveable" target="_blank"><span className="symbol">Mv</span><span className="name">Moveable</span></a>
@@ -116,14 +114,14 @@ story.add("Welcome", () => {
                 <a className="element drag" href="https://github.com/daybrush/keycon" target="_blank"><span className="symbol">K</span><span className="name">Keycon</span></a>
                 <a className="element guides" href="https://github.com/daybrush/guides" target="_blank"><span className="symbol">Gd</span><span className="name">Guides</span></a>
             </div>
-            <div className="elements selecto-area" id="selecto3">
+            <div className="welcome-elements selecto-area" id="selecto3">
                 <h2>📝 Select Codes</h2>
                 <ol>
                     <li>Press the <strong>A</strong> key or the <strong>Addons</strong> button to view the <strong>Code Preview</strong> tab.</li>
                     <li>You can see the story on the screen as code in various frameworks, and in <strong>CodeSandBox</strong>.</li>
                 </ol>
             </div>
-            <div className="elements selecto-area" id="selecto3">
+            <div className="welcome-elements selecto-area" id="selecto3">
                 <h2>🚀 Select Examples</h2>
                 <ol>
                     <li>Press the <strong>S</strong> key or the <strong>Sidebar</strong> button to view examples.</li>
