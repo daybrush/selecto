@@ -30,7 +30,7 @@ body {
     font-size: 0;
     text-align: left;
 }
-.logo.moveable {
+.moveable .logo {
     width: 320px;
     text-align: center;
 }
@@ -83,6 +83,9 @@ h1, .description {
 }
 #selecto1 .cube {
     transition: all ease 0.2s;
+}
+.moveable #selecto1 .cube {
+    transition: none;
 }
 .selecto-area .selected {
     color: #fff;

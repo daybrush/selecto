@@ -54,14 +54,14 @@ export const SELECT_ONLY_END_EVENT_TEMPLATE = previewFunction(`function onSelect
     });
 }`);
 
-export const REACT_SELCTO_TEMPLATE = (props: string[], events: any[]) => previewTemplate`            <Selecto
-                dragContainer={".elements"}
+export const REACT_SELCTO_TEMPLATE = (props: string[], events: IObject<any>, otherTexts = "") => previewTemplate`            <Selecto
+${otherTexts}                dragContainer={".elements"}
 ${JSX_PROPS_TEMPLATE(props, { indent: 16 })}
-                ${events.map(e => codeIndent(e(CODE_TYPE.REACT_ARROW, "react"), { indent: 16 })).join("\n                ")}
+                ${Object.keys(events).map(name => `${camelize(`on ${name}`)}={${codeIndent(events[name](CODE_TYPE.ARROW, "react"), { indent: 16 })}}`).join("\n                ")}
             ></Selecto>
 `;
-export const AGULAR_HTML_SELCTO_TEMPLATE = (props: string[], events: any[]) => previewTemplate`        <ngx-selecto
-            dragContainer=".elements"
+export const AGULAR_HTML_SELCTO_TEMPLATE = (props: string[], events: any[], otherTexts = "") => previewTemplate`        <ngx-selecto
+${otherTexts}            dragContainer=".elements"
 ${ANGULAR_PROPS_TEMPLATE(props, { indent: 12, wrap: "'" })}
             ${events.map(name => `(${name})="${camelize(`on ${name}`)}($event)"`).join("\n            ")}
         ></ngx-selecto>`;
@@ -78,10 +78,10 @@ ${LIT_PROPS_TEMPLATE(props, { indent: 16 })}
                 ${eventNames.map((name, i) => `@${camelize(`lit ${name}`)}=${"$"}{${codeIndent(events[i](CODE_TYPE.CUSTOM_EVENT_ARROW, "lit"), { indent: 16 })}}`).join("\n                ")}
                 ></lit-selecto>
 `;
-export const SVELTE_SELCTO_TEMPLATE = (props: string[], eventNames: any[], events: any[]) => previewTemplate`        <Selecto
-            dragContainer={".elements"}
+export const SVELTE_SELCTO_TEMPLATE = (props: string[], events: IObject<any>, otherTexts = "") => previewTemplate`        <Selecto
+${otherTexts}            dragContainer={".elements"}
 ${JSX_PROPS_TEMPLATE(props, { indent: 12 })}
-            ${eventNames.map((name, i) => `on:${name}={${codeIndent(events[i](CODE_TYPE.CUSTOM_EVENT_ARROW, "svelte"), { indent: 12 })}}`).join("\n            ")}
+            ${Object.keys(events).map((name, i) => `on:${name}={${codeIndent(events[name](CODE_TYPE.CUSTOM_EVENT_ARROW, "svelte"), { indent: 12 })}}`).join("\n            ")}
         ></Selecto>
 `;
 
@@ -105,7 +105,7 @@ ${DEFAULT_PROPS_TEMPLATE(props, { indent: 4 })}
 selecto${Object.keys(events).map(name => `.on("${name}", ${events[name](CODE_TYPE.ARROW, "vanilla")})`).join("")};
 `;
 
-export const REACT_TEMPLATE = (props: any[], events: any[], isPreact?: boolean) => previewTemplate`
+export const REACT_TEMPLATE = (props: any[], events: IObject<any>, isPreact?: boolean) => previewTemplate`
 ${isPreact ? `
 import { h } from "preact";
 import Selecto from "preact-selecto";
@@ -275,7 +275,7 @@ for (let i = 0; i < 60; ++i) {
 ]), { indent: 4 })}
 </style>
 `;
-export const SVELTE_JSX_TEMPLATE = (props: any[], eventNames: any[], events: any[]) => previewTemplate`
+export const SVELTE_JSX_TEMPLATE = (props: any[], events: IObject<any>) => previewTemplate`
 <div class="app">
     <div class="container">
         <div class="logo" id="logo">
@@ -283,7 +283,7 @@ export const SVELTE_JSX_TEMPLATE = (props: any[], eventNames: any[], events: any
         </div>
         <h1>${raw("title")}</h1>
         <p class="description">${raw("description")}</p>
-${SVELTE_SELCTO_TEMPLATE(props, eventNames, events)}
+${SVELTE_SELCTO_TEMPLATE(props, events)}
         <div class="elements selecto-area" id="selecto1">
             {#each cubes as cube}
                 <div class="cube"></div>
@@ -308,13 +308,13 @@ export const PREVIEWS_TEMPLATE = (props: any[], events: IObject<any>) => {
         },
         {
             tab: "React",
-            template: REACT_TEMPLATE(props, values),
+            template: REACT_TEMPLATE(props, events),
             language: "jsx",
             codesandbox: DEFAULT_REACT_CODESANDBOX(["react-selecto"]),
         },
         {
             tab: "Preact",
-            template: REACT_TEMPLATE(props, values, true),
+            template: REACT_TEMPLATE(props, events, true),
             language: "jsx",
             codesandbox: DEFAULT_PREACT_CODESANDBOX(["preact-selecto"]),
         },
@@ -360,7 +360,7 @@ export const PREVIEWS_TEMPLATE = (props: any[], events: IObject<any>) => {
         {
             continue: true,
             tab: "Svelte",
-            template: SVELTE_JSX_TEMPLATE(props, keys, values),
+            template: SVELTE_JSX_TEMPLATE(props, events),
             language: "tsx",
             codesandbox: DEFAULT_SVELTE_CODESANDBOX(["svelte-selecto"]),
         },

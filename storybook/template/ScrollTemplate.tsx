@@ -80,7 +80,7 @@ const infiniteViewer = new InfiniteViewer(
 );
 `;
 
-export const SCROLL_REACT_TEMPLATE = (props: any[], events: any[], isPreact?: boolean) => previewTemplate`
+export const SCROLL_REACT_TEMPLATE = (props: any[], events: IObject<any>, isPreact?: boolean) => previewTemplate`
 ${isPreact ? `
 import { h } from "preact";
 import Selecto from "preact-selecto";
@@ -125,7 +125,7 @@ export default function App() {
             <button className="button" onClick={() => {
                 viewerRef.current.scrollTo(0, 0);
             }}>Reset Scroll</button>
-${REACT_SELCTO_TEMPLATE(props, [...events, SCROLL_OPTIONS_TEMPLATE])}
+${REACT_SELCTO_TEMPLATE(props, {...events, scrollOptions: SCROLL_OPTIONS_TEMPLATE })}
             <InfiniteViewer className="elements infinite-viewer" ref={viewerRef}>
                 <div className="viewport selecto-area" id="selecto1">
                     {cubes.map(i => <div className="cube" key={i}></div>)}
@@ -367,7 +367,7 @@ onMount(() => {
 ]), { indent: 4 })}
 </style>
 `;
-export const SCROLL_SVELTE_JSX_TEMPLATE = (props: any[], eventNames: any[], events: any[]) => previewTemplate`
+export const SCROLL_SVELTE_JSX_TEMPLATE = (props: any[], events: IObject<any>) => previewTemplate`
 <div class="app">
     <div class="container">
         <div class="logo" id="logo">
@@ -378,7 +378,7 @@ export const SCROLL_SVELTE_JSX_TEMPLATE = (props: any[], eventNames: any[], even
         <button class="button" on:click={() => {
             viewer.scrollTo(0, 0);
         }}>Reset Scroll</button>
-${SVELTE_SELCTO_TEMPLATE([...props, "scrollOptions"], eventNames, events)}
+${SVELTE_SELCTO_TEMPLATE([...props, "scrollOptions"], events)}
         <InfiniteViewer class="elements infinite-viewer" bind:this={viewer}>
             <div class="elements selecto-area" id="selecto1">
                 {#each cubes as cube}
@@ -404,13 +404,13 @@ export const SCROLL_PREVIEWS_TEMPLATE = (props: any[], events: IObject<any>) => 
         },
         {
             tab: "React",
-            template: SCROLL_REACT_TEMPLATE(props, values),
+            template: SCROLL_REACT_TEMPLATE(props, events),
             language: "jsx",
             codesandbox: DEFAULT_REACT_CODESANDBOX(["react-selecto", "react-infinite-viewer"]),
         },
         {
             tab: "Preact",
-            template: SCROLL_REACT_TEMPLATE(props, values, true),
+            template: SCROLL_REACT_TEMPLATE(props, events, true),
             language: "jsx",
             codesandbox: DEFAULT_PREACT_CODESANDBOX(["preact-selecto", "preact-infinite-viewer"]),
         },
@@ -456,7 +456,7 @@ export const SCROLL_PREVIEWS_TEMPLATE = (props: any[], events: IObject<any>) => 
         {
             continue: true,
             tab: "Svelte",
-            template: SCROLL_SVELTE_JSX_TEMPLATE(props, keys, values),
+            template: SCROLL_SVELTE_JSX_TEMPLATE(props, events),
             language: "tsx",
             codesandbox: DEFAULT_SVELTE_CODESANDBOX(["svelte-selecto", "svelte-infinite-viewer"]),
         },
