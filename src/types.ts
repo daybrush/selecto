@@ -22,7 +22,7 @@ import { DragScrollOptions } from "@scena/dragscroll";
 export interface SelectoOptions {
     target: HTMLElement | null;
     container: HTMLElement | null;
-    dragContainer: Element | Window;
+    dragContainer: Element | Window | Element[] | string;
     selectableTargets: Array<HTMLElement | string>;
     selectByClick: boolean;
     selectFromInside: boolean;

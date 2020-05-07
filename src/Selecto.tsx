@@ -37,7 +37,7 @@ import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 class Selecto extends Component {
     public options: SelectoOptions;
     private target!: HTMLElement | SVGElement;
-    private dragContainer!: Element | Window;
+    private dragContainer!: Element | Window | Element[];
     private container!: HTMLElement;
     private dragger!: Dragger;
     private injectResult!: InjectResult;
@@ -165,8 +165,11 @@ class Selecto extends Component {
 
         const target = this.target;
 
-        this.dragContainer = this.options.dragContainer || this.target.parentNode as any;
-        this.dragger = new Dragger(this.dragContainer as any, {
+        const dragContainer = this.options.dragContainer;
+        this.dragContainer = typeof dragContainer === "string"
+            ? [].slice.call(document.querySelectorAll(dragContainer))
+            : (this.options.dragContainer || this.target.parentNode as any);
+        this.dragger = new Dragger(this.dragContainer, {
             container: window,
             preventDefault: false,
             dragstart: this.onDragStart,
@@ -633,15 +636,19 @@ class Selecto extends Component {
         if (!this.dragger.isFlag()) {
             return;
         }
-        let dragContainer = this.dragContainer as any;
+        let dragContainer = this.dragContainer;
 
         if (dragContainer === window) {
             dragContainer = document.documentElement;
         }
-        if (dragContainer === e.target || dragContainer.contains(e.target)) {
-            e.preventDefault();
-            return;
-        }
+        const containers = [].slice.call(dragContainer) as Element[];
+
+        containers.some(container => {
+            if (container === e.target || container.contains(e.target)) {
+                e.preventDefault();
+                return true;
+            }
+        });
     }
 }
 
