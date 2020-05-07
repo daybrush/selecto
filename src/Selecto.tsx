@@ -496,6 +496,9 @@ class Selecto extends Component {
             inputEvent.preventDefault();
             return false;
         } else {
+            if (type === "touchstart") {
+                inputEvent.preventDefault();
+            }
             const { scrollOptions } = this.options;
             if (scrollOptions && scrollOptions.container) {
                 this.dragScroll.dragStart(e, scrollOptions);
