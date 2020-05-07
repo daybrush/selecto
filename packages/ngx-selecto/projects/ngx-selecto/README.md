@@ -57,7 +57,7 @@ export class AppModule { }
 ```html
 <ngx-selecto
     [container]="document.body"
-    [dragContainer]="window"
+    dragContainer=".elements"
     [selectableTargets]='[".target", document.querySelector(".target2")]'
     [selectByClick]="true"
     [selectFromInside]="true"

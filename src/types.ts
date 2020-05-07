@@ -17,7 +17,7 @@ import { DragScrollOptions } from "@scena/dragscroll";
  * @property - Determines which key to continue selecting the next target via keydown and keyup.
  * @property - The container for keydown and keyup events
  * @property - The rate at which the target overlaps the drag area to be selected. (default: 100)
- * @property - 1
+ * @property - Set the container, time, etc. to automatically scroll by dragging. (default: null)
  */
 export interface SelectoOptions {
     target: HTMLElement | null;
