@@ -8,12 +8,12 @@ import { DragScrollOptions } from "@scena/dragscroll";
 import { REACT_SELCTO_TEMPLATE, SELECT_EVENT_TEMPLATE, CSS_TEMPLATE, DRAG_START_EVENT_TEMPLATE } from "../../template/SelectoTemlate";
 import {
     SCROLL_HTML_TEMPLATE, SCROLL_VANILLA_TEMPLATE,
-    SCROLL_EVENT_TEMPLATE, SCROLL_PREVIEWS_TEMPLATE
-} from "../../template/ScrollTemplate";
+    SCROLL_EVENT_TEMPLATE, SCROLL_OPTIONS_TEMPLATE, SCROLL_PREVIEWS_TEMPLATE
+} from "../../template/InfiniteScrollTemplate";
 
-const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
+const story = storiesOf("Selecto with Infinite Viewer", module).addDecorator(withKnobs).addDecorator(withPreview);
 
-story.add("Select in the scroll area.", () => {
+story.add("Select in the Infinite Scroll Viewer.", () => {
     return <App />;
 }, {
     preview: [
@@ -22,7 +22,7 @@ story.add("Select in the scroll area.", () => {
             template: SCROLL_HTML_TEMPLATE,
             language: "html",
             knobs: {
-                title: `Select in the scroll area.`,
+                title: `Select in the Infinite Scroll Viewer.`,
                 description: `Selecting the scroll area area causes scrolling.`,
                 selectableTargets: [".selecto-area .cube"],
             },
@@ -44,7 +44,7 @@ story.add("Select in the scroll area.", () => {
 });
 function App() {
     const [scrollOptions, setScrollOptions] = React.useState({});
-    const scrollerRef = React.useRef<HTMLDivElement>(null);
+    const viewerRef = React.useRef<InfiniteViewer>(null);
     const cubes: number[] = [];
 
     for (let i = 0; i < 30 * 7; ++i) {
@@ -53,11 +53,11 @@ function App() {
 
     React.useEffect(() => {
         setScrollOptions({
-            container: scrollerRef.current!,
+            container: viewerRef.current!.getElement(),
             getScrollPosition: () => {
                 return [
-                    scrollerRef.current!.scrollLeft,
-                    scrollerRef.current!.scrollTop,
+                    viewerRef.current!.getScrollLeft(),
+                    viewerRef.current!.getScrollTop(),
                 ];
             },
         });
@@ -68,13 +68,14 @@ function App() {
 
     return <div className="app">
         <div className="container">
-            <div className="logo" id="logo">
-                <img alt="logo" src="https://daybrush.com/selecto/images/256x256.png" />
+            <div className="logos logo" id="logo">
+                <a href="https://github.com/daybrush/selecto" target="_blank"><img src="https://daybrush.com/selecto/images/256x256.png" className="selecto" /></a>
+                <a href="https://github.com/daybrush/infinite-viewer" target="_blank"><img src="https://daybrush.com/infinite-viewer/images/logo.png" /></a>
             </div>
-            <h1>Select in the scroll area.</h1>
+            <h1>Select in the Infinite Scroll Viewer.</h1>
             <p className="description">Selecting the scroll area area causes scrolling.</p>
-            <button className="button reset" onClick={() => {
-                scrollerRef.current!.scrollTo(0, 0);
+            <button className="button" onClick={() => {
+                viewerRef.current!.scrollTo(0, 0);
             }}>Reset Scroll</button>
             <Selecto
                 dragContainer={".elements"}
@@ -94,7 +95,7 @@ function App() {
                     });
                 }}
                 onScroll={({ direction }) => {
-                    scrollerRef.current!.scrollBy(direction[0] * 10, direction[1] * 10);
+                    viewerRef.current!.scrollBy(direction[0] * 10, direction[1] * 10);
                 }}
                 scrollOptions={{
                     ...scrollOptions,
@@ -106,9 +107,11 @@ function App() {
                 selectFromInside={boolean("selectFromInside", true)}
                 toggleContinueSelect={array("toggleContinueSelect", ["shift"])}
             ></Selecto>
-            <div className="elements scroll selecto-area" id="selecto1" ref={scrollerRef}>
-                {cubes.map(i => <div className="cube" key={i}></div>)}
-            </div>
+            <InfiniteViewer className="elements infinite-viewer" ref={viewerRef}>
+                <div className="viewport selecto-area" id="selecto1">
+                    {cubes.map(i => <div className="cube" key={i}></div>)}
+                </div>
+            </InfiniteViewer>
             <div className="empty elements"></div>
         </div>
     </div>;

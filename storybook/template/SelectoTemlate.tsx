@@ -20,6 +20,12 @@ export const HTML_TEMPLATE = previewTemplate`
     </div>
 </div>
 `;
+export const DRAG_START_EVENT_TEMPLATE = previewFunction(`function onDragStart(e) {
+    if (e.inputEvent.target.nodeName === "BUTTON") {
+        return false;
+    }
+    return true;
+}`);
 export const SELECT_EVENT_TEMPLATE = previewFunction(`function onSelect(e) {
     e.added.forEach(el => {
         el.classList.add("selected");

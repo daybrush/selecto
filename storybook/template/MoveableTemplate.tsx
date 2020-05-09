@@ -101,7 +101,7 @@ export const SELECTO_REAL_TIME_SELECT_END_TEMPLATE = previewFunction(`function o
 export const MOVEABLE_HTML_TEMPLATE = previewTemplate`
 <div class="moveable app">
     <div class="container">
-        <div class="logo" id="logo">
+        <div class="logo logos" id="logo">
             <a href="https://github.com/daybrush/selecto" target="_blank"><img src="https://daybrush.com/selecto/images/256x256.png" class="selecto" /></a>
             <a href="https://github.com/daybrush/moveable" target="_blank"><img src="https://daybrush.com/moveable/images/256x256.png" /></a>
         </div>
@@ -171,7 +171,7 @@ export default function App() {
 
     return <div className="moveable app">
         <div className="container">
-            <div className="logo" id="logo">
+            <div className="logo logos" id="logo">
                 <a href="https://github.com/daybrush/selecto" target="_blank"><img src="https://daybrush.com/selecto/images/256x256.png" className="selecto" /></a>
                 <a href="https://github.com/daybrush/moveable" target="_blank"><img src="https://daybrush.com/moveable/images/256x256.png" /></a>
             </div>
@@ -197,7 +197,7 @@ export const MOVEABLE_ANGULAR_HTML_TEMPLATE = (
 ) => previewTemplate`
 <div class="moveable app">
     <div class="container">
-        <div class="logo" id="logo">
+        <div class="logo logos" id="logo">
             <a href="https://github.com/daybrush/selecto" target="_blank"><img src="https://daybrush.com/selecto/images/256x256.png" class="selecto" /></a>
             <a href="https://github.com/daybrush/moveable" target="_blank"><img src="https://daybrush.com/moveable/images/256x256.png" /></a>
         </div>
@@ -293,7 +293,7 @@ export const MOVEABLE_SVELTE_JSX_TEMPLATE = (
 ) => previewTemplate`
 <div class="moveable app">
     <div class="container">
-        <div class="logo" id="logo">
+        <div class="logo logos" id="logo">
             <a href="https://github.com/daybrush/selecto" target="_blank"><img src="https://daybrush.com/selecto/images/256x256.png" class="selecto" /></a>
             <a href="https://github.com/daybrush/moveable" target="_blank"><img src="https://daybrush.com/moveable/images/256x256.png" /></a>
         </div>

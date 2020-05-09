@@ -67,7 +67,7 @@ function App() {
 
     return <div className="moveable app">
         <div className="container">
-            <div className="logo" id="logo">
+            <div className="logo logos" id="logo">
                 <a href="https://github.com/daybrush/selecto" target="_blank"><img src="https://daybrush.com/selecto/images/256x256.png" className="selecto" /></a>
                 <a href="https://github.com/daybrush/moveable" target="_blank"><img src="https://daybrush.com/moveable/images/256x256.png" /></a>
             </div>
