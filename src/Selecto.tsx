@@ -102,6 +102,7 @@ class Selecto extends Component {
     }
     /**
      * `OnDragStart` is triggered by an external event.
+     * @param - external event
      * @example
      * import Selecto from "selecto";
      *
