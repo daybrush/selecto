@@ -100,7 +100,21 @@ class Selecto extends Component {
             this.setKeyEvent();
         });
     }
-
+    /**
+     * `OnDragStart` is triggered by an external event.
+     * @example
+     * import Selecto from "selecto";
+     *
+     * const selecto = new Selecto();
+     *
+     * window.addEventListener("mousedown", e => {
+     *   selecto.triggerDragStart(e);
+     * });
+     */
+    public triggerDragStart(e: MouseEvent | TouchEvent) {
+        this.dragger.onDragStart(e);
+        return this;
+    }
     /**
      * Destroy elements, properties, and events.
      */

@@ -76,4 +76,5 @@ export const EVENTS = [
 export const METHODS = [
     "clickTarget",
     "setSelectedTargets",
+    "triggerDragStart",
 ] as const;
