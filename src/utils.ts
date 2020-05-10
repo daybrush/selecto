@@ -1,11 +1,9 @@
 import { Hypertext } from "./types";
 import { IObject, addClass, hasClass } from "@daybrush/utils";
-import { METHODS } from "./consts";
-import Selecto from "./Selecto";
 
 export function getClient(e: MouseEvent | TouchEvent) {
     if ("touches" in e) {
-        const touch = e.touches[0];
+        const touch = e.touches[0] || e.changedTouches[0];
 
         return {
             clientX: touch.clientX,
