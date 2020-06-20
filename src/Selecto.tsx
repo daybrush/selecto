@@ -66,6 +66,8 @@ class Selecto extends Component {
             toggleContinueSelect: null,
             keyContainer: null,
             scrollOptions: undefined,
+            checkInput: false,
+            preventDefault: false,
             ...options,
         };
         this.initElement();
@@ -99,6 +101,12 @@ class Selecto extends Component {
 
             this.setKeyEvent();
         });
+    }
+    public setPreventDefault(value: boolean) {
+        this.dragger.options.preventDefault = value;
+    }
+    public setCheckInput(value: boolean) {
+        this.dragger.options.checkInput = value;
     }
     /**
      * `OnDragStart` is triggered by an external event.
@@ -180,13 +188,14 @@ class Selecto extends Component {
 
         const target = this.target;
 
-        const dragContainer = this.options.dragContainer;
+        const { dragContainer, checkInput, preventDefault } = this.options;
         this.dragContainer = typeof dragContainer === "string"
             ? [].slice.call(document.querySelectorAll(dragContainer))
             : (this.options.dragContainer || this.target.parentNode as any);
         this.dragger = new Dragger(this.dragContainer, {
             container: window,
-            preventDefault: false,
+            checkInput,
+            preventDefault,
             dragstart: this.onDragStart,
             drag: this.onDrag,
             dragend: this.onDragEnd,
@@ -368,11 +377,12 @@ class Selecto extends Component {
             });
         }
     }
-    private selecteEnd(
+    private selectEnd(
         startSelectedTargets: Array<HTMLElement | SVGElement>,
         selectedTargets: Array<HTMLElement | SVGElement>,
-        inputEvent: any,
+        e: OnDragEvent,
     ) {
+        const { inputEvent, isDouble } = e;
         const {
             added,
             removed,
@@ -425,6 +435,7 @@ class Selecto extends Component {
             afterAdded: afterAdded.map(index => afterList[index]),
             afterRemoved: afterRemoved.map(index => afterPrevList[index]),
             isDragStart,
+            isDouble: !!isDouble,
             inputEvent,
         });
     }
@@ -565,10 +576,11 @@ class Selecto extends Component {
         }
         this.check(e);
     }
-    private onDragEnd = ({ datas, inputEvent }: OnDragEvent) => {
+    private onDragEnd = (e: OnDragEvent) => {
+        const { datas } = e;
         this.dragScroll.dragEnd();
         this.target.style.cssText += "display: none;";
-        this.selecteEnd(datas.startSelectedTargets, datas.selectedTargets, inputEvent);
+        this.selectEnd(datas.startSelectedTargets, datas.selectedTargets, e);
         this.selectedTargets = datas.selectedTargets;
     }
     private sameCombiKey(e: any) {
@@ -648,6 +660,7 @@ class Selecto extends Component {
         }
     }
     private onDocumentSelectStart = (e: any) => {
+        console.log("WH");
         if (!this.dragger.isFlag()) {
             return;
         }
@@ -656,10 +669,12 @@ class Selecto extends Component {
         if (dragContainer === window) {
             dragContainer = document.documentElement;
         }
-        const containers = [].slice.call(dragContainer) as Element[];
+        const containers = dragContainer instanceof Element
+            ? [dragContainer] : [].slice.call(dragContainer) as Element[];
+        const target = e.target;
 
         containers.some(container => {
-            if (container === e.target || container.contains(e.target)) {
+            if (container === target || container.contains(target)) {
                 e.preventDefault();
                 return true;
             }

@@ -16,12 +16,7 @@ export const injector = styled(`
  */
 export const CLASS_NAME = `selecto-selection ${injector.className}`;
 
-/**
- * @memberof Selecto
- */
-export const OPTIONS = [
-    // ignore target, container,
-    "dragContainer",
+export const PROPERTIES = [
     "selectableTargets",
     "selectByClick",
     "selectFromInside",
@@ -30,6 +25,16 @@ export const OPTIONS = [
     "keyContainer",
     "hitRate",
     "scrollOptions",
+    "checkInput",
+    "preventDefault",
+] as const;
+/**
+ * @memberof Selecto
+ */
+export const OPTIONS = [
+    // ignore target, container,
+    "dragContainer",
+    ...PROPERTIES,
 ] as const;
 
 export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
@@ -44,18 +49,10 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     keyContainer: null,
     hitRate: Number,
     scrollOptions: Object,
+    checkInput: Boolean,
+    preventDefault: Boolean,
 };
 
-export const PROPERTIES = [
-    "selectableTargets",
-    "selectByClick",
-    "selectFromInside",
-    "continueSelect",
-    "toggleContinueSelect",
-    "keyContainer",
-    "hitRate",
-    "scrollOptions",
-] as const;
 
 /**
  * @memberof Selecto

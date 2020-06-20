@@ -18,6 +18,8 @@ import { DragScrollOptions } from "@scena/dragscroll";
  * @property - The container for keydown and keyup events
  * @property - The rate at which the target overlaps the drag area to be selected. (default: 100)
  * @property - Set the container, time, etc. to automatically scroll by dragging. (default: null)
+ * @property - Checks whether this is an element to input text or contentEditable, and prevents dragging. (default: false)
+ * @property - When dragging, preventDefault is called. (Touch occurs unconditionally) (default: false)
  */
 export interface SelectoOptions {
     target: HTMLElement | null;
@@ -31,6 +33,8 @@ export interface SelectoOptions {
     keyContainer: Document | HTMLElement | Window | null;
     hitRate: number;
     scrollOptions: DragScrollOptions;
+    checkInput: boolean;
+    preventDefault: boolean;
 }
 
 export interface Hypertext {
@@ -80,6 +84,7 @@ export interface OnDragEvent {
     datas: IObject<any>;
     clientX: number;
     clientY: number;
+    isDouble?: boolean;
     inputEvent: any;
 }
 export interface OnKeyEvent {

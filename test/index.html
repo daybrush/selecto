@@ -40,7 +40,7 @@
     <div class="target" style="top: 300px; left: 250px; width: 50px; height: 150px">T4</div>
     <div class="target" style="top: 200px; left: 400px; width: 100px; height: 100px">T5</div>
     <div class="target" style="top: 300px; left: 50px; width: 50px; height: 50px">T6</div>
-    <div class="target2" style="top: 330px; left: 80px; width: 120px; height: 120px">T7</div>
+    <div class="target2" style="top: 330px; left: 80px; width: 120px; height: 120px" contenteditable="true">T7</div>
 
 
 </body>
@@ -52,7 +52,9 @@ const selecto = new Selecto({
     container: document.body,
     hitRate: 40,
     selectableTargets: [".target"],
-    selectFromInside: false,
+    // selectFromInside: false,
+    checkInput: true,
+    selectByClick: true,
     toggleContinueSelect: "shift",
 }).on("dragStart", e => {
     console.log("ds", e.inputEvent.target);
@@ -65,6 +67,9 @@ const selecto = new Selecto({
         el.classList.remove("selected");
     });
 }).on("selectEnd", e => {
+    if (e.isDouble) {
+        console.log("dblclick");
+    }
     console.log("end", e);
     e.afterAdded.forEach(el => {
         el.classList.add("selected");
