@@ -660,7 +660,6 @@ class Selecto extends Component {
         }
     }
     private onDocumentSelectStart = (e: any) => {
-        console.log("WH");
         if (!this.dragger.isFlag()) {
             return;
         }

@@ -30,6 +30,8 @@ export class NgxSelectoComponent
   @Input() keyContainer: SelectoOptions['keyContainer'];
   @Input() hitRate: SelectoOptions['hitRate'];
   @Input() scrollOptions: SelectoOptions['scrollOptions'];
+  @Input() checkInput: SelectoOptions['checkInput'];
+  @Input() preventDefault: SelectoOptions['preventDefault'];
   @Output() dragStart: NgxSelectoEvents['dragStart'];
   @Output() selectStart: NgxSelectoEvents['selectStart'];
   @Output() select: NgxSelectoEvents['select'];
