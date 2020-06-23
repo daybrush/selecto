@@ -50,6 +50,8 @@ export interface Rect {
     left: number;
     bottom: number;
     right: number;
+    width: number;
+    height: number;
 }
 
 /**
@@ -58,12 +60,14 @@ export interface Rect {
  * @property - Selection Element to apply for framework (private)
  * @property - added
  * @property - removed
+ * @property - Rect of Selection Element
  * @property - inputEvent
  */
 export interface OnSelect {
     selected: Array<HTMLElement | SVGElement>;
     added: Array<HTMLElement | SVGElement>;
     removed: Array<HTMLElement | SVGElement>;
+    rect: Rect;
     inputEvent: any;
 }
 /**
@@ -84,6 +88,8 @@ export interface OnDragEvent {
     datas: IObject<any>;
     clientX: number;
     clientY: number;
+    distX?: number;
+    distY?: number;
     isDouble?: boolean;
     inputEvent: any;
 }

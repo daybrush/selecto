@@ -1,4 +1,4 @@
-import { Hypertext } from "./types";
+import { Hypertext, Rect } from "./types";
 import { IObject, addClass, hasClass } from "@daybrush/utils";
 
 export function getClient(e: MouseEvent | TouchEvent) {
@@ -73,4 +73,28 @@ export function diffValue<T>(prev: T, cur: T, func: (prev: T, cur: T) => void) {
     if (prev !== cur) {
         func(prev, cur);
     }
+}
+
+export function getRect(e: any): Rect {
+    const {
+        distX = 0,
+        distY = 0,
+        datas,
+    } = e;
+    const { startX, startY } = datas;
+    const tx = Math.min(0, distX);
+    const ty = Math.min(0, distY);
+    const width = Math.abs(distX);
+    const height = Math.abs(distY);
+    const left = startX + tx;
+    const top = startY + ty;
+
+    return {
+        left,
+        top,
+        right: left + width,
+        bottom: top + height,
+        width,
+        height,
+    };
 }

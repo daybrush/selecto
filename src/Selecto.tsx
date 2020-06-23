@@ -6,7 +6,7 @@ import { isObject, camelize, IObject, addEvent, removeEvent } from "@daybrush/ut
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
 import DragScroll from "@scena/dragscroll";
 import KeyController, { getCombi } from "keycon";
-import { createElement, h, getClient, diffValue } from "./utils";
+import { createElement, h, getClient, diffValue, getRect } from "./utils";
 import { SelectoOptions, Rect, SelectoProperties, OnDragEvent, SelectoEvents } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 /**
@@ -299,7 +299,8 @@ class Selecto extends Component {
 
         return added.map(index => list[index]).concat(removed.map(index => prevList[index]));
     }
-    private select(selectedTargets: Array<HTMLElement | SVGElement>, inputEvent: any, isStart?: boolean) {
+    private select(
+        selectedTargets: Array<HTMLElement | SVGElement>, rect: Rect, inputEvent: any, isStart?: boolean) {
         const {
             added,
             removed,
@@ -342,6 +343,7 @@ class Selecto extends Component {
                 selected: selectedTargets,
                 added: added.map(index => list[index]),
                 removed: removed.map(index => prevList[index]),
+                rect,
                 inputEvent,
             });
         }
@@ -373,6 +375,7 @@ class Selecto extends Component {
                 selected: selectedTargets,
                 added: added.map(index => list[index]),
                 removed: removed.map(index => prevList[index]),
+                rect,
                 inputEvent,
             });
         }
@@ -380,6 +383,7 @@ class Selecto extends Component {
     private selectEnd(
         startSelectedTargets: Array<HTMLElement | SVGElement>,
         selectedTargets: Array<HTMLElement | SVGElement>,
+        rect: Rect,
         e: OnDragEvent,
     ) {
         const { inputEvent, isDouble } = e;
@@ -436,6 +440,7 @@ class Selecto extends Component {
             afterRemoved: afterRemoved.map(index => afterPrevList[index]),
             isDragStart,
             isDouble: !!isDouble,
+            rect,
             inputEvent,
         });
     }
@@ -452,6 +457,8 @@ class Selecto extends Component {
                 top,
                 right: left + width,
                 bottom: top + height,
+                width,
+                height,
             };
         });
         datas.selectableTargets = selectableTargets;
@@ -459,14 +466,18 @@ class Selecto extends Component {
         datas.startSelectedTargets = this.selectedTargets;
 
         const pointTarget = clickedTarget || document.elementFromPoint(clientX, clientY);
-        let firstPassedTargets = this.hitTest({
+        const hitRect = {
             left: clientX,
             top: clientY,
             right: clientX,
             bottom: clientY,
-        }, clientX, clientY, selectableTargets, selectableRects).filter(
-            target => target === pointTarget || target.contains(pointTarget),
-        );
+            width: 0,
+            height: 0,
+        };
+        let firstPassedTargets = this.hitTest(
+            hitRect, clientX, clientY, selectableTargets, selectableRects).filter(
+                target => target === pointTarget || target.contains(pointTarget),
+            );
 
         const hasInsideTargets = firstPassedTargets.length > 0;
         const isPreventSelect = !selectFromInside && hasInsideTargets;
@@ -514,11 +525,12 @@ class Selecto extends Component {
         if (!result) {
             return false;
         }
-        this.select(firstPassedTargets, inputEvent, true);
+        this.select(firstPassedTargets, hitRect, inputEvent, true);
         datas.startX = clientX;
         datas.startY = clientY;
         datas.selectedTargets = firstPassedTargets;
-        this.target.style.cssText += `left:${clientX}px;top:${clientY}px`;
+        this.target.style.cssText
+            += `left:0px;top:0px;transform: translate(${clientX}px, ${clientY}px)`;
 
         if (isPreventSelect && selectByClick) {
             this.onDragEnd(e);
@@ -537,34 +549,27 @@ class Selecto extends Component {
     }
     private check(e: any) {
         const {
-            distX,
-            distY,
             datas,
             inputEvent,
         } = e;
-        const { startX, startY } = datas;
-        const tx = Math.min(0, distX);
-        const ty = Math.min(0, distY);
-        const width = Math.abs(distX);
-        const height = Math.abs(distY);
-
+        const rect = getRect(e);
+        const {
+            top,
+            left,
+            width,
+            height,
+        } = rect;
         this.target.style.cssText
             += `display: block;`
-            + `left:${startX}px;top:${startY}px;`
-            + `transform: translate(${tx}px, ${ty}px);`
+            + `left:0px;top:0px;`
+            + `transform: translate(${left}px, ${top}px);`
             + `width:${width}px;height:${height}px;`;
 
-        const left = startX + tx;
-        const top = startY + ty;
-        const passedTargets = this.hitTest({
-            left,
-            top,
-            right: left + width,
-            bottom: top + height,
-        }, datas.startX, datas.startY, datas.selectableTargets, datas.selectableRects);
+        const passedTargets = this.hitTest(
+            rect, datas.startX, datas.startY, datas.selectableTargets, datas.selectableRects);
         const selectedTargets = this.getSelectedTargets(passedTargets);
 
-        this.select(selectedTargets, inputEvent);
+        this.select(selectedTargets, rect, inputEvent);
         datas.selectedTargets = selectedTargets;
     }
     private onDrag = (e: OnDrag) => {
@@ -580,7 +585,8 @@ class Selecto extends Component {
         const { datas } = e;
         this.dragScroll.dragEnd();
         this.target.style.cssText += "display: none;";
-        this.selectEnd(datas.startSelectedTargets, datas.selectedTargets, e);
+        this.selectEnd(
+            datas.startSelectedTargets, datas.selectedTargets, getRect(e), e);
         this.selectedTargets = datas.selectedTargets;
     }
     private sameCombiKey(e: any) {
