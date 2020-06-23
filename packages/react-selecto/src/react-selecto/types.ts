@@ -5,6 +5,8 @@ export interface ReactSelectoEventNames {
     onSelect: "select";
     onSelectEnd: "selectEnd";
     onDragStart: "dragStart";
+    onDrag: "drag";
+    onDragEnd: "dragEnd";
     onKeydown: "keydown";
     onKeyup: "keyup";
     onScroll: "scroll";
