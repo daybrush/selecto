@@ -569,6 +569,10 @@ class Selecto extends Component {
             rect, datas.startX, datas.startY, datas.selectableTargets, datas.selectableRects);
         const selectedTargets = this.getSelectedTargets(passedTargets);
 
+        this.trigger("drag", {
+            ...e,
+            rect,
+        });
         this.select(selectedTargets, rect, inputEvent);
         datas.selectedTargets = selectedTargets;
     }
@@ -583,10 +587,15 @@ class Selecto extends Component {
     }
     private onDragEnd = (e: OnDragEvent) => {
         const { datas } = e;
+        const rect = getRect(e);
         this.dragScroll.dragEnd();
         this.target.style.cssText += "display: none;";
+        this.trigger("dragEnd", {
+            ...e,
+            rect,
+        });
         this.selectEnd(
-            datas.startSelectedTargets, datas.selectedTargets, getRect(e), e);
+            datas.startSelectedTargets, datas.selectedTargets, rect, e);
         this.selectedTargets = datas.selectedTargets;
     }
     private sameCombiKey(e: any) {

@@ -1,7 +1,11 @@
 import { IObject } from "@daybrush/utils";
 import { PROPERTIES, METHODS } from "./consts";
 import Selecto from "./Selecto";
-import { OnDragStart as OnParentDragStart } from "@daybrush/drag";
+import {
+    OnDragStart as OnParentDragStart,
+    OnDrag as OnParentDrag,
+    OnDragEnd as OnParentDragEnd,
+} from "@daybrush/drag";
 import { DragScrollOptions } from "@scena/dragscroll";
 
 /**
@@ -103,12 +107,34 @@ export interface OnScroll {
     container: HTMLElement;
     direction: number[];
 }
-
+/**
+ * @memberof Selecto
+ * @typedef
+ * @property - Stop all events
+ */
 export interface OnDragStart extends OnParentDragStart {
     stop(): void;
 }
+/**
+ * @memberof Selecto
+ * @typedef
+ * @property - Rect of Selection Element
+ */
+export interface OnDrag extends OnParentDrag {
+    rect: Rect;
+}
+/**
+ * @memberof Selecto
+ * @typedef
+ * @property - Rect of Selection Element
+ */
+export interface OnDragEnd extends OnParentDragEnd {
+    rect: Rect;
+}
 export interface SelectoEvents {
     dragStart: OnDragStart;
+    drag: OnDrag;
+    dragEnd: OnDragEnd;
     selectStart: OnSelect;
     select: OnSelect;
     selectEnd: OnSelectEnd;

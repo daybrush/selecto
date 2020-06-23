@@ -53,12 +53,13 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     preventDefault: Boolean,
 };
 
-
 /**
  * @memberof Selecto
  */
 export const EVENTS = [
     "dragStart",
+    "drag",
+    "dragEnd",
     "selectStart",
     "select",
     "selectEnd",
