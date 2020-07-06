@@ -121,7 +121,7 @@ class Selecto extends Component {
      * });
      */
     public triggerDragStart(e: MouseEvent | TouchEvent) {
-        this.dragger.onDragStart(e);
+        this.dragger.triggerDragStart(e);
         return this;
     }
     /**
