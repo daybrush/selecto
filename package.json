@@ -1,71 +1,71 @@
 {
-  "name": "selecto",
-  "version": "1.4.0",
-  "description": "Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.",
-  "main": "./dist/selecto.cjs.js",
-  "module": "./dist/selecto.esm.js",
-  "sideEffects": false,
-  "types": "declaration/index.d.ts",
-  "scripts": {
-    "start": "rollup -c -w",
-    "build": "rollup -c && npm run declaration && print-sizes ./dist",
-    "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
-    "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
-    "prerelease": "npm run build && npm run doc && npm run storybook && prerelease --dirs=dist,doc",
-    "storybook": "cd storybook/ && npm run build && cd ../",
-    "release": "npm run build && npm run doc && npm run storybook && release --dirs=dist,doc",
-    "release:init": "npm run build && npm run doc && npm run storybook && release -i --dirs=dist,doc",
-    "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
-    "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
-    "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
-    "packages:update": "pvu --update=react-selecto,ngx-selecto/projects/ngx-selecto,svelte-selecto,lit-selecto,vue-selecto",
-    "packages:build": "pvu --build=react-selecto,ngx-selecto,svelte-selecto,lit-selecto,vue-selecto",
-    "packages:publish": "pvu --publish=react-selecto,ngx-selecto/dist/ngx-selecto,svelte-selecto,lit-selecto,vue-selecto",
-    "packages:preact": "cd ./packages/react-selecto && npm run packages && cd ../.."
-  },
-  "keywords": [
-    "select",
-    "selecto",
-    "selection",
-    "selectable",
-    "moveable"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/daybrush/selecto.git"
-  },
-  "author": "Daybrush",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/daybrush/selecto/issues"
-  },
-  "homepage": "https://github.com/daybrush/selecto#readme",
-  "dependencies": {
-    "@daybrush/drag": "^0.18.6",
-    "@daybrush/utils": "^0.10.5",
-    "@egjs/children-differ": "^1.0.0",
-    "@egjs/component": "^2.1.2",
-    "@scena/dragscroll": "^0.2.1",
-    "css-styled": "^0.1.7",
-    "framework-utils": "^0.3.4",
-    "keycon": "^0.8.0"
-  },
-  "peerDependencies": {
-    "framework-utils": ">=0.3.4",
-    "keycon": ">=0.8.0",
-    "css-styled": ">=0.1.7",
-    "@daybrush/drag": ">=0.18.6",
-    "@daybrush/utils": ">=0.10.5",
-    "@scena/dragscroll": ">=0.2.1"
-  },
-  "devDependencies": {
-    "@daybrush/builder": "^0.1.2",
-    "@daybrush/jsdoc": "^0.3.7",
-    "@daybrush/release": "^0.2.4",
-    "daybrush-jsdoc-template": "^1.6.0",
-    "print-sizes": "^0.1.0",
-    "pvu": "^0.4.1",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.4"
-  }
+    "name": "selecto",
+    "version": "1.4.1",
+    "description": "Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.",
+    "main": "./dist/selecto.cjs.js",
+    "module": "./dist/selecto.esm.js",
+    "sideEffects": false,
+    "types": "declaration/index.d.ts",
+    "scripts": {
+        "start": "rollup -c -w",
+        "build": "rollup -c && npm run declaration && print-sizes ./dist",
+        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
+        "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
+        "prerelease": "npm run build && npm run doc && npm run storybook && prerelease --dirs=dist,doc",
+        "storybook": "cd storybook/ && npm run build && cd ../",
+        "release": "npm run build && npm run doc && npm run storybook && release --dirs=dist,doc",
+        "release:init": "npm run build && npm run doc && npm run storybook && release -i --dirs=dist,doc",
+        "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
+        "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
+        "packages": "npm run packages:update && npm run packages:build && npm run packages:publish && npm run packages:preact",
+        "packages:update": "pvu --update=react-selecto,ngx-selecto/projects/ngx-selecto,svelte-selecto,lit-selecto,vue-selecto",
+        "packages:build": "pvu --build=react-selecto,ngx-selecto,svelte-selecto,lit-selecto,vue-selecto",
+        "packages:publish": "pvu --publish=react-selecto,ngx-selecto/dist/ngx-selecto,svelte-selecto,lit-selecto,vue-selecto",
+        "packages:preact": "cd ./packages/react-selecto && npm run packages && cd ../.."
+    },
+    "keywords": [
+        "select",
+        "selecto",
+        "selection",
+        "selectable",
+        "moveable"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/daybrush/selecto.git"
+    },
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/selecto/issues"
+    },
+    "homepage": "https://github.com/daybrush/selecto#readme",
+    "dependencies": {
+        "@daybrush/drag": "^0.19.0",
+        "@daybrush/utils": "^0.10.5",
+        "@egjs/children-differ": "^1.0.0",
+        "@egjs/component": "^2.1.2",
+        "@scena/dragscroll": "^0.2.1",
+        "css-styled": "^0.1.7",
+        "framework-utils": "^0.3.4",
+        "keycon": "^0.8.0"
+    },
+    "peerDependencies": {
+        "framework-utils": ">=0.3.4",
+        "keycon": ">=0.8.0",
+        "css-styled": ">=0.1.7",
+        "@daybrush/drag": ">=0.19.0",
+        "@daybrush/utils": ">=0.10.5",
+        "@scena/dragscroll": ">=0.2.1"
+    },
+    "devDependencies": {
+        "@daybrush/builder": "^0.1.2",
+        "@daybrush/jsdoc": "^0.3.7",
+        "@daybrush/release": "^0.2.4",
+        "daybrush-jsdoc-template": "^1.6.0",
+        "print-sizes": "^0.1.0",
+        "pvu": "^0.4.1",
+        "tslint": "^5.20.1",
+        "typescript": "^3.7.4"
+    }
 }
