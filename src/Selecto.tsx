@@ -68,6 +68,7 @@ class Selecto extends Component {
             scrollOptions: undefined,
             checkInput: false,
             preventDefault: false,
+            cspNonce: "",
             ...options,
         };
         this.initElement();
@@ -202,7 +203,9 @@ class Selecto extends Component {
         });
         addEvent(document, "selectstart", this.onDocumentSelectStart);
 
-        this.injectResult = injector.inject(target);
+        this.injectResult = injector.inject(target, {
+            nonce: this.options.cspNonce,
+        });
     }
     private hitTest(
         selectRect: Rect,

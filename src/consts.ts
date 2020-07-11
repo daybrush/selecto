@@ -34,6 +34,7 @@ export const PROPERTIES = [
 export const OPTIONS = [
     // ignore target, container,
     "dragContainer",
+    "cspNonce",
     ...PROPERTIES,
 ] as const;
 
@@ -51,6 +52,7 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     scrollOptions: Object,
     checkInput: Boolean,
     preventDefault: Boolean,
+    cspNonce: String,
 };
 
 /**
