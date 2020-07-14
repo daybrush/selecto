@@ -54,13 +54,13 @@ const selecto = new Selecto({
     // Whether to select from the target inside (default: true)
     selectFromInside: true,
     // After the select, whether to select the next target with the selected target (deselected if the target is selected again).
-    continueSelect: false;
+    continueSelect: false,
     // Determines which key to continue selecting the next target via keydown and keyup.
     toggleContinueSelect: "shift",
     // The container for keydown and keyup events
     keyContainer: window,
     // The rate at which the target overlaps the drag area to be selected. (default: 100)
-    hitRate: 100;
+    hitRate: 100,
 });
 
 selecto.on("select", e => {
