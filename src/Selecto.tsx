@@ -488,11 +488,6 @@ class Selecto extends Component {
         if (isPreventSelect && !selectByClick) {
             return false;
         }
-        if (!continueSelect) {
-            this.selectedTargets = [];
-        } else {
-            firstPassedTargets = this.getSelectedTargets(firstPassedTargets);
-        }
         const type = inputEvent.type;
         const isTrusted = type === "mousedown" || type === "touchstart";
         /**
@@ -528,6 +523,13 @@ class Selecto extends Component {
         if (!result) {
             return false;
         }
+
+        if (!continueSelect) {
+            this.selectedTargets = [];
+        } else {
+            firstPassedTargets = this.getSelectedTargets(firstPassedTargets);
+        }
+
         this.select(firstPassedTargets, hitRect, inputEvent, true);
         datas.startX = clientX;
         datas.startY = clientY;
