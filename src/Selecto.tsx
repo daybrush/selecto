@@ -468,7 +468,7 @@ class Selecto extends Component {
         datas.selectableRects = selectableRects;
         datas.startSelectedTargets = this.selectedTargets;
 
-        const pointTarget = clickedTarget || document.elementFromPoint(clientX, clientY);
+        let pointTarget = (clickedTarget || document.elementFromPoint(clientX, clientY)) as HTMLElement | SVGElement ;
         const hitRect = {
             left: clientX,
             top: clientY,
@@ -477,10 +477,13 @@ class Selecto extends Component {
             width: 0,
             height: 0,
         };
-        let firstPassedTargets = this.hitTest(
-            hitRect, clientX, clientY, selectableTargets, selectableRects).filter(
-                target => target === pointTarget || target.contains(pointTarget),
-            );
+        while (pointTarget) {
+            if (selectableTargets.indexOf(pointTarget as HTMLElement | SVGElement) > -1) {
+                break;
+            }
+            pointTarget = pointTarget.parentElement;
+        }
+        let firstPassedTargets = pointTarget ? [pointTarget] : [];
 
         const hasInsideTargets = firstPassedTargets.length > 0;
         const isPreventSelect = !selectFromInside && hasInsideTargets;
