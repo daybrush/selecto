@@ -2,7 +2,7 @@ import Component from "@egjs/component";
 import Dragger, { OnDrag } from "@daybrush/drag";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
-import { isObject, camelize, IObject, addEvent, removeEvent } from "@daybrush/utils";
+import { isObject, camelize, IObject, addEvent, removeEvent, isArray } from "@daybrush/utils";
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
 import DragScroll from "@scena/dragscroll";
 import KeyController, { getCombi } from "keycon";
@@ -69,6 +69,7 @@ class Selecto extends Component {
             checkInput: false,
             preventDefault: false,
             cspNonce: "",
+            ratio: 0,
             ...options,
         };
         this.initElement();
@@ -84,7 +85,12 @@ class Selecto extends Component {
 
         return this;
     }
-
+    /**
+     * You can get the currently selected targets.
+     */
+    public getSelectedTargets(): Array<HTMLElement | SVGElement> {
+        return this.selectedTargets;
+    }
     public setKeyContainer(keyContainer: HTMLElement | Document | Window) {
         const options = this.options;
 
@@ -94,7 +100,7 @@ class Selecto extends Component {
             this.setKeyController();
         });
     }
-    public setToggleContinueSelect(toggleContinueSelect: string[] | string) {
+    public setToggleContinueSelect(toggleContinueSelect: string[][] | string[] | string) {
         const options = this.options;
 
         diffValue(options.toggleContinueSelect, toggleContinueSelect, () => {
@@ -292,7 +298,7 @@ class Selecto extends Component {
 
         return selectableTargets;
     }
-    private getSelectedTargets(passedTargets: Array<HTMLElement | SVGElement>) {
+    private passSelectedTargets(passedTargets: Array<HTMLElement | SVGElement>) {
         const {
             list,
             prevList,
@@ -530,7 +536,7 @@ class Selecto extends Component {
         if (!continueSelect) {
             this.selectedTargets = [];
         } else {
-            firstPassedTargets = this.getSelectedTargets(firstPassedTargets);
+            firstPassedTargets = this.passSelectedTargets(firstPassedTargets);
         }
 
         this.select(firstPassedTargets, hitRect, inputEvent, true);
@@ -560,7 +566,7 @@ class Selecto extends Component {
             datas,
             inputEvent,
         } = e;
-        const rect = getRect(e);
+        const rect = getRect(e, this.options.ratio);
         const {
             top,
             left,
@@ -575,7 +581,7 @@ class Selecto extends Component {
 
         const passedTargets = this.hitTest(
             rect, datas.startX, datas.startY, datas.selectableTargets, datas.selectableRects);
-        const selectedTargets = this.getSelectedTargets(passedTargets);
+        const selectedTargets = this.passSelectedTargets(passedTargets);
 
         this.trigger("drag", {
             ...e,
@@ -595,7 +601,7 @@ class Selecto extends Component {
     }
     private onDragEnd = (e: OnDragEvent) => {
         const { datas } = e;
-        const rect = getRect(e);
+        const rect = getRect(e, this.options.ratio);
         this.dragScroll.dragEnd();
         this.target.style.cssText += "display: none;";
         this.trigger("dragEnd", {
@@ -609,7 +615,9 @@ class Selecto extends Component {
     private sameCombiKey(e: any) {
         const toggleContinueSelect = [].concat(this.options.toggleContinueSelect);
         const combi = getCombi(e.inputEvent, e.key);
-        return toggleContinueSelect.every(key => combi.indexOf(key) > -1);
+        const toggleKeys = (isArray(toggleContinueSelect[0]) ? toggleContinueSelect : [toggleContinueSelect]);
+
+        return toggleKeys.some(keys => keys.every(key => combi.indexOf(key) > -1));
     }
     private onKeyDown = (e: any) => {
         if (!this.sameCombiKey(e)) {
