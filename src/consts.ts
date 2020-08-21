@@ -27,6 +27,7 @@ export const PROPERTIES = [
     "scrollOptions",
     "checkInput",
     "preventDefault",
+    "ratio",
 ] as const;
 /**
  * @memberof Selecto
@@ -53,6 +54,7 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     checkInput: Boolean,
     preventDefault: Boolean,
     cspNonce: String,
+    ratio: Number,
 };
 
 /**

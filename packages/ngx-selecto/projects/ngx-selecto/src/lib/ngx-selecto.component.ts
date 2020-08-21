@@ -33,6 +33,7 @@ export class NgxSelectoComponent
   @Input() checkInput: SelectoOptions['checkInput'];
   @Input() preventDefault: SelectoOptions['preventDefault'];
   @Input() cspNonce: SelectoOptions['cspNonce'];
+  @Input() ratio: SelectoOptions['ratio'];
   @Output() dragStart: NgxSelectoEvents['dragStart'];
   @Output() drag: NgxSelectoEvents['drag'];
   @Output() dragEnd: NgxSelectoEvents['dragEnd'];
