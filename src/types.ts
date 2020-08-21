@@ -25,6 +25,7 @@ import { DragScrollOptions } from "@scena/dragscroll";
  * @property - Checks whether this is an element to input text or contentEditable, and prevents dragging. (default: false)
  * @property - When dragging, preventDefault is called. (Touch occurs unconditionally) (default: false)
  * @property - add nonce property to style for CSP (default: "")
+ * @property - Adjust the ratio of the selection. (default: 0)
  */
 export interface SelectoOptions {
     target: HTMLElement | null;
@@ -34,13 +35,14 @@ export interface SelectoOptions {
     selectByClick: boolean;
     selectFromInside: boolean;
     continueSelect: boolean;
-    toggleContinueSelect: string[] | string | null;
+    toggleContinueSelect: string[][] | string[] | string | null;
     keyContainer: Document | HTMLElement | Window | null;
     hitRate: number;
     scrollOptions: DragScrollOptions;
     checkInput: boolean;
     preventDefault: boolean;
     cspNonce: string;
+    ratio: number;
 }
 
 export interface Hypertext {
@@ -63,9 +65,9 @@ export interface Rect {
 /**
  * @memberof Selecto
  * @typedef
- * @property - Selection Element to apply for framework (private)
- * @property - added
- * @property - removed
+ * @property - selected elements
+ * @property - added elements
+ * @property - removed elements
  * @property - Rect of Selection Element
  * @property - inputEvent
  */
@@ -80,8 +82,8 @@ export interface OnSelect {
  * @memberof Selecto
  * @extends Selecto.OnSelect
  * @typedef
- * @property - afterAdded
- * @property - afterRemoved
+ * @property - after added elements
+ * @property - after removed elements
  * @property - isDragStart
  */
 export interface OnSelectEnd extends OnSelect {

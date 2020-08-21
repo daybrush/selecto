@@ -75,15 +75,25 @@ export function diffValue<T>(prev: T, cur: T, func: (prev: T, cur: T) => void) {
     }
 }
 
-export function getRect(e: any): Rect {
-    const {
+export function getRect(e: any, ratio: number): Rect {
+    let {
         distX = 0,
         distY = 0,
-        datas,
     } = e;
-    const { startX, startY } = datas;
+    const { startX, startY } = e.datas;
+
+    if (ratio > 0) {
+        const nextHeight = Math.sqrt((distX * distX + distY * distY) / (1 + ratio * ratio));
+        const nextWidth = ratio * nextHeight;
+
+        distX = (distX >= 0 ? 1 : -1) * nextWidth;
+        distY = (distY >= 0 ? 1 : -1) * nextHeight;
+    }
     const tx = Math.min(0, distX);
     const ty = Math.min(0, distY);
+    // h ^ 2 + (ratio * h) ^ 2 = dist
+    // (1 + ratio ^ 2) * h^2 = dist ^ 2
+    // dist * Math.atan(ratio);
     const width = Math.abs(distX);
     const height = Math.abs(distY);
     const left = startX + tx;
