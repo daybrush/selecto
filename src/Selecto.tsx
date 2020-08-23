@@ -9,6 +9,7 @@ import KeyController, { getCombi } from "keycon";
 import { createElement, h, getClient, diffValue, getRect } from "./utils";
 import { SelectoOptions, Rect, SelectoProperties, OnDragEvent, SelectoEvents } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
+
 /**
  * Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.
  * @sort 1
@@ -24,11 +25,11 @@ import { PROPERTIES, injector, CLASS_NAME } from "./consts";
     };
     const setter = camelize(`set ${property}`);
     if (prototype[setter]) {
-        attributes.set = function(value) {
+        attributes.set = function set(value) {
             this[setter](value);
         };
     } else {
-        attributes.set = function(value) {
+        attributes.set = function set(value) {
             this.options[property] = value;
         };
     }
@@ -222,15 +223,14 @@ class Selecto extends Component {
     ) {
         const { hitRate, selectByClick } = this.options;
         const { left, top, right, bottom } = selectRect;
-        const passedTargets: Array<HTMLElement | SVGElement> = [];
 
-        rects.forEach((rect, i) => {
+        return targets.filter((target, i) => {
             const {
                 left: rectLeft,
                 top: rectTop,
                 right: rectRight,
                 bottom: rectBottom,
-            } = rect;
+            } = rects[i];
             const isStart
                 = rectLeft <= clientX
                 && clientX <= rectRight
@@ -243,20 +243,18 @@ class Selecto extends Component {
             const testBottom = Math.min(rectBottom, bottom);
 
             if (selectByClick && isStart) {
-                passedTargets.push(targets[i]);
-                return;
+                return true;
             }
             if (testRight < testLeft || testBottom < testTop) {
-                return;
+                return false;
             }
             const rate = Math.round((testRight - testLeft) * (testBottom - testTop) / rectSize * 100);
 
             if (rate >= hitRate) {
-                passedTargets.push(targets[i]);
+                return true;
             }
+            return false;
         });
-
-        return passedTargets;
     }
     private initDragScroll() {
         this.dragScroll.on("scroll", ({ container, direction }) => {
@@ -473,8 +471,6 @@ class Selecto extends Component {
         datas.selectableTargets = selectableTargets;
         datas.selectableRects = selectableRects;
         datas.startSelectedTargets = this.selectedTargets;
-
-        let pointTarget = (clickedTarget || document.elementFromPoint(clientX, clientY)) as HTMLElement | SVGElement ;
         const hitRect = {
             left: clientX,
             top: clientY,
@@ -483,14 +479,19 @@ class Selecto extends Component {
             width: 0,
             height: 0,
         };
-        while (pointTarget) {
-            if (selectableTargets.indexOf(pointTarget as HTMLElement | SVGElement) > -1) {
-                break;
-            }
-            pointTarget = pointTarget.parentElement;
-        }
-        let firstPassedTargets = pointTarget ? [pointTarget] : [];
+        let firstPassedTargets: Array<HTMLElement | SVGElement> = [];
+        if (selectFromInside || selectByClick) {
+            let pointTarget
+                = (clickedTarget || document.elementFromPoint(clientX, clientY)) as HTMLElement | SVGElement;
 
+            while (pointTarget) {
+                if (selectableTargets.indexOf(pointTarget as HTMLElement | SVGElement) > -1) {
+                    break;
+                }
+                pointTarget = pointTarget.parentElement;
+            }
+            firstPassedTargets = pointTarget ? [pointTarget] : [];
+        }
         const hasInsideTargets = firstPassedTargets.length > 0;
         const isPreventSelect = !selectFromInside && hasInsideTargets;
 
