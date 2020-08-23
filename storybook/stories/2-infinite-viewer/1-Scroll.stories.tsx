@@ -1,14 +1,12 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { withKnobs, number, boolean, array } from "@storybook/addon-knobs";
-import { withPreview, DEFAULT_REACT_CODESANDBOX, previewTemplate, raw, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
+import { withPreview } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import InfiniteViewer from "react-infinite-viewer";
-import { DragScrollOptions } from "@scena/dragscroll";
-import { REACT_SELCTO_TEMPLATE, SELECT_EVENT_TEMPLATE, CSS_TEMPLATE, DRAG_START_EVENT_TEMPLATE } from "../../template/SelectoTemlate";
+import { SELECT_EVENT_TEMPLATE, CSS_TEMPLATE, DRAG_START_EVENT_TEMPLATE } from "../../template/SelectoTemlate";
 import {
-    SCROLL_HTML_TEMPLATE, SCROLL_VANILLA_TEMPLATE,
-    SCROLL_EVENT_TEMPLATE, SCROLL_OPTIONS_TEMPLATE, SCROLL_PREVIEWS_TEMPLATE
+    SCROLL_HTML_TEMPLATE, SCROLL_EVENT_TEMPLATE, SCROLL_PREVIEWS_TEMPLATE
 } from "../../template/InfiniteScrollTemplate";
 
 const story = storiesOf("Selecto with Infinite Viewer", module).addDecorator(withKnobs).addDecorator(withPreview);
@@ -33,7 +31,7 @@ story.add("Select in the Infinite Scroll Viewer.", () => {
             language: "css",
         },
         ...SCROLL_PREVIEWS_TEMPLATE(
-            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect"],
+            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect", "ratio"],
             {
                 dragStart: DRAG_START_EVENT_TEMPLATE,
                 select: SELECT_EVENT_TEMPLATE,
@@ -106,6 +104,7 @@ function App() {
                 selectByClick={boolean("selectByClick", true)}
                 selectFromInside={boolean("selectFromInside", true)}
                 toggleContinueSelect={array("toggleContinueSelect", ["shift"])}
+                ratio={number("ratio", 0)}
             ></Selecto>
             <InfiniteViewer className="elements infinite-viewer" ref={viewerRef}>
                 <div className="viewport selecto-area" id="selecto1">

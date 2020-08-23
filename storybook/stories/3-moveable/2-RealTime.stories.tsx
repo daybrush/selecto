@@ -35,7 +35,7 @@ story.add("Select Moveable targets in real time.", () => {
             language: "css",
         },
         ...MOVEABLE_PREVIEWS_TEMPLATE(
-            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect"],
+            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect", "ratio"],
             {
                 clickGroup: MOVEABLE_CLICK_GROUP_TEMPLATE,
                 dragStart: MOVEABLE_DRAG_START_TEMPLATE,
@@ -93,6 +93,7 @@ function App() {
                 selectByClick={boolean("selectByClick", true)}
                 selectFromInside={boolean("selectFromInside", false)}
                 toggleContinueSelect={array("toggleContinueSelect", ["shift"])}
+                ratio={number("ratio", 0)}
                 onDragStart={(e: any) => {
                     const target = e.inputEvent.target;
                     if (

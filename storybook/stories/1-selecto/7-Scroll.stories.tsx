@@ -33,7 +33,7 @@ story.add("Select in the scroll area.", () => {
             language: "css",
         },
         ...SCROLL_PREVIEWS_TEMPLATE(
-            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect"],
+            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect", "ratio"],
             {
                 dragStart: DRAG_START_EVENT_TEMPLATE,
                 select: SELECT_EVENT_TEMPLATE,
@@ -105,6 +105,7 @@ function App() {
                 selectByClick={boolean("selectByClick", true)}
                 selectFromInside={boolean("selectFromInside", true)}
                 toggleContinueSelect={array("toggleContinueSelect", ["shift"])}
+                ratio={number("ratio", 0)}
             ></Selecto>
             <div className="elements scroll selecto-area" id="selecto1" ref={scrollerRef}>
                 {cubes.map(i => <div className="cube" key={i}></div>)}

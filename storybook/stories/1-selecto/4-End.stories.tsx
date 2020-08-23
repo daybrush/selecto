@@ -1,9 +1,9 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { withKnobs, number, boolean } from "@storybook/addon-knobs";
-import { withPreview, DEFAULT_REACT_CODESANDBOX, previewTemplate, raw, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
+import { withPreview } from "storybook-addon-preview";
 import Selecto from "react-selecto";
-import { SELECT_ONLY_END_EVENT_TEMPLATE, REACT_SELCTO_TEMPLATE, HTML_TEMPLATE, VANILLA_TEMPLATE, CSS_TEMPLATE, PREVIEWS_TEMPLATE } from "../../template/SelectoTemlate";
+import { SELECT_ONLY_END_EVENT_TEMPLATE, HTML_TEMPLATE, CSS_TEMPLATE, PREVIEWS_TEMPLATE } from "../../template/SelectoTemlate";
 
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
@@ -27,7 +27,7 @@ story.add("Only select at end.", () => {
             language: "css",
         },
         ...PREVIEWS_TEMPLATE(
-            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside"],
+            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "ratio"],
             {
                 selectEnd: SELECT_ONLY_END_EVENT_TEMPLATE,
             },
@@ -63,6 +63,7 @@ function App() {
                 hitRate={number("hitRate", 100)}
                 selectByClick={boolean("selectByClick", true)}
                 selectFromInside={boolean("selectFromInside", true)}
+                ratio={number("ratio", 0)}
             ></Selecto>
              <div className="elements selecto-area" id="selecto1">
                 {cubes.map(i => <div className="cube" key={i}></div>)}

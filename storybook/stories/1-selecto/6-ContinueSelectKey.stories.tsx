@@ -1,9 +1,9 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { withKnobs, number, boolean, array } from "@storybook/addon-knobs";
-import { withPreview, previewTemplate, DEFAULT_REACT_CODESANDBOX, raw, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
+import { withPreview } from "storybook-addon-preview";
 import Selecto from "react-selecto";
-import { REACT_SELCTO_TEMPLATE, SELECT_EVENT_TEMPLATE, HTML_TEMPLATE, REACT_TEMPLATE, VANILLA_TEMPLATE, CSS_TEMPLATE, PREVIEWS_TEMPLATE } from "../../template/SelectoTemlate";
+import { SELECT_EVENT_TEMPLATE, HTML_TEMPLATE, CSS_TEMPLATE, PREVIEWS_TEMPLATE } from "../../template/SelectoTemlate";
 
 const story = storiesOf("Selecto", module).addDecorator(withKnobs).addDecorator(withPreview);
 
@@ -27,7 +27,7 @@ story.add("Continue to select through the toggle key.", () => {
             language: "css",
         },
         ...PREVIEWS_TEMPLATE(
-            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect"],
+            ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect", "ratio"],
             {
                 select: SELECT_EVENT_TEMPLATE,
             },
@@ -63,6 +63,7 @@ function App() {
                 selectByClick={boolean("selectByClick", true)}
                 selectFromInside={boolean("selectFromInside", true)}
                 toggleContinueSelect={array("toggleContinueSelect", ["shift"])}
+                ratio={number("ratio", 0)}
             ></Selecto>
              <div className="elements selecto-area" id="selecto1">
                 {cubes.map(i => <div className="cube" key={i}></div>)}
