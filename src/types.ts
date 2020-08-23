@@ -15,8 +15,8 @@ import { DragScrollOptions } from "@scena/dragscroll";
  * @property - The container to add a selection element for vanilla
  * @property - The area to drag selection element (default: container)
  * @property - Targets to select. You can register a queryselector or an Element. (default: [])
- * @property - Whether to select by click (default: true)
- * @property - Whether to select from the target inside (default: true)
+ * @property - When the target is clicked, the event is stopped and selected. (If hitTest is 0, it becomes click as well.) (default: true)
+ * @property - Whether to select from the target inside (If hitTest is 0, it becomes inside select as well) (default: true)
  * @property - After the select, whether to select the next target with the selected target (deselected if the target is selected again). (default: false)
  * @property - Determines which key to continue selecting the next target via keydown and keyup.
  * @property - The container for keydown and keyup events
