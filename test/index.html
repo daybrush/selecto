@@ -52,11 +52,11 @@ const selecto = new Selecto({
     container: document.body,
     hitRate: 40,
     selectableTargets: [".target"],
-    // selectFromInside: false,
-    checkInput: true,
+    selectFromInside: false,
     selectByClick: true,
+    checkInput: true,
     toggleContinueSelect: "shift",
-    ratio: 0.7,
+    // ratio: 0.7,
 }).on("dragStart", e => {
     console.log("ds", e.inputEvent.target);
 }).on("selectStart", e => {
