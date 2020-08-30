@@ -613,11 +613,16 @@ class Selecto extends Component {
             datas.startSelectedTargets, datas.selectedTargets, rect, e);
         this.selectedTargets = datas.selectedTargets;
     }
-    private sameCombiKey(e: any) {
+    private sameCombiKey(e: any, isKeyup?: boolean) {
         const toggleContinueSelect = [].concat(this.options.toggleContinueSelect);
         const combi = getCombi(e.inputEvent, e.key);
         const toggleKeys = (isArray(toggleContinueSelect[0]) ? toggleContinueSelect : [toggleContinueSelect]);
 
+        if (isKeyup) {
+            const singleKey = e.key;
+
+            return toggleKeys.some(keys => keys.some(key => key === singleKey));
+        }
         return toggleKeys.some(keys => keys.every(key => combi.indexOf(key) > -1));
     }
     private onKeyDown = (e: any) => {
@@ -654,7 +659,7 @@ class Selecto extends Component {
         this.trigger("keydown", {});
     }
     private onKeyUp = (e: any) => {
-        if (!this.sameCombiKey(e)) {
+        if (!this.sameCombiKey(e, true)) {
             return;
         }
         this.continueSelect = false;
