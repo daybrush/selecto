@@ -22,7 +22,7 @@
     },
     "linkMap": {
         "IObject": "https://daybrush.com/utils/release/latest/doc/global.html#ObjectInterface",
-        "OnDragStart": "https://daybrush.com/drag/release/latest/doc/Dragger.html#.OnDragStart"
+        "OnDragStart": "https://daybrush.com/gesto/release/latest/doc/Gesto.html#.OnDragStart"
     },
     "docdash": {
         "menu": {
