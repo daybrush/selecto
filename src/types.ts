@@ -5,7 +5,7 @@ import {
     OnDragStart as OnParentDragStart,
     OnDrag as OnParentDrag,
     OnDragEnd as OnParentDragEnd,
-} from "@daybrush/drag";
+} from "gesto";
 import { DragScrollOptions } from "@scena/dragscroll";
 
 /**
