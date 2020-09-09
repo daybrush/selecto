@@ -1,5 +1,5 @@
 import Component from "@egjs/component";
-import Dragger, { OnDrag } from "@daybrush/drag";
+import Gesto, { OnDrag } from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { isObject, camelize, IObject, addEvent, removeEvent, isArray } from "@daybrush/utils";
@@ -40,7 +40,7 @@ class Selecto extends Component {
     private target!: HTMLElement | SVGElement;
     private dragContainer!: Element | Window | Element[];
     private container!: HTMLElement;
-    private dragger!: Dragger;
+    private gesto!: Gesto;
     private injectResult!: InjectResult;
     private selectedTargets: Array<HTMLElement | SVGElement> = [];
     private differ = new ChildrenDiffer<HTMLElement | SVGElement>();
@@ -111,10 +111,10 @@ class Selecto extends Component {
         });
     }
     public setPreventDefault(value: boolean) {
-        this.dragger.options.preventDefault = value;
+        this.gesto.options.preventDefault = value;
     }
     public setCheckInput(value: boolean) {
-        this.dragger.options.checkInput = value;
+        this.gesto.options.checkInput = value;
     }
     /**
      * `OnDragStart` is triggered by an external event.
@@ -129,7 +129,7 @@ class Selecto extends Component {
      * });
      */
     public triggerDragStart(e: MouseEvent | TouchEvent) {
-        this.dragger.triggerDragStart(e);
+        this.gesto.triggerDragStart(e);
         return this;
     }
     /**
@@ -138,12 +138,12 @@ class Selecto extends Component {
     public destroy(): void {
         this.off();
         this.keycon && this.keycon.destroy();
-        this.dragger.unset();
+        this.gesto.unset();
         this.injectResult.destroy();
         removeEvent(document, "selectstart", this.onDocumentSelectStart);
 
         this.keycon = null;
-        this.dragger = null;
+        this.gesto = null;
         this.injectResult = null;
         this.target = null;
         this.container = null;
@@ -200,13 +200,14 @@ class Selecto extends Component {
         this.dragContainer = typeof dragContainer === "string"
             ? [].slice.call(document.querySelectorAll(dragContainer))
             : (this.options.dragContainer || this.target.parentNode as any);
-        this.dragger = new Dragger(this.dragContainer, {
+        this.gesto = new Gesto(this.dragContainer, {
             container: window,
             checkInput,
             preventDefault,
-            dragstart: this.onDragStart,
+        }).on({
+            dragStart: this.onDragStart,
             drag: this.onDrag,
-            dragend: this.onDragEnd,
+            dragEnd: this.onDragEnd,
         });
         addEvent(document, "selectstart", this.onDocumentSelectStart);
 
@@ -272,7 +273,7 @@ class Selecto extends Component {
                 rect.left -= offsetX;
                 rect.right -= offsetX;
             });
-            this.dragger.scrollBy(offsetX, offsetY, inputEvent.inputEvent, false);
+            this.gesto.scrollBy(offsetX, offsetY, inputEvent.inputEvent, false);
 
             inputEvent.distX += offsetX;
             inputEvent.distY += offsetY;
@@ -697,7 +698,7 @@ class Selecto extends Component {
         }
     }
     private onDocumentSelectStart = (e: any) => {
-        if (!this.dragger.isFlag()) {
+        if (!this.gesto.isFlag()) {
             return;
         }
         let dragContainer = this.dragContainer;
