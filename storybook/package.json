@@ -15,7 +15,7 @@
     "raw-loader": "^4.0.0",
     "react-infinite-viewer": "^0.6.1",
     "react-moveable": "^0.20.6",
-    "react-selecto": "^1.6.2",
+    "react-selecto": "^1.6.3",
     "storybook-addon-preview": "^1.2.0"
   },
   "devDependencies": {
