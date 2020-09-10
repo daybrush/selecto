@@ -1,5 +1,5 @@
 import Component from "@egjs/component";
-import Gesto, { OnDrag } from "gesto";
+import Gesto, { OnDrag, OnDragStart } from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { isObject, camelize, IObject, addEvent, removeEvent, isArray } from "@daybrush/utils";
@@ -157,12 +157,15 @@ class Selecto extends Component {
      */
     public clickTarget(e: MouseEvent | TouchEvent, clickedTarget?: Element): this {
         const { clientX, clientY } = getClient(e);
-        const dragEvent: OnDragEvent = {
+        const dragEvent = {
             datas: {},
             clientX,
             clientY,
             inputEvent: e,
-        };
+            stop: () => {
+                return false;
+            },
+        } as any;
         if (this.onDragStart(dragEvent, clickedTarget)) {
             this.onDragEnd(dragEvent);
         }
@@ -452,7 +455,7 @@ class Selecto extends Component {
             inputEvent,
         });
     }
-    private onDragStart = (e: OnDragEvent, clickedTarget?: Element) => {
+    private onDragStart = (e: OnDragStart, clickedTarget?: Element) => {
         const { datas, clientX, clientY, inputEvent } = e;
         const { continueSelect, selectFromInside, selectByClick } = this.options;
         const selectableTargets = this.getSelectableTargets();
@@ -497,6 +500,7 @@ class Selecto extends Component {
         const isPreventSelect = !selectFromInside && hasInsideTargets;
 
         if (isPreventSelect && !selectByClick) {
+            e.stop();
             return false;
         }
         const type = inputEvent.type;
@@ -529,9 +533,10 @@ class Selecto extends Component {
          *   });
          * });
          */
-        const result = isTrusted ? this.trigger("dragStart", e) : true;
+        const result = isTrusted ? this.trigger("dragStart", { ...e }) : true;
 
         if (!result) {
+            e.stop();
             return false;
         }
 
@@ -551,6 +556,7 @@ class Selecto extends Component {
         if (isPreventSelect && selectByClick) {
             this.onDragEnd(e);
             inputEvent.preventDefault();
+            e.stop();
             return false;
         } else {
             if (type === "touchstart") {
