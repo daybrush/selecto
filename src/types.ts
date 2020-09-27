@@ -43,6 +43,7 @@ export interface SelectoOptions {
     preventDefault: boolean;
     cspNonce: string;
     ratio: number;
+    scale: number;
 }
 
 export interface Hypertext {

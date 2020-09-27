@@ -70,6 +70,7 @@ class Selecto extends Component {
             checkInput: false,
             preventDefault: false,
             cspNonce: "",
+            scale: 1,
             ratio: 0,
             ...options,
         };
@@ -581,11 +582,12 @@ class Selecto extends Component {
             width,
             height,
         } = rect;
+        const scale = this.options.scale
         this.target.style.cssText
             += `display: block;`
             + `left:0px;top:0px;`
-            + `transform: translate(${left}px, ${top}px);`
-            + `width:${width}px;height:${height}px;`;
+            + `transform: translate(${left * scale}px, ${top * scale}px);`
+            + `width:${width * scale}px;height:${height * scale}px;`;
 
         const passedTargets = this.hitTest(
             rect, datas.startX, datas.startY, datas.selectableTargets, datas.selectableRects);
