@@ -79,9 +79,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
     }
     /**
      * You can set the currently selected targets.
+     *
      */
     public setSelectedTargets(selectedTargets: Array<HTMLElement | SVGElement>): this {
         this.selectedTargets = selectedTargets;
+        this.gesto.setEventDatas({
+            startSelectedTargets: selectedTargets,
+        });
         this.differ = new ChildrenDiffer(selectedTargets);
 
         return this;
