@@ -458,7 +458,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
     }
     private onDragStart = (e: OnDragStart, clickedTarget?: Element) => {
         const { datas, clientX, clientY, inputEvent } = e;
-        const { continueSelect, selectFromInside, selectByClick } = this.options;
+        const {
+            continueSelect, selectFromInside, selectByClick,
+        } = this.options;
         const selectableTargets = this.getSelectableTargets();
         const selectableRects = selectableTargets.map(target => {
             const rect = target.getBoundingClientRect();
@@ -487,7 +489,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             height: 0,
         };
         let firstPassedTargets: Array<HTMLElement | SVGElement> = [];
-        if (selectFromInside || selectByClick) {
+        if (!selectFromInside || selectByClick) {
             let pointTarget
                 = (clickedTarget || document.elementFromPoint(clientX, clientY)) as HTMLElement | SVGElement;
 
@@ -537,7 +539,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
          * });
          */
         const result = isTrusted ? this.trigger("dragStart", { ...e }) : true;
-        console.log(result);
+
         if (!result) {
             e.stop();
             return false;
@@ -556,7 +558,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
         datas.selectedTargets = firstPassedTargets;
         this.target.style.cssText
             += `left:0px;top:0px;transform: translate(${clientX}px, ${clientY}px)`;
-
 
         if (isPreventSelect && selectByClick) {
             this.onDragEnd(e);
