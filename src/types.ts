@@ -85,27 +85,27 @@ export interface OnSelect {
  * @property - after added elements
  * @property - after removed elements
  * @property - isDragStart
+ * @property - is double click
  */
 export interface OnSelectEnd extends OnSelect {
     afterAdded: Array<HTMLElement | SVGElement>;
     afterRemoved: Array<HTMLElement | SVGElement>;
     isDragStart: boolean;
+    isDouble: boolean;
 }
 
 export interface OnDragEvent {
     datas: IObject<any>;
     clientX: number;
     clientY: number;
-    distX?: number;
-    distY?: number;
+    deltaX: number;
+    deltaY: number;
+    distX: number;
+    distY: number;
     isDouble?: boolean;
     inputEvent: any;
 }
 export interface OnKeyEvent {
-    datas: IObject<any>;
-    clientX: number;
-    clientY: number;
-    inputEvent: any;
 }
 export interface OnScroll {
     container: HTMLElement;

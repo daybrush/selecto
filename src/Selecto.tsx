@@ -1,5 +1,5 @@
-import Component from "@egjs/component";
-import Gesto, { OnDrag, OnDragStart } from "gesto";
+import EventEmitter from "@scena/event-emitter";
+import Gesto, { OnDrag, OnDragEnd, OnDragStart } from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { isObject, camelize, IObject, addEvent, removeEvent, isArray } from "@daybrush/utils";
@@ -35,7 +35,7 @@ import { PROPERTIES, injector, CLASS_NAME } from "./consts";
     }
     Object.defineProperty(prototype, property, attributes);
 })
-class Selecto extends Component {
+class Selecto extends EventEmitter<SelectoEvents> {
     public options: SelectoOptions;
     private target!: HTMLElement | SVGElement;
     private dragContainer!: Element | Window | Element[];
@@ -397,6 +397,7 @@ class Selecto extends Component {
         rect: Rect,
         e: OnDragEvent,
     ) {
+        console.log(startSelectedTargets, selectedTargets);
         const { inputEvent, isDouble } = e;
         const {
             added,
@@ -475,6 +476,8 @@ class Selecto extends Component {
         datas.selectableTargets = selectableTargets;
         datas.selectableRects = selectableRects;
         datas.startSelectedTargets = this.selectedTargets;
+        datas.selectedTargets = [];
+
         const hitRect = {
             left: clientX,
             top: clientY,
@@ -534,7 +537,7 @@ class Selecto extends Component {
          * });
          */
         const result = isTrusted ? this.trigger("dragStart", { ...e }) : true;
-
+        console.log(result);
         if (!result) {
             e.stop();
             return false;
@@ -546,12 +549,14 @@ class Selecto extends Component {
             firstPassedTargets = this.passSelectedTargets(firstPassedTargets);
         }
 
+        console.log(result);
         this.select(firstPassedTargets, hitRect, inputEvent, true);
         datas.startX = clientX;
         datas.startY = clientY;
         datas.selectedTargets = firstPassedTargets;
         this.target.style.cssText
             += `left:0px;top:0px;transform: translate(${clientX}px, ${clientY}px)`;
+
 
         if (isPreventSelect && selectByClick) {
             this.onDragEnd(e);
@@ -608,14 +613,21 @@ class Selecto extends Component {
         this.check(e);
     }
     private onDragEnd = (e: OnDragEvent) => {
-        const { datas } = e;
+        const { datas, inputEvent } = e;
         const rect = getRect(e, this.options.ratio);
+
         this.dragScroll.dragEnd();
         this.target.style.cssText += "display: none;";
-        this.trigger("dragEnd", {
-            ...e,
-            rect,
-        });
+
+        if (inputEvent && inputEvent.type !== "mousedown" && inputEvent.type !== "touchstart") {
+            this.trigger("dragEnd", {
+                isDouble: false,
+                isDrag: false,
+                ...e,
+                rect,
+            });
+        }
+
         this.selectEnd(
             datas.startSelectedTargets, datas.selectedTargets, rect, e);
         this.selectedTargets = datas.selectedTargets;
@@ -725,10 +737,7 @@ class Selecto extends Component {
     }
 }
 
-interface Selecto extends Component, SelectoProperties {
-    on<T extends keyof SelectoEvents>(eventName: T, handlerToAttach: (event: SelectoEvents[T]) => any): this;
-    on(eventName: string, handlerToAttach: (event: { [key: string]: any }) => any): this;
-    on(events: { [key: string]: (event: { [key: string]: any }) => any }): this;
+interface Selecto extends SelectoProperties {
 }
 
 export default Selecto;

@@ -42,17 +42,17 @@
     "homepage": "https://github.com/daybrush/selecto#readme",
     "dependencies": {
         "@daybrush/utils": "^1.0.0",
-        "@egjs/children-differ": "^1.0.0",
-        "@egjs/component": "^2.1.2",
-        "@scena/dragscroll": "^0.2.1",
+        "@egjs/children-differ": "^1.0.1",
+        "@scena/dragscroll": "^0.3.1",
+        "@scena/event-emitter": "^1.0.2",
         "css-styled": "^1.0.0",
         "framework-utils": "^0.3.4",
-        "gesto": "^1.0.0",
-        "keycon": "^1.1.0"
+        "gesto": "^1.1.1",
+        "keycon": "^1.1.2"
     },
     "peerDependencies": {
         "framework-utils": ">=0.3.4",
-        "@scena/dragscroll": ">=0.2.1"
+        "@scena/dragscroll": ">=0.3.1"
     },
     "devDependencies": {
         "@daybrush/builder": "^0.1.2",
