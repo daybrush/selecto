@@ -84,9 +84,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
      */
     public setSelectedTargets(selectedTargets: Array<HTMLElement | SVGElement>): this {
         this.selectedTargets = selectedTargets;
-        this.gesto.setEventDatas({
-            startSelectedTargets: selectedTargets,
-        });
+
+        if (this.gesto.isFlag()) {
+            this.findSelectableTargets(this.gesto.getEventDatas());
+            this.gesto.setEventDatas({
+                startSelectedTargets: selectedTargets,
+            });
+        }
         this.differ = new ChildrenDiffer(selectedTargets);
 
         return this;
@@ -461,12 +465,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             inputEvent,
         });
     }
-    private onDragStart = (e: OnDragStart, clickedTarget?: Element) => {
-        const { datas, clientX, clientY, inputEvent } = e;
-        const {
-            continueSelect, selectFromInside, selectByClick,
-            boundContainer,
-        } = this.options;
+    private findSelectableTargets(datas: any) {
         const selectableTargets = this.getSelectableTargets();
         const selectableRects = selectableTargets.map(target => {
             const rect = target.getBoundingClientRect();
@@ -483,6 +482,15 @@ class Selecto extends EventEmitter<SelectoEvents> {
         });
         datas.selectableTargets = selectableTargets;
         datas.selectableRects = selectableRects;
+    }
+    private onDragStart = (e: OnDragStart, clickedTarget?: Element) => {
+        const { datas, clientX, clientY, inputEvent } = e;
+        const {
+            continueSelect, selectFromInside, selectByClick,
+            boundContainer,
+        } = this.options;
+
+        this.findSelectableTargets(datas);
         datas.startSelectedTargets = this.selectedTargets;
 
         let boundArea = { left: -Infinity, top: -Infinity, right: Infinity, bottom: Infinity };
@@ -519,7 +527,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 = (clickedTarget || document.elementFromPoint(clientX, clientY)) as HTMLElement | SVGElement;
 
             while (pointTarget) {
-                if (selectableTargets.indexOf(pointTarget as HTMLElement | SVGElement) > -1) {
+                if (datas.selectableTargets.indexOf(pointTarget as HTMLElement | SVGElement) > -1) {
                     break;
                 }
                 pointTarget = pointTarget.parentElement;
