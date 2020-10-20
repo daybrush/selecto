@@ -209,6 +209,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             ? [].slice.call(document.querySelectorAll(dragContainer))
             : (this.options.dragContainer || this.target.parentNode as any);
         this.gesto = new Gesto(this.dragContainer, {
+            checkWindowBlur: true,
             container: window,
             checkInput,
             preventDefault,
@@ -415,7 +416,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             prevList: afterPrevList,
             list: afterList,
         } = diff(this.selectedTargets, selectedTargets);
-        const type = inputEvent.type;
+        const type = inputEvent && inputEvent.type;
         const isDragStart = type === "mousedown" || type === "touchstart";
 
         /**
