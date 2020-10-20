@@ -13,7 +13,7 @@ import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 /**
  * Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.
  * @sort 1
- * @extends eg.Component
+ * @extends EventEmitter
  */
 @Properties(PROPERTIES as any, (prototype, property) => {
     const attributes: IObject<any> = {
