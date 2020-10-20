@@ -2,7 +2,7 @@ import EventEmitter from "@scena/event-emitter";
 import Gesto, { OnDrag, OnDragEnd, OnDragStart } from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
-import { isObject, camelize, IObject, addEvent, removeEvent, isArray } from "@daybrush/utils";
+import { isObject, camelize, IObject, addEvent, removeEvent, isArray, isString } from "@daybrush/utils";
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
 import DragScroll from "@scena/dragscroll";
 import KeyController, { getCombi } from "keycon";
@@ -69,6 +69,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             scrollOptions: undefined,
             checkInput: false,
             preventDefault: false,
+            boundContainer: false,
             cspNonce: "",
             ratio: 0,
             ...options,
@@ -401,7 +402,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
         rect: Rect,
         e: OnDragEvent,
     ) {
-        console.log(startSelectedTargets, selectedTargets);
         const { inputEvent, isDouble } = e;
         const {
             added,
@@ -464,6 +464,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const { datas, clientX, clientY, inputEvent } = e;
         const {
             continueSelect, selectFromInside, selectByClick,
+            boundContainer,
         } = this.options;
         const selectableTargets = this.getSelectableTargets();
         const selectableRects = selectableTargets.map(target => {
@@ -482,6 +483,26 @@ class Selecto extends EventEmitter<SelectoEvents> {
         datas.selectableTargets = selectableTargets;
         datas.selectableRects = selectableRects;
         datas.startSelectedTargets = this.selectedTargets;
+
+        let boundArea = { left: -Infinity, top: -Infinity, right: Infinity, bottom: Infinity };
+
+        if (boundContainer) {
+            let rectContainer: HTMLElement;
+
+            if (isString(boundContainer)) {
+                rectContainer = document.querySelector(boundContainer);
+            } else if (boundContainer === true) {
+                rectContainer = this.container;
+            } else {
+                rectContainer = boundContainer;
+            }
+            const rect = rectContainer.getBoundingClientRect();
+
+            boundArea = { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom };
+        }
+
+        console.log(boundContainer, boundArea);
+        datas.boundArea = boundArea;
         datas.selectedTargets = [];
 
         const hitRect = {
@@ -560,6 +581,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         datas.startX = clientX;
         datas.startY = clientY;
         datas.selectedTargets = firstPassedTargets;
+        datas.boundsArea =
         this.target.style.cssText
             += `left:0px;top:0px;transform: translate(${clientX}px, ${clientY}px)`;
 
@@ -584,7 +606,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             datas,
             inputEvent,
         } = e;
-        const rect = getRect(e, this.options.ratio);
+        const rect = getRect(e, this.options.ratio, datas.boundArea);
         const {
             top,
             left,
@@ -619,7 +641,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     }
     private onDragEnd = (e: OnDragEvent) => {
         const { datas, inputEvent } = e;
-        const rect = getRect(e, this.options.ratio);
+        const rect = getRect(e, this.options.ratio, datas.boundArea);
 
         this.dragScroll.dragEnd();
         this.target.style.cssText += "display: none;";

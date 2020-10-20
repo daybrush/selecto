@@ -1,5 +1,5 @@
 import { Hypertext, Rect } from "./types";
-import { IObject, addClass, hasClass } from "@daybrush/utils";
+import { IObject, addClass, hasClass, convertUnitSize, caculateBoundSize } from "@daybrush/utils";
 
 export function getClient(e: MouseEvent | TouchEvent) {
     if ("touches" in e) {
@@ -75,7 +75,10 @@ export function diffValue<T>(prev: T, cur: T, func: (prev: T, cur: T) => void) {
     }
 }
 
-export function getRect(e: any, ratio: number): Rect {
+export function getRect(
+    e: any, ratio: number,
+    boundArea: { left: number, right: number, top: number, bottom: number},
+): Rect {
     let {
         distX = 0,
         distY = 0,
@@ -89,13 +92,18 @@ export function getRect(e: any, ratio: number): Rect {
         distX = (distX >= 0 ? 1 : -1) * nextWidth;
         distY = (distY >= 0 ? 1 : -1) * nextHeight;
     }
+    let width = Math.abs(distX);
+    let height = Math.abs(distY);
+
+    const maxWidth = distX < 0 ? startX - boundArea.left : boundArea.right - startX;
+    const maxHeight = distY < 0 ? startY - boundArea.top : boundArea.bottom - startY;
+
+    [width, height] = caculateBoundSize([width, height], [0, 0], [maxWidth, maxHeight], !!ratio);
+    distX = (distX >= 0 ? 1 : -1) * width;
+    distY = (distY >= 0 ? 1 : -1) * height;
+
     const tx = Math.min(0, distX);
     const ty = Math.min(0, distY);
-    // h ^ 2 + (ratio * h) ^ 2 = dist
-    // (1 + ratio ^ 2) * h^2 = dist ^ 2
-    // dist * Math.atan(ratio);
-    const width = Math.abs(distX);
-    const height = Math.abs(distY);
     const left = startX + tx;
     const top = startY + ty;
 

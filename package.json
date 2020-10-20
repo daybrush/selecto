@@ -41,7 +41,7 @@
     },
     "homepage": "https://github.com/daybrush/selecto#readme",
     "dependencies": {
-        "@daybrush/utils": "^1.0.0",
+        "@daybrush/utils": "^1.1.0",
         "@egjs/children-differ": "^1.0.1",
         "@scena/dragscroll": "^0.3.1",
         "@scena/event-emitter": "^1.0.2",
