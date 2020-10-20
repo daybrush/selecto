@@ -85,12 +85,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
     public setSelectedTargets(selectedTargets: Array<HTMLElement | SVGElement>): this {
         this.selectedTargets = selectedTargets;
 
-        if (this.gesto.isFlag()) {
-            this.findSelectableTargets(this.gesto.getEventDatas());
-            this.gesto.setEventDatas({
-                startSelectedTargets: selectedTargets,
-            });
-        }
         this.differ = new ChildrenDiffer(selectedTargets);
 
         return this;
@@ -158,7 +152,27 @@ class Selecto extends EventEmitter<SelectoEvents> {
         this.container = null;
         this.options = null;
     }
+    /**
+     * Find for selectableTargets again during drag event
+     */
+    public findSelectableTargets(datas: any = this.gesto.getEventDatas()) {
+        const selectableTargets = this.getSelectableTargets();
+        const selectableRects = selectableTargets.map(target => {
+            const rect = target.getBoundingClientRect();
+            const { left, top, width, height } = rect;
 
+            return {
+                left,
+                top,
+                right: left + width,
+                bottom: top + height,
+                width,
+                height,
+            };
+        });
+        datas.selectableTargets = selectableTargets;
+        datas.selectableRects = selectableRects;
+    }
     /**
      * External click or mouse events can be applied to the selecto.
      * @params - Extenal click or mouse event
@@ -464,24 +478,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
             rect,
             inputEvent,
         });
-    }
-    private findSelectableTargets(datas: any) {
-        const selectableTargets = this.getSelectableTargets();
-        const selectableRects = selectableTargets.map(target => {
-            const rect = target.getBoundingClientRect();
-            const { left, top, width, height } = rect;
-
-            return {
-                left,
-                top,
-                right: left + width,
-                bottom: top + height,
-                width,
-                height,
-            };
-        });
-        datas.selectableTargets = selectableTargets;
-        datas.selectableRects = selectableRects;
     }
     private onDragStart = (e: OnDragStart, clickedTarget?: Element) => {
         const { datas, clientX, clientY, inputEvent } = e;
