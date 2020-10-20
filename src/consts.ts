@@ -17,6 +17,7 @@ export const injector = styled(`
 export const CLASS_NAME = `selecto-selection ${injector.className}`;
 
 export const PROPERTIES = [
+    "boundContainer",
     "selectableTargets",
     "selectByClick",
     "selectFromInside",
@@ -40,6 +41,7 @@ export const OPTIONS = [
 ] as const;
 
 export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
+    boundContainer: null,
     target: null,
     container: null,
     dragContainer: null,

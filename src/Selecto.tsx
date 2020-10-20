@@ -502,7 +502,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
             boundArea = { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom };
         }
 
-        console.log(boundContainer, boundArea);
         datas.boundArea = boundArea;
         datas.selectedTargets = [];
 
@@ -577,7 +576,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
             firstPassedTargets = this.passSelectedTargets(firstPassedTargets);
         }
 
-        console.log(result);
         this.select(firstPassedTargets, hitRect, inputEvent, true);
         datas.startX = clientX;
         datas.startY = clientY;
