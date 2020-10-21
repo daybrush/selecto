@@ -742,6 +742,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     }
     private onBlur = () => {
         if (this.toggleContinueSelect && this.continueSelect) {
+            this.continueSelect = false;
             this.trigger("keyup", {});
         }
     }
