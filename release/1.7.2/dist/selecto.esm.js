@@ -533,6 +533,8 @@ function (_super) {
 
     _this.onBlur = function () {
       if (_this.toggleContinueSelect && _this.continueSelect) {
+        _this.continueSelect = false;
+
         _this.trigger("keyup", {});
       }
     };
