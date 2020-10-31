@@ -6,8 +6,8 @@ import { isObject, camelize, IObject, addEvent, removeEvent, isArray, isString }
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
 import DragScroll from "@scena/dragscroll";
 import KeyController, { getCombi } from "keycon";
-import { createElement, h, getClient, diffValue, getRect } from "./utils";
-import { SelectoOptions, Rect, SelectoProperties, OnDragEvent, SelectoEvents } from "./types";
+import { createElement, h, getClient, diffValue, getRect, getDefaultElementPoints } from "./utils";
+import { SelectoOptions, SelectoProperties, OnDragEvent, SelectoEvents, Point, Rect } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 
 /**
@@ -70,6 +70,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             checkInput: false,
             preventDefault: false,
             boundContainer: false,
+            getElementPoints: getDefaultElementPoints,
             cspNonce: "",
             ratio: 0,
             ...options,
@@ -156,22 +157,11 @@ class Selecto extends EventEmitter<SelectoEvents> {
      * Find for selectableTargets again during drag event
      */
     public findSelectableTargets(datas: any = this.gesto.getEventDatas()) {
+        const getElementPoints = this.getElementPoints;
         const selectableTargets = this.getSelectableTargets();
-        const selectableRects = selectableTargets.map(target => {
-            const rect = target.getBoundingClientRect();
-            const { left, top, width, height } = rect;
-
-            return {
-                left,
-                top,
-                right: left + width,
-                bottom: top + height,
-                width,
-                height,
-            };
-        });
+        const selectablePoints = selectableTargets.map(target => getElementPoints(target));
         datas.selectableTargets = selectableTargets;
-        datas.selectableRects = selectableRects;
+        datas.selectablePoints = selectablePoints;
     }
     /**
      * External click or mouse events can be applied to the selecto.
@@ -247,18 +237,20 @@ class Selecto extends EventEmitter<SelectoEvents> {
         clientX: number,
         clientY: number,
         targets: Array<HTMLElement | SVGElement>,
-        rects: Rect[],
+        points: Point[],
     ) {
         const { hitRate, selectByClick } = this.options;
         const { left, top, right, bottom } = selectRect;
 
         return targets.filter((target, i) => {
-            const {
-                left: rectLeft,
-                top: rectTop,
-                right: rectRight,
-                bottom: rectBottom,
-            } = rects[i];
+            const { pos1, pos2, pos3, pos4 } = points[i];
+            const [
+                rectLeft, rectTop,
+            ] = [0, 1].map(j => Math.min(pos1[j], pos2[j], pos3[j], pos4[j]));
+            const [
+                rectRight, rectBottom,
+            ] = [0, 1].map(j => Math.max(pos1[j], pos2[j], pos3[j], pos4[j]));
+
             const isStart
                 = rectLeft <= clientX
                 && clientX <= rectRight
@@ -294,11 +286,11 @@ class Selecto extends EventEmitter<SelectoEvents> {
             const datas = inputEvent.datas;
             datas.startX -= offsetX;
             datas.startY -= offsetY;
-            datas.selectableRects.forEach(rect => {
-                rect.top -= offsetY;
-                rect.bottom -= offsetY;
-                rect.left -= offsetX;
-                rect.right -= offsetX;
+            datas.selectablePoints.forEach(rect => {
+                [rect.pos1, rect.pos2, rect.pos3, rect.pos4].forEach(pos => {
+                    pos[0] -= offsetX;
+                    pos[1] -= offsetY;
+                });
             });
             this.gesto.scrollBy(offsetX, offsetY, inputEvent.inputEvent, false);
 
@@ -623,7 +615,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
             + `width:${width}px;height:${height}px;`;
 
         const passedTargets = this.hitTest(
-            rect, datas.startX, datas.startY, datas.selectableTargets, datas.selectableRects);
+            rect, datas.startX, datas.startY,
+            datas.selectableTargets, datas.selectablePoints,
+        );
         const selectedTargets = this.passSelectedTargets(passedTargets);
 
         this.trigger("drag", {

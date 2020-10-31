@@ -39,12 +39,12 @@
     <div class="target" style="top: 150px; left: 50px; width: 100px; height: 50px">T3</div>
     <div class="target" style="top: 300px; left: 250px; width: 50px; height: 150px">T4</div>
     <div class="target" style="top: 200px; left: 400px; width: 100px; height: 100px">T5</div>
-    <div class="target" style="top: 300px; left: 50px; width: 50px; height: 50px">T6</div>
+
     <div class="target2" style="top: 330px; left: 80px; width: 120px; height: 120px" contenteditable="true">T7</div>
 
 
 </body>
-<script src="../dist/selecto.js"></script>
+<script src="../../dist/selecto.js"></script>
 
 <div class="hi"></div>
 <script>
@@ -61,6 +61,8 @@ const selecto = new Selecto({
     // ratio: 0.7,
 }).on("dragStart", e => {
     console.log("ds", e.inputEvent.target);
+}).on("drag", e => {
+    selecto.findSelectableTargets();
 }).on("selectStart", e => {
     console.log("start", e);
     e.added.forEach(el => {
@@ -68,6 +70,10 @@ const selecto = new Selecto({
     });
     e.removed.forEach(el => {
         el.classList.remove("selected");
+    });
+}).on("selectStart", () => {
+    setTimeout(() => {
+        document.body.insertAdjacentHTML("beforeend", `<div class="target" style="top: 300px; left: 50px; width: 50px; height: 50px">T6</div>`);
     });
 }).on("selectEnd", e => {
     if (e.isDouble) {
