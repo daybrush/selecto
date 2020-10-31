@@ -1,5 +1,5 @@
 import { Hypertext, Rect } from "./types";
-import { IObject, addClass, hasClass, convertUnitSize, caculateBoundSize } from "@daybrush/utils";
+import { IObject, addClass, hasClass, calculateBoundSize } from "@daybrush/utils";
 
 export function getClient(e: MouseEvent | TouchEvent) {
     if ("touches" in e) {
@@ -98,7 +98,7 @@ export function getRect(
     const maxWidth = distX < 0 ? startX - boundArea.left : boundArea.right - startX;
     const maxHeight = distY < 0 ? startY - boundArea.top : boundArea.bottom - startY;
 
-    [width, height] = caculateBoundSize([width, height], [0, 0], [maxWidth, maxHeight], !!ratio);
+    [width, height] = calculateBoundSize([width, height], [0, 0], [maxWidth, maxHeight], !!ratio);
     distX = (distX >= 0 ? 1 : -1) * width;
     distY = (distY >= 0 ? 1 : -1) * height;
 
@@ -114,5 +114,17 @@ export function getRect(
         bottom: top + height,
         width,
         height,
+    };
+}
+
+export function getDefaultElementPoints(el: HTMLElement) {
+    const rect = el.getBoundingClientRect();
+    const { left, top, width, height } = rect;
+
+    return {
+        pos1: [left, top],
+        pos2: [left + width, top],
+        pos3: [left, top + height],
+        pos4: [left + width, top + height],
     };
 }

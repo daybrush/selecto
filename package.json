@@ -1,6 +1,6 @@
 {
     "name": "selecto",
-    "version": "1.7.3",
+    "version": "1.7.4",
     "description": "Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.",
     "main": "./dist/selecto.cjs.js",
     "module": "./dist/selecto.esm.js",
@@ -11,6 +11,8 @@
         "build": "rollup -c && npm run declaration && print-sizes ./dist",
         "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
         "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
+        "test": "jest --watchAll",
+        "coverage": "jest --coverage && print-coveralls --sort=desc",
         "prerelease": "npm run build && npm run doc && npm run storybook && prerelease --dirs=dist,doc",
         "storybook": "cd storybook/ && npm run build && cd ../",
         "release": "npm run build && npm run doc && npm run storybook && release --dirs=dist,doc",
@@ -41,7 +43,7 @@
     },
     "homepage": "https://github.com/daybrush/selecto#readme",
     "dependencies": {
-        "@daybrush/utils": "^1.1.0",
+        "@daybrush/utils": "^1.1.1",
         "@egjs/children-differ": "^1.0.1",
         "@scena/dragscroll": "^0.3.1",
         "@scena/event-emitter": "^1.0.2",
@@ -58,9 +60,13 @@
         "@daybrush/builder": "^0.1.2",
         "@daybrush/jsdoc": "^0.3.7",
         "@daybrush/release": "^0.2.4",
+        "@types/jest": "^24.0.13",
         "daybrush-jsdoc-template": "^1.6.0",
+        "jest": "^24.8.0",
+        "print-coveralls": "^1.2.2",
         "print-sizes": "^0.1.0",
         "pvu": "^0.4.1",
+        "ts-jest": "^24.0.2",
         "tslint": "^5.20.1",
         "typescript": "^3.7.4"
     }
