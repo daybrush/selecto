@@ -6,6 +6,7 @@ import { isObject, camelize, IObject, addEvent, removeEvent, isArray, isString }
 import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ";
 import DragScroll from "@scena/dragscroll";
 import KeyController, { getCombi } from "keycon";
+import { getAreaSize, getOverlapPoints, isInside, getMinMaxs } from "overlap-area";
 import { createElement, h, getClient, diffValue, getRect, getDefaultElementPoints } from "./utils";
 import { SelectoOptions, SelectoProperties, OnDragEvent, SelectoEvents, Point, Rect } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
@@ -159,7 +160,26 @@ class Selecto extends EventEmitter<SelectoEvents> {
     public findSelectableTargets(datas: any = this.gesto.getEventDatas()) {
         const getElementPoints = this.getElementPoints;
         const selectableTargets = this.getSelectableTargets();
-        const selectablePoints = selectableTargets.map(target => getElementPoints(target));
+        const selectablePoints = selectableTargets.map(target => {
+            const info = getElementPoints(target);
+            const points = [info.pos1, info.pos2, info.pos4, info.pos3];
+
+            if (getElementPoints !== getDefaultElementPoints) {
+                const rect = target.getBoundingClientRect();
+                const { width, height, left, top } = rect;
+                const { minX, minY, maxX, maxY } = getMinMaxs(points);
+                const ratioX = width / (maxX - minX);
+                const ratioY = height / (maxY - minY);
+
+                return points.map(point => {
+                    return [
+                        left + (point[0] - minX) * ratioX,
+                        top + (point[1] - minY) * ratioY,
+                    ];
+                });
+            }
+            return points;
+        });
         datas.selectableTargets = selectableTargets;
         datas.selectablePoints = selectablePoints;
     }
@@ -237,38 +257,31 @@ class Selecto extends EventEmitter<SelectoEvents> {
         clientX: number,
         clientY: number,
         targets: Array<HTMLElement | SVGElement>,
-        points: Point[],
+        pointsList: number[][][],
     ) {
         const { hitRate, selectByClick } = this.options;
         const { left, top, right, bottom } = selectRect;
+        const rectPoints = [
+            [left, top],
+            [right, top],
+            [right, bottom],
+            [left, bottom],
+        ];
+        return targets.filter((_, i) => {
+            const points = pointsList[i];
+            const inArea = isInside([clientX, clientY], points);
 
-        return targets.filter((target, i) => {
-            const { pos1, pos2, pos3, pos4 } = points[i];
-            const [
-                rectLeft, rectTop,
-            ] = [0, 1].map(j => Math.min(pos1[j], pos2[j], pos3[j], pos4[j]));
-            const [
-                rectRight, rectBottom,
-            ] = [0, 1].map(j => Math.max(pos1[j], pos2[j], pos3[j], pos4[j]));
-
-            const isStart
-                = rectLeft <= clientX
-                && clientX <= rectRight
-                && rectTop <= clientY
-                && clientY <= rectBottom;
-            const rectSize = (rectRight - rectLeft) * (rectBottom - rectTop);
-            const testLeft = Math.max(rectLeft, left);
-            const testRight = Math.min(rectRight, right);
-            const testTop = Math.max(rectTop, top);
-            const testBottom = Math.min(rectBottom, bottom);
-
-            if (selectByClick && isStart) {
+            if (selectByClick && inArea) {
                 return true;
             }
-            if (testRight < testLeft || testBottom < testTop) {
+            const overlapPoints = getOverlapPoints(rectPoints, points);
+
+            if (!overlapPoints.length) {
                 return false;
             }
-            const rate = Math.round((testRight - testLeft) * (testBottom - testTop) / rectSize * 100);
+            const overlapSize = getAreaSize(overlapPoints);
+            const targetSize = getAreaSize(points);
+            const rate = Math.round(overlapSize / targetSize * 100);
 
             if (rate >= hitRate) {
                 return true;
@@ -286,8 +299,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             const datas = inputEvent.datas;
             datas.startX -= offsetX;
             datas.startY -= offsetY;
-            datas.selectablePoints.forEach(rect => {
-                [rect.pos1, rect.pos2, rect.pos3, rect.pos4].forEach(pos => {
+            datas.selectablePoints.forEach((points: number[][]) => {
+                points.forEach(pos => {
                     pos[0] -= offsetX;
                     pos[1] -= offsetY;
                 });

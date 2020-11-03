@@ -157,9 +157,10 @@ export interface SelectoEvents {
 }
 export type SelectoProperties = { [P in typeof PROPERTIES[number]]: SelectoOptions[P] };
 export type SelectoMethods = { [P in typeof METHODS[number]]: Selecto[P] };
-export type GetElementPointsFunction = (el: HTMLElement | SVGElement) => {
-    pos1: number[],
-    pos2: number[],
-    pos3: number[],
-    pos4: number[],
-};
+export type GetElementPointsFunction = (el: HTMLElement | SVGElement) => PointArea;
+export interface PointArea {
+    pos1: number[];
+    pos2: number[];
+    pos3: number[];
+    pos4: number[];
+}
