@@ -72,6 +72,20 @@ selecto.on("select", e => {
     });
 });
 ```
+### Do you want to select correctly?
+Since `selecto` basically checks using getBoundingClientRect, it is not accurate if the object is rotated or distorted.
+
+If you want to check correctly, use the following code
+
+```ts
+import Selecto from "selecto";
+import { getElementInfo } from "moveable";
+
+const selecto = new Selecto({
+    ...,
+    getElementPoints: Moveable.getElementInfo,
+});
+```
 
 ## 📦 Packages
 |Package&nbsp;Name|&nbsp;Version&nbsp;|Description|
