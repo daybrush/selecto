@@ -83,7 +83,8 @@ import { getElementInfo } from "moveable";
 
 const selecto = new Selecto({
     ...,
-    getElementPoints: Moveable.getElementInfo,
+    // (target: HTMLElement | SVGElement ) => { pos1: number[], pos2: number[], pos3: number[], pos4: number[] }
+    getElementPoints: getElementInfo,
 });
 ```
 
