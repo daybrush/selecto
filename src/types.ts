@@ -45,7 +45,7 @@ export interface SelectoOptions {
     preventDefault: boolean;
     cspNonce: string;
     ratio: number;
-    getElementPoints: GetElementPointsFunction;
+    getElementRect: getElementRectFunction;
 }
 
 export interface Hypertext {
@@ -157,7 +157,7 @@ export interface SelectoEvents {
 }
 export type SelectoProperties = { [P in typeof PROPERTIES[number]]: SelectoOptions[P] };
 export type SelectoMethods = { [P in typeof METHODS[number]]: Selecto[P] };
-export type GetElementPointsFunction = (el: HTMLElement | SVGElement) => PointArea;
+export type getElementRectFunction = (el: HTMLElement | SVGElement) => PointArea;
 export interface PointArea {
     pos1: number[];
     pos2: number[];

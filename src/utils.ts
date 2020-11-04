@@ -117,7 +117,7 @@ export function getRect(
     };
 }
 
-export function getDefaultElementPoints(el: HTMLElement) {
+export function getDefaultElementRect(el: HTMLElement) {
     const rect = el.getBoundingClientRect();
     const { left, top, width, height } = rect;
 

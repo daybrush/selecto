@@ -29,7 +29,7 @@ export const PROPERTIES = [
     "checkInput",
     "preventDefault",
     "ratio",
-    "getElementPoints",
+    "getElementRect",
 ] as const;
 /**
  * @memberof Selecto
@@ -58,7 +58,7 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     preventDefault: Boolean,
     cspNonce: String,
     ratio: Number,
-    getElementPoints: Function,
+    getElementRect: Function,
 };
 
 /**

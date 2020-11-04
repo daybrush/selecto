@@ -59,7 +59,7 @@ const selecto = new Selecto({
     selectByClick: true,
     checkInput: true,
     toggleContinueSelect: "shift",
-    getElementPoints: Moveable.getElementInfo,
+    getElementRect: Moveable.getElementInfo,
     // ratio: 0.7,
 }).on("dragStart", e => {
     console.log("ds", e.inputEvent.target);

@@ -7,7 +7,7 @@ import ChildrenDiffer, { diff, ChildrenDiffResult } from "@egjs/children-differ"
 import DragScroll from "@scena/dragscroll";
 import KeyController, { getCombi } from "keycon";
 import { getAreaSize, getOverlapPoints, isInside, getMinMaxs } from "overlap-area";
-import { createElement, h, getClient, diffValue, getRect, getDefaultElementPoints } from "./utils";
+import { createElement, h, getClient, diffValue, getRect, getDefaultElementRect } from "./utils";
 import { SelectoOptions, SelectoProperties, OnDragEvent, SelectoEvents, Point, Rect } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 
@@ -71,7 +71,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             checkInput: false,
             preventDefault: false,
             boundContainer: false,
-            getElementPoints: getDefaultElementPoints,
+            getElementRect: getDefaultElementRect,
             cspNonce: "",
             ratio: 0,
             ...options,
@@ -154,32 +154,33 @@ class Selecto extends EventEmitter<SelectoEvents> {
         this.container = null;
         this.options = null;
     }
+    public getElementPoints(target: HTMLElement | SVGElement) {
+        const getElementRect = this.getElementRect;
+        const info = getElementRect(target);
+        const points = [info.pos1, info.pos2, info.pos4, info.pos3];
+
+        if (getElementRect !== getDefaultElementRect) {
+            const rect = target.getBoundingClientRect();
+            const { width, height, left, top } = rect;
+            const { minX, minY, maxX, maxY } = getMinMaxs(points);
+            const ratioX = width / (maxX - minX);
+            const ratioY = height / (maxY - minY);
+
+            return points.map(point => {
+                return [
+                    left + (point[0] - minX) * ratioX,
+                    top + (point[1] - minY) * ratioY,
+                ];
+            });
+        }
+        return points;
+    }
     /**
      * Find for selectableTargets again during drag event
      */
     public findSelectableTargets(datas: any = this.gesto.getEventDatas()) {
-        const getElementPoints = this.getElementPoints;
         const selectableTargets = this.getSelectableTargets();
-        const selectablePoints = selectableTargets.map(target => {
-            const info = getElementPoints(target);
-            const points = [info.pos1, info.pos2, info.pos4, info.pos3];
-
-            if (getElementPoints !== getDefaultElementPoints) {
-                const rect = target.getBoundingClientRect();
-                const { width, height, left, top } = rect;
-                const { minX, minY, maxX, maxY } = getMinMaxs(points);
-                const ratioX = width / (maxX - minX);
-                const ratioY = height / (maxY - minY);
-
-                return points.map(point => {
-                    return [
-                        left + (point[0] - minX) * ratioX,
-                        top + (point[1] - minY) * ratioY,
-                    ];
-                });
-            }
-            return points;
-        });
+        const selectablePoints = selectableTargets.map(target => this.getElementPoints(target));
         datas.selectableTargets = selectableTargets;
         datas.selectablePoints = selectablePoints;
     }
@@ -257,7 +258,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         clientX: number,
         clientY: number,
         targets: Array<HTMLElement | SVGElement>,
-        pointsList: number[][][],
+        selectablePoints: number[][][],
     ) {
         const { hitRate, selectByClick } = this.options;
         const { left, top, right, bottom } = selectRect;
@@ -268,7 +269,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             [left, bottom],
         ];
         return targets.filter((_, i) => {
-            const points = pointsList[i];
+            const points = selectablePoints[i];
             const inArea = isInside([clientX, clientY], points);
 
             if (selectByClick && inArea) {

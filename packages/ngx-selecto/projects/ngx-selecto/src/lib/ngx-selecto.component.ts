@@ -35,7 +35,7 @@ export class NgxSelectoComponent
   @Input() cspNonce: SelectoOptions['cspNonce'];
   @Input() ratio: SelectoOptions['ratio'];
   @Input() boundContainer: SelectoOptions['boundContainer'];
-  @Input() getElementPoints: SelectoOptions['getElementPoints'];
+  @Input() getElementRect: SelectoOptions['getElementRect'];
   @Output() dragStart: NgxSelectoEvents['dragStart'];
   @Output() drag: NgxSelectoEvents['drag'];
   @Output() dragEnd: NgxSelectoEvents['dragEnd'];
