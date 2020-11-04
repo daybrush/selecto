@@ -1,5 +1,6 @@
 import { Hypertext, Rect } from "./types";
 import { IObject, addClass, hasClass, calculateBoundSize } from "@daybrush/utils";
+import { diff } from "@egjs/children-differ";
 
 export function getClient(e: MouseEvent | TouchEvent) {
     if ("touches" in e) {
@@ -127,4 +128,18 @@ export function getDefaultElementRect(el: HTMLElement) {
         pos3: [left, top + height],
         pos4: [left + width, top + height],
     };
+}
+
+export function passTargets(
+    beforeTargets: Array<HTMLElement | SVGElement>,
+    afterTargets: Array<HTMLElement | SVGElement>,
+) {
+    const {
+        list,
+        prevList,
+        added,
+        removed,
+    } = diff(beforeTargets, afterTargets);
+
+    return added.map(index => list[index]).concat(removed.map(index => prevList[index]));
 }
