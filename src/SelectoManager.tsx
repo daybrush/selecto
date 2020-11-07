@@ -44,7 +44,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
     private gesto!: Gesto;
     private injectResult!: InjectResult;
     private selectedTargets: Array<HTMLElement | SVGElement> = [];
-    private differ: ChildrenDiffer;
     private dragScroll: DragScroll = new DragScroll();
     private keycon!: KeyController;
     /**
@@ -181,7 +180,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
     public clickTarget(e: MouseEvent | TouchEvent, clickedTarget?: Element): this {
         const { clientX, clientY } = getClient(e);
         const dragEvent = {
-            datas: {},
+            datas: {
+                flag: false,
+            },
             clientX,
             clientY,
             inputEvent: e,
@@ -190,6 +191,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             },
         } as any;
         if (this.onDragStart(dragEvent, clickedTarget)) {
+            dragEvent.datas.flag = false;
             this.onDragEnd(dragEvent);
         }
         return this;
@@ -320,6 +322,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         return selectableTargets;
     }
     private select(
+        prevSelectedTargets: Array<HTMLElement | SVGElement>,
         selectedTargets: Array<HTMLElement | SVGElement>,
         rect: Rect,
         inputEvent: any,
@@ -330,7 +333,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             removed,
             prevList,
             list,
-        } = diff(this.selectedTargets, selectedTargets);
+        } = diff(prevSelectedTargets, selectedTargets);
 
         this.selectedTargets = selectedTargets;
 
@@ -570,19 +573,19 @@ class Selecto extends EventEmitter<SelectoEvents> {
             firstPassedTargets = passTargets(this.selectedTargets, firstPassedTargets);
             datas.startPassedTargets = this.selectedTargets;
         }
-        this.select(firstPassedTargets, hitRect, inputEvent, true);
+        this.select(this.selectedTargets, firstPassedTargets, hitRect, inputEvent, true);
         datas.startX = clientX;
         datas.startY = clientY;
+        datas.selectFlag = false;
         datas.boundsArea =
         this.target.style.cssText
             += `left:0px;top:0px;transform: translate(${clientX}px, ${clientY}px)`;
 
         if (isPreventSelect && selectByClick) {
-            this.onDragEnd(e);
             inputEvent.preventDefault();
-            e.stop();
             return false;
         } else {
+            datas.selectFlag = true;
             if (type === "touchstart") {
                 inputEvent.preventDefault();
             }
@@ -593,62 +596,77 @@ class Selecto extends EventEmitter<SelectoEvents> {
             return true;
         }
     }
-    private check(e: any) {
+    private check(e: any, rect = getRect(e, this.options.ratio)) {
         const {
             datas,
             inputEvent,
         } = e;
-        const rect = getRect(e, this.options.ratio, datas.boundArea);
         const {
             top,
             left,
             width,
             height,
         } = rect;
-        this.target.style.cssText
-            += `display: block;`
-            + `left:0px;top:0px;`
-            + `transform: translate(${left}px, ${top}px);`
-            + `width:${width}px;height:${height}px;`;
+        const selectFlag = datas.selectFlag;
+        let prevSelectedTargets: Array<HTMLElement | SVGElement> = [];
+        let selectedTargets: Array<HTMLElement | SVGElement> = [];
+        if (selectFlag) {
+            this.target.style.cssText
+                += `display: block;`
+                + `left:0px;top:0px;`
+                + `transform: translate(${left}px, ${top}px);`
+                + `width:${width}px;height:${height}px;`;
 
-        const passedTargets = this.hitTest(
-            rect, datas.startX, datas.startY,
-            datas.selectableTargets, datas.selectablePoints,
-        );
-        const selectedTargets = passTargets(datas.startPassedTargets, passedTargets);
+            const passedTargets = this.hitTest(
+                rect, datas.startX, datas.startY,
+                datas.selectableTargets, datas.selectablePoints,
+            );
+            prevSelectedTargets = this.selectedTargets;
+            selectedTargets = passTargets(datas.startPassedTargets, passedTargets);
 
-        this.selectedTargets = selectedTargets;
+            this.selectedTargets = selectedTargets;
+        }
+
         this.trigger("drag", {
             ...e,
+            isSelect: selectFlag,
             rect,
         });
-        this.select(selectedTargets, rect, inputEvent);
+
+        if (selectFlag) {
+            this.select(prevSelectedTargets, selectedTargets, rect, inputEvent);
+        }
     }
     private onDrag = (e: OnDrag) => {
-        const { scrollOptions } = this.options;
-        if (scrollOptions && scrollOptions.container) {
-            if (this.dragScroll.drag(e, scrollOptions)) {
-                return;
+        if (e.datas.selectFlag) {
+            const { scrollOptions } = this.options;
+            if (scrollOptions && scrollOptions.container) {
+                if (this.dragScroll.drag(e, scrollOptions)) {
+                    return;
+                }
             }
         }
         this.check(e);
     }
     private onDragEnd = (e: OnDragEvent) => {
         const { datas, inputEvent } = e;
-        const rect = getRect(e, this.options.ratio, datas.boundArea);
+        const rect = getRect(e, this.options.ratio);
+        const selectFlag = datas.selectFlag;
 
-        this.dragScroll.dragEnd();
-        this.target.style.cssText += "display: none;";
-
-        if (inputEvent && inputEvent.type !== "mousedown" && inputEvent.type !== "touchstart") {
+        if (inputEvent) {
             this.trigger("dragEnd", {
                 isDouble: false,
                 isDrag: false,
+                isSelect: selectFlag,
                 ...e,
                 rect,
             });
         }
-
+        if (selectFlag) {
+            datas.selectFlag = false;
+            this.dragScroll.dragEnd();
+            this.target.style.cssText += "display: none;";
+        }
         this.selectEnd(
             datas.startSelectedTargets,
             datas.startPassedTargets,

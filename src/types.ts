@@ -132,17 +132,21 @@ export interface OnDragStart extends OnParentDragStart {
  * @memberof Selecto
  * @typedef
  * @property - Rect of Selection Element
+ * @property - Whether it is in select
  */
 export interface OnDrag extends OnParentDrag {
     rect: Rect;
+    isSelect: boolean;
 }
 /**
  * @memberof Selecto
  * @typedef
  * @property - Rect of Selection Element
+ * @property - Whether it is in select
  */
 export interface OnDragEnd extends OnParentDragEnd {
     rect: Rect;
+    isSelect: boolean;
 }
 export interface SelectoEvents {
     dragStart: OnDragStart;

@@ -78,7 +78,7 @@ export function diffValue<T>(prev: T, cur: T, func: (prev: T, cur: T) => void) {
 
 export function getRect(
     e: any, ratio: number,
-    boundArea: { left: number, right: number, top: number, bottom: number},
+    boundArea = e.datas.boundArea,
 ): Rect {
     let {
         distX = 0,
