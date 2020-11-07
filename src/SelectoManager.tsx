@@ -2,8 +2,8 @@ import EventEmitter from "@scena/event-emitter";
 import Gesto, { OnDrag, OnDragStart } from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
-import { isObject, camelize, IObject, addEvent, removeEvent, isArray, isString } from "@daybrush/utils";
-import ChildrenDiffer, { diff } from "@egjs/children-differ";
+import { isObject, camelize, IObject, addEvent, removeEvent, isArray, isString, between } from "@daybrush/utils";
+import { diff } from "@egjs/children-differ";
 import DragScroll from "@scena/dragscroll";
 import KeyController, { getCombi } from "keycon";
 import { getAreaSize, getOverlapPoints, isInside, fitPoints } from "overlap-area";
@@ -273,9 +273,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
             }
             const overlapSize = getAreaSize(overlapPoints);
             const targetSize = getAreaSize(points);
-            const rate = Math.round(overlapSize / targetSize * 100);
+            const rate = between(Math.round(overlapSize / targetSize * 100), 0, 100);
 
-            if (rate >= hitRate) {
+            if (rate >= Math.min(100, hitRate)) {
                 return true;
             }
             return false;
@@ -578,7 +578,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         datas.startY = clientY;
         datas.selectFlag = false;
         datas.boundsArea =
-        this.target.style.cssText
+            this.target.style.cssText
             += `left:0px;top:0px;transform: translate(${clientX}px, ${clientY}px)`;
 
         if (isPreventSelect && selectByClick) {
