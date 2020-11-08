@@ -82,5 +82,8 @@ export const EVENTS = [
 export const METHODS = [
     "clickTarget",
     "setSelectedTargets",
+    "getElementPoints",
+    "getSelectedTargets",
+    "findSelectableTargets",
     "triggerDragStart",
 ] as const;

@@ -70,17 +70,26 @@ export interface Point {
     pos3: number[];
     pos4: number[];
 }
+/**
+ * @memberof Selecto
+ * @typedef
+ * @property - An Selecto instance itself
+ */
+export interface CurrentTarget<T = Selecto> {
+    currentTarget: T;
+}
 
 /**
  * @memberof Selecto
  * @typedef
+ * @property - An Selecto instance itself
  * @property - selected elements
  * @property - added elements
  * @property - removed elements
  * @property - Rect of Selection Element
  * @property - inputEvent
  */
-export interface OnSelect {
+export interface OnSelect<T = Selecto> extends CurrentTarget<T> {
     selected: Array<HTMLElement | SVGElement>;
     added: Array<HTMLElement | SVGElement>;
     removed: Array<HTMLElement | SVGElement>;
@@ -96,7 +105,7 @@ export interface OnSelect {
  * @property - isDragStart
  * @property - is double click
  */
-export interface OnSelectEnd extends OnSelect {
+export interface OnSelectEnd<T = Selecto> extends OnSelect<T>, CurrentTarget<T> {
     afterAdded: Array<HTMLElement | SVGElement>;
     afterRemoved: Array<HTMLElement | SVGElement>;
     isDragStart: boolean;
@@ -114,7 +123,7 @@ export interface OnDragEvent {
     isDouble?: boolean;
     inputEvent: any;
 }
-export interface OnKeyEvent {
+export interface OnKeyEvent<T = Selecto> extends CurrentTarget<T> {
 }
 export interface OnScroll {
     container: HTMLElement;
@@ -125,16 +134,17 @@ export interface OnScroll {
  * @typedef
  * @property - Stop all events
  */
-export interface OnDragStart extends OnParentDragStart {
+export interface OnDragStart<T = Selecto> extends OnParentDragStart<T> {
     stop(): void;
 }
+
 /**
  * @memberof Selecto
  * @typedef
  * @property - Rect of Selection Element
  * @property - Whether it is in select
  */
-export interface OnDrag extends OnParentDrag {
+export interface OnDrag<T = Selecto> extends OnParentDrag<T> {
     rect: Rect;
     isSelect: boolean;
 }
@@ -144,7 +154,7 @@ export interface OnDrag extends OnParentDrag {
  * @property - Rect of Selection Element
  * @property - Whether it is in select
  */
-export interface OnDragEnd extends OnParentDragEnd {
+export interface OnDragEnd<T = Selecto> extends OnParentDragEnd<T> {
     rect: Rect;
     isSelect: boolean;
 }
