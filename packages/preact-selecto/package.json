@@ -1,6 +1,6 @@
 {
     "name": "preact-selecto",
-    "version": "1.6.4",
+    "version": "1.8.1",
     "description": "A Preact Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
     "main": "./dist/selecto.cjs.js",
     "module": "./dist/selecto.esm.js",
@@ -41,6 +41,6 @@
         "typescript": "^3.4.5"
     },
     "dependencies": {
-        "react-selecto": "^1.7.4"
+        "react-selecto": "^1.9.1"
     }
 }
