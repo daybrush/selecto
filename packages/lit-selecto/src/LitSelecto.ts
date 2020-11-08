@@ -40,7 +40,7 @@ export class LitSelecto extends LitElement {
     public updated(changedProperties) {
         const selecto = this.selecto;
         changedProperties.forEach((oldValue, propName) => {
-            if (PROPERTIES.indexOf(propName)) {
+            if (PROPERTIES.indexOf(propName) > -1) {
                 selecto[propName] = this[propName];
             }
         });
