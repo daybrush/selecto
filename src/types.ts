@@ -121,6 +121,7 @@ export interface OnDragEvent {
     distX: number;
     distY: number;
     isDouble?: boolean;
+    isClick?: boolean;
     inputEvent: any;
 }
 export interface OnKeyEvent<T = Selecto> extends CurrentTarget<T> {

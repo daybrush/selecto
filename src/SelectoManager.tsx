@@ -181,17 +181,17 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const { clientX, clientY } = getClient(e);
         const dragEvent = {
             datas: {
-                flag: false,
+                selectFlag: false,
             },
             clientX,
             clientY,
             inputEvent: e,
+            isClick: true,
             stop: () => {
                 return false;
             },
         } as any;
         if (this.onDragStart(dragEvent, clickedTarget)) {
-            dragEvent.datas.flag = false;
             this.onDragEnd(dragEvent);
         }
         return this;
@@ -560,7 +560,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
          *   });
          * });
          */
-        const result = isTrusted ? this.trigger("dragStart", { ...e }) : true;
+        const result = !(e as any).isClick && isTrusted ? this.trigger("dragStart", { ...e }) : true;
 
         if (!result) {
             e.stop();
@@ -583,7 +583,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
         if (isPreventSelect && selectByClick) {
             inputEvent.preventDefault();
-            return false;
         } else {
             datas.selectFlag = true;
             if (type === "touchstart") {
@@ -593,8 +592,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             if (scrollOptions && scrollOptions.container) {
                 this.dragScroll.dragStart(e, scrollOptions);
             }
-            return true;
         }
+        return true;
     }
     private check(e: any, rect = getRect(e, this.options.ratio)) {
         const {
@@ -653,7 +652,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const rect = getRect(e, this.options.ratio);
         const selectFlag = datas.selectFlag;
 
-        if (inputEvent) {
+        if (inputEvent && !e.isClick) {
             this.trigger("dragEnd", {
                 isDouble: false,
                 isDrag: false,
