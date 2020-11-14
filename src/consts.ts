@@ -30,6 +30,7 @@ export const PROPERTIES = [
     "preventDefault",
     "ratio",
     "getElementRect",
+    "preventDragFromInside",
 ] as const;
 /**
  * @memberof Selecto
@@ -59,6 +60,7 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     cspNonce: String,
     ratio: Number,
     getElementRect: Function,
+    preventDragFromInside: Boolean,
 };
 
 /**

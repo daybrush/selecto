@@ -25,6 +25,7 @@ import { DragScrollOptions } from "@scena/dragscroll";
  * @property - Set the scroll options, time, etc. to automatically scroll by dragging. (default: null)
  * @property - Checks whether this is an element to input text or contentEditable, and prevents dragging. (default: false)
  * @property - When dragging, preventDefault is called. (Touch occurs unconditionally) (default: false)
+ * @property - Whether to force drag end when selectFromInside, selectByClick is true (default: true)
  * @property - add nonce property to style for CSP (default: "")
  * @property - Adjust the ratio of the selection. (default: 0)
  */
@@ -43,6 +44,7 @@ export interface SelectoOptions {
     scrollOptions: DragScrollOptions;
     checkInput: boolean;
     preventDefault: boolean;
+    preventDragFromInside: boolean;
     cspNonce: string;
     ratio: number;
     getElementRect: getElementRectFunction;

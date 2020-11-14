@@ -70,6 +70,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             checkInput: false,
             preventDefault: false,
             boundContainer: false,
+            preventDragFromInside: true,
             getElementRect: getDefaultElementRect,
             cspNonce: "",
             ratio: 0,
@@ -478,6 +479,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const {
             continueSelect, selectFromInside, selectByClick,
             boundContainer,
+            preventDragFromInside = true,
         } = this.options;
 
         this.findSelectableTargets(datas);
@@ -583,6 +585,12 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
         if (isPreventSelect && selectByClick) {
             inputEvent.preventDefault();
+
+            if (preventDragFromInside) {
+                this.onDragEnd(e);
+                e.stop();
+            }
+            return false;
         } else {
             datas.selectFlag = true;
             if (type === "touchstart") {
@@ -654,17 +662,17 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
         if (inputEvent && !e.isClick) {
             this.trigger("dragEnd", {
-                isDouble: false,
+                isDouble: !!e.isDouble,
                 isDrag: false,
                 isSelect: selectFlag,
                 ...e,
                 rect,
             });
         }
+        this.target.style.cssText += "display: none;";
         if (selectFlag) {
             datas.selectFlag = false;
             this.dragScroll.dragEnd();
-            this.target.style.cssText += "display: none;";
         }
         this.selectEnd(
             datas.startSelectedTargets,
