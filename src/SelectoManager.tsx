@@ -579,6 +579,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         datas.startX = clientX;
         datas.startY = clientY;
         datas.selectFlag = false;
+        datas.preventDragFromInside = false;
         datas.boundsArea =
             this.target.style.cssText
             += `left:0px;top:0px;transform: translate(${clientX}px, ${clientY}px)`;
@@ -587,10 +588,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
             inputEvent.preventDefault();
 
             if (preventDragFromInside) {
-                this.onDragEnd(e);
-                e.stop();
+                this.selectEnd(
+                    datas.startSelectedTargets,
+                    datas.startPassedTargets,
+                    hitRect, e,
+                );
+                datas.preventDragFromInside = true;
             }
-            return false;
         } else {
             datas.selectFlag = true;
             if (type === "touchstart") {
@@ -674,11 +678,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
             datas.selectFlag = false;
             this.dragScroll.dragEnd();
         }
-        this.selectEnd(
-            datas.startSelectedTargets,
-            datas.startPassedTargets,
-            rect, e,
-        );
+        if (!datas.preventDragFromInside) {
+            this.selectEnd(
+                datas.startSelectedTargets,
+                datas.startPassedTargets,
+                rect, e,
+            );
+        }
     }
     private sameCombiKey(e: any, isKeyup?: boolean) {
         const toggleContinueSelect = [].concat(this.options.toggleContinueSelect);
