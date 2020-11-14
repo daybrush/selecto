@@ -36,6 +36,7 @@ export class NgxSelectoComponent
   @Input() ratio: SelectoOptions['ratio'];
   @Input() boundContainer: SelectoOptions['boundContainer'];
   @Input() getElementRect: SelectoOptions['getElementRect'];
+  @Input() preventDragFromInside: SelectoOptions['preventDragFromInside'];
   @Output() dragStart: NgxSelectoEvents['dragStart'];
   @Output() drag: NgxSelectoEvents['drag'];
   @Output() dragEnd: NgxSelectoEvents['dragEnd'];

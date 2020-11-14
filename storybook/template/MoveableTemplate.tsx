@@ -122,7 +122,7 @@ import Moveable from "moveable";
 const container = document.querySelector(".container");
 const frameMap = new Map();
 const cubes = [];
-const targets = [];
+let targets = [];
 
 for (let i = 0; i < 30; ++i) {
     cubes.push(i);
