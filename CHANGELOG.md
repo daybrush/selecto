@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 * `lit-selecto` 1.10.2
 
 ### Added
-* Fix `getElementRect` option #27
+* Fix `getElementRect` option #28
 
 
 ## [1.10.1] - 2020-11-15
