@@ -153,7 +153,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         this.options = null;
     }
     public getElementPoints(target: HTMLElement | SVGElement) {
-        const getElementRect = this.getElementRect;
+        const getElementRect = this.getElementRect || getDefaultElementRect;
         const info = getElementRect(target);
         const points = [info.pos1, info.pos2, info.pos4, info.pos3];
 

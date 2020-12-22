@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+
+## [1.10.2] - 2020-12-22
+* `selecto` 1.10.2
+* `react-selecto` 1.10.2
+* `preact-selecto` 1.9.2
+* `ngx-selecto` 1.10.2
+* `svelte-selecto` 1.10.2
+* `lit-selecto` 1.10.2
+
+### Added
+* Fix `getElementRect` option #27
+
+
 ## [1.10.1] - 2020-11-15
 * `selecto` 1.10.1
 * `react-selecto` 1.10.1

@@ -17,6 +17,7 @@
 
   let selecto;
   let el;
+  let options = {};
 
   export function getInstance() {
     return selecto;
@@ -26,23 +27,31 @@
     if (!selecto) {
       return;
     }
+    const nextOptions = {};
 
     PROPERTIES.forEach(name => {
-      selecto[name] = $$props[name];
+      nextOptions[name] = $$props[name];
+
+      if (options[name] !== nextOptions[name]) {
+        selecto[name] = nextOptions[name];
+      }
     });
+
+    options = nextOptions;
   });
   onMount(() => {
-    const options = [];
-
     OPTIONS.forEach(name => {
       if (name in $$props) {
         options[name] = $$props[name];
       }
     });
+
+    
     selecto = new VanillaSelecto({
       ...options,
       target: el
     });
+    console.log(options, selecto);
     EVENTS.forEach((name, i) => {
       selecto.on(name, e => {
         const result = dispatch(name, e);

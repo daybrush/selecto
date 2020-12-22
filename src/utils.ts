@@ -118,7 +118,7 @@ export function getRect(
     };
 }
 
-export function getDefaultElementRect(el: HTMLElement) {
+export function getDefaultElementRect(el: HTMLElement | SVGElement) {
     const rect = el.getBoundingClientRect();
     const { left, top, width, height } = rect;
 
