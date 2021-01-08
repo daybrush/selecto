@@ -6,4 +6,4 @@ export class NgxSelectoInterface {
   @withMethods(METHODS as any)
   protected selecto!: VanillaSelecto;
 }
-export default interface Selecto extends MethodInterface<SelectoMethods, VanillaSelecto, NgxSelectoComponent> {}
+export interface NgxSelectoInterface extends MethodInterface<SelectoMethods, VanillaSelecto, NgxSelectoComponent> {}

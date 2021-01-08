@@ -232,7 +232,7 @@ import { NgxSelectoComponent } from "ngx-selecto";
 })
 export class AppComponent implements OnInit, AfterViewInit {
     @ViewChild('moveable', { static: false }) moveable: NgxMoveableComponent;
-    @ViewChild('selecto', { static: false }) selecto: NgxMoveableComponent;
+    @ViewChild('selecto', { static: false }) selecto: NgxSelectoComponent;
     cubes = [];
     targets = [];
     frameMap = new Map();
