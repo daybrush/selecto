@@ -79,7 +79,8 @@ export const SELECTO_SELECT_END_TEMPLATE = previewFunction(`function onSelectEnd
         e.inputEvent.preventDefault();
 
         setTimeout(() => {
-             this.moveable.dragStart(e.inputEvent);
+            //-angular this.moveable.dragStart(e.inputEvent);
+            //angular this.moveable.ngDragStart(e.inputEvent);
         });
     }
 }`);
