@@ -40,7 +40,7 @@ export interface SelectoOptions {
     toggleContinueSelect: string[][] | string[] | string | null;
     keyContainer: Document | HTMLElement | Window | null;
     hitRate: number;
-    boundContainer: boolean | HTMLElement | string | null;
+    boundContainer: BoundContainer | boolean | HTMLElement | string | null;
     scrollOptions: DragScrollOptions;
     checkInput: boolean;
     preventDefault: boolean;
@@ -48,6 +48,17 @@ export interface SelectoOptions {
     cspNonce: string;
     ratio: number;
     getElementRect: getElementRectFunction;
+}
+/**
+ * @memberof Selecto
+ * @typedef
+ */
+export interface BoundContainer {
+    element: HTMLElement | string | boolean;
+    left?: boolean;
+    top?: boolean;
+    right?: boolean;
+    bottom?: boolean;
 }
 
 export interface Hypertext {
