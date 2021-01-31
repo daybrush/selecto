@@ -1,6 +1,6 @@
 {
     "name": "vue-selecto",
-    "version": "1.10.2",
+    "version": "1.10.3",
     "types": "declaration/index.d.ts",
     "main": "dist/selecto.cjs.js",
     "module": "dist/selecto.esm.js",
