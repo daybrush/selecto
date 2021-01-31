@@ -51,7 +51,6 @@
       ...options,
       target: el
     });
-    console.log(options, selecto);
     EVENTS.forEach((name, i) => {
       selecto.on(name, e => {
         const result = dispatch(name, e);
