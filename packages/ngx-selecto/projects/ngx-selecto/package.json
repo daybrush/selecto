@@ -1,6 +1,6 @@
 {
   "name": "ngx-selecto",
-  "version": "1.10.3",
+  "version": "1.10.4",
   "description": "An Angular Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
   "keywords": [
     "select",
@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/daybrush/selecto#readme",
   "peerDependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14"
+    "@angular/common": ">=8.2.14",
+    "@angular/core": ">=8.2.14"
   },
   "dependencies": {
     "selecto": "^1.10.2"
