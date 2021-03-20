@@ -83,6 +83,7 @@ export const EVENTS = [
  */
 export const METHODS = [
     "clickTarget",
+    "getSelectableElements",
     "setSelectedTargets",
     "getElementPoints",
     "getSelectedTargets",

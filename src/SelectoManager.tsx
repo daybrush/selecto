@@ -196,10 +196,32 @@ class Selecto extends EventEmitter<SelectoEvents> {
         return points;
     }
     /**
+     * Get all elements set in `selectableTargets`.
+     */
+    public getSelectableElements() {
+        const selectableElements: Array<HTMLElement | SVGElement> = [];
+
+        this.options.selectableTargets.forEach((target) => {
+            if (isObject(target)) {
+                selectableElements.push(target);
+            } else {
+                const elements = [].slice.call(
+                    document.querySelectorAll(target)
+                );
+
+                elements.forEach((el) => {
+                    selectableElements.push(el);
+                });
+            }
+        });
+
+        return selectableElements;
+    }
+    /**
      * Find for selectableTargets again during drag event
      */
     public findSelectableTargets(datas: any = this.gesto.getEventDatas()) {
-        const selectableTargets = this.getSelectableTargets();
+        const selectableTargets = this.getSelectableElements();
         const selectablePoints = selectableTargets.map((target) =>
             this.getElementPoints(target)
         );
@@ -355,25 +377,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 inputEvent.distY += offsetY;
                 this.check(inputEvent);
             });
-    }
-    private getSelectableTargets() {
-        const selectableTargets: Array<HTMLElement | SVGElement> = [];
-
-        this.options.selectableTargets.forEach((target) => {
-            if (isObject(target)) {
-                selectableTargets.push(target);
-            } else {
-                const elements = [].slice.call(
-                    document.querySelectorAll(target)
-                );
-
-                elements.forEach((el) => {
-                    selectableTargets.push(el);
-                });
-            }
-        });
-
-        return selectableTargets;
     }
     private select(
         prevSelectedTargets: Array<HTMLElement | SVGElement>,
