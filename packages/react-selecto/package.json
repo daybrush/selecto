@@ -1,6 +1,6 @@
 {
   "name": "react-selecto",
-  "version": "1.10.2",
+  "version": "1.11.0",
   "description": "A React Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
   "main": "./dist/selecto.cjs.js",
   "module": "./dist/selecto.esm.js",
@@ -11,7 +11,10 @@
     "start": "react-scripts start",
     "build": "rollup -c && npm run declaration && print-sizes ./dist ",
     "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
-    "packages": "pvu --path=../ --update=preact-selecto --build=preact-selecto --publish=preact-selecto"
+    "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
+    "packages:update": "pvu --path=../ --update=preact-selecto",
+    "packages:build": "pvu --path=../ --build=preact-selecto",
+    "packages:publish": "pvu --path=../ --publish=preact-selecto"
   },
   "keywords": [
     "select",
@@ -35,7 +38,7 @@
     "@daybrush/builder": "^0.1.2",
     "@types/react-dom": "^16.9.4",
     "print-sizes": "0.0.4",
-    "pvu": "^0.3.1",
+    "pvu": "^0.5.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^3.0.1",
@@ -43,7 +46,7 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
-    "selecto": "^1.10.2"
+    "selecto": "^1.11.0"
   },
   "browserslist": {
     "production": [

@@ -1,6 +1,6 @@
 {
     "name": "lit-selecto",
-    "version": "1.10.2",
+    "version": "1.11.0",
     "types": "declaration/index.d.ts",
     "main": "dist/selecto.cjs.js",
     "module": "dist/selecto.esm.js",
@@ -37,6 +37,6 @@
         "typescript": "3.6.4"
     },
     "dependencies": {
-        "selecto": "^1.10.2"
+        "selecto": "^1.11.0"
     }
 }
