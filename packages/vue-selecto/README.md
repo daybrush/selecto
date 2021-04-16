@@ -35,7 +35,7 @@ $ npm install vue-selecto
 ## 🚀 How to use
 ```html
 <template>
-    <Selecto
+    <VueSelecto
         :container="document.body"
         :dragContainer="window"
         :selectableTargets='[".target", document.querySelector(".target2")]'
@@ -49,11 +49,11 @@ $ npm install vue-selecto
         />
 </template>
 <script>
-import Selecto from "vue-selecto";
+import { VueSelecto } from "vue-selecto";
 
 export default {
     components: {
-        Selecto: Selecto,
+        VueSelecto,
     },
     methods: {
         onSelect(e) {
