@@ -751,6 +751,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     }
     private onDrag = (e: OnDrag) => {
         if (e.datas.selectFlag) {
+            this.findSelectableTargets(e.datas);
             const { scrollOptions } = this.options;
             if (scrollOptions && scrollOptions.container) {
                 if (this.dragScroll.drag(e, scrollOptions)) {
