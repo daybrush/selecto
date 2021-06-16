@@ -21,6 +21,7 @@ import {
     isInside,
     fitPoints,
 } from "overlap-area";
+import { getDistElementMatrix, calculateMatrixDist, createMatrix } from "css-to-mat";
 import {
     createElement,
     h,
@@ -98,6 +99,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             preventDefault: false,
             boundContainer: false,
             preventDragFromInside: true,
+            dragCondition: null,
+            rootContainer: null,
             getElementRect: getDefaultElementRect,
             cspNonce: "",
             ratio: 0,
@@ -532,12 +535,21 @@ class Selecto extends EventEmitter<SelectoEvents> {
             continueSelect,
             selectFromInside,
             selectByClick,
+            rootContainer,
             boundContainer,
             preventDragFromInside = true,
+            dragCondition,
         } = this.options;
 
+        if (dragCondition && !dragCondition(e)) {
+            e.stop();
+            return;
+        }
         this.findSelectableTargets(datas);
         datas.startSelectedTargets = this.selectedTargets;
+        datas.scaleMatrix = createMatrix();
+        datas.containerX = 0;
+        datas.containerY = 0;
 
         let boundArea = {
             left: -Infinity,
@@ -545,24 +557,31 @@ class Selecto extends EventEmitter<SelectoEvents> {
             right: Infinity,
             bottom: Infinity,
         };
+        if (rootContainer) {
+            const containerRect = this.container.getBoundingClientRect();
+
+            datas.containerX = containerRect.left;
+            datas.containerY = containerRect.top;
+            datas.scaleMatrix = getDistElementMatrix(this.container, rootContainer);
+        }
 
         if (boundContainer) {
             const boundInfo: Required<BoundContainer> =
                 isObject(boundContainer) && "element" in boundContainer
                     ? {
-                          left: true,
-                          top: true,
-                          bottom: true,
-                          right: true,
-                          ...boundContainer,
-                      }
+                        left: true,
+                        top: true,
+                        bottom: true,
+                        right: true,
+                        ...boundContainer,
+                    }
                     : {
-                          element: boundContainer,
-                          left: true,
-                          top: true,
-                          bottom: true,
-                          right: true,
-                      };
+                        element: boundContainer,
+                        left: true,
+                        top: true,
+                        bottom: true,
+                        right: true,
+                    };
             const boundElement = boundInfo.element;
             let rectElement: HTMLElement;
 
@@ -687,7 +706,14 @@ class Selecto extends EventEmitter<SelectoEvents> {
         datas.startY = clientY;
         datas.selectFlag = false;
         datas.preventDragFromInside = false;
-        datas.boundsArea = this.target.style.cssText += `left:0px;top:0px;transform: translate(${clientX}px, ${clientY}px)`;
+
+        const offsetPos = calculateMatrixDist(datas.scaleMatrix, [
+            clientX - datas.containerX,
+            clientY - datas.containerY,
+        ]);
+        datas.boundsArea = this.target.style.cssText += `position: ${rootContainer ? "absolute" : "fixed"};`
+            + `left:0px;top:0px;`
+            + `transform: translate(${offsetPos[0]}px, ${offsetPos[1]}px)`;
 
         if (isPreventSelect && selectByClick) {
             inputEvent.preventDefault();
@@ -717,14 +743,27 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const { datas, inputEvent } = e;
         const { top, left, width, height } = rect;
         const selectFlag = datas.selectFlag;
+        const {
+            containerX,
+            containerY,
+            scaleMatrix,
+        } = datas;
+        const offsetPos = calculateMatrixDist(scaleMatrix, [
+            left - containerX,
+            top - containerY,
+        ]);
+        const offsetSize = calculateMatrixDist(scaleMatrix, [
+            width,
+            height,
+        ]);
         let prevSelectedTargets: Array<HTMLElement | SVGElement> = [];
         let selectedTargets: Array<HTMLElement | SVGElement> = [];
         if (selectFlag) {
             this.target.style.cssText +=
                 `display: block;` +
                 `left:0px;top:0px;` +
-                `transform: translate(${left}px, ${top}px);` +
-                `width:${width}px;height:${height}px;`;
+                `transform: translate(${offsetPos[0]}px, ${offsetPos[1]}px);` +
+                `width:${offsetSize[0]}px;height:${offsetSize[1]}px;`;
 
             const passedTargets = this.hitTest(
                 rect,
@@ -907,6 +946,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
     };
 }
 
-interface Selecto extends SelectoProperties {}
+interface Selecto extends SelectoProperties { }
 
 export default Selecto;

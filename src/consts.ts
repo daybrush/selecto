@@ -9,6 +9,9 @@ export const injector = styled(`
     background: rgba(68, 170, 255, 0.5);
     z-index: 100;
 }
+:host {
+    position: absolute;
+}
 `);
 
 /**
@@ -31,6 +34,8 @@ export const PROPERTIES = [
     "ratio",
     "getElementRect",
     "preventDragFromInside",
+    "rootContainer",
+    "dragCondition",
 ] as const;
 /**
  * @memberof Selecto
@@ -61,6 +66,8 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     ratio: Number,
     getElementRect: Function,
     preventDragFromInside: Boolean,
+    rootContainer: Object,
+    dragCondition: Function,
 };
 
 /**

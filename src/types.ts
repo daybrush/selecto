@@ -13,6 +13,7 @@ import { DragScrollOptions } from "@scena/dragscroll";
  * @typedef
  * @property - Selection Element to apply for framework (private)
  * @property - The container to add a selection element for vanilla
+ * @property - Selecto's root container (No transformed container. (default: null)
  * @property - The area to drag selection element (default: container)
  * @property - Targets to select. You can register a queryselector or an Element. (default: [])
  * @property - When the target is clicked, the event is stopped and selected. (If hitTest is 0, it becomes click as well.) (default: true)
@@ -32,6 +33,7 @@ import { DragScrollOptions } from "@scena/dragscroll";
 export interface SelectoOptions {
     target: HTMLElement | null;
     container: HTMLElement | null;
+    rootContainer: HTMLElement | null;
     dragContainer: Element | Window | Element[] | string;
     selectableTargets: Array<HTMLElement | string>;
     selectByClick: boolean;
@@ -48,6 +50,7 @@ export interface SelectoOptions {
     cspNonce: string;
     ratio: number;
     getElementRect: getElementRectFunction;
+    dragCondition: ((e: OnParentDragStart) => boolean) | null;
 }
 /**
  * @memberof Selecto

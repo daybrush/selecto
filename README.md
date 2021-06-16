@@ -45,6 +45,8 @@ import Selecto from "selecto";
 const selecto = new Selecto({
     // The container to add a selection element
     container: document.body,
+    // Selecto's root container (No transformed container. (default: null)
+    rootContainer: null,
     // The area to drag selection element (default: container)
     dragContainer: Element,
     // Targets to select. You can register a queryselector or an Element.

@@ -50,8 +50,10 @@
 <script>
 const selecto = new Selecto({
     container: document.body,
+    // rootContainer: document.body,
     // boundContainer: true,
     // ratio: 1,
+    dragCondition: () => false,
     hitRate: 40,
     selectableTargets: [".target"],
     selectFromInside: true,
