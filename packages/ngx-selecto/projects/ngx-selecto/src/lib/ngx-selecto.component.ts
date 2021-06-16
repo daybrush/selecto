@@ -2,6 +2,7 @@ import {
   Component, ElementRef,
   AfterViewInit, OnDestroy, OnChanges, SimpleChanges, ViewChild, Input, Output, OnInit, EventEmitter,
 } from '@angular/core';
+import Gesto, { OnDragStart } from 'gesto';
 import VanillaSelecto, {
   CLASS_NAME, OPTIONS, SelectoOptions, PROPERTIES, EVENTS,
 } from 'selecto';
@@ -37,6 +38,8 @@ export class NgxSelectoComponent
   @Input() boundContainer: SelectoOptions['boundContainer'];
   @Input() getElementRect: SelectoOptions['getElementRect'];
   @Input() preventDragFromInside: SelectoOptions['preventDragFromInside'];
+  @Input() rootContainer: SelectoOptions['rootContainer'];
+  @Input() dragCondition: SelectoOptions['dragCondition'];
   @Output() dragStart: NgxSelectoEvents['dragStart'];
   @Output() drag: NgxSelectoEvents['drag'];
   @Output() dragEnd: NgxSelectoEvents['dragEnd'];
@@ -54,6 +57,7 @@ export class NgxSelectoComponent
       (this as any)[name] = new EventEmitter();
     });
   }
+
   ngAfterViewInit(): void {
     const options: Partial<SelectoOptions> = {};
 
