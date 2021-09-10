@@ -361,6 +361,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             })
             .on("move", ({ offsetX, offsetY, inputEvent }) => {
                 const datas = inputEvent.datas;
+                const boundArea = datas.boundArea;
+
                 datas.startX -= offsetX;
                 datas.startY -= offsetY;
                 datas.selectablePoints.forEach((points: number[][]) => {
@@ -369,6 +371,12 @@ class Selecto extends EventEmitter<SelectoEvents> {
                         pos[1] -= offsetY;
                     });
                 });
+
+                boundArea.left -= offsetX;
+                boundArea.right -= offsetX;
+                boundArea.top -= offsetY;
+                boundArea.bottom -= offsetY;
+
                 this.gesto.scrollBy(
                     offsetX,
                     offsetY,

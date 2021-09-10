@@ -118,7 +118,7 @@ export interface OnSelect<T = Selecto> extends CurrentTarget<T> {
  * @typedef
  * @property - after added elements
  * @property - after removed elements
- * @property - isDragStart
+ * @property - Whether it is a mousedown or touchstart event
  * @property - is double click
  */
 export interface OnSelectEnd<T = Selecto> extends OnSelect<T>, CurrentTarget<T> {
