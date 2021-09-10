@@ -62,7 +62,7 @@
     });
   });
   onDestroy(() => {
-    selecto.destroy();
+    selecto && selecto.destroy();
   });
 </script>
 
