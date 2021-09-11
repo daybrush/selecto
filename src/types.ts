@@ -138,8 +138,8 @@ export interface OnDragEvent {
     deltaY: number;
     distX: number;
     distY: number;
-    isDouble?: boolean;
     isClick?: boolean;
+    isDouble?: boolean;
     inputEvent: any;
 }
 export interface OnKeyEvent<T = Selecto> extends CurrentTarget<T> {

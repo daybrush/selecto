@@ -822,6 +822,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 isDrag: false,
                 isSelect: selectFlag,
                 ...e,
+                isClick: !!e.isClick,
                 rect,
             });
         }
