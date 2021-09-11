@@ -120,7 +120,7 @@ export interface OnSelect<T = Selecto> extends CurrentTarget<T> {
  * @property - after removed elements
  * @property - Whether it is a mousedown or touchstart event
  * @property - Whether it is click
- * @property - Wheter it is double click
+ * @property - Wheter it is double click or double start
  */
 export interface OnSelectEnd<T = Selecto> extends OnSelect<T>, CurrentTarget<T> {
     afterAdded: Array<HTMLElement | SVGElement>;
