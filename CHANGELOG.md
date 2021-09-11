@@ -2,6 +2,34 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+## [1.13.0] - 2021-09-11
+* `selecto` 1.13.0
+* `react-selecto` 1.13.0
+* `preact-selecto` 1.13.0
+* `ngx-selecto` 1.13.0
+* `svelte-selecto` 1.13.0
+* `lit-selecto` 1.13.0
+
+### Added
+* Add `isClick` property on dragEnd, selectEnd #51
+
+### Fixed
+* Fix svelte ssr #53
+* Fix boundContainer's area on scroll #52
+
+
+## [1.12.1] - 2021-06-17
+* `selecto` 1.12.1
+* `react-selecto` 1.12.0
+* `preact-selecto` 1.12.0
+* `ngx-selecto` 1.12.0
+* `svelte-selecto` 1.12.0
+* `lit-selecto` 1.12.0
+
+### Added
+* Add `dragCondition` option #47 
+* Add `rootContainer` option #49 
+
 
 ## [1.11.0] - 2021-03-21
 * `selecto` 1.11.0
