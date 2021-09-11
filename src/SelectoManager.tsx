@@ -532,6 +532,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             afterAdded: afterAdded.map((index) => afterList[index]),
             afterRemoved: afterRemoved.map((index) => afterPrevList[index]),
             isDragStart,
+            isClick: !!e.isClick,
             isDouble: !!isDouble,
             rect,
             inputEvent,
