@@ -64,7 +64,7 @@
     );
 const selecto = new Selecto({
     container: document.body,
-    // boundContainer: document.querySelector(".viewport"),
+    boundContainer: document.querySelector(".viewport"),
     hitRate: 40,
     selectableTargets: [".target"],
     selectFromInside: false,
@@ -92,7 +92,7 @@ const selecto = new Selecto({
         el.classList.remove("selected");
     });
 }).on("selectEnd", e => {
-    console.log("end", e);
+    console.log("end", e, e.isDragStart, e.isClick, e.isDouble);
     e.afterAdded.forEach(el => {
         el.classList.add("selected");
     });
