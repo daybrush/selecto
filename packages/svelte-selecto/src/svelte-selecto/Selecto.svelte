@@ -66,4 +66,4 @@
   });
 </script>
 
-<div className={CLASS_NAME} bind:this={el} />
+<div class={CLASS_NAME} bind:this={el} />

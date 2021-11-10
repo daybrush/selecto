@@ -4,6 +4,7 @@
   "description": "A Svelte Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
   "main": "./dist/selecto.cjs.js",
   "module": "./dist/selecto.esm.js",
+  "svelte": "./src/svelte-selecto/index.js",
   "types": "src/index.d.ts",
   "sideEffects": false,
   "scripts": {
@@ -41,6 +42,7 @@
     "rollup-plugin-terser": "^5.1.2",
     "sirv-cli": "^0.4.5",
     "svelte": "^3.16.7",
+    "tslib": "^2.3.1",
     "typescript": "^3.7.4"
   },
   "dependencies": {
