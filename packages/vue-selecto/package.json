@@ -1,6 +1,6 @@
 {
     "name": "vue-selecto",
-    "version": "1.13.0",
+    "version": "1.13.1",
     "types": "declaration/index.d.ts",
     "main": "dist/selecto.cjs.js",
     "module": "dist/selecto.esm.js",
@@ -30,13 +30,13 @@
     },
     "homepage": "https://daybrush.com/selecto",
     "dependencies": {
-        "selecto": "~1.13.0",
-        "vue-property-decorator": "^8.1.0"
+        "selecto": "~1.13.0"
     },
     "devDependencies": {
         "@daybrush/builder": "^0.1.2",
         "@vue/cli-plugin-typescript": "^3.12.0",
         "@vue/cli-service": "^3.12.0",
+        "rollup-plugin-vue": "^5.1.9",
         "typescript": "^3.4.3",
         "vue": "^2.6.11",
         "vue-template-compiler": "^2.6.11"

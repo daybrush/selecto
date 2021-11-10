@@ -1,3 +1,5 @@
-import VueSelecto from './VueSelecto';
+// import VueSelecto from './VueMoveable';
+import Selecto from './Selecto.vue';
 
-export { VueSelecto };
+export default Selecto;
+export { Selecto as VueSelecto };
