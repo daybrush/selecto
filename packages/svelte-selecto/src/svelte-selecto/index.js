@@ -4,6 +4,9 @@ import { METHODS } from "selecto";
 export default /*#__PURE__*/ (() => {
     const prototype = Selecto.prototype;
 
+    if (!prototype) {
+        return Selecto;
+    }
     METHODS.forEach(name => {
         prototype[name] = function (...args) {
             const self = this.getInstance();
