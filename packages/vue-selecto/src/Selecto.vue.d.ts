@@ -4,11 +4,15 @@ import VanillaSelecto, {
     SelectoProperties,
 } from "selecto";
 
-export default class VueSelecto { }
-export default interface VueSelecto
+interface VueSelectoInterface
     extends SelectoProperties,
-    MethodInterface<SelectoMethods, VanillaSelecto, VueSelecto> {
+    MethodInterface<SelectoMethods, VanillaSelecto, VueSelectoInterface> {
     $el: HTMLElement;
     $_selecto: VanillaSelecto;
     $props: SelectoProperties;
 }
+
+declare const VueSelecto: VueSelectoInterface;
+type VueSelecto = VueSelectoInterface;
+
+export default VueSelecto;
