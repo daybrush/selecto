@@ -7,6 +7,7 @@ import VanillaSelecto, {
 interface VueSelectoInterface
     extends SelectoProperties,
     MethodInterface<SelectoMethods, VanillaSelecto, VueSelectoInterface> {
+    name: string;
     $el: HTMLElement;
     $_selecto: VanillaSelecto;
     $props: SelectoProperties;
