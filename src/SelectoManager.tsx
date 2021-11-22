@@ -354,7 +354,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     private initDragScroll() {
         this.dragScroll
             .on("scroll", ({ container, direction }) => {
-                this.trigger("scroll", {
+                this.emit("scroll", {
                     container,
                     direction,
                 });
@@ -434,7 +434,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
              *   });
              * });
              */
-            this.trigger("selectStart", {
+            this.emit("selectStart", {
                 selected: selectedTargets,
                 added: added.map((index) => list[index]),
                 removed: removed.map((index) => prevList[index]),
@@ -466,7 +466,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
              *   });
              * });
              */
-            this.trigger("select", {
+            this.emit("select", {
                 selected: selectedTargets,
                 added: added.map((index) => list[index]),
                 removed: removed.map((index) => prevList[index]),
@@ -525,7 +525,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
          *   });
          * });
          */
-        this.trigger("selectEnd", {
+        this.emit("selectEnd", {
             selected: this.selectedTargets,
             added: added.map((index) => list[index]),
             removed: removed.map((index) => prevList[index]),
@@ -687,7 +687,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
          */
         const result =
             !(e as any).isClick && isTrusted
-                ? this.trigger("dragStart", { ...e })
+                ? this.emit("dragStart", { ...e })
                 : true;
 
         if (!result) {
@@ -789,12 +789,40 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
             this.selectedTargets = selectedTargets;
         }
-
-        this.trigger("drag", {
+        /**
+         * When the drag, the drag event is called.
+         * Call the stop () function if you have a specific element or don't want to raise a select
+         * @memberof Selecto
+         * @event drag
+         * @param {OnDrag} - Parameters for the drag event
+         * @example
+         * import Selecto from "selecto";
+         *
+         * const selecto = new Selecto({
+         *   container: document.body,
+         *   selectByClick: true,
+         *   selectFromInside: false,
+         * });
+         *
+         * selecto.on("drag", e => {
+         *   e.stop();
+         * }).on("select", e => {
+         *   e.added.forEach(el => {
+         *     el.classList.add("selected");
+         *   });
+         *   e.removed.forEach(el => {
+         *     el.classList.remove("selected");
+         *   });
+         * });
+         */
+        const result = this.emit("drag", {
             ...e,
             isSelect: selectFlag,
             rect,
         });
+        if (result === false) {
+            return;
+        }
 
         if (selectFlag) {
             this.select(prevSelectedTargets, selectedTargets, rect, inputEvent);
@@ -817,7 +845,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const selectFlag = datas.selectFlag;
 
         if (inputEvent && !e.isClick) {
-            this.trigger("dragEnd", {
+            this.emit("dragEnd", {
                 isDouble: !!e.isDouble,
                 isDrag: false,
                 isSelect: selectFlag,
@@ -891,7 +919,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
          *   });
          * });
          */
-        this.trigger("keydown", {});
+        this.emit("keydown", {});
     };
     private onKeyUp = (e: any) => {
         if (!this.sameCombiKey(e, true)) {
@@ -924,12 +952,12 @@ class Selecto extends EventEmitter<SelectoEvents> {
          *   });
          * });
          */
-        this.trigger("keyup", {});
+        this.emit("keyup", {});
     };
     private onBlur = () => {
         if (this.toggleContinueSelect && this.continueSelect) {
             this.continueSelect = false;
-            this.trigger("keyup", {});
+            this.emit("keyup", {});
         }
     };
     private onDocumentSelectStart = (e: any) => {
