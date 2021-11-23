@@ -821,6 +821,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             rect,
         });
         if (result === false) {
+            this.target.style.cssText += "display: none;";
+            e.stop();
             return;
         }
 
