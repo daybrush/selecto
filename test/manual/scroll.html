@@ -83,6 +83,9 @@ const selecto = new Selecto({
     viewer.scrollBy(direction[0] * 10, direction[1] * 10);
 }).on("dragStart", e => {
     console.log("ds", e.inputEvent.target);
+}).on("drag", e => {
+    // console.log(e);
+    // e.stop();
 }).on("select", e => {
     console.log("start", e);
     e.added.forEach(el => {

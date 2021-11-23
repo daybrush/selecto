@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.13.1] - 2021-11-23
+* `selecto` 1.13.2
+* `react-selecto` 1.13.2
+* `preact-selecto` 1.13.2
+* `ngx-selecto` 1.13.1
+* `svelte-selecto` 1.13.3
+* `vue-selecto` 1.13.3
+* `lit-selecto` 1.13.2
+
+### Fixed
+* fix `stop()` property on drag event #60
+
+
+## [1.13.1] - 2021-11-23
 * `selecto` 1.13.1
 * `react-selecto` 1.13.1
 * `preact-selecto` 1.13.1
