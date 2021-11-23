@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.13.1] - 2021-11-24
+## [1.13.2] - 2021-11-24
 * `selecto` 1.13.2
 * `react-selecto` 1.13.2
 * `preact-selecto` 1.13.2
