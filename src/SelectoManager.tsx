@@ -658,7 +658,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const type = inputEvent.type;
         const isTrusted = type === "mousedown" || type === "touchstart";
         /**
-         * When the drag starts, the dragStart event is called.
+         * When the drag starts (triggers on mousedown or touchstart), the dragStart event is called.
          * Call the stop () function if you have a specific element or don't want to raise a select
          * @memberof Selecto
          * @event dragStart
@@ -846,6 +846,12 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const rect = getRect(e, this.options.ratio);
         const selectFlag = datas.selectFlag;
 
+        /**
+         * When the drag ends (triggers on mouseup or touchend after drag), the dragEnd event is called.
+         * @memberof Selecto
+         * @event dragEnd
+         * @param {OnDragEnd} - Parameters for the dragEnd event
+         */
         if (inputEvent && !e.isClick) {
             this.emit("dragEnd", {
                 isDouble: !!e.isDouble,
