@@ -31,7 +31,7 @@ export default class Selecto extends React.PureComponent<Partial<SelectoProps>> 
         });
         this.selecto = new VanillaSelecto({
             ...options,
-            target: this.selectionElement,
+            portalContainer: this.selectionElement,
         });
 
         EVENTS.forEach((name, i) => {

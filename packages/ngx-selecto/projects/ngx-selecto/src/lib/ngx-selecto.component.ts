@@ -20,7 +20,7 @@ export class NgxSelectoComponent
   extends NgxSelectoInterface
   implements OnDestroy, AfterViewInit, OnChanges, SelectoOptions, NgxSelectoEvents {
   @ViewChild('el', { static: false }) elRef: ElementRef;
-  @Input() target: SelectoOptions['target'];
+  @Input() portalContainer: SelectoOptions['portalContainer'];
   @Input() container: SelectoOptions['container'];
   @Input() dragContainer: SelectoOptions['dragContainer'];
   @Input() selectableTargets: SelectoOptions['selectableTargets'];
@@ -40,6 +40,8 @@ export class NgxSelectoComponent
   @Input() preventDragFromInside: SelectoOptions['preventDragFromInside'];
   @Input() rootContainer: SelectoOptions['rootContainer'];
   @Input() dragCondition: SelectoOptions['dragCondition'];
+  @Input() clickBySelectEnd: SelectoOptions['clickBySelectEnd'];
+
   @Output() dragStart: NgxSelectoEvents['dragStart'];
   @Output() drag: NgxSelectoEvents['drag'];
   @Output() dragEnd: NgxSelectoEvents['dragEnd'];
@@ -58,6 +60,7 @@ export class NgxSelectoComponent
     });
   }
 
+
   ngAfterViewInit(): void {
     const options: Partial<SelectoOptions> = {};
 
@@ -68,7 +71,7 @@ export class NgxSelectoComponent
     });
     this.selecto = new VanillaSelecto({
       ...options,
-      target: this.elRef.nativeElement,
+      portalContainer: this.elRef.nativeElement,
     });
 
     const selecto = this.selecto;

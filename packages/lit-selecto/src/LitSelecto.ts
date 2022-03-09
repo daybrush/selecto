@@ -19,7 +19,7 @@ export class LitSelecto extends LitElement {
 
         this.selecto = new VanillaSelecto({
             ...options,
-            target: this,
+            portalContainer: this,
             dragContainer: options.dragContainer || this.parentElement as any,
         });
 

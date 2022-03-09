@@ -1,6 +1,6 @@
 {
     "name": "selecto",
-    "version": "1.13.2",
+    "version": "1.14.0",
     "description": "Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.",
     "main": "./dist/selecto.cjs.js",
     "module": "./dist/selecto.esm.js",
@@ -20,9 +20,9 @@
         "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
         "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
         "packages": "npm run packages:update && npm run packages:build && npm run packages:publish && npm run packages:preact",
-        "packages:update": "pvu --update=react-selecto,ngx-selecto/projects/ngx-selecto,svelte-selecto,lit-selecto,vue-selecto",
-        "packages:build": "pvu --build=react-selecto,ngx-selecto,svelte-selecto,lit-selecto,vue-selecto",
-        "packages:publish": "pvu --publish=react-selecto,ngx-selecto/dist/ngx-selecto,svelte-selecto,lit-selecto,vue-selecto",
+        "packages:update": "pvu --update=react-selecto,ngx-selecto/projects/ngx-selecto,svelte-selecto,lit-selecto,vue-selecto,vue3-selecto",
+        "packages:build": "pvu --build=react-selecto,ngx-selecto,svelte-selecto,lit-selecto,vue-selecto,vue3-selecto",
+        "packages:publish": "pvu --publish=react-selecto,ngx-selecto/dist/ngx-selecto,svelte-selecto,lit-selecto,vue-selecto,vue3-selecto",
         "packages:preact": "cd ./packages/react-selecto && npm run packages && cd ../.."
     },
     "keywords": [
@@ -50,7 +50,7 @@
         "css-styled": "^1.0.0",
         "css-to-mat": "^1.0.3",
         "framework-utils": "^1.1.0",
-        "gesto": "^1.6.0-beta.2",
+        "gesto": "^1.6.0",
         "keycon": "^1.1.2",
         "overlap-area": "^1.0.0"
     },

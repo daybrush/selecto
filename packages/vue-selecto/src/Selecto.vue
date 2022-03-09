@@ -43,7 +43,7 @@ export default {
 
     const selecto = new VanillaSelecto({
       ...options,
-      target: this.$refs.target as any,
+      portalContainer: this.$refs.target as any,
     });
 
     this.$_selecto = selecto;

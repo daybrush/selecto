@@ -49,7 +49,7 @@
     
     selecto = new VanillaSelecto({
       ...options,
-      target: el
+      portalContainer: el
     });
     EVENTS.forEach((name, i) => {
       selecto.on(name, e => {
