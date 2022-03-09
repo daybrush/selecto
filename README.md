@@ -44,12 +44,13 @@ $ npm install selecto
 * If you want to prevent select from inside
     * selectFromInside: false
 * If you want to include it regardless of hitTest when selecting from the inside
-    * selectFromInside: true(default)
+    * selectFromInside: true (default)
     * selectByClick: true
-* If you want to finish right away without dragging when selecting from inside
+* If you want to finish right away (selectStart and selectEnd occur at the same time) without dragging when selecting from inside
     * selectFromInside: false
     * selectByClick: true
-    * preventDragFromInside: true(default)
+    * preventDragFromInside: true (default)
+    * clickBySelectEnd: false (default)
 * If you want to selectEnd(click) after stopping drag and mouse(touch)
     * selectFromInside: false
     * selectByClick: true
