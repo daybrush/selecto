@@ -1,6 +1,6 @@
 
 <p align="middle" ><img src="https://daybrush.com/selecto/images/logo.png" /></p>
-<h2 align="middle">Vue Selecto</h2>
+<h2 align="middle">Vue 3 Selecto</h2>
 <p align="middle">
 <a href="https://www.npmjs.com/package/vue-selecto" target="_blank"><img src="https://img.shields.io/npm/v/vue-selecto.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
 <img src="https://img.shields.io/badge/language-typescript-blue.svg?style=flat-square"/>
@@ -18,11 +18,11 @@
     alt="Lit"
     src="https://img.shields.io/static/v1.svg?label=&message=Lit&style=flat-square&color=4E8EE0"></a>
 </p>
-<p align="middle">Vue Selecto is a Vue component that allows you to select elements in the drag area using the mouse or touch.</p>
+<p align="middle">Vue 3 Selecto is a Vue component that allows you to select elements in the drag area using the mouse or touch.</p>
 
 <p align="middle">
     <a href="https://daybrush.com/selecto" target="_blank"><strong>Demo</strong></a> /
-    <a href="https://github.com/daybrush/selecto/tree/master/packages/vue3-selecto" target="_blank"><strong>Vue 3</strong></a> /
+    <a href="https://github.com/daybrush/selecto/tree/master/packages/vue-selecto" target="_blank"><strong>Vue 2</strong></a> /
     <a href="https://daybrush.com/selecto/release/latest/doc/" target="_blank"><strong>API</strong></a> /
     <a href="https://github.com/daybrush/scena" target="_blank"><strong>Main Project</strong></a>
 </p>
@@ -30,42 +30,42 @@
 ## ⚙️ Installation
 ### npm
 ```bash
-$ npm install vue-selecto
+$ npm install vue3-selecto
 ```
 
 ## 🚀 How to use
 ```html
 <template>
-    <VueSelecto
-        :container="document.body"
-        :dragContainer="window"
-        :selectableTargets='[".target", document.querySelector(".target2")]'
-        :selectByClick="true"
-        :selectFromInside="true"
-        :continueSelect="false"
-        :toggleContinueSelect='"shift"'
-        :keyContainer="window"
-        :hitRate="100"
-        @select="onSelect"
-        />
+  <VueSelecto
+    :container="document.body"
+    :dragContainer="window"
+    :selectableTargets='[".target", document.querySelector(".target2")]'
+    :selectByClick="true"
+    :selectFromInside="true"
+    :continueSelect="false"
+    :toggleContinueSelect='"shift"'
+    :keyContainer="window"
+    :hitRate="100"
+    @select="onSelect"
+    />
 </template>
 <script>
-import { VueSelecto } from "vue-selecto";
+import { VueSelecto } from "vue3-selecto";
 
 export default {
-    components: {
-        VueSelecto,
+  components: {
+    VueSelecto,
+  },
+  methods: {
+    onSelect(e) {
+      e.added.forEach(el => {
+        el.classList.add("selected");
+      });
+      e.removed.forEach(el => {
+        el.classList.remove("selected");
+      });
     },
-    methods: {
-        onSelect(e) {
-            e.added.forEach(el => {
-                el.classList.add("selected");
-            });
-            e.removed.forEach(el => {
-                el.classList.remove("selected");
-            });
-        },
-    },
+  },
 };
 </script>
 ```

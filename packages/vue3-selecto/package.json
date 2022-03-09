@@ -1,7 +1,7 @@
 {
-    "name": "vue-selecto",
-    "version": "1.13.3",
-    "description": "A Vue 2 Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
+    "name": "vue3-selecto",
+    "version": "0.0.0",
+    "description": "A Vue 3 Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
     "types": "declaration/index.d.ts",
     "main": "dist/selecto.cjs.js",
     "module": "dist/selecto.esm.js",
@@ -19,7 +19,7 @@
         "selectable",
         "moveable",
         "vue",
-        "vue2",
+        "vue3"
     ],
     "repository": {
         "type": "git",
@@ -36,11 +36,12 @@
     },
     "devDependencies": {
         "@daybrush/builder": "^0.1.2",
-        "@vue/cli-plugin-typescript": "^3.12.0",
-        "@vue/cli-service": "^3.12.0",
-        "rollup-plugin-vue": "^5.1.9",
-        "typescript": "^3.4.3",
-        "vue": "^2.6.11",
-        "vue-template-compiler": "^2.6.11"
+        "@vue/cli-plugin-typescript": "~4.5.0",
+        "@vue/cli-service": "~4.5.0",
+        "@vue/compiler-sfc": "^3.0.0",
+        "rollup-plugin-vue": "^6.0.0",
+        "tslib": "^2.3.1",
+        "typescript": "^4.3.5",
+        "vue": "^3.1.1"
     }
 }
