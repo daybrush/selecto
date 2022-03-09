@@ -43,17 +43,18 @@ $ npm install selecto
 ### Option Behaviors
 * If you want to prevent select from inside
     * selectFromInside: false
+* If you want to include it regardless of hitTest when selecting from the inside
+    * selectFromInside: true(default)
+    * selectByClick: true
 * If you want to finish right away without dragging when selecting from inside
     * selectFromInside: false
     * selectByClick: true
     * preventDragFromInside: true(default)
-* If you want to include it regardless of hitTest when selecting from the inside
-    * selectFromInside: true(default)
-    * selectByClick: true
 * If you want to selectEnd(click) after stopping drag and mouse(touch)
     * selectFromInside: false
     * selectByClick: true
-    * clickBySelectEnd: true,
+    * clickBySelectEnd: true
+
 ```js
 import Selecto from "selecto";
 
@@ -116,7 +117,8 @@ const selecto = new Selecto({
 |---|---|---|
 |[**react-selecto**](https://github.com/daybrush/selecto/tree/master/packages/react-selecto)|[![](https://img.shields.io/npm/v/react-selecto.svg?style=flat-square)](https://npmjs.com/package/react-selecto)|A React Selecto Component that allows you to select elements in the drag area using the mouse or touch.|
 |[**ngx-selecto**](https://github.com/daybrush/selecto/tree/master/packages/ngx-selecto)|[![](https://img.shields.io/npm/v/ngx-selecto.svg?style=flat-square)](https://npmjs.com/package/ngx-selecto)|An Angular Selecto Component that allows you to select elements in the drag area using the mouse or touch.|
-|[**vue-selecto**](https://github.com/daybrush/selecto/tree/master/packages/vue-selecto)|[![](https://img.shields.io/npm/v/vue-selecto.svg?style=flat-square)](https://npmjs.com/package/vue-selecto)|A Vue Selecto Component that allows you to select elements in the drag area using the mouse or touch.|
+|[**vue-selecto**](https://github.com/daybrush/selecto/tree/master/packages/vue-selecto)|[![](https://img.shields.io/npm/v/vue-selecto.svg?style=flat-square)](https://npmjs.com/package/vue-selecto)|A Vue 2 Selecto Component that allows you to select elements in the drag area using the mouse or touch.|
+|[**vue3-selecto**](https://github.com/daybrush/selecto/tree/master/packages/vue3-selecto)|[![](https://img.shields.io/npm/v/vue3-selecto.svg?style=flat-square)](https://npmjs.com/package/vue-selecto)|A Vue 3 Selecto Component that allows you to select elements in the drag area using the mouse or touch.|
 |[**preact-selecto**](https://github.com/daybrush/selecto/tree/master/packages/preact-selecto)|[![](https://img.shields.io/npm/v/preact-selecto.svg?style=flat-square)](https://npmjs.com/package/preact-selecto)|A Preact Selecto Component that allows you to select elements in the drag area using the mouse or touch.|
 |[**svelte-selecto**](https://github.com/daybrush/selecto/tree/master/packages/svelte-selecto)|[![](https://img.shields.io/npm/v/svelte-selecto.svg?style=flat-square)](https://npmjs.com/package/svelte-selecto)|A Svelte Selecto Component that allows you to select elements in the drag area using the mouse or touch.|
 |[**lit-selecto**](https://github.com/daybrush/selecto/tree/master/packages/lit-selecto)|[![](https://img.shields.io/npm/v/lit-selecto.svg?style=flat-square)](https://npmjs.com/package/lit-selecto)|A Lit Selecto Component that allows you to select elements in the drag area using the mouse or touch.|
