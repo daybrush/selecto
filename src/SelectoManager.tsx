@@ -875,7 +875,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
             this.dragScroll.dragEnd();
         } else if (this.selectByClick && this.clickBySelectEnd) {
             // only clickBySelectEnd
-            console.log(e.clientX, e.clientY);
             const pointTarget = this._findElement(
                 document.elementFromPoint(e.clientX, e.clientY) as
                 | HTMLElement
