@@ -11,6 +11,7 @@ import {
     isArray,
     isString,
     between,
+    splitUnit,
 } from "@daybrush/utils";
 import { diff } from "@egjs/children-differ";
 import DragScroll from "@scena/dragscroll";
@@ -339,16 +340,20 @@ class Selecto extends EventEmitter<SelectoEvents> {
             }
             const overlapSize = getAreaSize(overlapPoints);
             const targetSize = getAreaSize(points);
-            const rate = between(
-                Math.round((overlapSize / targetSize) * 100),
-                0,
-                100
-            );
 
-            if (rate >= Math.min(100, hitRate)) {
-                return true;
+            const hitRateValue = splitUnit(`${hitRate}`);
+
+            if (hitRateValue.unit === "px") {
+                return overlapSize >= hitRateValue.value;
+            } else {
+                const rate = between(
+                    Math.round((overlapSize / targetSize) * 100),
+                    0,
+                    100
+                );
+
+                return rate >= Math.min(100, hitRateValue.value);
             }
-            return false;
         });
     }
     private initDragScroll() {

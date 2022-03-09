@@ -21,7 +21,7 @@ import { DragScrollOptions } from "@scena/dragscroll";
  * @property - After the select, whether to select the next target with the selected target (deselected if the target is selected again). (default: false)
  * @property - Determines which key to continue selecting the next target via keydown and keyup.
  * @property - The container for keydown and keyup events
- * @property - The rate at which the target overlaps the drag area to be selected. (default: 100)
+ * @property - The rate at which the target overlaps the drag area to be selected. If you want an absolute number, set it to a px value. (ex: 10px) (default: 100)
  * @property - Container to bound the selection area. If false, do not bound. If true, it is the container of selecto. (default: false)
  * @property - Set the scroll options, time, etc. to automatically scroll by dragging. (default: null)
  * @property - Checks whether this is an element to input text or contentEditable, and prevents dragging. (default: false)
@@ -41,7 +41,7 @@ export interface SelectoOptions {
     continueSelect: boolean;
     toggleContinueSelect: string[][] | string[] | string | null;
     keyContainer: Document | HTMLElement | Window | null;
-    hitRate: number;
+    hitRate: number | string;
     boundContainer: BoundContainer | boolean | HTMLElement | string | null;
     scrollOptions: DragScrollOptions;
     checkInput: boolean;
