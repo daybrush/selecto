@@ -10,7 +10,10 @@
 <a href="https://github.com/daybrush/selecto/tree/master/packages/ngx-selecto" target="_blank"><img alt="Angular" src="https://img.shields.io/static/v1.svg?label=&message=Angular&style=flat-square&color=C82B38"></a>
 <a href="https://github.com/daybrush/selecto/tree/master/packages/vue-selecto" target="_blank"><img
     alt="Vue"
-    src="https://img.shields.io/static/v1.svg?label=&message=Vue&style=flat-square&color=3fb984"></a>
+    src="https://img.shields.io/static/v1.svg?label=&message=Vue2&style=flat-square&color=3fb984"></a>
+<a href="https://github.com/daybrush/selecto/tree/master/packages/vue3-selecto" target="_blank"><img
+    alt="Vue"
+    src="https://img.shields.io/static/v1.svg?label=&message=Vue3&style=flat-square&color=3fb984"></a>
 <a href="https://github.com/daybrush/selecto/tree/master/packages/svelte-selecto" target="_blank"><img
     alt="Svelte"
     src="https://img.shields.io/static/v1.svg?label=&message=Svelte&style=flat-square&color=C82B38"></a>
