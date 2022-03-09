@@ -28,7 +28,7 @@ PROPERTIES.forEach((name) => {
 export default {
   name: "selecto",
   methods,
-  props: PROPERTIES,
+  props: OPTIONS,
   watch,
   mounted(this: any) {
     const props = this.$props;

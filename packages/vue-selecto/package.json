@@ -8,7 +8,7 @@
     "scripts": {
         "serve": "vue-cli-service serve demo",
         "build": "rm -rf dist && rollup -c && npm run declaration",
-        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
+        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json && cp ./src/Selecto.vue.d.ts ./declaration",
         "lint": "vue-cli-service lint --no-fix"
     },
     "keywords": [
