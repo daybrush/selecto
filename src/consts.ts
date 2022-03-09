@@ -36,6 +36,7 @@ export const PROPERTIES = [
     "preventDragFromInside",
     "rootContainer",
     "dragCondition",
+    "clickBySelectEnd",
 ] as const;
 /**
  * @memberof Selecto
@@ -49,7 +50,7 @@ export const OPTIONS = [
 
 export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     boundContainer: null,
-    target: null,
+    portalContainer: null,
     container: null,
     dragContainer: null,
     selectableTargets: Array,
@@ -68,6 +69,7 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     preventDragFromInside: Boolean,
     rootContainer: Object,
     dragCondition: Function,
+    clickBySelectEnd: Boolean,
 };
 
 /**

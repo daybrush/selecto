@@ -53,12 +53,14 @@ const selecto = new Selecto({
     // rootContainer: document.body,
     // boundContainer: true,
     // ratio: 1,
-    dragCondition: () => false,
+    // dragCondition: () => false,
     hitRate: 40,
     selectableTargets: [".target"],
-    selectFromInside: true,
+    selectFromInside: false,
     selectByClick: true,
+    // clickBySelectEnd: true,
     checkInput: true,
+    preventDragFromInside: false,
     toggleContinueSelect: "shift",
 }).on("dragStart", e => {
     console.log("ds", e.inputEvent.target);

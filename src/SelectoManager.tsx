@@ -82,15 +82,16 @@ class Selecto extends EventEmitter<SelectoEvents> {
      */
     constructor(options: Partial<SelectoOptions> = {}) {
         super();
-        this.target = options.target;
+        this.target = options.portalContainer;
         this.container = options.container || document.body;
         this.options = {
-            target: null,
+            portalContainer: null,
             container: null,
             dragContainer: null,
             selectableTargets: [],
             selectByClick: true,
             selectFromInside: true,
+            clickBySelectEnd: false,
             hitRate: 100,
             continueSelect: false,
             toggleContinueSelect: null,
@@ -178,7 +179,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         this.keycon && this.keycon.destroy();
         this.gesto.unset();
         this.injectResult.destroy();
-        removeEvent(document, "selectstart", this.onDocumentSelectStart);
+        removeEvent(document, "selectstart", this._onDocumentSelectStart);
 
         this.keycon = null;
         this.gesto = null;
@@ -254,8 +255,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 return false;
             },
         } as any;
-        if (this.onDragStart(dragEvent, clickedTarget)) {
-            this.onDragEnd(dragEvent);
+        if (this._onDragStart(dragEvent, clickedTarget)) {
+            this._onDragEnd(dragEvent);
         }
         return this;
     }
@@ -269,9 +270,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
         if (toggleContinueSelect) {
             this.keycon = new KeyController(keyContainer || window);
             this.keycon
-                .keydown(this.onKeyDown)
-                .keyup(this.onKeyUp)
-                .on("blur", this.onBlur);
+                .keydown(this._onKeyDown)
+                .keyup(this._onKeyUp)
+                .on("blur", this._onBlur);
         }
     }
     private setKeyEvent() {
@@ -294,18 +295,18 @@ class Selecto extends EventEmitter<SelectoEvents> {
         this.dragContainer =
             typeof dragContainer === "string"
                 ? [].slice.call(document.querySelectorAll(dragContainer))
-                : this.options.dragContainer || (this.target.parentNode as any);
+                : dragContainer || (this.target.parentNode as any);
         this.gesto = new Gesto(this.dragContainer, {
             checkWindowBlur: true,
             container: window,
             checkInput,
             preventDefault,
         }).on({
-            dragStart: this.onDragStart,
-            drag: this.onDrag,
-            dragEnd: this.onDragEnd,
+            dragStart: this._onDragStart,
+            drag: this._onDrag,
+            dragEnd: this._onDragEnd,
         });
-        addEvent(document, "selectstart", this.onDocumentSelectStart);
+        addEvent(document, "selectstart", this._onDocumentSelectStart);
 
         this.injectResult = injector.inject(target, {
             nonce: this.options.cspNonce,
@@ -391,7 +392,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
                 inputEvent.distX += offsetX;
                 inputEvent.distY += offsetY;
-                this.check(inputEvent);
+                this._checkSelected(inputEvent);
             });
     }
     private select(
@@ -543,7 +544,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             inputEvent,
         });
     }
-    private onDragStart = (e: OnDragStart, clickedTarget?: Element) => {
+    private _onDragStart = (e: OnDragStart, clickedTarget?: Element) => {
         const { datas, clientX, clientY, inputEvent } = e;
         const {
             continueSelect,
@@ -552,6 +553,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             rootContainer,
             boundContainer,
             preventDragFromInside = true,
+            clickBySelectEnd,
             dragCondition,
         } = this.options;
 
@@ -635,31 +637,26 @@ class Selecto extends EventEmitter<SelectoEvents> {
             height: 0,
         };
         let firstPassedTargets: Array<HTMLElement | SVGElement> = [];
-        if (!selectFromInside || selectByClick) {
-            let pointTarget = (clickedTarget ||
+
+        if (selectByClick && !clickBySelectEnd) {
+            const pointTarget = this._findElement(
+                (clickedTarget ||
                 document.elementFromPoint(clientX, clientY)) as
                 | HTMLElement
-                | SVGElement;
-
-            while (pointTarget) {
-                if (
-                    datas.selectableTargets.indexOf(
-                        pointTarget as HTMLElement | SVGElement
-                    ) > -1
-                ) {
-                    break;
-                }
-                pointTarget = pointTarget.parentElement;
-            }
+                | SVGElement,
+                datas.selectableTargets,
+            );
             firstPassedTargets = pointTarget ? [pointTarget] : [];
         }
         const hasInsideTargets = firstPassedTargets.length > 0;
         const isPreventSelect = !selectFromInside && hasInsideTargets;
 
+        // prevent drag from inside when selectByClick is false
         if (isPreventSelect && !selectByClick) {
             e.stop();
             return false;
         }
+
         const type = inputEvent.type;
         const isTrusted = type === "mousedown" || type === "touchstart";
         /**
@@ -729,9 +726,10 @@ class Selecto extends EventEmitter<SelectoEvents> {
             + `left:0px;top:0px;`
             + `transform: translate(${offsetPos[0]}px, ${offsetPos[1]}px)`;
 
-        if (isPreventSelect && selectByClick) {
+        if (isPreventSelect && selectByClick && !clickBySelectEnd) {
             inputEvent.preventDefault();
 
+            // prevent drag from inside when selectByClick is true and force call `selectEnd`
             if (preventDragFromInside) {
                 this.selectEnd(
                     datas.startSelectedTargets,
@@ -750,10 +748,14 @@ class Selecto extends EventEmitter<SelectoEvents> {
             if (scrollOptions && scrollOptions.container) {
                 this.dragScroll.dragStart(e, scrollOptions);
             }
+            if (clickBySelectEnd) {
+                datas.selectFlag = false;
+                e.preventDrag();
+            }
         }
         return true;
     };
-    private check(e: any, rect = getRect(e, this.options.ratio)) {
+    private _checkSelected(e: any, rect = getRect(e, this.options.ratio)) {
         const { datas, inputEvent } = e;
         const { top, left, width, height } = rect;
         const selectFlag = datas.selectFlag;
@@ -835,7 +837,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             this.select(prevSelectedTargets, selectedTargets, rect, inputEvent);
         }
     }
-    private onDrag = (e: OnDrag) => {
+    private _onDrag = (e: OnDrag) => {
         if (e.datas.selectFlag) {
             const { scrollOptions } = this.options;
             if (scrollOptions && scrollOptions.container) {
@@ -844,9 +846,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 }
             }
         }
-        this.check(e);
+        this._checkSelected(e);
     };
-    private onDragEnd = (e: OnDragEvent) => {
+    private _onDragEnd = (e: OnDragEvent) => {
         const { datas, inputEvent } = e;
         const rect = getRect(e, this.options.ratio);
         const selectFlag = datas.selectFlag;
@@ -855,7 +857,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
          * When the drag ends (triggers on mouseup or touchend after drag), the dragEnd event is called.
          * @memberof Selecto
          * @event dragEnd
-         * @param {OnDragEnd} - Parameters for the dragEnd event
+         * @param {_OnDragEnd} - Parameters for the dragEnd event
          */
         if (inputEvent && !e.isClick) {
             this.emit("dragEnd", {
@@ -871,6 +873,16 @@ class Selecto extends EventEmitter<SelectoEvents> {
         if (selectFlag) {
             datas.selectFlag = false;
             this.dragScroll.dragEnd();
+        } else if (this.selectByClick && this.clickBySelectEnd) {
+            // only clickBySelectEnd
+            console.log(e.clientX, e.clientY);
+            const pointTarget = this._findElement(
+                document.elementFromPoint(e.clientX, e.clientY) as
+                | HTMLElement
+                | SVGElement,
+                datas.selectableTargets,
+            );
+            this.select(this.selectedTargets, pointTarget ? [pointTarget] : [], rect, inputEvent);
         }
         if (!datas.preventDragFromInside) {
             this.selectEnd(
@@ -881,7 +893,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             );
         }
     };
-    private sameCombiKey(e: any, isKeyup?: boolean) {
+    private _sameCombiKey(e: any, isKeyup?: boolean) {
         const toggleContinueSelect = [].concat(
             this.options.toggleContinueSelect
         );
@@ -901,8 +913,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             keys.every((key) => combi.indexOf(key) > -1)
         );
     }
-    private onKeyDown = (e: any) => {
-        if (!this.sameCombiKey(e)) {
+    private _onKeyDown = (e: any) => {
+        if (!this._sameCombiKey(e)) {
             return;
         }
         this.continueSelect = true;
@@ -934,8 +946,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
          */
         this.emit("keydown", {});
     };
-    private onKeyUp = (e: any) => {
-        if (!this.sameCombiKey(e, true)) {
+    private _onKeyUp = (e: any) => {
+        if (!this._sameCombiKey(e, true)) {
             return;
         }
         this.continueSelect = false;
@@ -967,13 +979,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
          */
         this.emit("keyup", {});
     };
-    private onBlur = () => {
+    private _onBlur = () => {
         if (this.toggleContinueSelect && this.continueSelect) {
             this.continueSelect = false;
             this.emit("keyup", {});
         }
     };
-    private onDocumentSelectStart = (e: any) => {
+    private _onDocumentSelectStart = (e: any) => {
         if (!this.gesto.isFlag()) {
             return;
         }
@@ -995,6 +1007,17 @@ class Selecto extends EventEmitter<SelectoEvents> {
             }
         });
     };
+    private _findElement(clickedTarget: HTMLElement | SVGElement, selectableTargets: Array<HTMLElement | SVGElement>) {
+        let pointTarget = clickedTarget;
+
+        while (pointTarget) {
+            if (selectableTargets.indexOf(pointTarget) > -1) {
+                break;
+            }
+            pointTarget = pointTarget.parentElement;
+        }
+        return pointTarget;
+    }
 }
 
 interface Selecto extends SelectoProperties { }
