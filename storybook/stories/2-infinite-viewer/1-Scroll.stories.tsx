@@ -43,6 +43,7 @@ story.add("Select in the Infinite Scroll Viewer.", () => {
 function App() {
     const [scrollOptions, setScrollOptions] = React.useState({});
     const viewerRef = React.useRef<InfiniteViewer>(null);
+    const selectoRef = React.useRef<Selecto>(null);
     const cubes: number[] = [];
 
     for (let i = 0; i < 30 * 7; ++i) {
@@ -76,6 +77,7 @@ function App() {
                 viewerRef.current!.scrollTo(0, 0);
             }}>Reset Scroll</button>
             <Selecto
+                ref={selectoRef}
                 dragContainer={".elements"}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
                 onDragStart={e => {
@@ -106,7 +108,9 @@ function App() {
                 toggleContinueSelect={array("toggleContinueSelect", ["shift"])}
                 ratio={number("ratio", 0)}
             ></Selecto>
-            <InfiniteViewer className="elements infinite-viewer" ref={viewerRef}>
+            <InfiniteViewer className="elements infinite-viewer" ref={viewerRef} onScroll={() => {
+                selectoRef.current!.checkScroll();
+            }}>
                 <div className="viewport selecto-area" id="selecto1">
                     {cubes.map(i => <div className="cube" key={i}></div>)}
                 </div>

@@ -73,7 +73,9 @@ selecto${Object.keys(events).map(name => `.on("${name}", ${events[name](CODE_TYP
 const infiniteViewer = new InfiniteViewer(
     viewer,
     document.querySelector(".viewport"),
-);
+).on("scroll", () => {
+    selecto.checkScroll();
+});
 
 document.querySelector(".reset").addEventListener("click", () => {
     infiniteViewer.scrollTo(0, 0);
@@ -94,6 +96,7 @@ import InfiniteViewer from "react-infinite-viewer";
 export default function App() {
     const [scrollOptions, setScrollOptions] = React.useState({});
     const viewerRef = React.useRef(null);
+    const selectoRef = React.useRef(null);
     const cubes = [];
 
     for (let i = 0; i < 30 * 7; ++i) {
@@ -125,8 +128,10 @@ export default function App() {
             <button className="button reset" onClick={() => {
                 viewerRef.current.scrollTo(0, 0);
             }}>Reset Scroll</button>
-${REACT_SELCTO_TEMPLATE([...props, "scrollOptions"], events)}
-            <InfiniteViewer className="elements infinite-viewer" ref={viewerRef}>
+${REACT_SELCTO_TEMPLATE([...props, "scrollOptions"], events, "                ref={selectoRef}\n")}
+            <InfiniteViewer className="elements infinite-viewer" ref={viewerRef} onScroll={() => {
+                selectoRef.current!.checkScroll();
+            }}>
                 <div className="viewport selecto-area" id="selecto1">
                     {cubes.map(i => <div className="cube" key={i}></div>)}
                 </div>
@@ -146,8 +151,8 @@ export const SCROLL_ANGULAR_HTML_TEMPLATE = (props: any[], events: any[]) => pre
         <h1>${raw("title")}</h1>
         <p class="description">${raw("description")}</p>
         <button class="button reset" (click)="resetScroll()">Reset Scroll</button>
-${AGULAR_HTML_SELCTO_TEMPLATE([...props, "scrollOptions"], events)}
-        <ngx-infinite-viewer class="elements infinite-viewer" #viewer>
+${AGULAR_HTML_SELCTO_TEMPLATE([...props, "scrollOptions"], events, "            #selecto\n")}
+        <ngx-infinite-viewer class="elements infinite-viewer" #viewer (scroll)="onViewerScroll()">
             <div class="viewport selecto-area" id="selecto1">
                 <div class="cube" *ngFor="let num of cubes"></div>
             </div>
@@ -161,6 +166,7 @@ export const SCROLL_ANGULAR_COMPONENT_TEMPLATE = (
 ) => previewTemplate`
 import { Component, ViewChild, OnInit, AfterViewInit } from "@angular/core";
 import { NgxInfiniteViewerComponent } from "ngx-infinite-viewer";
+import { NgxSelectoComponent } from "ngx-selecto";
 
 @Component({
     selector: 'app-root',
@@ -169,6 +175,7 @@ import { NgxInfiniteViewerComponent } from "ngx-infinite-viewer";
 })
 export class AppComponent implements OnInit, AfterViewInit {
     @ViewChild('viewer', { static: false }) viewer: NgxInfiniteViewerComponent;
+    @ViewChild('selcto', { static: false }) selecto: NgxSelectoComponent;
     cubes = [];
     scrollOptions = {};
     ngOnInit() {
@@ -192,6 +199,9 @@ export class AppComponent implements OnInit, AfterViewInit {
             throttleTime: ${"Scroll's throttleTime"},
             threshold: ${"Scroll's threshold"},
         };
+    }
+    onViewerScroll() {
+        this.selecto.checkScroll();
     }
     resetScroll() {
         this.viewer.scrollTo(0, 0);
@@ -225,8 +235,8 @@ export const SCROLL_VUE_TEMPLATE = (props: any[], eventNames: any[], events: any
             <h1>${raw("title")}</h1>
             <p class="description">${raw("description")}</p>
             <button class="button reset" @click="resetScroll">Reset Scroll</button>
-${VUE_HTML_SELCTO_TEMPLATE([...props, "scrollOptions"], eventNames)}
-            <vue-infinite-viewer class="elements infinite-viewer" ref="viewer">
+${VUE_HTML_SELCTO_TEMPLATE([...props, "scrollOptions"], eventNames, `                ref="selecto"\n`)}
+            <vue-infinite-viewer class="elements infinite-viewer" ref="viewer" @scroll="onViewerScroll">
                 <div class="viewport selecto-area" id="selecto1">
                     <div class="cube" v-for="cube in cubes"></div>
                 </div>
@@ -262,6 +272,9 @@ export default {
         ${events.map(e => codeIndent(e(CODE_TYPE.METHOD, "vue"), { indent: 8 })).join(",\n        ")},
         resetScroll() {
             this.$refs.viewer.scrollTo(0, 0);
+        },
+        onViewerScroll() {
+            this.$refs.selecto.checkScroll();
         },
     },
     mounted() {
@@ -307,7 +320,9 @@ render(html${"`"}
                 viewer.scrollToViewer(0, 0);
             }}>Reset Scroll</button>
 ${LIT_HTML_SELCTO_TEMPLATE(props, eventNames, events)}
-            <lit-infinite-viewer class="elements infinite-viewer">
+            <lit-infinite-viewer class="elements infinite-viewer" @litScroll=${"$"}{() => {
+                selecto.checkScroll();
+            }}>
                 <div class="cubes selecto-area" id="selecto1">
                     ${"$"}{cubes.map(() => html${"`"}<div class="cube"></div>${"`"})}
                 </div>
@@ -346,6 +361,7 @@ for (let i = 0; i < 30 * 7; ++i) {
 }
 let scrollOptions;
 let viewer;
+let selecto;
 
 onMount(() => {
     scrollOptions = {
@@ -382,8 +398,10 @@ export const SCROLL_SVELTE_JSX_TEMPLATE = (props: any[], events: IObject<any>) =
         <button class="button reset" on:click={() => {
             viewer.scrollTo(0, 0);
         }}>Reset Scroll</button>
-${SVELTE_SELCTO_TEMPLATE([...props, "scrollOptions"], events)}
-        <InfiniteViewer class="elements infinite-viewer" bind:this={viewer}>
+${SVELTE_SELCTO_TEMPLATE([...props, "scrollOptions"], events, "            bind:this={selecto}\n")}
+        <InfiniteViewer class="elements infinite-viewer" bind:this={viewer} on:scroll={() => {
+            selecto.checkScroll();
+        }}>
             <div class="elements selecto-area" id="selecto1">
                 {#each cubes as cube}
                     <div class="cube"></div>

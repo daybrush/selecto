@@ -32,7 +32,8 @@
         "emitDecoratorMetadata": true
     },
     "include": [
-        "./"
+        "./",
+        "./stories/**/*.ts",
     ],
     "exclude": [
         "/node_modules/",

@@ -72,8 +72,8 @@ ${ANGULAR_PROPS_TEMPLATE(props, { indent: 12, wrap: "'" })}
             ${events.map(name => `(${name})="${camelize(`on ${name}`)}($event)"`).join("\n            ")}
         ></ngx-selecto>`;
 
-export const VUE_HTML_SELCTO_TEMPLATE = (props: string[], events: any[]) => previewTemplate`            <vue-selecto
-                dragContainer=".elements"
+export const VUE_HTML_SELCTO_TEMPLATE = (props: string[], events: any[], otherTexts = "") => previewTemplate`            <vue-selecto
+${otherTexts}                dragContainer=".elements"
 ${VUE_PROPS_TEMPLATE(props, { indent: 16, wrap: "'" })}
                 ${events.map(name => `@${name}="${camelize(`on ${name}`)}"`).join("\n                ")}
                 ></vue-selecto>

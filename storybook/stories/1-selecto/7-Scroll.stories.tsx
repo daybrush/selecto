@@ -43,6 +43,7 @@ story.add("Select in the scroll area.", () => {
     ],
 });
 function App() {
+    const selectoRef = React.useRef<Selecto>(null);
     const [scrollOptions, setScrollOptions] = React.useState({});
     const scrollerRef = React.useRef<HTMLDivElement>(null);
     const cubes: number[] = [];
@@ -77,6 +78,7 @@ function App() {
                 scrollerRef.current!.scrollTo(0, 0);
             }}>Reset Scroll</button>
             <Selecto
+                ref={selectoRef}
                 dragContainer={".elements"}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
                 onDragStart={e => {
@@ -107,7 +109,9 @@ function App() {
                 toggleContinueSelect={array("toggleContinueSelect", ["shift"])}
                 ratio={number("ratio", 0)}
             ></Selecto>
-            <div className="elements scroll selecto-area" id="selecto1" ref={scrollerRef}>
+            <div className="elements scroll selecto-area" id="selecto1" ref={scrollerRef} onScroll={() => {
+                selectoRef.current!.checkScroll();
+            }}>
                 {cubes.map(i => <div className="cube" key={i}></div>)}
             </div>
             <div className="empty elements"></div>

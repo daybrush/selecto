@@ -57,6 +57,9 @@ ${DEFAULT_PROPS_TEMPLATE(props, { indent: 4 })}
 
 selecto${Object.keys(events).map(name => `.on("${name}", ${events[name](CODE_TYPE.ARROW, "vanilla")})`).join("")};
 
+scroller.addEventListener("scroll", () => {
+    scroller.checkScroll();
+});
 document.querySelector(".reset").addEventListener("click", () => {
     scroller.scrollTo(0, 0);
 });
@@ -73,6 +76,7 @@ import Selecto from "react-selecto";
 
 export default function App() {
     const [scrollOptions, setScrollOptions] = React.useState({});
+    const selectoRef = React.useRef(null);
     const scrollerRef = React.useRef(null);
     const cubes = [];
 
@@ -99,8 +103,10 @@ export default function App() {
             <button className="button reset" onClick={() => {
                 scrollerRef.current.scrollTo(0, 0);
             }}>Reset Scroll</button>
-${REACT_SELCTO_TEMPLATE([...props, "scrollOptions"], events)}
-            <div className="elements scroll selecto-area" id="selecto1" ref={scrollerRef}>
+${REACT_SELCTO_TEMPLATE([...props, "scrollOptions"], events, "                ref={selectoRef}\n")}
+            <div className="elements scroll selecto-area" id="selecto1" ref={scrollerRef} onScroll={() => {
+                selectoRef.current.checkScroll();
+            }}>
                 {cubes.map(i => <div className="cube" key={i}></div>)}
             </div>
             <div className="empty elements"></div>
@@ -117,8 +123,8 @@ export const SCROLL_ANGULAR_HTML_TEMPLATE = (props: any[], events: any[]) => pre
         <h1>${raw("title")}</h1>
         <p class="description">${raw("description")}</p>
         <button class="button reset" (click)="resetScroll()">Reset Scroll</button>
-${AGULAR_HTML_SELCTO_TEMPLATE([...props, "scrollOptions"], events)}
-        <div class="elements scroll selecto-area" id="selecto1" #scroller>
+${AGULAR_HTML_SELCTO_TEMPLATE([...props, "scrollOptions"], events, "            #selecto\n")}
+        <div class="elements scroll selecto-area" id="selecto1" #scroller (scroll)="onScrollerScroll()">
             <div class="cube" *ngFor="let num of cubes"></div>
         </div>
     </div>
@@ -128,6 +134,7 @@ export const SCROLL_ANGULAR_COMPONENT_TEMPLATE = (
     events: any[],
 ) => previewTemplate`
 import { Component, ViewChild, OnInit, AfterViewInit } from "@angular/core";
+import { NgxSelectoComponent } from "ngx-selecto";
 
 @Component({
     selector: 'app-root',
@@ -136,6 +143,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from "@angular/core";
 })
 export class AppComponent implements OnInit, AfterViewInit {
     @ViewChild('scroller', { static: false }) scroller: ElementRef;
+    @ViewChild('selcto', { static: false }) selecto: NgxSelectoComponent;
     cubes = [];
     scrollOptions = {};
     ngOnInit() {
@@ -155,6 +163,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     resetScroll() {
         this.scroller.nativeElement.scrollTo(0, 0);
+    }
+    onScrollerScroll() {
+        this.selecto.checkScroll();
     }
     ${events.map(e => codeIndent(e(CODE_TYPE.METHOD, "angular"), { indent: 4 })).join("\n    ")}
 }
@@ -183,8 +194,8 @@ export const SCROLL_VUE_TEMPLATE = (props: any[], eventNames: any[], events: any
             <h1>${raw("title")}</h1>
             <p class="description">${raw("description")}</p>
             <button class="button reset" @click="resetScroll">Reset Scroll</button>
-${VUE_HTML_SELCTO_TEMPLATE([...props, "scrollOptions"], eventNames)}
-            <div class="elements scroll selecto-area" id="selecto1" ref="scroller">
+${VUE_HTML_SELCTO_TEMPLATE([...props, "scrollOptions"], eventNames, `                ref="selecto"\n`)}
+            <div class="elements scroll selecto-area" id="selecto1" ref="scroller" @scroll="onScrollerScroll">
                 <div class="cube" v-for="cube in cubes"></div>
             </div>
             <div class="empty elements"></div>
@@ -216,6 +227,9 @@ export default {
         ${events.map(e => codeIndent(e(CODE_TYPE.METHOD, "vue"), { indent: 8 })).join(",\n        ")},
         resetScroll() {
             this.$refs.scroller.scrollTo(0, 0);
+        },
+        onScrollerScroll() {
+            this.$refs.selecto.
         },
     },
     mounted() {
@@ -251,7 +265,9 @@ render(html${"`"}
                 scroller.scrollTo(0, 0);
             }}>Reset Scroll</button>
 ${LIT_HTML_SELCTO_TEMPLATE(props, eventNames, events)}
-            <div class="elements scroll cubes selecto-area" id="selecto1">
+            <div class="elements scroll cubes selecto-area" id="selecto1" @scroll=${"$"}{() => {
+                selecto.checkScroll();
+            }}>
                 ${"$"}{cubes.map(() => html${"`"}<div class="cube"></div>${"`"})}
             </div>
             <div class="empty elements"></div>
@@ -281,6 +297,7 @@ for (let i = 0; i < 30 * 7; ++i) {
 }
 let scrollOptions;
 let scroller;
+let selecto;
 
 onMount(() => {
     scrollOptions = {
@@ -309,8 +326,10 @@ export const SCROLL_SVELTE_JSX_TEMPLATE = (props: any[], events: IObject<any>) =
         <button class="button reset" on:click={() => {
             scroller.scrollTo(0, 0);
         }}>Reset Scroll</button>
-${SVELTE_SELCTO_TEMPLATE([...props, "scrollOptions"], events)}
-        <div class="elements scroll cubes selecto-area" id="selecto1" bind:this={scroller}>
+${SVELTE_SELCTO_TEMPLATE([...props, "scrollOptions"], events, "            bind:this={selecto}\n")}
+        <div class="elements scroll cubes selecto-area" id="selecto1" bind:this={scroller} on:scroll={() => {
+            selecto.checkScroll();
+        }}>
             {#each cubes as cube}
                 <div class="cube"></div>
             {/each}
