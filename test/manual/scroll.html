@@ -47,6 +47,7 @@
     <div class="button"> Shift </div>
 </body>
 <script src="https://daybrush.com/infinite-viewer/release/latest/dist/infinite-viewer.js"></script>
+<!-- <script src="https://daybrush.com/selecto/release/latest/dist/selecto.js"></script> -->
 <script src="../../dist/selecto.js"></script>
 <div class="container">
     <div class="viewport">
@@ -61,7 +62,12 @@
     const viewer = new InfiniteViewer(
         document.querySelector(".container"),
         document.querySelector(".viewport"),
-    );
+    ).on("scroll", () => {
+        console.log("scroll");
+        // setTimeout(() => {
+        selecto.checkScroll();
+        // });
+    });
 const selecto = new Selecto({
     container: document.body,
     boundContainer: document.querySelector(".viewport"),
@@ -71,6 +77,7 @@ const selecto = new Selecto({
     toggleContinueSelect: "shift",
     scrollOptions: {
         container: document.querySelector(".container"),
+        // useScroll: true,
         getScrollPosition: () => {
             return [
                 viewer.getScrollLeft(),

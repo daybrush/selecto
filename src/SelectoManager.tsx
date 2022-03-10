@@ -223,6 +223,21 @@ class Selecto extends EventEmitter<SelectoEvents> {
         return selectableElements;
     }
     /**
+     * If scroll occurs during dragging, you can manually call this method to check the position again.
+     */
+    public checkScroll() {
+        if (!this.gesto.isFlag()) {
+            return;
+        }
+        const scrollOptions = this.scrollOptions;
+
+        // If it is a scrolling position, pass drag
+        scrollOptions?.container && this.dragScroll.checkScroll({
+            inputEvent: this.gesto.getCurrentEvent(),
+            ...scrollOptions,
+        });
+    }
+    /**
      * Find for selectableTargets again during drag event
      */
     public findSelectableTargets(datas: any = this.gesto.getEventDatas()) {
@@ -366,7 +381,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 });
             })
             .on("move", ({ offsetX, offsetY, inputEvent }) => {
-                const datas = inputEvent.datas;
+                const gesto = this.gesto;
+
+                if (!gesto || !gesto.isFlag()) {
+                    return;
+                }
+
+                const datas = this.gesto.getEventDatas();
                 const boundArea = datas.boundArea;
 
                 datas.startX -= offsetX;
@@ -389,10 +410,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                     inputEvent.inputEvent,
                     false
                 );
-
-                inputEvent.distX += offsetX;
-                inputEvent.distY += offsetY;
-                this._checkSelected(inputEvent);
+                this._checkSelected(this.gesto.getCurrentEvent());
             });
     }
     private select(
@@ -777,7 +795,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         if (selectFlag) {
             this.target.style.cssText +=
                 `display: block;` +
-                `left:0px;top:0px;` +
+                `left:0px;top:0px;pointer-events: none;` +
                 `transform: translate(${offsetPos[0]}px, ${offsetPos[1]}px);` +
                 `width:${offsetSize[0]}px;height:${offsetSize[1]}px;`;
 
@@ -839,11 +857,11 @@ class Selecto extends EventEmitter<SelectoEvents> {
     }
     private _onDrag = (e: OnDrag) => {
         if (e.datas.selectFlag) {
-            const { scrollOptions } = this.options;
-            if (scrollOptions && scrollOptions.container) {
-                if (this.dragScroll.drag(e, scrollOptions)) {
-                    return;
-                }
+            const scrollOptions = this.scrollOptions;
+
+            // If it is a scrolling position, pass drag
+            if (scrollOptions?.container && this.dragScroll.drag(e, scrollOptions)) {
+                return;
             }
         }
         this._checkSelected(e);
