@@ -656,7 +656,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         };
         let firstPassedTargets: Array<HTMLElement | SVGElement> = [];
 
-        if (selectByClick && !clickBySelectEnd) {
+        if (!selectFromInside || (selectByClick && !clickBySelectEnd)) {
             const pointTarget = this._findElement(
                 (clickedTarget ||
                 document.elementFromPoint(clientX, clientY)) as
