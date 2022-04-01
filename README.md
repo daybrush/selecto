@@ -44,8 +44,9 @@ $ npm install selecto
 ## 🚀 How to use
 
 ### Option Behaviors
-* If you want to prevent select from inside
+* If you want to prevent select from inside and no click
     * selectFromInside: false
+    * selectByClick: false (default)
 * If you want to include it regardless of hitTest when selecting from the inside
     * selectFromInside: true (default)
     * selectByClick: true
