@@ -62,6 +62,7 @@ const selecto = new Selecto({
     checkInput: true,
     preventDragFromInside: false,
     toggleContinueSelect: "shift",
+    continueSelectWithoutDeselect: true,
 }).on("dragStart", e => {
     console.log("ds", e.inputEvent.target);
 }).on("drag", e => {

@@ -57,7 +57,7 @@
     },
     "devDependencies": {
         "@daybrush/builder": "^0.1.2",
-        "@daybrush/jsdoc": "^0.3.7",
+        "@daybrush/jsdoc": "^0.4.0",
         "@daybrush/release": "^0.2.4",
         "@types/jest": "^24.0.13",
         "daybrush-jsdoc-template": "^1.6.0",

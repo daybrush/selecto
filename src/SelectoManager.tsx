@@ -94,6 +94,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             clickBySelectEnd: false,
             hitRate: 100,
             continueSelect: false,
+            continueSelectWithoutDeselect: false,
             toggleContinueSelect: null,
             keyContainer: null,
             scrollOptions: undefined,
@@ -566,6 +567,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const { datas, clientX, clientY, inputEvent } = e;
         const {
             continueSelect,
+            continueSelectWithoutDeselect,
             selectFromInside,
             selectByClick,
             rootContainer,
@@ -715,14 +717,15 @@ class Selecto extends EventEmitter<SelectoEvents> {
             return false;
         }
 
-        if (!continueSelect) {
-            datas.startPassedTargets = [];
-        } else {
+        if (continueSelect) {
             firstPassedTargets = passTargets(
                 this.selectedTargets,
-                firstPassedTargets
+                firstPassedTargets,
+                continueSelectWithoutDeselect,
             );
             datas.startPassedTargets = this.selectedTargets;
+        } else {
+            datas.startPassedTargets = [];
         }
         this.select(
             this.selectedTargets,
@@ -809,7 +812,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             prevSelectedTargets = this.selectedTargets;
             selectedTargets = passTargets(
                 datas.startPassedTargets,
-                passedTargets
+                passedTargets,
+                this.options.continueSelectWithoutDeselect,
             );
 
             this.selectedTargets = selectedTargets;
@@ -875,7 +879,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
          * When the drag ends (triggers on mouseup or touchend after drag), the dragEnd event is called.
          * @memberof Selecto
          * @event dragEnd
-         * @param {_OnDragEnd} - Parameters for the dragEnd event
+         * @param {OnDragEnd} - Parameters for the dragEnd event
          */
         if (inputEvent && !e.isClick) {
             this.emit("dragEnd", {

@@ -133,13 +133,19 @@ export function getDefaultElementRect(el: HTMLElement | SVGElement) {
 export function passTargets(
     beforeTargets: Array<HTMLElement | SVGElement>,
     afterTargets: Array<HTMLElement | SVGElement>,
+    continueSelectWithoutDeselect: boolean,
 ) {
     const {
         list,
         prevList,
         added,
         removed,
+        maintained,
     } = diff(beforeTargets, afterTargets);
 
-    return added.map(index => list[index]).concat(removed.map(index => prevList[index]));
+    return [
+        ...added.map(index => list[index]),
+        ...removed.map(index => prevList[index]),
+        ...continueSelectWithoutDeselect ? maintained.map(([, nextIndex]) => list[nextIndex]) : [],
+    ];
 }

@@ -11,51 +11,126 @@ import { DragScrollOptions } from "@scena/dragscroll";
 /**
  * @memberof Selecto
  * @typedef
- * @property - The container to add a selection element for vanilla
- * @property - Selecto's root container (No transformed container. (default: null)
- * @property - The area to drag selection element (default: container)
- * @property - Targets to select. You can register a queryselector or an Element. (default: [])
+ * @property -
 
- * @property - Whether to select from the target inside (If hitTest is 0, it becomes inside select as well) (default: true)
- * @property - When the target is clicked, the event is stopped and selected. (If hitTest is 0, it becomes click as well.) (default: true)
- * @property - Whether to force drag end when selectFromInside, selectByClick is true (default: false)
- * @property - Whether to click when mouse(touch) ends while using selectByClick(true) (default: false)
-
- * @property - After the select, whether to select the next target with the selected target (deselected if the target is selected again). (default: false)
- * @property - Determines which key to continue selecting the next target via keydown and keyup.
- * @property - The container for keydown and keyup events.
- * @property - The rate at which the target overlaps the drag area to be selected. If you want an absolute number, set it to a px value. (ex: 10px) (default: 100)
- * @property - Container to bound the selection area. If false, do not bound. If true, it is the container of selecto. (default: false)
- * @property - Set the scroll options, time, etc. to automatically scroll by dragging. (default: null)
- * @property - Checks whether this is an element to input text or contentEditable, and prevents dragging. (default: false)
- * @property - When dragging, preventDefault is called. (Touch occurs unconditionally) (default: false)
- * @property - add nonce property to style for CSP (default: "")
- * @property - Adjust the ratio of the selection. (default: 0)
- * @property - Selection Element to apply for framework (private)
+ * @property -
+ * @property -
+ * @property -
+ * @property -
+ * @property -
+ * @property - C
+ * @property -
+ * @property -
+ * @property -
+ * @property -
  */
 export interface SelectoOptions {
+    /**
+     * The container to add a selection element for vanilla
+     */
     container: HTMLElement | null;
+    /**
+     * Selecto's root container (No transformed container.)
+     * @dfeault null
+     */
     rootContainer: HTMLElement | null;
+    /**
+     * The area to drag selection element.
+     * @default container
+     */
     dragContainer: Element | Window | Element[] | string;
+    /**
+     * Targets to select. You can register a queryselector or an Element.
+     * @default []
+     */
     selectableTargets: Array<HTMLElement | string>;
-
+    /**
+     * Whether to select from the target inside (If hitTest is 0, it becomes inside select as well)
+     * @default true
+     */
     selectFromInside: boolean;
+    /**
+     * Whether to force drag end when selectFromInside, selectByClick is true.
+     * @default false
+     */
     selectByClick: boolean;
+    /**
+     * When the target is clicked, the event is stopped and selected. (If hitTest is 0, it becomes click as well.)
+     * @default true
+     */
     preventDragFromInside: boolean;
+    /**
+     * Whether to click when mouse(touch) ends while using selectByClick(true)
+     * @default false
+     */
     clickBySelectEnd: boolean;
-
+    /**
+     * After the select, whether to select the next target with the selected target (deselected if the target is selected again)
+     * @default false
+     */
     continueSelect: boolean;
+    /**
+     * Whether to continue the previously selected items without deselect when using `continueSelect` or `toggleContinueSelect`.
+     * @default false
+     */
+    continueSelectWithoutDeselect: boolean;
+    /**
+     * Determines which key to continue selecting the next target via keydown and keyup.
+     */
     toggleContinueSelect: string[][] | string[] | string | null;
+    /**
+     * The container for keydown and keyup events.
+     */
     keyContainer: Document | HTMLElement | Window | null;
+    /**
+     * The rate at which the target overlaps the drag area to be selected. If you want an absolute number, set it to a px value. (ex: 10px)
+     * @default 100
+     */
     hitRate: number | string;
+    /**
+     * Container to bound the selection area. If false, do not bound. If true, it is the container of selecto.
+     * @default false
+     */
     boundContainer: BoundContainer | boolean | HTMLElement | string | null;
+    /**
+     * Set the scroll options, time, etc. to automatically scroll by dragging.
+     * @default null
+     */
     scrollOptions: DragScrollOptions;
+    /**
+     * hecks whether this is an element to input text or contentEditable, and prevents dragging.
+     * @default false
+     */
     checkInput: boolean;
+    /**
+     * When dragging, preventDefault is called. (Touch occurs unconditionally)
+     * @default false
+     */
     preventDefault: boolean;
+    /**
+     * add nonce property to style for CSP
+     * @default ""
+     */
     cspNonce: string;
+    /**
+     * Adjust the ratio of the selection.
+     * @default 0
+     */
     ratio: number;
+    /**
+     * A function to get the exact position of an element's rect
+     * @default null
+     */
     getElementRect: getElementRectFunction;
+    /**
+     * Conditional function to start dragging
+     * @default null
+     */
     dragCondition: ((e: OnParentDragStart) => boolean) | null;
+    /**
+     * Selection Element to apply for framework.
+     * @private
+     */
     portalContainer: HTMLElement | null;
 }
 /**
