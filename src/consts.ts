@@ -69,6 +69,7 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     rootContainer: Object,
     dragCondition: Function,
     clickBySelectEnd: Boolean,
+    continueSelectWithoutDeselect: Boolean,
 };
 
 /**

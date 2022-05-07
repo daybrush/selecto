@@ -1,6 +1,6 @@
 {
   "name": "svelte-selecto",
-  "version": "1.15.1",
+  "version": "1.16.0",
   "description": "A Svelte Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
   "main": "./dist/selecto.cjs.js",
   "module": "./dist/selecto.esm.js",
@@ -46,6 +46,6 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
-    "selecto": "~1.15.1"
+    "selecto": "~1.16.0"
   }
 }
