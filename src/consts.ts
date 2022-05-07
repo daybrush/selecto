@@ -7,10 +7,9 @@ export const injector = styled(`
     display: none;
     border: 1px solid #4af;
     background: rgba(68, 170, 255, 0.5);
+    pointer-events: none;
+    will-change: transform;
     z-index: 100;
-}
-:host {
-    position: absolute;
 }
 `);
 

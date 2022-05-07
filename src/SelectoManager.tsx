@@ -414,7 +414,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 this._checkSelected(this.gesto.getCurrentEvent());
             });
     }
-    private select(
+    private _select(
         prevSelectedTargets: Array<HTMLElement | SVGElement>,
         selectedTargets: Array<HTMLElement | SVGElement>,
         rect: Rect,
@@ -500,7 +500,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             });
         }
     }
-    private selectEnd(
+    private _selectEnd(
         startSelectedTargets: Array<HTMLElement | SVGElement>,
         startPassedTargets: Array<HTMLElement | SVGElement>,
         rect: Rect,
@@ -727,7 +727,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         } else {
             datas.startPassedTargets = [];
         }
-        this.select(
+        this._select(
             this.selectedTargets,
             firstPassedTargets,
             hitRect,
@@ -752,7 +752,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
             // prevent drag from inside when selectByClick is true and force call `selectEnd`
             if (preventDragFromInside) {
-                this.selectEnd(
+                this._selectEnd(
                     datas.startSelectedTargets,
                     datas.startPassedTargets,
                     hitRect,
@@ -798,7 +798,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         if (selectFlag) {
             this.target.style.cssText +=
                 `display: block;` +
-                `left:0px;top:0px;pointer-events: none;` +
+                `left:0px;top:0px;` +
                 `transform: translate(${offsetPos[0]}px, ${offsetPos[1]}px);` +
                 `width:${offsetSize[0]}px;height:${offsetSize[1]}px;`;
 
@@ -856,7 +856,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         }
 
         if (selectFlag) {
-            this.select(prevSelectedTargets, selectedTargets, rect, inputEvent);
+            this._select(prevSelectedTargets, selectedTargets, rect, inputEvent);
         }
     }
     private _onDrag = (e: OnDrag) => {
@@ -903,10 +903,10 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 | SVGElement,
                 datas.selectableTargets,
             );
-            this.select(this.selectedTargets, pointTarget ? [pointTarget] : [], rect, inputEvent);
+            this._select(this.selectedTargets, pointTarget ? [pointTarget] : [], rect, inputEvent);
         }
         if (!datas.preventDragFromInside) {
-            this.selectEnd(
+            this._selectEnd(
                 datas.startSelectedTargets,
                 datas.startPassedTargets,
                 rect,

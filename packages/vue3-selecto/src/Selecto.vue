@@ -22,7 +22,7 @@ const watch: Record<string, any> = {};
 
 PROPERTIES.forEach((name) => {
   watch[name] = function (this: any, value: any) {
-    this.$_selecto[name] = value;
+    return this.$_selecto[name] = value;
   };
 });
 export default {
