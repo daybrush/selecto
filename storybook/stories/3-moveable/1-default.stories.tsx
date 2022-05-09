@@ -7,8 +7,8 @@ import Moveable from "react-moveable";
 import { ON_DRAG_START, ON_DRAG, ON_DRAG_GROUP_START, ON_DRAG_GROUP } from "./utils";
 import {
     MOVEABLE_PREVIEWS_TEMPLATE, MOVEABLE_CLICK_GROUP_TEMPLATE, MOVEABLE_HTML_TEMPLATE,
-    MOVEABLE_DRAG_START_TEMPLATE, MOVEABLE_DRAG_TEMPLATE,
-    MOVEABLE_DRAG_GROUP_START_TEMPLATE, MOVEABLE_DRAG_GROUP_TEMPLATE,
+    MOVEABLE_DRAG_TEMPLATE,
+    MOVEABLE_DRAG_GROUP_TEMPLATE,
     SELECTO_DRAG_START_TEMPLATE, SELECTO_SELECT_END_TEMPLATE
 } from "../../template/MoveableTemplate";
 import { CSS_TEMPLATE } from "../../template/SelectoTemlate";
@@ -38,9 +38,7 @@ story.add("Change the Moveable targets by selecting it.", () => {
             ["selectableTargets", "hitRate", "selectByClick", "selectFromInside", "toggleContinueSelect", "ratio"],
             {
                 clickGroup: MOVEABLE_CLICK_GROUP_TEMPLATE,
-                dragStart: MOVEABLE_DRAG_START_TEMPLATE,
                 drag: MOVEABLE_DRAG_TEMPLATE,
-                dragGroupStart: MOVEABLE_DRAG_GROUP_START_TEMPLATE,
                 dragGroup: MOVEABLE_DRAG_GROUP_TEMPLATE,
             },
             {

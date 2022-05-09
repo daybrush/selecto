@@ -17,53 +17,20 @@ export const MOVEABLE_CLICK_GROUP_TEMPLATE = previewFunction(`function onClickGr
     //lit selecto.clickTarget(e.inputEvent, e.inputTarget);
     //-react-angular-vue-lit selecto.clickTarget(e.inputEvent, e.inputTarget);
 }`);
-export const MOVEABLE_DRAG_START_TEMPLATE = previewFunction(`function onMoveableDragStart(e) {
-    const target = e.target;
-
-    if (!this.frameMap.has(target)) {
-        this.frameMap.set(target, {
-            translate: [0, 0],
-        });
-    }
-    const frame = this.frameMap.get(target);
-
-    e.set(frame.translate);
-}`);
-export const MOVEABLE_DRAG_GROUP_START_TEMPLATE = previewFunction(`function onDragGroupStart(e) {
-    e.events.forEach(ev => {
-        const target = ev.target;
-
-        if (!this.frameMap.has(target)) {
-            this.frameMap.set(target, {
-                translate: [0, 0],
-            });
-        }
-        const frame = this.frameMap.get(target);
-
-        ev.set(frame.translate);
-    });
-}`);
 export const MOVEABLE_DRAG_TEMPLATE = previewFunction(`function onDrag(e) {
-    const target = e.target;
-    const frame = this.frameMap.get(target);
-
-    frame.translate = e.beforeTranslate;
-    target.style.transform = ${"`"}translate(${"$"}{frame.translate[0]}px, ${"$"}{frame.translate[1]}px)${"`"};
+    e.target.style.transform = e.transform;
 }`);
 export const MOVEABLE_DRAG_GROUP_TEMPLATE = previewFunction(`function onDragGroup(e) {
     e.events.forEach(ev => {
-        const target = ev.target;
-        const frame = this.frameMap.get(target);
-
-        frame.translate = ev.beforeTranslate;
-        target.style.transform = ${"`"}translate(${"$"}{frame.translate[0]}px, ${"$"}{frame.translate[1]}px)${"`"};
+        ev.target.style.transform = ev.transform;
     });
 }`);
 export const SELECTO_DRAG_START_TEMPLATE = previewFunction(`function onDragStart(e) {
     //react const moveable = moveableRef.current;
     const target = e.inputEvent.target;
     if (
-        this.moveable.isMoveableElement(target)
+        //-vue this.moveable.isMoveableElement(target)
+        //vue this.$refs.moveable.isMoveableElement(target)
         || this.targets.some(t => t === target || t.contains(target))
     ) {
         e.stop();
@@ -79,8 +46,9 @@ export const SELECTO_SELECT_END_TEMPLATE = previewFunction(`function onSelectEnd
         e.inputEvent.preventDefault();
 
         setTimeout(() => {
-            //-angular this.moveable.dragStart(e.inputEvent);
+            //-angular-vue this.moveable.dragStart(e.inputEvent);
             //angular this.moveable.ngDragStart(e.inputEvent);
+            //vue this.$refs.moveable.ngDragStart(e.inputEvent);
         });
     }
 }`);
@@ -95,7 +63,9 @@ export const SELECTO_REAL_TIME_SELECT_END_TEMPLATE = previewFunction(`function o
         e.inputEvent.preventDefault();
 
         setTimeout(() => {
-             this.moveable.dragStart(e.inputEvent);
+            //-angular-vue this.moveable.dragStart(e.inputEvent);
+            //angular this.moveable.ngDragStart(e.inputEvent);
+            //vue this.$refs.moveable.dragStart(e.inputEvent);
         });
     }
 }`);
@@ -121,7 +91,6 @@ import Selecto from "selecto";
 import Moveable from "moveable";
 
 const container = document.querySelector(".container");
-const frameMap = new Map();
 const cubes = [];
 let targets = [];
 
@@ -161,7 +130,6 @@ import Moveable from "react-moveable";
 
 export default function App() {
     const [targets, setTargets] = React.useState([]);
-    const [frameMap] = React.useState(() => new Map());
     const moveableRef = React.useRef(null);
     const selectoRef = React.useRef(null);
     const cubes = [];
@@ -192,6 +160,66 @@ ${REACT_SELCTO_TEMPLATE(props, selectoEvents, "                ref={selectoRef}\
         </div>
     </div>;
 }`;
+
+export const MOVEABLE_VUE_TEMPLATE = (
+    props: any[],
+    moveableEvents: IObject<any>,
+    selectoEvents: IObject<any>,
+    isVue3?: boolean,
+) => previewTemplate`
+<template>
+<div class="moveable app">
+    <div class="container">
+        <div class="logo logos" id="logo">
+            <a href="https://github.com/daybrush/selecto" target="_blank"><img src="https://daybrush.com/selecto/images/256x256.png" class="selecto" /></a>
+            <a href="https://github.com/daybrush/moveable" target="_blank"><img src="https://daybrush.com/moveable/images/256x256.png" /></a>
+        </div>
+        <h1>${raw("title")}</h1>
+        <p class="description">${raw("description")}</p>
+        <vue-moveable
+            ref="moveable"
+            v-bind:draggable="true"
+            v-bind:target="targets"
+            ${Object.keys(moveableEvents).map(name => `@${name}="${camelize(`on ${name === "dragStart" ? "moveableDragStart" : name}`)}"`).join("\n            ")}
+        ></vue-moveable>
+${VUE_HTML_SELCTO_TEMPLATE(props, Object.keys(selectoEvents), `            ref="selecto"\n`, { indent: 12 })}
+        <div class="elements selecto-area" id="selecto1">
+            <div class="cube" v-for="cube in cubes"></div>
+        </div>
+        <div class="empty elements"></div>
+    </div>
+</div>
+</template>
+<style>
+    ${codeIndent(CSS_TEMPLATE, { indent: 4 })}
+</style>
+<script>
+import { VueMoveable } from "vue-moveable";
+import { VueSelecto } from "vue-selecto";
+
+export default {
+    components: {
+        VueMoveable,
+        VueSelecto,
+    },
+    data() {
+        const cubes = [];
+
+        for (let i = 0; i < 60; ++i) {
+            cubes.push(i);
+        }
+        return {
+            cubes,
+            targets: [],
+        };
+    },
+    methods: {
+        ${Object.keys(moveableEvents).map(name => codeIndent(moveableEvents[name](CODE_TYPE.METHOD, "vue"), { indent: 8 })).join(",\n        ")},
+        ${Object.keys(selectoEvents).map(name => codeIndent(selectoEvents[name](CODE_TYPE.METHOD, "vue"), { indent: 8 })).join(",\n        ")}
+    },
+};
+</script>
+`;
 
 export const MOVEABLE_ANGULAR_HTML_TEMPLATE = (
     props: any[], moveableEvents: any[], selectoEvents: any[],
@@ -236,7 +264,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     @ViewChild('selecto', { static: false }) selecto: NgxSelectoComponent;
     cubes = [];
     targets = [];
-    frameMap = new Map();
     ngOnInit() {
         const cubes = [];
 
@@ -270,7 +297,6 @@ import { onMount } from "svelte";
 import Selecto from "svelte-selecto";
 import Moveable from "svelte-moveable";
 
-const frameMap = new Map();
 const cubes = [];
 let targets = [];
 let moveable;
@@ -341,6 +367,12 @@ export const MOVEABLE_PREVIEWS_TEMPLATE = (props: any[], moveableEvents: IObject
             template: MOVEABLE_REACT_TEMPLATE(props, moveableEvents, selectoEvents, true),
             language: "jsx",
             codesandbox: DEFAULT_PREACT_CODESANDBOX(["preact-selecto", "preact-moveable"]),
+        },
+        {
+            tab: "Vue",
+            template: MOVEABLE_VUE_TEMPLATE(props, moveableEvents, selectoEvents, true),
+            language: "html",
+            codesandbox: DEFAULT_VUE_CODESANDBOX(["vue-selecto", "vue-moveable@beta"]),
         },
         {
             tab: "Angular",
