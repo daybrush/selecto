@@ -780,6 +780,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const { datas, inputEvent } = e;
         const { top, left, width, height } = rect;
         const selectFlag = datas.selectFlag;
+        const options = this.options;
         const {
             containerX,
             containerY,
@@ -813,7 +814,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             selectedTargets = passTargets(
                 datas.startPassedTargets,
                 passedTargets,
-                this.options.continueSelectWithoutDeselect,
+                options.continueSelect && options.continueSelectWithoutDeselect,
             );
 
             this.selectedTargets = selectedTargets;
