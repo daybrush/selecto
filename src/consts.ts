@@ -44,6 +44,7 @@ export const OPTIONS = [
     // ignore target, container,
     "dragContainer",
     "cspNonce",
+    "continueSelectWithoutDeselect",
     ...PROPERTIES,
 ] as const;
 
