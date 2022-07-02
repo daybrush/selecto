@@ -31,6 +31,7 @@ import {
     getRect,
     getDefaultElementRect,
     passTargets,
+    elementFromPoint,
 } from "./utils";
 import {
     SelectoOptions,
@@ -660,10 +661,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
         if (!selectFromInside || (selectByClick && !clickBySelectEnd)) {
             const pointTarget = this._findElement(
-                (clickedTarget ||
-                document.elementFromPoint(clientX, clientY)) as
-                | HTMLElement
-                | SVGElement,
+                clickedTarget || elementFromPoint(clientX, clientY),
                 datas.selectableTargets,
             );
             firstPassedTargets = pointTarget ? [pointTarget] : [];
@@ -899,9 +897,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         } else if (this.selectByClick && this.clickBySelectEnd) {
             // only clickBySelectEnd
             const pointTarget = this._findElement(
-                document.elementFromPoint(e.clientX, e.clientY) as
-                | HTMLElement
-                | SVGElement,
+                elementFromPoint(e.clientX, e.clientY),
                 datas.selectableTargets,
             );
             this._select(this.selectedTargets, pointTarget ? [pointTarget] : [], rect, inputEvent);
@@ -1029,7 +1025,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             }
         });
     };
-    private _findElement(clickedTarget: HTMLElement | SVGElement, selectableTargets: Array<HTMLElement | SVGElement>) {
+    private _findElement(clickedTarget: Element | null, selectableTargets: Array<Element>): HTMLElement | SVGElement {
         let pointTarget = clickedTarget;
 
         while (pointTarget) {
@@ -1038,7 +1034,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             }
             pointTarget = pointTarget.parentElement;
         }
-        return pointTarget;
+        return pointTarget as any;
     }
 }
 
