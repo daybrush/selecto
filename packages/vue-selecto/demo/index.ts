@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import App from './Moveable.vue';
+import App from './InfiniteViewer.vue';
 
 
 new Vue({
