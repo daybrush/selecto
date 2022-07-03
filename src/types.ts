@@ -274,3 +274,9 @@ export interface PointArea {
     pos3: number[];
     pos4: number[];
 }
+
+
+export interface InnerGroup {
+    targets: Array<HTMLElement | SVGElement>;
+    points: number[][][];
+}

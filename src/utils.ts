@@ -1,6 +1,7 @@
 import { Hypertext, Rect } from "./types";
 import { IObject, addClass, hasClass, calculateBoundSize } from "@daybrush/utils";
 import { diff } from "@egjs/children-differ";
+import { getMinMaxs } from "overlap-area";
 
 export function getClient(e: MouseEvent | TouchEvent) {
     if ("touches" in e) {
@@ -78,7 +79,39 @@ export function diffValue<T>(prev: T, cur: T, func: (prev: T, cur: T) => void) {
         func(prev, cur);
     }
 }
+export function isFastInside(point: number[], points: number[][]) {
+    const { minX, minY, maxX, maxY } = getMinMaxs(points);
+    const [x, y] = point;
 
+    return minX <= x && x <= maxX && minY <= y && y <= maxY;
+}
+export function getFastOverlapPoints(points1: number[][], points2: number[][]) {
+    const {
+        minX: minX1,
+        minY: minY1,
+        maxX: maxX1,
+        maxY: maxY1,
+    } = getMinMaxs(points1);
+    const {
+        minX: minX2,
+        minY: minY2,
+        maxX: maxX2,
+        maxY: maxY2,
+    } = getMinMaxs(points2);
+
+    if (maxX2 < minX1 || maxX1 < minX2 || maxY2 < minY1 || maxY1 < minY2) {
+        return [];
+    }
+    const width = Math.min(maxX2 - minX1, maxX1 - minX2);
+    const height = Math.min(maxY2 - minY1, maxY1 - minY2);
+
+    return [
+        [0, 0],
+        [width, 0],
+        [width, height],
+        [0, height],
+    ];
+}
 export function getRect(
     e: any, ratio: number,
     boundArea = e.datas.boundArea,

@@ -40,6 +40,7 @@ import {
     SelectoEvents,
     Rect,
     BoundContainer,
+    InnerGroup,
 } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 
@@ -231,11 +232,12 @@ class Selecto extends EventEmitter<SelectoEvents> {
      */
     public findSelectableTargets(datas: any = this.gesto.getEventDatas()) {
         const selectableTargets = this.getSelectableElements();
-        const selectablePoints = selectableTargets.map((target) =>
-            this.getElementPoints(target)
+        const selectablePoints = selectableTargets.map(
+            (target) => this.getElementPoints(target),
         );
         datas.selectableTargets = selectableTargets;
         datas.selectablePoints = selectablePoints;
+        this._refreshGroups(datas);
     }
     /**
      * External click or mouse events can be applied to the selecto.
@@ -380,19 +382,20 @@ class Selecto extends EventEmitter<SelectoEvents> {
         selectRect: Rect,
         clientX: number,
         clientY: number,
-        targets: Array<HTMLElement | SVGElement>,
-        selectablePoints: number[][][]
+        datas: any,
     ) {
         const { hitRate, selectByClick } = this.options;
         const { left, top, right, bottom } = selectRect;
+        const innerGroups: Record<string | number, Record<string | number, InnerGroup>> = datas.innerGroups;
+        const innerWidth = datas.innerWidth;
+        const innerHeight = datas.innerHeight;
         const rectPoints = [
             [left, top],
             [right, top],
             [right, bottom],
             [left, bottom],
         ];
-        return targets.filter((_, i) => {
-            const points = selectablePoints[i];
+        const isHit = (points: number[][]) => {
             const inArea = isInside([clientX, clientY], points);
 
             if (selectByClick && inArea) {
@@ -419,7 +422,42 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
                 return rate >= Math.min(100, hitRateValue.value);
             }
-        });
+        };
+        if (!innerGroups) {
+            const selectableTargets: Array<HTMLElement | SVGElement> = datas.selectableTargets;
+            const selectablePoints: number[][][] = datas.selectablePoints;
+
+            return selectableTargets.filter((_, i) => {
+                return isHit(selectablePoints[i]);
+            });
+        }
+        let selectedTargets: Array<HTMLElement | SVGElement> = [];
+        const minX = Math.floor(left / innerWidth);
+        const maxX = Math.floor(right / innerWidth);
+        const minY = Math.floor(top / innerHeight);
+        const maxY = Math.floor(bottom / innerHeight);
+
+        for (let x = minX; x <= maxX; ++x) {
+            const yGroups = innerGroups[x];
+
+            if (!yGroups) {
+                continue;
+            }
+            for (let y = minY; y <= maxY; ++y) {
+                const group = yGroups[y];
+
+                if (!group) {
+                    continue;
+                }
+                const { points, targets } = group;
+                points.forEach((nextPoints, i) => {
+                    if (isHit(nextPoints)) {
+                        selectedTargets.push(targets[i]);
+                    }
+                });
+            }
+        }
+        return selectedTargets;
     }
     private initDragScroll() {
         this.dragScroll
@@ -447,6 +485,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                         pos[1] -= offsetY;
                     });
                 });
+                this._refreshGroups(datas);
 
                 boundArea.left -= offsetX;
                 boundArea.right -= offsetX;
@@ -627,11 +666,14 @@ class Selecto extends EventEmitter<SelectoEvents> {
             e.stop();
             return;
         }
+        datas.innerWidth = window.innerWidth;
+        datas.innerHeight = window.innerHeight;
         this.findSelectableTargets(datas);
         datas.startSelectedTargets = this.selectedTargets;
         datas.scaleMatrix = createMatrix();
         datas.containerX = 0;
         datas.containerY = 0;
+
 
         let boundArea = {
             left: -Infinity,
@@ -823,7 +865,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const { datas, inputEvent } = e;
         const { top, left, width, height } = rect;
         const selectFlag = datas.selectFlag;
-        const options = this.options;
         const {
             containerX,
             containerY,
@@ -850,8 +891,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 rect,
                 datas.startX,
                 datas.startY,
-                datas.selectableTargets,
-                datas.selectablePoints
+                datas,
             );
             prevSelectedTargets = this.selectedTargets;
             selectedTargets = passTargets(
@@ -1118,6 +1158,37 @@ class Selecto extends EventEmitter<SelectoEvents> {
             pointTarget = pointTarget.parentElement;
         }
         return pointTarget as any;
+    }
+    private _refreshGroups(datas: any) {
+        const innerWidth = datas.innerWidth;
+        const innerHeight = datas.innerHeight;
+
+        if (!innerWidth || !innerHeight) {
+            datas.innerGroups = null;
+        } else {
+            const selectableTargets: Array<HTMLElement | SVGElement> = datas.selectableTargets;
+            const selectablePoints: number[][][] = datas.selectablePoints;
+            const groups: Record<string | number, Record<string | number, InnerGroup>> = {};
+
+            selectablePoints.forEach((points, i) => {
+                const pos = points[0];
+                const x = Math.floor(pos[0] / innerWidth);
+                const y = Math.floor(pos[1] / innerHeight);
+
+                groups[x] = groups[x] || {};
+                groups[x][y] = groups[x][y] || {
+                    points: [],
+                    targets: [],
+                };
+
+                const { targets, points: groupPoints } = groups[x][y];
+
+                targets.push(selectableTargets[i]);
+                groupPoints.push(points);
+            });
+
+            datas.innerGroups = groups;
+        }
     }
 }
 
