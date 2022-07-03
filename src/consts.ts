@@ -24,7 +24,9 @@ export const PROPERTIES = [
     "selectByClick",
     "selectFromInside",
     "continueSelect",
+    "continueSelectWithoutDeselect",
     "toggleContinueSelect",
+    "toggleContinueSelectWithoutDeselect",
     "keyContainer",
     "hitRate",
     "scrollOptions",
@@ -44,7 +46,6 @@ export const OPTIONS = [
     // ignore target, container,
     "dragContainer",
     "cspNonce",
-    "continueSelectWithoutDeselect",
     ...PROPERTIES,
 ] as const;
 
@@ -58,6 +59,7 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     selectFromInside: Boolean,
     continueSelect: Boolean,
     toggleContinueSelect: Array,
+    toggleContinueSelectWithoutDeselect: Array,
     keyContainer: null,
     hitRate: Number,
     scrollOptions: Object,

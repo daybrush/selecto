@@ -11,18 +11,6 @@ import { DragScrollOptions } from "@scena/dragscroll";
 /**
  * @memberof Selecto
  * @typedef
- * @property -
-
- * @property -
- * @property -
- * @property -
- * @property -
- * @property -
- * @property - C
- * @property -
- * @property -
- * @property -
- * @property -
  */
 export interface SelectoOptions {
     /**
@@ -76,8 +64,14 @@ export interface SelectoOptions {
     continueSelectWithoutDeselect: boolean;
     /**
      * Determines which key to continue selecting the next target via keydown and keyup.
+     * The initially set `continueSelect` value is the inactive(keyup) value.
      */
     toggleContinueSelect: string[][] | string[] | string | null;
+    /**
+     * Determines which key to continue selecting the next target without deselect via keydown and keyup.
+     * The initially set `continueSelectWithoutDeselect` value is the inactive(keyup) value.
+     */
+     toggleContinueSelectWithoutDeselect: string[][] | string[] | string | null;
     /**
      * The container for keydown and keyup events.
      */
@@ -224,6 +218,8 @@ export interface OnDragEvent {
     inputEvent: any;
 }
 export interface OnKeyEvent<T = Selecto> extends CurrentTarget<T> {
+    keydownContinueSelect: boolean;
+    keydownContinueSelectWithoutDeselection: boolean;
 }
 export interface OnScroll {
     container: HTMLElement;

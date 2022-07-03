@@ -56,6 +56,16 @@ import { PROPERTIES, injector, CLASS_NAME } from "./consts";
             return this.options[property];
         },
     };
+    const getter = camelize(`get ${property}`);
+    if (prototype[getter]) {
+        attributes.get = function get() {
+            return this[getter]();
+        };
+    } else {
+        attributes.get = function get() {
+            return this.options[property];
+        };
+    }
     const setter = camelize(`set ${property}`);
     if (prototype[setter]) {
         attributes.set = function set(value) {
@@ -78,6 +88,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
     private selectedTargets: Array<HTMLElement | SVGElement> = [];
     private dragScroll: DragScroll = new DragScroll();
     private keycon!: KeyController;
+    private _keydownContinueSelect: boolean;
+    private _keydownContinueSelectWithoutDeselection: boolean;
     /**
      *
      */
@@ -97,6 +109,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             continueSelect: false,
             continueSelectWithoutDeselect: false,
             toggleContinueSelect: null,
+            toggleContinueSelectWithoutDeselect: null,
             keyContainer: null,
             scrollOptions: undefined,
             checkInput: false,
@@ -130,32 +143,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
      */
     public getSelectedTargets(): Array<HTMLElement | SVGElement> {
         return this.selectedTargets;
-    }
-    public setKeyContainer(keyContainer: HTMLElement | Document | Window) {
-        const options = this.options;
-
-        diffValue(options.keyContainer, keyContainer, () => {
-            options.keyContainer = keyContainer;
-
-            this.setKeyController();
-        });
-    }
-    public setToggleContinueSelect(
-        toggleContinueSelect: string[][] | string[] | string
-    ) {
-        const options = this.options;
-
-        diffValue(options.toggleContinueSelect, toggleContinueSelect, () => {
-            options.toggleContinueSelect = toggleContinueSelect;
-
-            this.setKeyEvent();
-        });
-    }
-    public setPreventDefault(value: boolean) {
-        this.gesto.options.preventDefault = value;
-    }
-    public setCheckInput(value: boolean) {
-        this.gesto.options.checkInput = value;
     }
     /**
      * `OnDragStart` is triggered by an external event.
@@ -278,13 +265,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
         return this;
     }
     private setKeyController() {
-        const { keyContainer, toggleContinueSelect } = this.options;
+        const { keyContainer, toggleContinueSelect, toggleContinueSelectWithoutDeselect } = this.options;
 
         if (this.keycon) {
             this.keycon.destroy();
             this.keycon = null;
         }
-        if (toggleContinueSelect) {
+        if (toggleContinueSelect || toggleContinueSelectWithoutDeselect) {
             this.keycon = new KeyController(keyContainer || window);
             this.keycon
                 .keydown(this._onKeyDown)
@@ -293,11 +280,71 @@ class Selecto extends EventEmitter<SelectoEvents> {
         }
     }
     private setKeyEvent() {
-        const { toggleContinueSelect } = this.options;
-        if (!toggleContinueSelect || this.keycon) {
+        const { toggleContinueSelect, toggleContinueSelectWithoutDeselect } = this.options;
+        if ((!toggleContinueSelect && !toggleContinueSelectWithoutDeselect) || this.keycon) {
             return;
         }
         this.setKeyController();
+    }
+    // with getter, setter property
+    private setKeyContainer(keyContainer: HTMLElement | Document | Window) {
+        const options = this.options;
+
+        diffValue(options.keyContainer, keyContainer, () => {
+            options.keyContainer = keyContainer;
+
+            this.setKeyController();
+        });
+    }
+    private getContinueSelect() {
+        const {
+            continueSelect,
+            toggleContinueSelect,
+        } = this.options;
+
+        if (!toggleContinueSelect || !this._keydownContinueSelect) {
+            return continueSelect;
+        }
+        return !continueSelect;
+    }
+    private getContinueSelectWithoutDeselect() {
+        const {
+            continueSelectWithoutDeselect,
+            toggleContinueSelectWithoutDeselect,
+        } = this.options;
+
+        if (!toggleContinueSelectWithoutDeselect || !this._keydownContinueSelectWithoutDeselection) {
+            return continueSelectWithoutDeselect;
+        }
+        return !continueSelectWithoutDeselect;
+    }
+    private setToggleContinueSelect(
+        toggleContinueSelect: string[][] | string[] | string
+    ) {
+        const options = this.options;
+
+        diffValue(options.toggleContinueSelect, toggleContinueSelect, () => {
+            options.toggleContinueSelect = toggleContinueSelect;
+
+            this.setKeyEvent();
+        });
+    }
+    private setToggleContinueSelectWithoutDeselect(
+        toggleContinueSelectWithoutDeselect: string[][] | string[] | string
+    ) {
+        const options = this.options;
+
+        diffValue(options.toggleContinueSelectWithoutDeselect, toggleContinueSelectWithoutDeselect, () => {
+            options.toggleContinueSelectWithoutDeselect = toggleContinueSelectWithoutDeselect;
+
+            this.setKeyEvent();
+        });
+    }
+    private setPreventDefault(value: boolean) {
+        this.gesto.options.preventDefault = value;
+    }
+    private setCheckInput(value: boolean) {
+        this.gesto.options.checkInput = value;
     }
     private initElement() {
         this.target = createElement(
@@ -567,8 +614,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
     private _onDragStart = (e: OnDragStart, clickedTarget?: Element) => {
         const { datas, clientX, clientY, inputEvent } = e;
         const {
-            continueSelect,
-            continueSelectWithoutDeselect,
             selectFromInside,
             selectByClick,
             rootContainer,
@@ -715,11 +760,11 @@ class Selecto extends EventEmitter<SelectoEvents> {
             return false;
         }
 
-        if (continueSelect) {
+        if (this.continueSelect) {
             firstPassedTargets = passTargets(
                 this.selectedTargets,
                 firstPassedTargets,
-                continueSelectWithoutDeselect,
+                this.continueSelectWithoutDeselect,
             );
             datas.startPassedTargets = this.selectedTargets;
         } else {
@@ -812,7 +857,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             selectedTargets = passTargets(
                 datas.startPassedTargets,
                 passedTargets,
-                options.continueSelect && options.continueSelectWithoutDeselect,
+                this.continueSelect && this.continueSelectWithoutDeselect,
             );
 
             this.selectedTargets = selectedTargets;
@@ -911,14 +956,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
             );
         }
     };
-    private _sameCombiKey(e: any, isKeyup?: boolean) {
-        const toggleContinueSelect = [].concat(
-            this.options.toggleContinueSelect
-        );
+    private _sameCombiKey(e: any, keys: string | string[] | string[][], isKeyup?: boolean) {
+        if (!keys) {
+            return false;
+        }
         const combi = getCombi(e.inputEvent, e.key);
-        const toggleKeys = isArray(toggleContinueSelect[0])
-            ? toggleContinueSelect
-            : [toggleContinueSelect];
+        const nextKeys = [].concat(keys);
+        const toggleKeys = isArray(nextKeys[0]) ? nextKeys : [nextKeys];
 
         if (isKeyup) {
             const singleKey = e.key;
@@ -932,10 +976,24 @@ class Selecto extends EventEmitter<SelectoEvents> {
         );
     }
     private _onKeyDown = (e: any) => {
-        if (!this._sameCombiKey(e)) {
+        const options = this.options;
+        let isKeyDown = false;
+
+        if (!this._keydownContinueSelect) {
+            const result = this._sameCombiKey(e, options.toggleContinueSelect);
+
+            this._keydownContinueSelect = result;
+            isKeyDown = result;
+        }
+        if (!this._keydownContinueSelectWithoutDeselection) {
+            const result = this._sameCombiKey(e, options.toggleContinueSelectWithoutDeselect);
+
+            this._keydownContinueSelectWithoutDeselection = result;
+            isKeyDown = isKeyDown || result;
+        }
+        if (!isKeyDown) {
             return;
         }
-        this.continueSelect = true;
         /**
          * When you keydown the key you specified in toggleContinueSelect, the keydown event is called.
          * @memberof Selecto
@@ -962,13 +1020,31 @@ class Selecto extends EventEmitter<SelectoEvents> {
          *   });
          * });
          */
-        this.emit("keydown", {});
+        this.emit("keydown", {
+            keydownContinueSelect: this._keydownContinueSelect,
+            keydownContinueSelectWithoutDeselection: this._keydownContinueSelectWithoutDeselection,
+        });
     };
     private _onKeyUp = (e: any) => {
-        if (!this._sameCombiKey(e, true)) {
+        const options = this.options;
+        let isKeyUp = false;
+
+        if (this._keydownContinueSelect) {
+            const result = this._sameCombiKey(e, options.toggleContinueSelect, true);
+            this._keydownContinueSelect = !result;
+
+            isKeyUp = result;
+        }
+        if (this._keydownContinueSelectWithoutDeselection) {
+            const result = this._sameCombiKey(e, options.toggleContinueSelectWithoutDeselect, true);
+            this._keydownContinueSelectWithoutDeselection = !result;
+
+            isKeyUp = isKeyUp || result;
+        }
+        if (!isKeyUp) {
             return;
         }
-        this.continueSelect = false;
+
         /**
          * When you keyup the key you specified in toggleContinueSelect, the keyup event is called.
          * @memberof Selecto
@@ -995,12 +1071,19 @@ class Selecto extends EventEmitter<SelectoEvents> {
          *   });
          * });
          */
-        this.emit("keyup", {});
+        this.emit("keyup", {
+            keydownContinueSelect: this._keydownContinueSelect,
+            keydownContinueSelectWithoutDeselection: this._keydownContinueSelectWithoutDeselection,
+        });
     };
     private _onBlur = () => {
-        if (this.toggleContinueSelect && this.continueSelect) {
-            this.continueSelect = false;
-            this.emit("keyup", {});
+        if (this._keydownContinueSelect || this._keydownContinueSelectWithoutDeselection) {
+            this._keydownContinueSelect = false;
+            this._keydownContinueSelectWithoutDeselection = false;
+            this.emit("keyup", {
+                keydownContinueSelect: this._keydownContinueSelect,
+                keydownContinueSelectWithoutDeselection: this._keydownContinueSelectWithoutDeselection,
+            });
         }
     };
     private _onDocumentSelectStart = (e: any) => {

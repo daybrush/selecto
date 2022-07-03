@@ -176,7 +176,9 @@
         hitRate: 0,
         selectByClick: true,
         selectFromInside: false,
+        continueSelectWithoutDeselect: true,
         toggleContinueSelect: ["shift"],
+        toggleContinueSelectWithoutDeselect: ["meta"],
         ratio: 0,
     });
     const moveable = new Moveable(container, {
@@ -242,6 +244,10 @@
                 moveable.dragStart(e.inputEvent);
             });
         }
+    }).on("keydown", e => {
+        console.log(e);
+    }).on("keyup", e => {
+        console.log(e);
     });
 </script>
 
