@@ -3,6 +3,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+
+## [1.17.0] - 2022-07-04
+* `selecto` 1.17.0
+* `react-selecto` 1.17.0
+* `preact-selecto` 1.17.0
+* `ngx-selecto` 1.17.0
+* `svelte-selecto` 1.17.0
+* `vue-selecto` 1.17.0
+* `vue3-selecto` 1.17.0
+* `lit-selecto` 1.17.0
+
+### Added
+* Add `toggleContinueSelectWithoutDeselect` prop #80
+
+### Fixed
+* enhance large amount of data #81
+* fix vue methods #79
+* fix elementFromPoint in jest #83
+* fix meta key in firefox #82
+* fix vue container #64
+
 ## [1.13.2] - 2021-11-24
 * `selecto` 1.13.2
 * `react-selecto` 1.13.2

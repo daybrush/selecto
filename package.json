@@ -1,6 +1,6 @@
 {
     "name": "selecto",
-    "version": "1.16.2",
+    "version": "1.17.0",
     "description": "Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.",
     "main": "./dist/selecto.cjs.js",
     "module": "./dist/selecto.esm.js",
@@ -57,10 +57,10 @@
     },
     "devDependencies": {
         "@daybrush/builder": "^0.1.2",
-        "@daybrush/jsdoc": "^0.4.0",
+        "@daybrush/jsdoc": "^0.4.1",
         "@daybrush/release": "^0.2.4",
         "@types/jest": "^24.0.13",
-        "daybrush-jsdoc-template": "^1.6.0",
+        "daybrush-jsdoc-template": "^1.7.0",
         "jest": "^24.8.0",
         "print-coveralls": "^1.2.2",
         "print-sizes": "^0.1.0",

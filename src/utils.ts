@@ -20,7 +20,7 @@ export function getClient(e: MouseEvent | TouchEvent) {
 }
 
 export function elementFromPoint(clientX: number, clientY: number): HTMLElement | SVGElement | null {
-    return document?.elementFromPoint(clientX, clientY) as any ?? null;
+    return (document.elementFromPoint && document.elementFromPoint(clientX, clientY)) as any || null;
 }
 export function createElement(
     jsx: Hypertext,

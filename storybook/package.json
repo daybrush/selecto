@@ -15,15 +15,14 @@
     "raw-loader": "^4.0.0",
     "react-infinite-viewer": "^0.14.0",
     "react-moveable": "^0.30.3",
-    "react-selecto": "^1.16.2"
+    "react-selecto": "^1.17.0"
   },
   "devDependencies": {
-    "@storybook/addon-knobs": "^6.4.0",
-    "storybook-addon-preview": "^2.2.0",
     "@babel/core": "^7.7.2",
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-controls": "^6.0.21",
     "@storybook/addon-docs": "^6.0.21",
+    "@storybook/addon-knobs": "^6.4.0",
     "@storybook/addon-links": "^6.0.21",
     "@storybook/addon-viewport": "^6.0.21",
     "@storybook/addons": "^6.0.21",
@@ -31,13 +30,13 @@
     "@types/node": "^14.6.0",
     "@types/react": "^16.8.18",
     "@types/react-dom": "^16.8.4",
-    "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
     "react": "^16.8.6",
-    "react-docgen-typescript-loader": "^3.3.0",
     "react-dom": "^16.8.6",
     "scenejs": "^1.1.6",
+    "storybook-addon-preview": "^2.2.0",
     "storybook-dark-mode": "^1.0.9",
+    "ts-loader": "^8.3.0",
     "ts-node": "^8.5.0",
     "typescript": "^4.2.4"
   }

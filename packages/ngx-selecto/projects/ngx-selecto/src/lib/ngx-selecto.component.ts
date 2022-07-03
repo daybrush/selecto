@@ -42,6 +42,8 @@ export class NgxSelectoComponent
   @Input() dragCondition: SelectoOptions['dragCondition'];
   @Input() clickBySelectEnd: SelectoOptions['clickBySelectEnd'];
   @Input() continueSelectWithoutDeselect: SelectoOptions['continueSelectWithoutDeselect'];
+  @Input() toggleContinueSelectWithoutDeselect: SelectoOptions['toggleContinueSelectWithoutDeselect'];
+
 
   @Output() dragStart: NgxSelectoEvents['dragStart'];
   @Output() drag: NgxSelectoEvents['drag'];
