@@ -77,7 +77,7 @@ story.add("Welcome", () => {
                 <a href="https://github.com/daybrush/selecto" target="_blank"><button className="button">Github</button></a> <a href="https://daybrush.com/selecto/release/latest/doc/" target="_blank"><button className="button">API</button></a> <a href="https://github.com/daybrush/scena" target="_blank"><button className="button">Scena</button></a>
             </div>
             <Selecto
-                dragContainer={".selecto-area"}
+                dragContainer={typeof window !== "undefined" ? window : undefined}
                 selectableTargets={["#selecto1 .cube", "#selecto2 .element", "#selecto3 li"]}
                 onSelect={e => {
                     e.added.forEach(el => {
