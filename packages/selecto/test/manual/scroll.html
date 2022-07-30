@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html,body {
+            position: relative;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .target, .target2 {
+            position: absolute;
+            background: #faa;
+            box-sizing: border-box;
+        }
+        .target.selected {
+            border: 4px solid #f55;
+        }
+        .button {
+            position: absolute;
+            left: 500px;
+            top: 50px;
+            background: #eee;
+            padding: 15px 40px;
+            display: inline-block;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #444;
+        }
+        .button.selected {
+            color: #fff;
+            background: #66d;
+        }
+        .container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .viewport {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            background: #f5e0e0;
+        }
+    </style>
+
+<body>
+    <div class="button"> Shift </div>
+</body>
+<script src="https://daybrush.com/infinite-viewer/release/latest/dist/infinite-viewer.js"></script>
+<!-- <script src="https://daybrush.com/selecto/release/latest/dist/selecto.js"></script> -->
+<script src="../../dist/selecto.js"></script>
+<div class="container">
+    <div class="viewport">
+        <div class="target" style="top: 50px; left: 50px; width: 50px; height: 50px">T1</div>
+        <div class="target" style="top: 50px; left: 150px; width: 150px; height: 50px">T2</div>
+        <div class="target" style="top: 150px; left: 50px; width: 100px; height: 50px">T3</div>
+        <div class="target" style="top: 300px; left: 250px; width: 50px; height: 150px">T4</div>
+    </div>
+</div>
+<div class="hi"></div>
+<script>
+    const viewer = new InfiniteViewer(
+        document.querySelector(".container"),
+        document.querySelector(".viewport"),
+    ).on("scroll", () => {
+        console.log("scroll");
+        // setTimeout(() => {
+        selecto.checkScroll();
+        // });
+    });
+const selecto = new Selecto({
+    container: document.body,
+    boundContainer: document.querySelector(".viewport"),
+    hitRate: 40,
+    selectableTargets: [".target"],
+    selectFromInside: false,
+    toggleContinueSelect: "shift",
+    scrollOptions: {
+        container: document.querySelector(".container"),
+        // useScroll: true,
+        getScrollPosition: () => {
+            return [
+                viewer.getScrollLeft(),
+                viewer.getScrollTop(),
+            ];
+        },
+        throttleTime: 20,
+    },
+}).on("scroll", ({ direction }) => {
+    viewer.scrollBy(direction[0] * 10, direction[1] * 10);
+}).on("dragStart", e => {
+    console.log("ds", e.inputEvent.target);
+}).on("drag", e => {
+    // console.log(e);
+    // e.stop();
+}).on("select", e => {
+    console.log("start", e);
+    e.added.forEach(el => {
+        el.classList.add("selected");
+    });
+    e.removed.forEach(el => {
+        el.classList.remove("selected");
+    });
+}).on("selectEnd", e => {
+    console.log("end", e, e.isDragStart, e.isClick, e.isDouble);
+    e.afterAdded.forEach(el => {
+        el.classList.add("selected");
+    });
+    e.afterRemoved.forEach(el => {
+        el.classList.remove("selected");
+    });
+}).on("keydown", () => {
+    document.querySelector(".button").classList.add("selected");
+}).on("keyup", () => {
+    document.querySelector(".button").classList.remove("selected");
+});
+</script>
+</html>

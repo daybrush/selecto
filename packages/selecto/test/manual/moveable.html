@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <style>
+        html,
+        body,
+        #root {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            color: #333;
+            background: #fdfdfd;
+        }
+
+        .app {
+            position: relative;
+            min-height: 100%;
+            padding: 10px 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 800px;
+            ;
+        }
+
+        body {
+            background: #fff;
+        }
+
+        .logo {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0px auto;
+            font-size: 0;
+            text-align: left;
+        }
+
+        .logo.logos {
+            width: 320px;
+            text-align: center;
+        }
+
+        .logos .selecto {
+            padding: 16px;
+        }
+
+        .logo img {
+            position: relative;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .cube {
+            display: inline-block;
+            border-radius: 5px;
+            width: 40px;
+            height: 40px;
+            margin: 4px;
+            background: #eee;
+            --color: #4af;
+        }
+
+        h1,
+        .description {
+            text-align: center;
+        }
+
+        .button {
+            border: 1px solid #333;
+            color: #333;
+            background: transparent;
+            appearance: none;
+            -webkit-appearance: none;
+            box-sizing: border-box;
+            cursor: pointer;
+            width: 120px;
+            height: 42px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: all ease 0.2s;
+            margin: 0px 5px;
+        }
+
+        .button:hover {
+            background: #333;
+            color: white;
+        }
+
+        .elements {
+            margin-top: 40px;
+            border: 2px solid #eee;
+        }
+
+        .selecto-area {
+            padding: 20px;
+        }
+
+        #selecto1 .cube {
+            transition: all ease 0.2s;
+        }
+
+        .moveable #selecto1 .cube {
+            transition: none;
+        }
+
+        .selecto-area .selected {
+            color: #fff;
+            background: var(--color);
+        }
+
+        .scroll {
+            overflow: auto;
+            padding-top: 10px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .infinite-viewer,
+        .scroll {
+            width: 100%;
+            height: 300px;
+            box-sizing: border-box;
+        }
+
+        .infinite-viewer .viewport {
+            padding-top: 10px;
+        }
+
+        .empty.elements {
+            border: none;
+        }
+    </style>
+    <div class="moveable app">
+        <div class="container">
+            <div class="logo logos" id="logo">
+                <a href="https://github.com/daybrush/selecto" target="_blank"><img
+                        src="https://daybrush.com/selecto/images/256x256.png" class="selecto" /></a>
+                <a href="https://github.com/daybrush/moveable" target="_blank"><img
+                        src="https://daybrush.com/moveable/images/256x256.png" /></a>
+            </div>
+            <h1>Select Moveable targets in real time.</h1>
+            <p class="description">You can drag and move targets and select them.</p>
+            <div class="elements selecto-area"></div>
+        </div>
+    </div>
+</body>
+<script src="../../dist/selecto.js"></script>
+<script src="https://daybrush.com/moveable/release/latest/dist/moveable.js"></script>
+
+<script>
+
+    const container = document.querySelector(".container");
+    const frameMap = new Map();
+    const cubes = [];
+    let targets = [];
+
+    for (let i = 0; i < 30; ++i) {
+        cubes.push(i);
+    }
+    container.querySelector(".selecto-area").innerHTML
+        = cubes.map(i => `<div class="cube"></div>`).join("");
+    const selecto = new Selecto({
+        container,
+        dragContainer: ".elements",
+        selectableTargets: [".selecto-area .cube"],
+        hitRate: 0,
+        selectByClick: true,
+        selectFromInside: false,
+        continueSelectWithoutDeselect: true,
+        toggleContinueSelect: ["shift"],
+        toggleContinueSelectWithoutDeselect: ["meta"],
+        ratio: 0,
+    });
+    const moveable = new Moveable(container, {
+        draggable: true,
+    }).on("clickGroup", e => {
+        selecto.clickTarget(e.inputEvent, e.inputTarget);
+    }).on("dragStart", e => {
+        const target = e.target;
+
+        if (!frameMap.has(target)) {
+            frameMap.set(target, {
+                translate: [0, 0],
+            });
+        }
+        const frame = frameMap.get(target);
+
+        e.set(frame.translate);
+    }).on("drag", e => {
+        const target = e.target;
+        const frame = frameMap.get(target);
+
+        frame.translate = e.beforeTranslate;
+        target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px)`;
+    }).on("dragGroupStart", e => {
+        e.events.forEach(ev => {
+            const target = ev.target;
+
+            if (!frameMap.has(target)) {
+                frameMap.set(target, {
+                    translate: [0, 0],
+                });
+            }
+            const frame = frameMap.get(target);
+
+            ev.set(frame.translate);
+        });
+    }).on("dragGroup", e => {
+        e.events.forEach(ev => {
+            const target = ev.target;
+            const frame = frameMap.get(target);
+
+            frame.translate = ev.beforeTranslate;
+            target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px)`;
+        });
+    });
+
+    selecto.on("dragStart", e => {
+        const target = e.inputEvent.target;
+        if (
+            moveable.isMoveableElement(target)
+            || targets.some(t => t === target || t.contains(target))
+        ) {
+            e.stop();
+        }
+    }).on("select", e => {
+        targets = e.selected;
+        moveable.target = targets;
+    }).on("selectEnd", e => {
+        if (e.isDragStart) {
+            e.inputEvent.preventDefault();
+
+            setTimeout(() => {
+                moveable.dragStart(e.inputEvent);
+            });
+        }
+    }).on("keydown", e => {
+        console.log(e);
+    }).on("keyup", e => {
+        console.log(e);
+    });
+</script>
+
+</html>

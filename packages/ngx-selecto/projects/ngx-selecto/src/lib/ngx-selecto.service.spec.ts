@@ -3,10 +3,14 @@ import { TestBed } from '@angular/core/testing';
 import { NgxSelectoService } from './ngx-selecto.service';
 
 describe('NgxSelectoService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: NgxSelectoService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(NgxSelectoService);
+  });
 
   it('should be created', () => {
-    const service: NgxSelectoService = TestBed.get(NgxSelectoService);
     expect(service).toBeTruthy();
   });
 });

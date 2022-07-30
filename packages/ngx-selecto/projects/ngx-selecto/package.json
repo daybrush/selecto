@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/daybrush/selecto#readme",
   "dependencies": {
-    "selecto": "~1.17.0"
+    "selecto": "~1.17.0",
+    "tslib": "^2.3.0"
   }
 }

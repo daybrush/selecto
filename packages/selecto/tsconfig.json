@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "outDir": "./outjs/",
+    "esModuleInterop": false,
+    "sourceMap": true,
+    "module": "es2015",
+    "target": "es5",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "jsx": "react",
+    "jsxFactory": "h"
+  },
+  "include": [
+    "./src/**/*.ts", "src/Selecto.tsx"
+  ],
+  "exclude": [
+    "./storybook"
+  ]
+}

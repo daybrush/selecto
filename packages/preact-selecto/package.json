@@ -38,7 +38,7 @@
         "rollup-plugin-css-bundle": "^1.0.4",
         "rollup-plugin-preact": "^0.5.2",
         "tslint": "^5.16.0",
-        "typescript": "^3.4.5"
+        "typescript": "^4.5.0"
     },
     "dependencies": {
         "react-selecto": "~1.16.2"

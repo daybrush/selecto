@@ -1,37 +1,14 @@
 {
-    "name": "selecto",
-    "version": "1.17.0",
+    "name": "selecto-root",
+    "private": true,
     "description": "Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.",
-    "main": "./dist/selecto.cjs.js",
-    "module": "./dist/selecto.esm.js",
-    "sideEffects": false,
-    "types": "declaration/index.d.ts",
-    "scripts": {
-        "start": "rollup -c -w",
-        "build": "rollup -c && npm run declaration && print-sizes ./dist",
-        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
-        "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
-        "test": "jest --watchAll",
-        "coverage": "jest --coverage && print-coveralls --sort=desc",
-        "prerelease": "npm run build && npm run doc && npm run storybook && prerelease --dirs=dist,doc",
-        "storybook": "cd storybook/ && npm run build && cd ../",
-        "release": "npm run build && npm run doc && npm run storybook && release --dirs=dist,doc",
-        "release:init": "npm run build && npm run doc && npm run storybook && release -i --dirs=dist,doc",
-        "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
-        "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
-        "packages": "npm run packages:update && npm run packages:build && npm run packages:publish && npm run packages:preact",
-        "packages:update": "pvu --update=react-selecto,ngx-selecto/projects/ngx-selecto,svelte-selecto,lit-selecto,vue-selecto,vue3-selecto",
-        "packages:build": "pvu --build=react-selecto,ngx-selecto,svelte-selecto,lit-selecto,vue-selecto,vue3-selecto",
-        "packages:publish": "pvu --publish=react-selecto,ngx-selecto/dist/ngx-selecto,svelte-selecto,lit-selecto,vue-selecto,vue3-selecto",
-        "packages:preact": "cd ./packages/react-selecto && npm run packages && cd ../..",
-        "packages:demo": "npm run build && pvu --path=./ --distUpdate=./storybook --distPaths=declaration,dist"
-    },
+    
     "keywords": [
         "select",
         "selecto",
         "selection",
         "selectable",
-        "moveable"
+        "selecto"
     ],
     "repository": {
         "type": "git",
@@ -43,30 +20,87 @@
         "url": "https://github.com/daybrush/selecto/issues"
     },
     "homepage": "https://github.com/daybrush/selecto#readme",
-    "dependencies": {
+    "scripts": {
+        "bootstrap": "lerna bootstrap",
+        "build": "npm run build --prefix ./packages/selecto",
+        "packages:update": "lerna-helper version",
+        "packages:build": "lerna run build --ignore ngx-selecto --ignore storybook",
+        "packages:publish": "lerna-helper publish --ignore ngx-selecto --commit 'chore: publish packages'",
+        "changelog": "lerna-helper changelog --type all --base selecto",
+        "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
+        "build:storybook": "npm run build --prefix ./packages/storybook",
+        "demo:build": "npm run packages:build && npm run doc && npm run build:storybook",
+        "demo:deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
+        "deploy": "lerna-helper deploy --base selecto",
+        "release": "lerna-helper release --base selecto"
+    },
+    "devDependencies": {
+        "@daybrush/jsdoc": "^0.4.0",
+        "@daybrush/release": "^0.5.2",
+        "cpx": "1.5.0",
+        "daybrush-jsdoc-template": "^1.7.0",
+        "gh-pages": "^2.0.1",
+        "intercept-stdout": "0.1.2",
+        "lerna": "^4.0.0",
+        "lerna-changelog": "2.2.0",
+        "typescript": "^4.5.0 <4.6.0"
+    },
+    "workspaces": {
+        "nohoist": [
+            "**/@daybrush/builder",
+            "**/@daybrush/builder/**",
+            "**/rollup-plugin-vue",
+            "**/rollup-plugin-vue/**"
+        ],
+        "packages": [
+            "packages/*",
+            "packages/ngx-selecto/projects/ngx-selecto"
+        ]
+    },
+    "resolutions": {
         "@daybrush/utils": "^1.7.1",
+        "@types/react": "^16.9.17",
+        "typescript": "^4.5.0 <4.6.0",
+        "@storybook/react": "^6.4.22",
+        "@storybook/addon-actions": "^6.4.22",
+        "@storybook/addon-controls": "^6.4.22",
+        "@storybook/addon-docs": "^6.4.22",
+        "@storybook/addon-links": "^6.4.22",
+        "@storybook/addon-viewport": "^6.4.22",
+        "@storybook/addons": "^6.4.22",
+        "@egjs/agent": "^2.2.1",
         "@egjs/children-differ": "^1.0.1",
-        "@scena/dragscroll": "^1.1.1",
-        "@scena/event-emitter": "^1.0.5",
-        "css-styled": "^1.0.0",
+        "@scena/dragscroll": "^1.2.0",
+        "@scena/matrix": "^1.1.1",
         "css-to-mat": "^1.0.3",
         "framework-utils": "^1.1.0",
         "gesto": "^1.9.0",
-        "keycon": "^1.2.0",
-        "overlap-area": "^1.1.0"
+        "overlap-area": "^1.1.0",
+        "react-compat-css-styled": "^1.0.8",
+        "react-css-styled": "^1.0.3",
+        "tslib": "^2.3.0"
     },
-    "devDependencies": {
-        "@daybrush/builder": "^0.1.2",
-        "@daybrush/jsdoc": "^0.4.1",
-        "@daybrush/release": "^0.2.4",
-        "@types/jest": "^24.0.13",
-        "daybrush-jsdoc-template": "^1.7.0",
-        "jest": "^24.8.0",
-        "print-coveralls": "^1.2.2",
-        "print-sizes": "^0.1.0",
-        "pvu": "^0.6.1",
-        "ts-jest": "^24.0.2",
-        "tslint": "^5.20.1",
-        "typescript": "^3.7.4"
+    "overrides": {
+        "@daybrush/utils": "^1.7.1",
+        "@types/react": "^16.9.17",
+        "typescript": "^4.5.0 <4.6.0",
+        "@storybook/react": "^6.4.22",
+        "@storybook/addon-actions": "^6.4.22",
+        "@storybook/addon-controls": "^6.4.22",
+        "@storybook/addon-docs": "^6.4.22",
+        "@storybook/addon-links": "^6.4.22",
+        "@storybook/addon-viewport": "^6.4.22",
+        "@storybook/addons": "^6.4.22",
+        "@egjs/agent": "^2.2.1",
+        "@egjs/children-differ": "^1.0.1",
+        "@scena/dragscroll": "^1.2.0",
+        "@scena/matrix": "^1.1.1",
+        "css-to-mat": "^1.0.3",
+        "framework-utils": "^1.1.0",
+        "gesto": "^1.9.0",
+        "overlap-area": "^1.1.0",
+        "react-compat-css-styled": "^1.0.8",
+        "react-css-styled": "^1.0.3",
+        "tslib": "^2.3.0"
     }
 }
