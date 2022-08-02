@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>packages/selecto/src/types.ts - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="description" content="packages/selecto/src/types.ts - Documentation"/>
+
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h2 class="custom"><a href="https://github.com/daybrush/selecto" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><div class="search"><div class="input-area"><input type="text"/></div><button></button></div><ul class="classes"><li file="selecto" class="parent"><a href="Selecto.html">Selecto</a><h4><a href="Selecto.html#static members">Static Members</a></h4><ul class='static members'><li data-type='member'><a href="Selecto.html#.CLASS_NAME">CLASS_NAME</a></li><li data-type='member'><a href="Selecto.html#.EVENTS">EVENTS</a></li><li data-type='member'><a href="Selecto.html#.METHODS">METHODS</a></li><li data-type='member'><a href="Selecto.html#.OPTIONS">OPTIONS</a></li></ul><h4><a href="Selecto.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="Selecto.html#checkScroll">checkScroll</a></li><li data-type='method'><a href="Selecto.html#clickTarget">clickTarget</a></li><li data-type='method'><a href="Selecto.html#destroy">destroy</a></li><li data-type='method'><a href="Selecto.html#emit">emit</a></li><li data-type='method'><a href="Selecto.html#findSelectableTargets">findSelectableTargets</a></li><li data-type='method'><a href="Selecto.html#getSelectableElements">getSelectableElements</a></li><li data-type='method'><a href="Selecto.html#getSelectedTargets">getSelectedTargets</a></li><li data-type='method'><a href="Selecto.html#off">off</a></li><li data-type='method'><a href="Selecto.html#on">on</a></li><li data-type='method'><a href="Selecto.html#once">once</a></li><li data-type='method'><a href="Selecto.html#setSelectedTargets">setSelectedTargets</a></li><li data-type='method'><a href="Selecto.html#trigger">trigger</a></li><li data-type='method'><a href="Selecto.html#triggerDragStart">triggerDragStart</a></li></ul><h4><a href="Selecto.html#events">Events</a></h4><ul class='events'><li data-type='event'><a href="Selecto.html#.event:drag">drag</a></li><li data-type='event'><a href="Selecto.html#.event:dragEnd">dragEnd</a></li><li data-type='event'><a href="Selecto.html#.event:dragStart">dragStart</a></li><li data-type='event'><a href="Selecto.html#.event:keydown">keydown</a></li><li data-type='event'><a href="Selecto.html#.event:keyup">keyup</a></li><li data-type='event'><a href="Selecto.html#.event:select">select</a></li><li data-type='event'><a href="Selecto.html#.event:selectEnd">selectEnd</a></li><li data-type='event'><a href="Selecto.html#.event:selectStart">selectStart</a></li></ul><h4><a href="Selecto.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="Selecto.html#.BoundContainer">BoundContainer</a></li><li data-type='typddef'><a href="Selecto.html#.CurrentTarget">CurrentTarget</a></li><li data-type='typddef'><a href="Selecto.html#.OnDrag">OnDrag</a></li><li data-type='typddef'><a href="Selecto.html#.OnDragEnd">OnDragEnd</a></li><li data-type='typddef'><a href="Selecto.html#.OnDragStart">OnDragStart</a></li><li data-type='typddef'><a href="Selecto.html#.OnSelect">OnSelect</a></li><li data-type='typddef'><a href="Selecto.html#.OnSelectEnd">OnSelectEnd</a></li><li data-type='typddef'><a href="Selecto.html#.SelectoOptions">SelectoOptions</a></li></ul></li><li file="eventemitter" class="parent"><a href="EventEmitter.html">EventEmitter</a><h4><a href="EventEmitter.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="EventEmitter.html#emit">emit</a></li><li data-type='method'><a href="EventEmitter.html#off">off</a></li><li data-type='method'><a href="EventEmitter.html#on">on</a></li><li data-type='method'><a href="EventEmitter.html#once">once</a></li><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li></ul><h4><a href="EventEmitter.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="EventEmitter.html#.EmitterParam">EmitterParam</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventHash">EventHash</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventInfo">EventInfo</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventListener">EventListener</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventOptions">EventOptions</a></li><li data-type='typddef'><a href="EventEmitter.html#.OnEvent">OnEvent</a></li><li data-type='typddef'><a href="EventEmitter.html#.TargetParam">TargetParam</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">packages/selecto/src/types.ts</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { IObject } from "@daybrush/utils";
+import { PROPERTIES, METHODS } from "./consts";
+import Selecto from "./Selecto";
+import {
+    OnDragStart as OnParentDragStart,
+    OnDrag as OnParentDrag,
+    OnDragEnd as OnParentDragEnd,
+} from "gesto";
+import { DragScrollOptions } from "@scena/dragscroll";
+
+/**
+ * @memberof Selecto
+ * @typedef
+ */
+export interface SelectoOptions {
+    /**
+     * The container to add a selection element for vanilla
+     */
+    container: HTMLElement | null;
+    /**
+     * Selecto's root container (No transformed container.)
+     * @dfeault null
+     */
+    rootContainer: HTMLElement | null;
+    /**
+     * The area to drag selection element.
+     * @default container
+     */
+    dragContainer: Element | Window | Element[] | string;
+    /**
+     * Targets to select. You can register a queryselector or an Element.
+     * @default []
+     */
+    selectableTargets: Array&lt;HTMLElement | string>;
+    /**
+     * Whether to select from the target inside (If hitTest is 0, it becomes inside select as well)
+     * @default true
+     */
+    selectFromInside: boolean;
+    /**
+     * Whether to force drag end when selectFromInside, selectByClick is true.
+     * @default false
+     */
+    selectByClick: boolean;
+    /**
+     * When the target is clicked, the event is stopped and selected. (If hitTest is 0, it becomes click as well.)
+     * @default true
+     */
+    preventDragFromInside: boolean;
+    /**
+     * Whether to click when mouse(touch) ends while using selectByClick(true)
+     * @default false
+     */
+    clickBySelectEnd: boolean;
+    /**
+     * After the select, whether to select the next target with the selected target (deselected if the target is selected again)
+     * @default false
+     */
+    continueSelect: boolean;
+    /**
+     * Whether to continue the previously selected items without deselect when using `continueSelect` or `toggleContinueSelect`.
+     * @default false
+     */
+    continueSelectWithoutDeselect: boolean;
+    /**
+     * Determines which key to continue selecting the next target via keydown and keyup.
+     * The initially set `continueSelect` value is the inactive(keyup) value.
+     */
+    toggleContinueSelect: string[][] | string[] | string | null;
+    /**
+     * Determines which key to continue selecting the next target without deselect via keydown and keyup.
+     * The initially set `continueSelectWithoutDeselect` value is the inactive(keyup) value.
+     */
+     toggleContinueSelectWithoutDeselect: string[][] | string[] | string | null;
+    /**
+     * The container for keydown and keyup events.
+     */
+    keyContainer: Document | HTMLElement | Window | null;
+    /**
+     * The rate at which the target overlaps the drag area to be selected. If you want an absolute number, set it to a px value. (ex: 10px)
+     * @default 100
+     */
+    hitRate: number | string;
+    /**
+     * Container to bound the selection area. If false, do not bound. If true, it is the container of selecto.
+     * @default false
+     */
+    boundContainer: BoundContainer | boolean | HTMLElement | string | null;
+    /**
+     * Set the scroll options, time, etc. to automatically scroll by dragging.
+     * @default null
+     */
+    scrollOptions: DragScrollOptions;
+    /**
+     * hecks whether this is an element to input text or contentEditable, and prevents dragging.
+     * @default false
+     */
+    checkInput: boolean;
+    /**
+     * When dragging, preventDefault is called. (Touch occurs unconditionally)
+     * @default false
+     */
+    preventDefault: boolean;
+    /**
+     * add nonce property to style for CSP
+     * @default ""
+     */
+    cspNonce: string;
+    /**
+     * Adjust the ratio of the selection.
+     * @default 0
+     */
+    ratio: number;
+    /**
+     * A function to get the exact position of an element's rect
+     * @default null
+     */
+    getElementRect: getElementRectFunction;
+    /**
+     * Conditional function to start dragging
+     * @default null
+     */
+    dragCondition: ((e: OnParentDragStart) => boolean) | null;
+    /**
+     * Prevent click event on drag. (mousemove, touchmove)
+     * @default false
+     */
+    preventClickEventOnDrag?: boolean;
+    /**
+     * Prevent click event on dragStart. (mousedown, touchstart)
+     * @default false
+     */
+    preventClickEventOnDragStart?: boolean;
+    /**
+     * Whether to prevent dragging of the right mouse button
+     * @default true
+     */
+    preventRightClick?: boolean;
+    /**
+     * Selection Element to apply for framework.
+     * @private
+     */
+    portalContainer: HTMLElement | null;
+}
+/**
+ * @memberof Selecto
+ * @typedef
+ */
+export interface BoundContainer {
+    element: HTMLElement | string | boolean;
+    left?: boolean;
+    top?: boolean;
+    right?: boolean;
+    bottom?: boolean;
+}
+
+export interface Hypertext {
+    tag: string;
+    className: string;
+    style: IObject&lt;any>;
+    attributes: object;
+    children: Hypertext[];
+}
+export interface Rect {
+    top: number;
+    left: number;
+    bottom: number;
+    right: number;
+    width: number;
+    height: number;
+}
+
+export interface Point {
+    pos1: number[];
+    pos2: number[];
+    pos3: number[];
+    pos4: number[];
+}
+/**
+ * @memberof Selecto
+ * @typedef
+ * @property - An Selecto instance itself
+ */
+export interface CurrentTarget&lt;T = Selecto> {
+    currentTarget: T;
+}
+
+/**
+ * @memberof Selecto
+ * @typedef
+ * @property - An Selecto instance itself
+ * @property - selected elements
+ * @property - added elements
+ * @property - removed elements
+ * @property - Rect of Selection Element
+ * @property - inputEvent
+ */
+export interface OnSelect&lt;T = Selecto> extends CurrentTarget&lt;T> {
+    selected: Array&lt;HTMLElement | SVGElement>;
+    added: Array&lt;HTMLElement | SVGElement>;
+    removed: Array&lt;HTMLElement | SVGElement>;
+    rect: Rect;
+    inputEvent: any;
+}
+/**
+ * @memberof Selecto
+ * @extends Selecto.OnSelect
+ * @typedef
+ * @property - after added elements
+ * @property - after removed elements
+ * @property - Whether it is a mousedown or touchstart event
+ * @property - Whether it is click
+ * @property - Wheter it is double click or double start
+ */
+export interface OnSelectEnd&lt;T = Selecto> extends OnSelect&lt;T>, CurrentTarget&lt;T> {
+    afterAdded: Array&lt;HTMLElement | SVGElement>;
+    afterRemoved: Array&lt;HTMLElement | SVGElement>;
+    isDragStart: boolean;
+    isClick: boolean;
+    isDouble: boolean;
+}
+
+export interface OnDragEvent {
+    datas: IObject&lt;any>;
+    clientX: number;
+    clientY: number;
+    deltaX: number;
+    deltaY: number;
+    distX: number;
+    distY: number;
+    isMouseEvent: boolean;
+    isSecondaryButton: boolean;
+    isClick?: boolean;
+    isDouble?: boolean;
+    inputEvent: any;
+}
+export interface OnKeyEvent&lt;T = Selecto> extends CurrentTarget&lt;T> {
+    keydownContinueSelect: boolean;
+    keydownContinueSelectWithoutDeselection: boolean;
+}
+export interface OnScroll {
+    container: HTMLElement;
+    direction: number[];
+}
+/**
+ * @memberof Selecto
+ * @typedef
+ * @property - Stop all events
+ */
+export interface OnDragStart&lt;T = Selecto> extends OnParentDragStart&lt;T> {
+    stop(): void;
+}
+
+/**
+ * @memberof Selecto
+ * @typedef
+ * @property - Rect of Selection Element
+ * @property - Whether it is in select
+ */
+export interface OnDrag&lt;T = Selecto> extends OnParentDrag&lt;T> {
+    rect: Rect;
+    isSelect: boolean;
+}
+/**
+ * @memberof Selecto
+ * @typedef
+ * @property - Rect of Selection Element
+ * @property - Whether it is in select
+ */
+export interface OnDragEnd&lt;T = Selecto> extends OnParentDragEnd&lt;T> {
+    rect: Rect;
+    isSelect: boolean;
+}
+export interface SelectoEvents {
+    dragStart: OnDragStart;
+    drag: OnDrag;
+    dragEnd: OnDragEnd;
+    selectStart: OnSelect;
+    select: OnSelect;
+    selectEnd: OnSelectEnd;
+    keydown: OnKeyEvent;
+    keyup: OnKeyEvent;
+    scroll: OnScroll;
+}
+export type SelectoProperties = { [P in typeof PROPERTIES[number]]: SelectoOptions[P] };
+export type SelectoMethods = { [P in typeof METHODS[number]]: Selecto[P] };
+export type getElementRectFunction = (el: HTMLElement | SVGElement) => PointArea;
+export interface PointArea {
+    pos1: number[];
+    pos2: number[];
+    pos3: number[];
+    pos4: number[];
+}
+
+
+export interface InnerGroup {
+    targets: Array&lt;HTMLElement | SVGElement>;
+    points: number[][][];
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+<style>
+
+
+nav li[file="packages/selecto/src/types"]:after {
+    display: none;
+}
+nav li[file="packages/selecto/src/types"] h4, nav li[file="packages/selecto/src/types"] ul {
+    display: block;
+}
+</style>
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/daybrush/jsdoc">JSDoc 0.4.1</a> on Wed Aug 03 2022 03:12:07 GMT+0900 (대한민국 표준시) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/utils.min.js"></script>
+<script src="scripts/search.js"></script>
+<script src="scripts/custom.js"></script>
+</body>
+</html>

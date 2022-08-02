@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>node_modules/@scena/event-emitter/src/types.ts - Documentation</title>
+    <title>packages/selecto/src/consts.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -14,7 +14,7 @@
     <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
     <link type="text/css" rel="stylesheet" href="styles/custom.css">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta name="description" content="node_modules/@scena/event-emitter/src/types.ts - Documentation"/>
+    <meta name="description" content="packages/selecto/src/consts.ts - Documentation"/>
 
 </head>
 <body>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">node_modules/@scena/event-emitter/src/types.ts</h1>
+    <h1 class="page-title">packages/selecto/src/consts.ts</h1>
     
 
     
@@ -42,53 +42,116 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
-/**
- * @memberof EventEmitter
- * @typedef
- */
-export type TargetParam&lt;Param> = Pick&lt;Param, Exclude&lt;keyof Param, keyof EmitterParam>> &amp; Partial&lt;EmitterParam>;
+            <pre class="prettyprint source linenums"><code>import styled from "css-styled";
+import { SelectoOptions } from "./types";
+
+export const injector = styled(`
+:host {
+    position: fixed;
+    display: none;
+    border: 1px solid #4af;
+    background: rgba(68, 170, 255, 0.5);
+    pointer-events: none;
+    will-change: transform;
+    z-index: 100;
+}
+`);
 
 /**
- * @memberof EventEmitter
- * @typedef
+ * @memberof Selecto
  */
-export interface EmitterParam&lt;Target = any> {
-    type: string;
-    currentTarget: Target;
-    stop(): void;
-}
+export const CLASS_NAME = `selecto-selection ${injector.className}`;
+
+export const PROPERTIES = [
+    "boundContainer",
+    "selectableTargets",
+    "selectByClick",
+    "selectFromInside",
+    "continueSelect",
+    "continueSelectWithoutDeselect",
+    "toggleContinueSelect",
+    "toggleContinueSelectWithoutDeselect",
+    "keyContainer",
+    "hitRate",
+    "scrollOptions",
+    "checkInput",
+    "preventDefault",
+    "ratio",
+    "getElementRect",
+    "preventDragFromInside",
+    "rootContainer",
+    "dragCondition",
+    "clickBySelectEnd",
+] as const;
 /**
- * @memberof EventEmitter
- * @typedef
+ * @memberof Selecto
  */
-export type OnEvent&lt;Param, Target = any> = EmitterParam&lt;Target> &amp; Param;
-/**
- * @memberof EventEmitter
- * @typedef
- */
-export type EventHash&lt;Events, Target> = Partial&lt;{ [Key in keyof Events]: EventListener&lt;Events[Key], Target> }>;
-/**
- * @memberof EventEmitter
- * @typedef
- */
-export type EventListener&lt;Param, Target> = (e: OnEvent&lt;Param, Target>) => any;
+export const OPTIONS = [
+    // ignore target, container,
+    "dragContainer",
+    "cspNonce",
+    "preventClickEventOnDrag",
+    "preventClickEventOnDragStart",
+    "preventRightClick",
+    ...PROPERTIES,
+] as const;
+
+export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
+    boundContainer: null,
+    portalContainer: null,
+    container: null,
+    dragContainer: null,
+    selectableTargets: Array,
+    selectByClick: Boolean,
+    selectFromInside: Boolean,
+    continueSelect: Boolean,
+    toggleContinueSelect: Array,
+    toggleContinueSelectWithoutDeselect: Array,
+    keyContainer: null,
+    hitRate: Number,
+    scrollOptions: Object,
+    checkInput: Boolean,
+    preventDefault: Boolean,
+    cspNonce: String,
+    ratio: Number,
+    getElementRect: Function,
+    preventDragFromInside: Boolean,
+    rootContainer: Object,
+    dragCondition: Function,
+    clickBySelectEnd: Boolean,
+    continueSelectWithoutDeselect: Boolean,
+    preventClickEventOnDragStart: Boolean,
+    preventClickEventOnDrag: Boolean,
+};
 
 /**
- * @memberof EventEmitter
- * @typedef
+ * @memberof Selecto
  */
-export interface EventOptions {
-    once: boolean;
-}
+export const EVENTS = [
+    "dragStart",
+    "drag",
+    "dragEnd",
+    "selectStart",
+    "select",
+    "selectEnd",
+    "keydown",
+    "keyup",
+    "scroll",
+] as const;
 
 /**
- * @memberof EventEmitter
- * @typedef
+ * @memberof Selecto
  */
-export interface EventInfo extends Partial&lt;EventOptions> {
-    listener: EventListener&lt;any, any>;
-}
+export const METHODS = [
+    "clickTarget",
+    "getSelectableElements",
+    "setSelectedTargets",
+    "getElementPoints",
+    "getSelectedTargets",
+    "findSelectableTargets",
+    "triggerDragStart",
+    "checkScroll",
+] as const;
 </code></pre>
         </article>
     </section>
@@ -100,10 +163,10 @@ export interface EventInfo extends Partial&lt;EventOptions> {
 <style>
 
 
-nav li[file="node_modules/@scena/event-emitter/src/types"]:after {
+nav li[file="packages/selecto/src/consts"]:after {
     display: none;
 }
-nav li[file="node_modules/@scena/event-emitter/src/types"] h4, nav li[file="node_modules/@scena/event-emitter/src/types"] ul {
+nav li[file="packages/selecto/src/consts"] h4, nav li[file="packages/selecto/src/consts"] ul {
     display: block;
 }
 </style>
