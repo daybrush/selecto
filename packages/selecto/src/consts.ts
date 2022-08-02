@@ -48,6 +48,7 @@ export const OPTIONS = [
     "cspNonce",
     "preventClickEventOnDrag",
     "preventClickEventOnDragStart",
+    "preventRightClick",
     ...PROPERTIES,
 ] as const;
 

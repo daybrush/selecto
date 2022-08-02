@@ -132,6 +132,11 @@ export interface SelectoOptions {
      */
     preventClickEventOnDragStart?: boolean;
     /**
+     * Whether to prevent dragging of the right mouse button
+     * @default true
+     */
+    preventRightClick?: boolean;
+    /**
      * Selection Element to apply for framework.
      * @private
      */

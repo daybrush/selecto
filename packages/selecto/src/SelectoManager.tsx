@@ -363,6 +363,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             preventDefault,
             preventClickEventOnDragStart,
             preventClickEventOnDrag,
+            preventRightClick = true,
         } = this.options;
         this.dragContainer =
             typeof dragContainer === "string"
@@ -375,6 +376,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             preventDefault,
             preventClickEventOnDragStart,
             preventClickEventOnDrag,
+            preventRightClick,
         }).on({
             dragStart: this._onDragStart,
             drag: this._onDrag,
