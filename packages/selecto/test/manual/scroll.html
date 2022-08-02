@@ -76,7 +76,7 @@ const selecto = new Selecto({
     selectFromInside: false,
     toggleContinueSelect: "shift",
     scrollOptions: {
-        container: document.querySelector(".container"),
+        container: () => document.querySelector(".container"),
         // useScroll: true,
         getScrollPosition: () => {
             return [
