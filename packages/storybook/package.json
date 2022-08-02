@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build": "npm run build:storybook",
@@ -15,7 +16,7 @@
     "raw-loader": "^4.0.0",
     "react-infinite-viewer": "^0.14.0",
     "react-moveable": "^0.30.3",
-    "react-selecto": "^1.17.0"
+    "react-selecto": "~1.18.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
