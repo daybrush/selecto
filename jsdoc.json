@@ -7,7 +7,7 @@
 		"destination": "./doc/"
     },
     "source": {
-		"include": ["./packages/selcto/src", "README.md", "node_modules/@scena/event-emitter/src"],
+		"include": ["./packages/selecto/src", "README.md", "node_modules/@scena/event-emitter/src"],
         "includePattern": "(.+\\.js(doc|x)?|.+\\.ts(doc|x)?)$",
         "excludePattern": "(^|\\/|\\\\)_"
     },
