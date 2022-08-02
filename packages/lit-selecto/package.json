@@ -31,6 +31,10 @@
         "build": "rollup -c && npm run declaration",
         "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json"
     },
+    "files": [
+        "./*",
+        "dist/*"
+    ],
     "devDependencies": {
         "@daybrush/builder": "^0.1.2",
         "lit-element": "^2.2.1",

@@ -42,5 +42,9 @@
     },
     "dependencies": {
         "react-selecto": "~1.18.0"
-    }
+    },
+    "files": [
+        "./*",
+        "dist/*"
+    ]
 }

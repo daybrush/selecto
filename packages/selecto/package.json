@@ -28,6 +28,10 @@
         "url": "https://github.com/daybrush/selecto/issues"
     },
     "homepage": "https://github.com/daybrush/selecto#readme",
+    "files": [
+        "./*",
+        "dist/*"
+    ],
     "dependencies": {
         "@daybrush/utils": "^1.7.1",
         "@egjs/children-differ": "^1.0.1",

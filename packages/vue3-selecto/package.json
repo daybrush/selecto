@@ -31,6 +31,10 @@
         "url": "https://github.com/daybrush/selecto/issues"
     },
     "homepage": "https://daybrush.com/selecto",
+    "files": [
+        "./*",
+        "dist/*"
+    ],
     "dependencies": {
         "selecto": "~1.18.0"
     },
