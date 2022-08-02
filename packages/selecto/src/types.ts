@@ -122,6 +122,16 @@ export interface SelectoOptions {
      */
     dragCondition: ((e: OnParentDragStart) => boolean) | null;
     /**
+     * Prevent click event on drag. (mousemove, touchmove)
+     * @default false
+     */
+    preventClickEventOnDrag?: boolean;
+    /**
+     * Prevent click event on dragStart. (mousedown, touchstart)
+     * @default false
+     */
+    preventClickEventOnDragStart?: boolean;
+    /**
      * Selection Element to apply for framework.
      * @private
      */
@@ -213,6 +223,8 @@ export interface OnDragEvent {
     deltaY: number;
     distX: number;
     distY: number;
+    isMouseEvent: boolean;
+    isSecondaryButton: boolean;
     isClick?: boolean;
     isDouble?: boolean;
     inputEvent: any;

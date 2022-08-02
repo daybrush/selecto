@@ -46,6 +46,8 @@ export const OPTIONS = [
     // ignore target, container,
     "dragContainer",
     "cspNonce",
+    "preventClickEventOnDrag",
+    "preventClickEventOnDragStart",
     ...PROPERTIES,
 ] as const;
 
@@ -73,6 +75,8 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     dragCondition: Function,
     clickBySelectEnd: Boolean,
     continueSelectWithoutDeselect: Boolean,
+    preventClickEventOnDragStart: Boolean,
+    preventClickEventOnDrag: Boolean,
 };
 
 /**

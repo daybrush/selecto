@@ -357,7 +357,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
         const target = this.target;
 
-        const { dragContainer, checkInput, preventDefault } = this.options;
+        const {
+            dragContainer,
+            checkInput,
+            preventDefault,
+            preventClickEventOnDragStart,
+            preventClickEventOnDrag,
+        } = this.options;
         this.dragContainer =
             typeof dragContainer === "string"
                 ? [].slice.call(document.querySelectorAll(dragContainer))
@@ -367,6 +373,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             container: window,
             checkInput,
             preventDefault,
+            preventClickEventOnDragStart,
+            preventClickEventOnDrag,
         }).on({
             dragStart: this._onDragStart,
             drag: this._onDrag,
@@ -968,10 +976,10 @@ class Selecto extends EventEmitter<SelectoEvents> {
         if (inputEvent && !e.isClick) {
             this.emit("dragEnd", {
                 isDouble: !!e.isDouble,
+                isClick: !!e.isClick,
                 isDrag: false,
                 isSelect: selectFlag,
                 ...e,
-                isClick: !!e.isClick,
                 rect,
             });
         }
