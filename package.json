@@ -23,7 +23,8 @@
     "scripts": {
         "bootstrap": "lerna bootstrap",
         "build": "npm run build --prefix ./packages/selecto",
-        "packages:update": "lerna-helper version",
+        "packages:update": "lerna-helper version && npm run update-type-consts",
+        "update-type-consts": "node ./config/update-type-consts.js",
         "packages:build": "lerna run build --ignore ngx-selecto --ignore storybook",
         "packages:publish": "lerna-helper publish --ignore ngx-selecto --commit 'chore: publish packages'",
         "changelog": "lerna-helper changelog --type all --base selecto",
