@@ -32,6 +32,7 @@ import {
     getDefaultElementRect,
     passTargets,
     elementFromPoint,
+    filterDuplicated,
 } from "./utils";
 import {
     SelectoOptions,
@@ -460,6 +461,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                     continue;
                 }
                 const { points, targets } = group;
+
                 points.forEach((nextPoints, i) => {
                     if (isHit(nextPoints)) {
                         selectedTargets.push(targets[i]);
@@ -467,7 +469,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 });
             }
         }
-        return selectedTargets;
+        return filterDuplicated(selectedTargets);
     }
     private initDragScroll() {
         this.dragScroll
@@ -1181,20 +1183,35 @@ class Selecto extends EventEmitter<SelectoEvents> {
             const groups: Record<string | number, Record<string | number, InnerGroup>> = {};
 
             selectablePoints.forEach((points, i) => {
-                const pos = points[0];
-                const x = Math.floor(pos[0] / innerWidth);
-                const y = Math.floor(pos[1] / innerHeight);
+                let minX = Infinity;
+                let maxX = -Infinity;
+                let minY = Infinity;
+                let maxY = -Infinity;
 
-                groups[x] = groups[x] || {};
-                groups[x][y] = groups[x][y] || {
-                    points: [],
-                    targets: [],
-                };
+                points.forEach(pos => {
+                    const x = Math.floor(pos[0] / innerWidth);
+                    const y = Math.floor(pos[1] / innerHeight);
+    
+                    minX = Math.min(x, minX);
+                    maxX = Math.max(x, maxX);
+                    minY = Math.min(y, minY);
+                    maxY = Math.max(y, maxY);
+                });
 
-                const { targets, points: groupPoints } = groups[x][y];
-
-                targets.push(selectableTargets[i]);
-                groupPoints.push(points);
+                for (let x = minX; x <= maxX; ++x) {
+                    for (let y = minY; y <= maxY; ++y) {
+                        groups[x] = groups[x] || {};
+                        groups[x][y] = groups[x][y] || {
+                            points: [],
+                            targets: [],
+                        };
+        
+                        const { targets, points: groupPoints } = groups[x][y];
+        
+                        targets.push(selectableTargets[i]);
+                        groupPoints.push(points);
+                    }
+                }
             });
 
             datas.innerGroups = groups;

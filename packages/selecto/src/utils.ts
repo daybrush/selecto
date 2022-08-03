@@ -18,7 +18,21 @@ export function getClient(e: MouseEvent | TouchEvent) {
         };
     }
 }
-
+export function filterDuplicated<T>(arr: T[]): T[] {
+    if (typeof Map === "undefined") {
+        return arr.filter((value, index) => {
+            return arr.indexOf(value) === index;
+        });
+    }
+    const map = new Map<T, true>();
+    return arr.filter(value => {
+        if (map.has(value)) {
+            return false;
+        }
+        map.set(value, true);
+        return true;
+    });
+}
 export function elementFromPoint(clientX: number, clientY: number): HTMLElement | SVGElement | null {
     return (document.elementFromPoint && document.elementFromPoint(clientX, clientY)) as any || null;
 }
