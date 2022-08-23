@@ -23,7 +23,7 @@ export default builder([
         format: "es",
     },
     {
-        input: "src/index.umd.ts",
+        input: "src/index.cjs.ts",
         output: "./dist/selecto.cjs.js",
         exports: "named",
         format: "cjs",
