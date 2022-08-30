@@ -16,7 +16,7 @@
     "raw-loader": "^4.0.0",
     "react-infinite-viewer": "^0.14.0",
     "react-moveable": "^0.30.3",
-    "react-selecto": "~1.18.2"
+    "react-selecto": "~1.19.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
