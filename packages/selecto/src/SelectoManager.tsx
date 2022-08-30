@@ -231,14 +231,14 @@ class Selecto extends EventEmitter<SelectoEvents> {
     /**
      * Find for selectableTargets again during drag event
      */
-    public findSelectableTargets(datas: any = this.gesto.getEventDatas()) {
+    public findSelectableTargets(data: any = this.gesto.getEventDatas()) {
         const selectableTargets = this.getSelectableElements();
         const selectablePoints = selectableTargets.map(
             (target) => this.getElementPoints(target),
         );
-        datas.selectableTargets = selectableTargets;
-        datas.selectablePoints = selectablePoints;
-        this._refreshGroups(datas);
+        data.selectableTargets = selectableTargets;
+        data.selectablePoints = selectablePoints;
+        this._refreshGroups(data);
     }
     /**
      * External click or mouse events can be applied to the selecto.
@@ -251,7 +251,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     ): this {
         const { clientX, clientY } = getClient(e);
         const dragEvent = {
-            datas: {
+            data: {
                 selectFlag: false,
             },
             clientX,
@@ -393,13 +393,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
         selectRect: Rect,
         clientX: number,
         clientY: number,
-        datas: any,
+        data: any,
     ) {
         const { hitRate, selectByClick } = this.options;
         const { left, top, right, bottom } = selectRect;
-        const innerGroups: Record<string | number, Record<string | number, InnerGroup>> = datas.innerGroups;
-        const innerWidth = datas.innerWidth;
-        const innerHeight = datas.innerHeight;
+        const innerGroups: Record<string | number, Record<string | number, InnerGroup>> = data.innerGroups;
+        const innerWidth = data.innerWidth;
+        const innerHeight = data.innerHeight;
         const rectPoints = [
             [left, top],
             [right, top],
@@ -435,8 +435,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             }
         };
         if (!innerGroups) {
-            const selectableTargets: Array<HTMLElement | SVGElement> = datas.selectableTargets;
-            const selectablePoints: number[][][] = datas.selectablePoints;
+            const selectableTargets: Array<HTMLElement | SVGElement> = data.selectableTargets;
+            const selectablePoints: number[][][] = data.selectablePoints;
 
             return selectableTargets.filter((_, i) => {
                 return isHit(selectablePoints[i]);
@@ -486,18 +486,18 @@ class Selecto extends EventEmitter<SelectoEvents> {
                     return;
                 }
 
-                const datas = this.gesto.getEventDatas();
-                const boundArea = datas.boundArea;
+                const data = this.gesto.getEventDatas();
+                const boundArea = data.boundArea;
 
-                datas.startX -= offsetX;
-                datas.startY -= offsetY;
-                datas.selectablePoints.forEach((points: number[][]) => {
+                data.startX -= offsetX;
+                data.startY -= offsetY;
+                data.selectablePoints.forEach((points: number[][]) => {
                     points.forEach((pos) => {
                         pos[0] -= offsetX;
                         pos[1] -= offsetY;
                     });
                 });
-                this._refreshGroups(datas);
+                this._refreshGroups(data);
 
                 boundArea.left -= offsetX;
                 boundArea.right -= offsetX;
@@ -517,9 +517,11 @@ class Selecto extends EventEmitter<SelectoEvents> {
         prevSelectedTargets: Array<HTMLElement | SVGElement>,
         selectedTargets: Array<HTMLElement | SVGElement>,
         rect: Rect,
-        inputEvent: any,
+        e: OnDragEvent,
         isStart?: boolean
     ) {
+        const inputEvent = e.inputEvent;
+        const data = e.data;
         const { added, removed, prevList, list } = diff(
             prevSelectedTargets,
             selectedTargets
@@ -564,6 +566,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 removed: removed.map((index) => prevList[index]),
                 rect,
                 inputEvent,
+                data: data.data,
             });
         }
         if (added.length || removed.length) {
@@ -596,6 +599,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 removed: removed.map((index) => prevList[index]),
                 rect,
                 inputEvent,
+                data: data.data,
             });
         }
     }
@@ -603,9 +607,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
         startSelectedTargets: Array<HTMLElement | SVGElement>,
         startPassedTargets: Array<HTMLElement | SVGElement>,
         rect: Rect,
-        e: OnDragEvent
+        e: OnDragEvent,
     ) {
-        const { inputEvent, isDouble } = e;
+        const { inputEvent, isDouble, data } = e;
         const { added, removed, prevList, list } = diff(
             startSelectedTargets,
             this.selectedTargets
@@ -660,10 +664,11 @@ class Selecto extends EventEmitter<SelectoEvents> {
             isDouble: !!isDouble,
             rect,
             inputEvent,
+            data: data.data,
         });
     }
     private _onDragStart = (e: OnDragStart, clickedTarget?: Element) => {
-        const { datas, clientX, clientY, inputEvent } = e;
+        const { data, clientX, clientY, inputEvent } = e;
         const {
             selectFromInside,
             selectByClick,
@@ -678,13 +683,14 @@ class Selecto extends EventEmitter<SelectoEvents> {
             e.stop();
             return;
         }
-        datas.innerWidth = window.innerWidth;
-        datas.innerHeight = window.innerHeight;
-        this.findSelectableTargets(datas);
-        datas.startSelectedTargets = this.selectedTargets;
-        datas.scaleMatrix = createMatrix();
-        datas.containerX = 0;
-        datas.containerY = 0;
+        data.data = {};
+        data.innerWidth = window.innerWidth;
+        data.innerHeight = window.innerHeight;
+        this.findSelectableTargets(data);
+        data.startSelectedTargets = this.selectedTargets;
+        data.scaleMatrix = createMatrix();
+        data.containerX = 0;
+        data.containerY = 0;
 
 
         let boundArea = {
@@ -696,9 +702,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
         if (rootContainer) {
             const containerRect = this.container.getBoundingClientRect();
 
-            datas.containerX = containerRect.left;
-            datas.containerY = containerRect.top;
-            datas.scaleMatrix = getDistElementMatrix(this.container, rootContainer);
+            data.containerX = containerRect.left;
+            data.containerY = containerRect.top;
+            data.scaleMatrix = getDistElementMatrix(this.container, rootContainer);
         }
 
         if (boundContainer) {
@@ -746,7 +752,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             }
         }
 
-        datas.boundArea = boundArea;
+        data.boundArea = boundArea;
 
         const hitRect = {
             left: clientX,
@@ -761,7 +767,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         if (!selectFromInside || (selectByClick && !clickBySelectEnd)) {
             const pointTarget = this._findElement(
                 clickedTarget || elementFromPoint(clientX, clientY),
-                datas.selectableTargets,
+                data.selectableTargets,
             );
             firstPassedTargets = pointTarget ? [pointTarget] : [];
         }
@@ -806,7 +812,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
          */
         const result =
             !(e as any).isClick && isTrusted
-                ? this.emit("dragStart", { ...e })
+                ? this.emit("dragStart", { ...e, data: data.data })
                 : true;
 
         if (!result) {
@@ -820,27 +826,27 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 firstPassedTargets,
                 this.continueSelectWithoutDeselect,
             );
-            datas.startPassedTargets = this.selectedTargets;
+            data.startPassedTargets = this.selectedTargets;
         } else {
-            datas.startPassedTargets = [];
+            data.startPassedTargets = [];
         }
         this._select(
             this.selectedTargets,
             firstPassedTargets,
             hitRect,
-            inputEvent,
+            e,
             true
         );
-        datas.startX = clientX;
-        datas.startY = clientY;
-        datas.selectFlag = false;
-        datas.preventDragFromInside = false;
+        data.startX = clientX;
+        data.startY = clientY;
+        data.selectFlag = false;
+        data.preventDragFromInside = false;
 
-        const offsetPos = calculateMatrixDist(datas.scaleMatrix, [
-            clientX - datas.containerX,
-            clientY - datas.containerY,
+        const offsetPos = calculateMatrixDist(data.scaleMatrix, [
+            clientX - data.containerX,
+            clientY - data.containerY,
         ]);
-        datas.boundsArea = this.target.style.cssText += `position: ${rootContainer ? "absolute" : "fixed"};`
+        data.boundsArea = this.target.style.cssText += `position: ${rootContainer ? "absolute" : "fixed"};`
             + `left:0px;top:0px;`
             + `transform: translate(${offsetPos[0]}px, ${offsetPos[1]}px)`;
 
@@ -850,15 +856,15 @@ class Selecto extends EventEmitter<SelectoEvents> {
             // prevent drag from inside when selectByClick is true and force call `selectEnd`
             if (preventDragFromInside) {
                 this._selectEnd(
-                    datas.startSelectedTargets,
-                    datas.startPassedTargets,
+                    data.startSelectedTargets,
+                    data.startPassedTargets,
                     hitRect,
                     e
                 );
-                datas.preventDragFromInside = true;
+                data.preventDragFromInside = true;
             }
         } else {
-            datas.selectFlag = true;
+            data.selectFlag = true;
             if (type === "touchstart") {
                 inputEvent.preventDefault();
             }
@@ -867,21 +873,21 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 this.dragScroll.dragStart(e, scrollOptions);
             }
             if (clickBySelectEnd) {
-                datas.selectFlag = false;
+                data.selectFlag = false;
                 e.preventDrag();
             }
         }
         return true;
     };
     private _checkSelected(e: any, rect = getRect(e, this.options.ratio)) {
-        const { datas, inputEvent } = e;
+        const { data, inputEvent } = e;
         const { top, left, width, height } = rect;
-        const selectFlag = datas.selectFlag;
+        const selectFlag = data.selectFlag;
         const {
             containerX,
             containerY,
             scaleMatrix,
-        } = datas;
+        } = data;
         const offsetPos = calculateMatrixDist(scaleMatrix, [
             left - containerX,
             top - containerY,
@@ -901,13 +907,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
             const passedTargets = this.hitTest(
                 rect,
-                datas.startX,
-                datas.startY,
-                datas,
+                data.startX,
+                data.startY,
+                data,
             );
             prevSelectedTargets = this.selectedTargets;
             selectedTargets = passTargets(
-                datas.startPassedTargets,
+                data.startPassedTargets,
                 passedTargets,
                 this.continueSelect && this.continueSelectWithoutDeselect,
             );
@@ -942,6 +948,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
          */
         const result = this.emit("drag", {
             ...e,
+            data: data.data,
             isSelect: selectFlag,
             rect,
         });
@@ -952,11 +959,11 @@ class Selecto extends EventEmitter<SelectoEvents> {
         }
 
         if (selectFlag) {
-            this._select(prevSelectedTargets, selectedTargets, rect, inputEvent);
+            this._select(prevSelectedTargets, selectedTargets, rect, e);
         }
     }
     private _onDrag = (e: OnDrag) => {
-        if (e.datas.selectFlag) {
+        if (e.data.selectFlag) {
             const scrollOptions = this.scrollOptions;
 
             // If it is a scrolling position, pass drag
@@ -967,9 +974,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
         this._checkSelected(e);
     };
     private _onDragEnd = (e: OnDragEvent) => {
-        const { datas, inputEvent } = e;
+        const { data, inputEvent } = e;
         const rect = getRect(e, this.options.ratio);
-        const selectFlag = datas.selectFlag;
+        const selectFlag = data.selectFlag;
 
         /**
          * When the drag ends (triggers on mouseup or touchend after drag), the dragEnd event is called.
@@ -977,32 +984,33 @@ class Selecto extends EventEmitter<SelectoEvents> {
          * @event dragEnd
          * @param {OnDragEnd} - Parameters for the dragEnd event
          */
-        if (inputEvent && !e.isClick) {
+        if (inputEvent) {
             this.emit("dragEnd", {
                 isDouble: !!e.isDouble,
                 isClick: !!e.isClick,
                 isDrag: false,
                 isSelect: selectFlag,
                 ...e,
+                data: data.data,
                 rect,
             });
         }
-        this.target.style.cssText += "display: none;";
+        this.target.style.cssText += "display: none;";   
         if (selectFlag) {
-            datas.selectFlag = false;
+            data.selectFlag = false;
             this.dragScroll.dragEnd();
         } else if (this.selectByClick && this.clickBySelectEnd) {
             // only clickBySelectEnd
             const pointTarget = this._findElement(
                 elementFromPoint(e.clientX, e.clientY),
-                datas.selectableTargets,
+                data.selectableTargets,
             );
-            this._select(this.selectedTargets, pointTarget ? [pointTarget] : [], rect, inputEvent);
+            this._select(this.selectedTargets, pointTarget ? [pointTarget] : [], rect, e);
         }
-        if (!datas.preventDragFromInside) {
+        if (!data.preventDragFromInside) {
             this._selectEnd(
-                datas.startSelectedTargets,
-                datas.startPassedTargets,
+                data.startSelectedTargets,
+                data.startPassedTargets,
                 rect,
                 e
             );
@@ -1171,15 +1179,15 @@ class Selecto extends EventEmitter<SelectoEvents> {
         }
         return pointTarget as any;
     }
-    private _refreshGroups(datas: any) {
-        const innerWidth = datas.innerWidth;
-        const innerHeight = datas.innerHeight;
+    private _refreshGroups(data: any) {
+        const innerWidth = data.innerWidth;
+        const innerHeight = data.innerHeight;
 
         if (!innerWidth || !innerHeight) {
-            datas.innerGroups = null;
+            data.innerGroups = null;
         } else {
-            const selectableTargets: Array<HTMLElement | SVGElement> = datas.selectableTargets;
-            const selectablePoints: number[][][] = datas.selectablePoints;
+            const selectableTargets: Array<HTMLElement | SVGElement> = data.selectableTargets;
+            const selectablePoints: number[][][] = data.selectablePoints;
             const groups: Record<string | number, Record<string | number, InnerGroup>> = {};
 
             selectablePoints.forEach((points, i) => {
@@ -1214,7 +1222,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 }
             });
 
-            datas.innerGroups = groups;
+            data.innerGroups = groups;
         }
     }
 }

@@ -154,7 +154,7 @@
         </div>
     </div>
 </body>
-<script src="../../dist/selecto.js"></script>
+<script src="../../packages/selecto/dist/selecto.js"></script>
 <script src="https://daybrush.com/moveable/release/latest/dist/moveable.js"></script>
 
 <script>
@@ -171,7 +171,7 @@
         = cubes.map(i => `<div class="cube"></div>`).join("");
     const selecto = new Selecto({
         container,
-        dragContainer: ".elements",
+        dragContainer: container,
         selectableTargets: [".selecto-area .cube"],
         hitRate: 0,
         selectByClick: true,
@@ -183,6 +183,9 @@
     });
     const moveable = new Moveable(container, {
         draggable: true,
+        snappable: true,
+        elementGuidelines: [".cube"],
+
     }).on("clickGroup", e => {
         selecto.clickTarget(e.inputEvent, e.inputTarget);
     }).on("dragStart", e => {
@@ -240,10 +243,12 @@
         if (e.isDragStart) {
             e.inputEvent.preventDefault();
 
-            setTimeout(() => {
+            e.data.timer = setTimeout(() => {
                 moveable.dragStart(e.inputEvent);
-            });
+            }, 100);
         }
+    }).on("dragEnd", e => {
+        clearTimeout(e.data.timer);
     }).on("keydown", e => {
         console.log(e);
     }).on("keyup", e => {

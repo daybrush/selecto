@@ -194,6 +194,7 @@ export interface CurrentTarget<T = Selecto> {
  * @property - removed elements
  * @property - Rect of Selection Element
  * @property - inputEvent
+ * @property - Data shared from dragStart, selectStart to dragEnd, selectEnd
  */
 export interface OnSelect<T = Selecto> extends CurrentTarget<T> {
     selected: Array<HTMLElement | SVGElement>;
@@ -201,6 +202,7 @@ export interface OnSelect<T = Selecto> extends CurrentTarget<T> {
     removed: Array<HTMLElement | SVGElement>;
     rect: Rect;
     inputEvent: any;
+    data: Record<string, any>;
 }
 /**
  * @memberof Selecto
@@ -222,6 +224,7 @@ export interface OnSelectEnd<T = Selecto> extends OnSelect<T>, CurrentTarget<T> 
 
 export interface OnDragEvent {
     datas: IObject<any>;
+    data: IObject<any>;
     clientX: number;
     clientY: number;
     deltaX: number;
