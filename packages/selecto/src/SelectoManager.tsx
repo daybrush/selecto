@@ -231,7 +231,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     /**
      * Find for selectableTargets again during drag event
      */
-    public findSelectableTargets(data: any = this.gesto.getEventDatas()) {
+    public findSelectableTargets(data: any = this.gesto.getEventData()) {
         const selectableTargets = this.getSelectableElements();
         const selectablePoints = selectableTargets.map(
             (target) => this.getElementPoints(target),
@@ -486,7 +486,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                     return;
                 }
 
-                const data = this.gesto.getEventDatas();
+                const data = this.gesto.getEventData();
                 const boundArea = data.boundArea;
 
                 data.startX -= offsetX;
@@ -995,7 +995,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 rect,
             });
         }
-        this.target.style.cssText += "display: none;";   
+        this.target.style.cssText += "display: none;";
         if (selectFlag) {
             data.selectFlag = false;
             this.dragScroll.dragEnd();
@@ -1199,7 +1199,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 points.forEach(pos => {
                     const x = Math.floor(pos[0] / innerWidth);
                     const y = Math.floor(pos[1] / innerHeight);
-    
+
                     minX = Math.min(x, minX);
                     maxX = Math.max(x, maxX);
                     minY = Math.min(y, minY);
@@ -1213,9 +1213,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
                             points: [],
                             targets: [],
                         };
-        
+
                         const { targets, points: groupPoints } = groups[x][y];
-        
+
                         targets.push(selectableTargets[i]);
                         groupPoints.push(points);
                     }

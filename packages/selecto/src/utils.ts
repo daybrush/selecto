@@ -128,13 +128,13 @@ export function getFastOverlapPoints(points1: number[][], points2: number[][]) {
 }
 export function getRect(
     e: any, ratio: number,
-    boundArea = e.datas.boundArea,
+    boundArea = e.data.boundArea,
 ): Rect {
     let {
         distX = 0,
         distY = 0,
     } = e;
-    const { startX, startY } = e.datas;
+    const { startX, startY } = e.data;
 
     if (ratio > 0) {
         const nextHeight = Math.sqrt((distX * distX + distY * distY) / (1 + ratio * ratio));
