@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.1](https://github.com/daybrush/selecto/compare/selecto@1.19.0...selecto@1.19.1) (2022-09-01)
+
+
+### :bug: Bug Fix
+
+* fix data name #99 ([a207ebe](https://github.com/daybrush/selecto/commit/a207ebeab56b20c3f2d82929fc6f7cf1c44d2667))
+* fix select box for rootMatrix #100 ([d60d601](https://github.com/daybrush/selecto/commit/d60d6017014f179423fce654619961308a7f7804))
+
+
+### :mega: Other
+
+* publish packages ([0d75334](https://github.com/daybrush/selecto/commit/0d7533495d2d9fde606a9207bff5e6228f242217))
+
+
+
 ## [1.19.0](https://github.com/daybrush/selecto/compare/selecto@1.18.0...selecto@1.19.0) (2022-08-30)
 
 

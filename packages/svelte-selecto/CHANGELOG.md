@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.1](https://github.com/daybrush/selecto/blob/master/packages/svelte-selecto/compare/svelte-selecto@1.19.0...svelte-selecto@1.19.1) (2022-09-01)
+
+
+### :mega: Other
+
+* publish packages ([0d75334](https://github.com/daybrush/selecto/blob/master/packages/svelte-selecto/commit/0d7533495d2d9fde606a9207bff5e6228f242217))
+
+
+
 ## [1.19.0](https://github.com/daybrush/selecto/blob/master/packages/svelte-selecto/compare/svelte-selecto@1.18.0...svelte-selecto@1.19.0) (2022-08-30)
 
 
