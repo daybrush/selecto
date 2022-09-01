@@ -141,7 +141,7 @@
         }
     </style>
     <div class="moveable app">
-        <div class="container">
+        <div class="container" style="transform: scale(0.5);">
             <div class="logo logos" id="logo">
                 <a href="https://github.com/daybrush/selecto" target="_blank"><img
                         src="https://daybrush.com/selecto/images/256x256.png" class="selecto" /></a>
@@ -171,6 +171,7 @@
         = cubes.map(i => `<div class="cube"></div>`).join("");
     const selecto = new Selecto({
         container,
+        rootContainer: document.body,
         dragContainer: container,
         selectableTargets: [".selecto-area .cube"],
         hitRate: 0,

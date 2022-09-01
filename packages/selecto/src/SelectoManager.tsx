@@ -98,7 +98,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     constructor(options: Partial<SelectoOptions> = {}) {
         super();
         this.target = options.portalContainer;
-        this.container = options.container || document.body;
+        let container = options.container;
         this.options = {
             portalContainer: null,
             container: null,
@@ -125,6 +125,12 @@ class Selecto extends EventEmitter<SelectoEvents> {
             ratio: 0,
             ...options,
         };
+        const portalContainer = this.options.portalContainer;
+
+        if (portalContainer) {
+            container = portalContainer.parentElement;
+        }
+        this.container = container || document.body;
         this.initElement();
         this.initDragScroll();
         this.setKeyController();
