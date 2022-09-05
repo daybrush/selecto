@@ -132,6 +132,12 @@ export interface SelectoOptions {
      */
     preventClickEventOnDragStart?: boolean;
     /**
+     * Prevent click event according to specific conditions.
+     * Returning true allows the click event, returning false prevents it.
+     * @default null
+     */
+    preventClickEventByCondition?: ((e: MouseEvent) => boolean) | null;
+    /**
      * Whether to prevent dragging of the right mouse button
      * @default true
      */

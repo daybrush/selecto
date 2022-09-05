@@ -370,6 +370,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             preventDefault,
             preventClickEventOnDragStart,
             preventClickEventOnDrag,
+            preventClickEventByCondition,
             preventRightClick = true,
         } = this.options;
         this.dragContainer =
@@ -383,6 +384,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             preventDefault,
             preventClickEventOnDragStart,
             preventClickEventOnDrag,
+            preventClickEventByCondition,
             preventRightClick,
         }).on({
             dragStart: this._onDragStart,
