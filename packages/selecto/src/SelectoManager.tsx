@@ -992,8 +992,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 passedTargets,
                 this.continueSelect && this.continueSelectWithoutDeselect,
             );
-
-            this.selectedTargets = selectedTargets;
         }
         /**
          * When the drag, the drag event is called.
