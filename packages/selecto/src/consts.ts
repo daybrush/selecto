@@ -107,4 +107,6 @@ export const METHODS = [
     "findSelectableTargets",
     "triggerDragStart",
     "checkScroll",
+    "selectTargetsByPoints",
+    "setSelectedTargetsByPoints",
 ] as const;
