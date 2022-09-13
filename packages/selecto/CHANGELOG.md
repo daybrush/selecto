@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.2](https://github.com/daybrush/selecto/compare/selecto@1.20.1...selecto@1.20.2) (2022-09-13)
+
+
+### :bug: Bug Fix
+
+* fix startSelected property ([8c88d61](https://github.com/daybrush/selecto/commit/8c88d61b3c94f79f07697585e806456a309c1099))
+
+
+### :mega: Other
+
+* publish packages ([3f008ae](https://github.com/daybrush/selecto/commit/3f008aee544e9ef22d630c1cd73af62e13201182))
+
+
+
 ## [1.20.1](https://github.com/daybrush/selecto/compare/selecto@1.20.0...selecto@1.20.1) (2022-09-13)
 
 
