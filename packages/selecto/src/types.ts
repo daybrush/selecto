@@ -194,15 +194,42 @@ export interface CurrentTarget<T = Selecto> {
 /**
  * @memberof Selecto
  * @typedef
+ */
+export interface SelectedTargets {
+    /**
+     * selected elements
+     */
+    selected: Array<HTMLElement | SVGElement>;
+    /**
+     * added elements
+     */
+    added: Array<HTMLElement | SVGElement>;
+    /**
+     * removed elements
+     */
+    removed: Array<HTMLElement | SVGElement>;
+}
+/**
+ * @memberof Selecto
+ * @extends Selecto.SelectedTargets
+ * @typedef
+ */
+export interface SelectedTargetsWithRect extends SelectedTargets {
+    /**
+     * @property - Rect of Selection Element
+     */
+    rect: Rect;
+}
+
+/**
+ * @memberof Selecto
+ * @extends Selecto.SelectedTargets
+ * @typedef
  * @property - An Selecto instance itself
- * @property - selected elements
- * @property - added elements
- * @property - removed elements
- * @property - Rect of Selection Element
  * @property - inputEvent
  * @property - Data shared from dragStart, selectStart to dragEnd, selectEnd
  */
-export interface OnSelect<T = Selecto> extends CurrentTarget<T> {
+export interface OnSelect<T = Selecto> extends CurrentTarget<T>, SelectedTargets {
     selected: Array<HTMLElement | SVGElement>;
     added: Array<HTMLElement | SVGElement>;
     removed: Array<HTMLElement | SVGElement>;

@@ -2,7 +2,6 @@
     "name": "selecto-root",
     "private": true,
     "description": "Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.",
-    
     "keywords": [
         "select",
         "selecto",
@@ -37,7 +36,7 @@
         "release": "lerna-helper release --base selecto"
     },
     "devDependencies": {
-        "@daybrush/jsdoc": "^0.4.0",
+        "@daybrush/jsdoc": "^0.4.3",
         "@daybrush/release": "^0.5.2",
         "cpx": "1.5.0",
         "daybrush-jsdoc-template": "^1.7.0",
