@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.1](https://github.com/daybrush/selecto/compare/1.20.0...1.20.1) (2022-09-13)
+### :sparkles: Packages
+* `lit-selecto` 1.20.1
+* `preact-selecto` 1.17.1
+* `react-selecto` 1.20.1
+* `selecto` 1.20.1
+* `svelte-selecto` 1.20.1
+* `vue-selecto` 1.20.1
+* `vue3-selecto` 1.6.1
+* `ngx-selecto` 1.20.1
+
+
+### :rocket: New Features
+
+* `selecto`
+    * support beforeSelected, startSelected property in select events ([bf906bb](https://github.com/daybrush/selecto/commit/bf906bb3702f1b4698d823ecbb5686c5bad40662))
+
+
+### :bug: Bug Fix
+
+* `selecto`
+    * fix select event ([5ce891a](https://github.com/daybrush/selecto/commit/5ce891a278f9156dd62952767862545cf2f696c2))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([1d0f3c8](https://github.com/daybrush/selecto/commit/1d0f3c8c10237cf76b43ef090f407f00547d0809))
+
+
+
 ## [1.20.0](https://github.com/daybrush/selecto/compare/1.19.1...1.20.0) (2022-09-13)
 ### :sparkles: Packages
 * `lit-selecto` 1.20.0
