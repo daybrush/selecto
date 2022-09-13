@@ -730,7 +730,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
          * });
          */
         this.emit("selectEnd", {
-            startSelected: startPassedTargets,
+            startSelected: startSelectedTargets,
             beforeSelected: startPassedTargets,
             selected: this.selectedTargets,
             added: added.map((index) => list[index]),
