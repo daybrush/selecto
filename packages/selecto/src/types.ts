@@ -185,9 +185,11 @@ export interface Point {
 /**
  * @memberof Selecto
  * @typedef
- * @property - An Selecto instance itself
  */
 export interface CurrentTarget<T = Selecto> {
+    /**
+     * An Selecto instance itself
+     */
     currentTarget: T;
 }
 
@@ -196,6 +198,10 @@ export interface CurrentTarget<T = Selecto> {
  * @typedef
  */
 export interface SelectedTargets {
+    /**
+     * before selecting elements
+     */
+    beforeSelected: Array<HTMLElement | SVGElement>;
     /**
      * selected elements
      */
@@ -216,42 +222,57 @@ export interface SelectedTargets {
  */
 export interface SelectedTargetsWithRect extends SelectedTargets {
     /**
-     * @property - Rect of Selection Element
+     * Rect of Selection Element
      */
     rect: Rect;
 }
 
 /**
  * @memberof Selecto
- * @extends Selecto.SelectedTargets
+ * @extends Selecto.CurrentTarget
+ * @extends Selecto.SelectedTargetsWithRect
  * @typedef
- * @property - An Selecto instance itself
- * @property - inputEvent
- * @property - Data shared from dragStart, selectStart to dragEnd, selectEnd
  */
-export interface OnSelect<T = Selecto> extends CurrentTarget<T>, SelectedTargets {
-    selected: Array<HTMLElement | SVGElement>;
-    added: Array<HTMLElement | SVGElement>;
-    removed: Array<HTMLElement | SVGElement>;
-    rect: Rect;
+export interface OnSelect<T = Selecto> extends CurrentTarget<T>, SelectedTargetsWithRect {
+    /**
+     * inputEvent
+     */
     inputEvent: any;
+    /**
+     * Data shared from dragStart, selectStart to dragEnd, selectEnd
+     */
     data: Record<string, any>;
 }
 /**
  * @memberof Selecto
  * @extends Selecto.OnSelect
+ * @extends Selecto.CurrentTarget
  * @typedef
- * @property - after added elements
- * @property - after removed elements
- * @property - Whether it is a mousedown or touchstart event
- * @property - Whether it is click
- * @property - Wheter it is double click or double start
  */
 export interface OnSelectEnd<T = Selecto> extends OnSelect<T>, CurrentTarget<T> {
+    /**
+     * start selected elements
+     */
+    startSelected: Array<HTMLElement | SVGElement>;
+    /**
+     * after added elements
+     */
     afterAdded: Array<HTMLElement | SVGElement>;
+    /**
+     * after removed elements
+     */
     afterRemoved: Array<HTMLElement | SVGElement>;
+    /**
+     * Whether it is a mousedown or touchstart event
+     */
     isDragStart: boolean;
+    /**
+     * Whether it is click
+     */
     isClick: boolean;
+    /**
+     * Wheter it is double click or double start
+     */
     isDouble: boolean;
 }
 

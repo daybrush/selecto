@@ -144,8 +144,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
     public setSelectedTargets(
         selectedTargets: Array<HTMLElement | SVGElement>
     ): SelectedTargets {
+        const beforeSelected = this.selectedTargets;
         const { added, removed, prevList, list } = diff(
-            this.selectedTargets,
+            beforeSelected,
             selectedTargets
         );
         this.selectedTargets = selectedTargets;
@@ -153,6 +154,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         return {
             added: added.map(index => list[index]),
             removed: removed.map(index => prevList[index]),
+            beforeSelected,
             selected: selectedTargets,
         };
     }
@@ -605,9 +607,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     ) {
         const inputEvent = e.inputEvent;
         const data = e.data;
-
-
-        const { added, removed } = this.setSelectedTargets(selectedTargets);
+        const result = this.setSelectedTargets(selectedTargets);
 
         if (isStart) {
             /**
@@ -641,15 +641,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
              * });
              */
             this.emit("selectStart", {
-                selected: selectedTargets,
-                added,
-                removed,
+                ...result,
                 rect,
                 inputEvent,
                 data: data.data,
             });
         }
-        if (added.length || removed.length) {
+        if (result.added.length || result.removed.length) {
             /**
              * When the select in real time, the select event is called.
              * @memberof Selecto
@@ -674,9 +672,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
              * });
              */
             this.emit("select", {
-                selected: selectedTargets,
-                added,
-                removed,
+                ...result,
                 rect,
                 inputEvent,
                 data: data.data,
@@ -734,6 +730,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
          * });
          */
         this.emit("selectEnd", {
+            startSelected: startPassedTargets,
+            beforeSelected: startPassedTargets,
             selected: this.selectedTargets,
             added: added.map((index) => list[index]),
             removed: removed.map((index) => prevList[index]),
