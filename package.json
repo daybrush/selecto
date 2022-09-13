@@ -24,7 +24,7 @@
         "build": "npm run build --prefix ./packages/selecto",
         "packages:update": "lerna-helper version && npm run update-type-consts",
         "update-type-consts": "node ./config/update-type-consts.js",
-        "packages:build": "lerna run build --ignore ngx-selecto --ignore storybook",
+        "packages:build": "npm run build --prefix packages/selecto && npm run update-type-consts && lerna run build --ignore ngx-selecto --ignore storybook --ignore selecto",
         "packages:publish": "lerna-helper publish --ignore ngx-selecto --commit 'chore: publish packages'",
         "changelog": "lerna-helper changelog --type all --base selecto",
         "changelog:root": "lerna-helper changelog --type root --base selecto",
