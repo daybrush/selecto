@@ -21,6 +21,7 @@
     "homepage": "https://github.com/daybrush/selecto#readme",
     "scripts": {
         "bootstrap": "lerna bootstrap",
+        "start:storybook": "npm run storybook --prefix ./packages/storybook",
         "build": "npm run build --prefix ./packages/selecto",
         "packages:update": "lerna-helper version && npm run update-type-consts",
         "update-type-consts": "node ./config/update-type-consts.js",

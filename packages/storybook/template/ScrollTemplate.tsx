@@ -229,7 +229,7 @@ export default {
             this.$refs.scroller.scrollTo(0, 0);
         },
         onScrollerScroll() {
-            this.$refs.selecto.
+            this.$refs.selecto.checkScroll();
         },
     },
     mounted() {
