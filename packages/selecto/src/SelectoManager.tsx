@@ -514,8 +514,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
             if (overlapSize === 0 && getAreaSize(points) === 0) {
                 targetSize = getLineSize(points);
                 overlapSize = getLineSize(overlapPoints);
-
-                console.log(targetSize, overlapSize);
             } else {
                 targetSize = getAreaSize(points);
             }
