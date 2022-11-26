@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.3](https://github.com/daybrush/selecto/compare/selecto@1.20.2...selecto@1.20.3) (2022-11-26)
+
+
+### :bug: Bug Fix
+
+* fix line size #110 ([1e87cad](https://github.com/daybrush/selecto/commit/1e87cadfa1d0496b0b439753a21aaa87341fa24a))
+* remove console.log ([a073446](https://github.com/daybrush/selecto/commit/a073446bcdf5bbdaee3aa751d9124d34f449cbe7))
+
+
+### :mega: Other
+
+* publish packages ([717fb31](https://github.com/daybrush/selecto/commit/717fb31fa0edc56498c6bfbd8dba53abed5b042d))
+
+
+
 ## [1.20.2](https://github.com/daybrush/selecto/compare/selecto@1.20.1...selecto@1.20.2) (2022-09-13)
 
 

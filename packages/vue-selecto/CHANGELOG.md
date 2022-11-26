@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.3](https://github.com/daybrush/selecto/blob/master/packages/vue-selecto/compare/vue-selecto@1.20.2...vue-selecto@1.20.3) (2022-11-26)
+
+
+### :mega: Other
+
+* publish packages ([717fb31](https://github.com/daybrush/selecto/blob/master/packages/vue-selecto/commit/717fb31fa0edc56498c6bfbd8dba53abed5b042d))
+
+
+
 ## [1.20.2](https://github.com/daybrush/selecto/blob/master/packages/vue-selecto/compare/vue-selecto@1.20.1...vue-selecto@1.20.2) (2022-09-13)
 
 
