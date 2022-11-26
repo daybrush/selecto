@@ -1,5 +1,5 @@
 import type { Hypertext, Rect } from "./types";
-import { IObject, addClass, hasClass, calculateBoundSize } from "@daybrush/utils";
+import { IObject, addClass, hasClass, calculateBoundSize, getDist } from "@daybrush/utils";
 import { diff } from "@egjs/children-differ";
 import { getMinMaxs } from "overlap-area";
 
@@ -198,4 +198,15 @@ export function passTargets(
         ...removed.map(index => prevList[index]),
         ...continueSelectWithoutDeselect ? maintained.map(([, nextIndex]) => list[nextIndex]) : [],
     ];
+}
+
+export function getLineSize(points: number[][]) {
+    let size = 0;
+    const length = points.length;
+
+    for (let i = 1; i < length; ++i) {
+        size = Math.max(getDist(points[i], points[i - 1]), size);
+    }
+
+    return size;
 }

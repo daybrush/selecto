@@ -33,6 +33,7 @@ import {
     passTargets,
     elementFromPoint,
     filterDuplicated,
+    getLineSize,
 } from "./utils";
 import {
     SelectoOptions,
@@ -492,6 +493,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             [right, bottom],
             [left, bottom],
         ];
+        const hitRateValue = splitUnit(`${hitRate}`);
+
         const isHit = (points: number[][]) => {
             const inArea = ignoreClick ? false : isInside([clientX, clientY], points);
 
@@ -503,10 +506,20 @@ class Selecto extends EventEmitter<SelectoEvents> {
             if (!overlapPoints.length) {
                 return false;
             }
-            const overlapSize = getAreaSize(overlapPoints);
-            const targetSize = getAreaSize(points);
+            let overlapSize = getAreaSize(overlapPoints);
 
-            const hitRateValue = splitUnit(`${hitRate}`);
+            // Line
+            let targetSize = 0;
+
+            if (overlapSize === 0 && getAreaSize(points) === 0) {
+                targetSize = getLineSize(points);
+                overlapSize = getLineSize(overlapPoints);
+
+                console.log(targetSize, overlapSize);
+            } else {
+                targetSize = getAreaSize(points);
+            }
+
 
             if (hitRateValue.unit === "px") {
                 return overlapSize >= hitRateValue.value;
