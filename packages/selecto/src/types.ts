@@ -8,6 +8,11 @@ import {
 } from "gesto";
 import { DragScrollOptions } from "@scena/dragscroll";
 
+export type ElementType = HTMLElement | SVGElement;
+export interface ElementRef<T> {
+    current?: T | undefined | null;
+    value?: T | undefined | null;
+}
 /**
  * @memberof Selecto
  * @typedef
@@ -31,7 +36,7 @@ export interface SelectoOptions {
      * Targets to select. You can register a queryselector or an Element.
      * @default []
      */
-    selectableTargets: Array<HTMLElement | string>;
+    selectableTargets: Array<ElementType | string | (() => ElementType | ElementType[]) | ElementRef<ElementType>>;
     /**
      * Whether to select from the target inside (If hitTest is 0, it becomes inside select as well)
      * @default true

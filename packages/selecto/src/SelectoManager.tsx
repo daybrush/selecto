@@ -12,6 +12,7 @@ import {
     isString,
     between,
     splitUnit,
+    isFunction,
 } from "@daybrush/utils";
 import { diff } from "@egjs/children-differ";
 import DragScroll from "@scena/dragscroll";
@@ -282,16 +283,22 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const selectableElements: Array<HTMLElement | SVGElement> = [];
 
         this.options.selectableTargets.forEach((target) => {
-            if (isObject(target)) {
+            if (isFunction(target)) {
+                const result = target();
+
+                if (result) {
+                    selectableElements.push(...[].slice.call(result));
+                }
+            } else if (target instanceof Node) {
                 selectableElements.push(target);
+            } else if (isObject(target)) {
+                selectableElements.push(target.value || target.current);
             } else {
                 const elements = [].slice.call(
                     document.querySelectorAll(target)
                 );
 
-                elements.forEach((el) => {
-                    selectableElements.push(el);
-                });
+                selectableElements.push(...elements);
             }
         });
 
