@@ -1,4 +1,4 @@
-import type { Hypertext, Rect } from "./types";
+import type { Hypertext, Point, Rect } from "./types";
 import { IObject, addClass, hasClass, calculateBoundSize, getDist } from "@daybrush/utils";
 import { diff } from "@egjs/children-differ";
 import { getMinMaxs } from "overlap-area";
@@ -168,7 +168,7 @@ export function getRect(
     };
 }
 
-export function getDefaultElementRect(el: HTMLElement | SVGElement) {
+export function getDefaultElementRect(el: HTMLElement | SVGElement): Point {
     const rect = el.getBoundingClientRect();
     const { left, top, width, height } = rect;
 

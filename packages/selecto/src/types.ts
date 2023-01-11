@@ -152,6 +152,11 @@ export interface SelectoOptions {
      * @private
      */
     portalContainer: HTMLElement | null;
+    /**
+     * Inspect the overflow area and exclude the outside target from the select.
+     * @default false
+     */
+    checkOverflow?: boolean;
 }
 /**
  * @memberof Selecto
@@ -358,4 +363,5 @@ export interface PointArea {
 export interface InnerGroup {
     targets: Array<HTMLElement | SVGElement>;
     points: number[][][];
+    inners: boolean[];
 }

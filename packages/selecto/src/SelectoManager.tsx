@@ -46,6 +46,7 @@ import {
     InnerGroup,
     SelectedTargets,
     SelectedTargetsWithRect,
+    Point,
 } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 
@@ -321,15 +322,61 @@ class Selecto extends EventEmitter<SelectoEvents> {
     }
     /**
      * Find for selectableTargets again during drag event
+     * You can update selectable targets during an event.
      */
-    public findSelectableTargets(data: any = this.gesto.getEventData()) {
+    public findSelectableTargets(data: any = this.gesto.getEventData()): Array<HTMLElement | SVGElement> {
         const selectableTargets = this.getSelectableElements();
         const selectablePoints = selectableTargets.map(
             (target) => this.getElementPoints(target),
         );
         data.selectableTargets = selectableTargets;
         data.selectablePoints = selectablePoints;
+        if (this.options.checkOverflow) {
+            const parentMap = new Map<Element, Point>();
+
+            data.selectableInners = selectableTargets.map((target, i) => {
+                let parentElement = target.parentElement;
+
+                const parents: Element[] = [];
+
+                while (parentElement && parentElement !== document.body) {
+                    let rect: Point = parentMap.get(parentElement);
+
+                    if (!rect) {
+                        const overflow = getComputedStyle(parentElement).overflow !== "visible";
+
+                        if (overflow) {
+                            rect = getDefaultElementRect(parentElement);
+
+                            parents.forEach(prevParentElement => {
+                                parentMap.set(prevParentElement, rect);
+                            })
+                            // TODO: multi parent
+                        }
+                    }
+                    if (rect) {
+                        const points1 = selectablePoints[i];
+                        const points2 = [rect.pos1, rect.pos2, rect.pos4, rect.pos3];
+
+                        const overlapPoints = getOverlapPoints(points1, points2);
+
+                        if (!overlapPoints.length) {
+                            return false;
+                        }
+                        break;
+                    }
+                    parents.push(parentElement);
+                    parentElement = parentElement.parentElement;
+                }
+                return true;
+            });
+        } else {
+            data.selectableInners = selectableTargets.map(() => true);
+        }
+
         this._refreshGroups(data);
+
+        return selectableTargets;
     }
     /**
      * External click or mouse events can be applied to the selecto.
@@ -542,8 +589,12 @@ class Selecto extends EventEmitter<SelectoEvents> {
         if (!innerGroups) {
             const selectableTargets: Array<HTMLElement | SVGElement> = data.selectableTargets;
             const selectablePoints: number[][][] = data.selectablePoints;
+            const selectableInners: boolean[] = data.selectableInners;
 
             return selectableTargets.filter((_, i) => {
+                if (!selectableInners[i]) {
+                    return false;
+                }
                 return isHit(selectablePoints[i], selectableTargets[i]);
             });
         }
@@ -565,10 +616,10 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 if (!group) {
                     continue;
                 }
-                const { points, targets } = group;
+                const { points, targets, inners } = group;
 
                 points.forEach((nextPoints, i) => {
-                    if (isHit(nextPoints, targets[i])) {
+                    if (inners[i] && isHit(nextPoints, targets[i])) {
                         selectedTargets.push(targets[i]);
                     }
                 });
@@ -1282,6 +1333,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         } else {
             const selectableTargets: Array<HTMLElement | SVGElement> = data.selectableTargets;
             const selectablePoints: number[][][] = data.selectablePoints;
+            const selectableInners: boolean[] = data.selectableInners;
             const groups: Record<string | number, Record<string | number, InnerGroup>> = {};
 
             selectablePoints.forEach((points, i) => {
@@ -1306,12 +1358,18 @@ class Selecto extends EventEmitter<SelectoEvents> {
                         groups[x][y] = groups[x][y] || {
                             points: [],
                             targets: [],
+                            inners: [],
                         };
 
-                        const { targets, points: groupPoints } = groups[x][y];
+                        const {
+                            targets,
+                            inners,
+                            points: groupPoints,
+                        } = groups[x][y];
 
                         targets.push(selectableTargets[i]);
                         groupPoints.push(points);
+                        inners.push(selectableInners[i])
                     }
                 }
             });
