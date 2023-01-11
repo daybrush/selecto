@@ -11267,10 +11267,10 @@ gensync@^1.0.0-beta.1, gensync@^1.0.0-beta.2:
   resolved "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
-gesto@^1.12.2, gesto@^1.13.1, gesto@^1.2.1, gesto@^1.3.0, gesto@^1.9.0:
-  version "1.13.4"
-  resolved "https://registry.npmjs.org/gesto/-/gesto-1.13.4.tgz#5f53608dfac589e21acd2b905f51fb259f15a77f"
-  integrity sha512-TkXGgv8nC/IIjOO2dMrgCNovSnuRfPTJybmtwponzGihCje8QgLEdMf+h/RERu6O+wq8FZTSJ6ihIO9ytt4/Qg==
+gesto@^1.15.0, gesto@^1.2.1, gesto@^1.3.0, gesto@^1.9.0:
+  version "1.15.0"
+  resolved "https://registry.npmjs.org/gesto/-/gesto-1.15.0.tgz#b5f3cbe456ca2016de58bd050a019d339f06dc9c"
+  integrity sha512-al19XPu2TA0KrVTDXIVzFqC/cgZv5hGyLj4IYOf+6iKx7AWag3rvt96C8fP9RaLaptGWgFrhr7c+KVu2F2pEOw==
   dependencies:
     "@daybrush/utils" "^1.7.1"
     "@scena/event-emitter" "^1.0.2"

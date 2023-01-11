@@ -252,6 +252,10 @@ export interface OnSelect<T = Selecto> extends CurrentTarget<T>, SelectedTargets
      * Data shared from dragStart, selectStart to dragEnd, selectEnd
      */
     data: Record<string, any>;
+    /**
+     * Whether or not you directly dragged
+     */
+    isTrusted: boolean;
 }
 /**
  * @memberof Selecto
@@ -300,6 +304,7 @@ export interface OnDragEvent {
     isClick?: boolean;
     isDouble?: boolean;
     inputEvent: any;
+    isTrusted: boolean;
 }
 export interface OnKeyEvent<T = Selecto> extends CurrentTarget<T> {
     keydownContinueSelect: boolean;

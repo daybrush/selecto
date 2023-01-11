@@ -396,6 +396,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             clientY,
             inputEvent: e,
             isClick: true,
+            isTrusted: false,
             stop: () => {
                 return false;
             },
@@ -715,6 +716,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 rect,
                 inputEvent,
                 data: data.data,
+                isTrusted: e.isTrusted,
             });
         }
         if (result.added.length || result.removed.length) {
@@ -746,6 +748,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 rect,
                 inputEvent,
                 data: data.data,
+                isTrusted: e.isTrusted,
             });
         }
     }
@@ -813,6 +816,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             rect,
             inputEvent,
             data: data.data,
+            isTrusted: e.isTrusted,
         });
     }
     private _onDragStart = (e: OnDragStart, clickedTarget?: Element) => {
