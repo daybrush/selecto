@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.0](https://github.com/daybrush/selecto/compare/1.20.3...1.21.0) (2023-01-11)
+### :sparkles: Packages
+* `lit-selecto` 1.21.0
+* `preact-selecto` 1.18.0
+* `react-selecto` 1.21.0
+* `selecto` 1.21.0
+* `svelte-selecto` 1.21.0
+* `vue-selecto` 1.21.0
+* `vue3-selecto` 1.7.0
+* `ngx-selecto` 1.21.0
+
+
+### :rocket: New Features
+
+* `selecto`
+    * add isTrusted property #116 ([a6dda2f](https://github.com/daybrush/selecto/commit/a6dda2fb13e07e85ebf9c0c534537a5d50acc643))
+    * add ref, function type in selectableTargets ([0b17e59](https://github.com/daybrush/selecto/commit/0b17e5920a682b3d2de63227a170237e64b5f73e))
+    * checkOverflow prop #115 ([746bd43](https://github.com/daybrush/selecto/commit/746bd43203943cd29acb14494c8de168925d6df8))
+
+
+### :bug: Bug Fix
+
+* `selecto`
+    * fix amount html ([84563ee](https://github.com/daybrush/selecto/commit/84563eed32a846dcc3ec0ed3fce194a9146cb242))
+    * fix zero size line #117 ([b2ad11c](https://github.com/daybrush/selecto/commit/b2ad11c10e235aa440937e268431306f451fff37))
+* Other
+    * fix root tests ([bce375d](https://github.com/daybrush/selecto/commit/bce375ddd4039bf9635ec724819f71fb1df31415))
+    * update release version ([2ba03af](https://github.com/daybrush/selecto/commit/2ba03af8811b045905fa107d35c9304b499979d2))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([efb0522](https://github.com/daybrush/selecto/commit/efb0522ca13cb2e636973b6eaf947d0675732eca))
+
+
+
 ## [1.20.3](https://github.com/daybrush/selecto/compare/1.20.2...1.20.3) (2022-11-26)
 ### :sparkles: Packages
 * `lit-selecto` 1.20.3
