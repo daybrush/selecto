@@ -156,7 +156,7 @@ export interface SelectoOptions {
      * Inspect the overflow area and exclude the outside target from the select.
      * @default false
      */
-    checkOverflow?: boolean;
+    checkOverflow: boolean;
 }
 /**
  * @memberof Selecto

@@ -125,6 +125,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             preventDragFromInside: true,
             dragCondition: null,
             rootContainer: null,
+            checkOverflow: false,
             getElementRect: getDefaultElementRect,
             cspNonce: "",
             ratio: 0,

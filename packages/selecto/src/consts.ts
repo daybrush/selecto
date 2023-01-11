@@ -38,6 +38,7 @@ export const PROPERTIES = [
     "rootContainer",
     "dragCondition",
     "clickBySelectEnd",
+    "checkOverflow",
 ] as const;
 /**
  * @memberof Selecto
@@ -78,6 +79,7 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     continueSelectWithoutDeselect: Boolean,
     preventClickEventOnDragStart: Boolean,
     preventClickEventOnDrag: Boolean,
+    checkOverflow: Boolean,
 };
 
 /**
