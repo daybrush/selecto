@@ -485,14 +485,15 @@ class Selecto extends EventEmitter<SelectoEvents> {
     private hitTest(
         selectRect: Rect,
         data: any,
+        gestoEvent?: any,
     ) {
         const { hitRate, selectByClick } = this.options;
         const { left, top, right, bottom } = selectRect;
         const innerGroups: Record<string | number, Record<string | number, InnerGroup>> = data.innerGroups;
         const innerWidth = data.innerWidth;
         const innerHeight = data.innerHeight;
-        const clientX = data.clientX;
-        const clientY = data.clientY;
+        const clientX = gestoEvent?.clientX;
+        const clientY = gestoEvent?.clientY;
         const ignoreClick = data.ignoreClick;
         const rectPoints = [
             [left, top],
@@ -502,7 +503,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         ];
         const hitRateValue = splitUnit(`${hitRate}`);
 
-        const isHit = (points: number[][]) => {
+        const isHit = (points: number[][], el: Element) => {
             const inArea = ignoreClick ? false : isInside([clientX, clientY], points);
 
             if (selectByClick && inArea) {
@@ -543,7 +544,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             const selectablePoints: number[][][] = data.selectablePoints;
 
             return selectableTargets.filter((_, i) => {
-                return isHit(selectablePoints[i]);
+                return isHit(selectablePoints[i], selectableTargets[i]);
             });
         }
         let selectedTargets: Array<HTMLElement | SVGElement> = [];
@@ -567,7 +568,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 const { points, targets } = group;
 
                 points.forEach((nextPoints, i) => {
-                    if (isHit(nextPoints)) {
+                    if (isHit(nextPoints, targets[i])) {
                         selectedTargets.push(targets[i]);
                     }
                 });
@@ -1004,6 +1005,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             const passedTargets = this.hitTest(
                 rect,
                 data,
+                e,
             );
             selectedTargets = passTargets(
                 data.startPassedTargets,
