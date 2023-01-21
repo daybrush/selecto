@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.22.0](https://github.com/daybrush/selecto/compare/1.21.0...1.22.0) (2023-01-21)
+### :sparkles: Packages
+* `lit-selecto` 1.22.0
+* `preact-selecto` 1.19.0
+* `react-selecto` 1.22.0
+* `selecto` 1.22.0
+* `svelte-selecto` 1.22.0
+* `vue-selecto` 1.22.0
+* `vue3-selecto` 1.8.0
+* `ngx-selecto` 1.22.0
+
+
+### :rocket: New Features
+
+* `selecto`
+    * add innerScrollOptions #115 ([d7622e0](https://github.com/daybrush/selecto/commit/d7622e04931a2341ba30bce095b4b0e6be03e785))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([01cc234](https://github.com/daybrush/selecto/commit/01cc2349da2361bd331b6454494aa61c51e8baf8))
+
+
+
 ## [1.21.0](https://github.com/daybrush/selecto/compare/1.20.3...1.21.0) (2023-01-11)
 ### :sparkles: Packages
 * `lit-selecto` 1.21.0

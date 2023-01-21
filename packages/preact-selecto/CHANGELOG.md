@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.0](https://github.com/daybrush/selecto/blob/master/packages/preact-selecto/compare/preact-selecto@1.18.0...preact-selecto@1.19.0) (2023-01-21)
+
+
+### :mega: Other
+
+* publish packages ([01cc234](https://github.com/daybrush/selecto/blob/master/packages/preact-selecto/commit/01cc2349da2361bd331b6454494aa61c51e8baf8))
+
+
+
 ## [1.18.0](https://github.com/daybrush/selecto/blob/master/packages/preact-selecto/compare/preact-selecto@1.17.3...preact-selecto@1.18.0) (2023-01-11)
 
 

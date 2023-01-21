@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.22.0](https://github.com/daybrush/selecto/compare/selecto@1.21.0...selecto@1.22.0) (2023-01-21)
+
+
+### :rocket: New Features
+
+* add innerScrollOptions #115 ([d7622e0](https://github.com/daybrush/selecto/commit/d7622e04931a2341ba30bce095b4b0e6be03e785))
+
+
+### :mega: Other
+
+* publish packages ([01cc234](https://github.com/daybrush/selecto/commit/01cc2349da2361bd331b6454494aa61c51e8baf8))
+
+
+
 ## [1.21.0](https://github.com/daybrush/selecto/compare/selecto@1.20.3...selecto@1.21.0) (2023-01-11)
 
 
