@@ -58,6 +58,7 @@
         <div class="target" style="top: 700px; left: 250px; width: 50px; height: 150px">T4</div>
     </div>
 </div>
+<div class="target" style="top: 700px; left: 250px; width: 50px; height: 150px">T4</div>
 <div class="hi"></div>
 <script>
     const viewer = new InfiniteViewer(
@@ -76,8 +77,12 @@ const selecto = new Selecto({
     selectFromInside: false,
     toggleContinueSelect: "shift",
     checkOverflow: true,
+    innerScrollOptions: true,
 }).on("scroll", ({ direction }) => {
     viewer.scrollBy(direction[0] * 10, direction[1] * 10);
+}).on("innerScroll", ({ container, direction }) => {
+    console.log("inner");
+    container.scrollBy(direction[0] * 10, direction[1] * 10);
 }).on("dragStart", e => {
     console.log("ds", e.inputEvent.target);
 }).on("drag", e => {

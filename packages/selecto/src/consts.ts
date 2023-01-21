@@ -39,6 +39,7 @@ export const PROPERTIES = [
     "dragCondition",
     "clickBySelectEnd",
     "checkOverflow",
+    "innerScrollOptions",
 ] as const;
 /**
  * @memberof Selecto
@@ -80,6 +81,7 @@ export const OPTION_TYPES: { [key in keyof SelectoOptions]: any } = {
     preventClickEventOnDragStart: Boolean,
     preventClickEventOnDrag: Boolean,
     checkOverflow: Boolean,
+    innerScrollOptions: Object,
 };
 
 /**
@@ -95,6 +97,7 @@ export const EVENTS = [
     "keydown",
     "keyup",
     "scroll",
+    "innerScroll",
 ] as const;
 
 /**

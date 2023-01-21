@@ -43,10 +43,9 @@ import {
     SelectoEvents,
     Rect,
     BoundContainer,
-    InnerGroup,
     SelectedTargets,
     SelectedTargetsWithRect,
-    Point,
+    InnerParentInfo,
 } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 
@@ -126,6 +125,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             dragCondition: null,
             rootContainer: null,
             checkOverflow: false,
+            innerScrollOptions: false,
             getElementRect: getDefaultElementRect,
             cspNonce: "",
             ratio: 0,
@@ -257,6 +257,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         this.keycon && this.keycon.destroy();
         this.gesto.unset();
         this.injectResult.destroy();
+        this.dragScroll.dragEnd();
         removeEvent(document, "selectstart", this._onDocumentSelectStart);
 
         this.keycon = null;
@@ -314,12 +315,16 @@ class Selecto extends EventEmitter<SelectoEvents> {
             return;
         }
         const scrollOptions = this.scrollOptions;
+        const innerScrollOptions = this.gesto.getEventData().innerScrollOptions;
+        const hasScrollOptions = innerScrollOptions || scrollOptions?.container;
 
         // If it is a scrolling position, pass drag
-        scrollOptions?.container && this.dragScroll.checkScroll({
-            inputEvent: this.gesto.getCurrentEvent(),
-            ...scrollOptions,
-        });
+        if (hasScrollOptions) {
+            this.dragScroll.checkScroll({
+                inputEvent: this.gesto.getCurrentEvent(),
+                ...(innerScrollOptions || scrollOptions),
+            });
+        }
     }
     /**
      * Find for selectableTargets again during drag event
@@ -330,48 +335,63 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const selectablePoints = selectableTargets.map(
             (target) => this.getElementPoints(target),
         );
+
         data.selectableTargets = selectableTargets;
         data.selectablePoints = selectablePoints;
-        if (this.options.checkOverflow) {
-            const parentMap = new Map<Element, Point>();
+        data.selectableParentMap = null;
 
-            data.selectableInners = selectableTargets.map((target, i) => {
+        const options = this.options;
+        const hasIndexesMap = options.checkOverflow || options.innerScrollOptions;
+
+        if (hasIndexesMap) {
+            const parentMap = new Map<Element, InnerParentInfo>();
+
+            data.selectableInnerScrollParentMap = parentMap;
+            data.selectableInnerScrollPathsList = selectableTargets.map((target, index) => {
                 let parentElement = target.parentElement;
 
-                const parents: Element[] = [];
+                let parents: Element[] = [];
+                const paths: Element[] = [];
 
                 while (parentElement && parentElement !== document.body) {
-                    let rect: Point = parentMap.get(parentElement);
+                    let info: InnerParentInfo = parentMap.get(parentElement);
 
-                    if (!rect) {
+                    if (!info) {
                         const overflow = getComputedStyle(parentElement).overflow !== "visible";
 
                         if (overflow) {
-                            rect = getDefaultElementRect(parentElement);
+                            const rect = getDefaultElementRect(parentElement);
 
+                            info = {
+                                parentElement,
+                                indexes: [],
+                                points: [rect.pos1, rect.pos2, rect.pos4, rect.pos3],
+                                paths: [...paths],
+                            };
+
+                            parents.push(parentElement);
                             parents.forEach(prevParentElement => {
-                                parentMap.set(prevParentElement, rect);
-                            })
-                            // TODO: multi parent
+                                parentMap.set(prevParentElement, info);
+                            });
+                            parents = [];
                         }
                     }
-                    if (rect) {
-                        const points1 = selectablePoints[i];
-                        const points2 = [rect.pos1, rect.pos2, rect.pos4, rect.pos3];
+                    if (info) {
+                        parentElement = info.parentElement;
 
-                        const overlapPoints = getOverlapPoints(points1, points2);
-
-                        if (!overlapPoints.length) {
-                            return false;
-                        }
-                        break;
+                        parentMap.get(parentElement).indexes.push(index);
+                        paths.push(parentElement);
+                    } else {
+                        parents.push(parentElement);
                     }
-                    parents.push(parentElement);
                     parentElement = parentElement.parentElement;
                 }
-                return true;
+
+                return paths;
             });
-        } else {
+        }
+
+        if (!options.checkOverflow) {
             data.selectableInners = selectableTargets.map(() => true);
         }
 
@@ -538,7 +558,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     ) {
         const { hitRate, selectByClick } = this.options;
         const { left, top, right, bottom } = selectRect;
-        const innerGroups: Record<string | number, Record<string | number, InnerGroup>> = data.innerGroups;
+        const innerGroups: Record<string | number, Record<string | number, number[]>> = data.innerGroups;
         const innerWidth = data.innerWidth;
         const innerHeight = data.innerHeight;
         const clientX = gestoEvent?.clientX;
@@ -588,11 +608,11 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 return rate >= Math.min(100, hitRateValue.value);
             }
         };
-        if (!innerGroups) {
-            const selectableTargets: Array<HTMLElement | SVGElement> = data.selectableTargets;
-            const selectablePoints: number[][][] = data.selectablePoints;
-            const selectableInners: boolean[] = data.selectableInners;
+        const selectableTargets: Array<HTMLElement | SVGElement> = data.selectableTargets;
+        const selectablePoints: number[][][] = data.selectablePoints;
+        const selectableInners: boolean[] = data.selectableInners;
 
+        if (!innerGroups) {
             return selectableTargets.filter((_, i) => {
                 if (!selectableInners[i]) {
                     return false;
@@ -618,11 +638,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 if (!group) {
                     continue;
                 }
-                const { points, targets, inners } = group;
+                group.forEach(index => {
+                    const points = selectablePoints[index];
+                    const inner = selectableInners[index];
+                    const target = selectableTargets[index];
 
-                points.forEach((nextPoints, i) => {
-                    if (inners[i] && isHit(nextPoints, targets[i])) {
-                        selectedTargets.push(targets[i]);
+                    if (inner && isHit(points, target)) {
+                        selectedTargets.push(target);
                     }
                 });
             }
@@ -631,11 +653,23 @@ class Selecto extends EventEmitter<SelectoEvents> {
     }
     private initDragScroll() {
         this.dragScroll
+            .on("scrollDrag", ({ next }) => {
+                next(this.gesto.getCurrentEvent());
+            })
             .on("scroll", ({ container, direction }) => {
-                this.emit("scroll", {
-                    container,
-                    direction,
-                });
+                const innerScrollOptions = this.gesto.getEventData().innerScrollOptions;
+
+                if (innerScrollOptions) {
+                    this.emit("innerScroll", {
+                        container,
+                        direction,
+                    });
+                } else {
+                    this.emit("scroll", {
+                        container,
+                        direction,
+                    });
+                }
             })
             .on("move", ({ offsetX, offsetY, inputEvent }) => {
                 const gesto = this.gesto;
@@ -649,12 +683,41 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
                 data.startX -= offsetX;
                 data.startY -= offsetY;
-                data.selectablePoints.forEach((points: number[][]) => {
-                    points.forEach((pos) => {
-                        pos[0] -= offsetX;
-                        pos[1] -= offsetY;
+
+                const innerScrollOptions = this.gesto.getEventData().innerScrollOptions;
+                const container = innerScrollOptions?.container;
+                let isMoveInnerScroll = false;
+
+                if (container) {
+                    const parentMap: Map<Element, InnerParentInfo> = data.selectableInnerScrollParentMap;
+                    const parentInfo = parentMap.get(container);
+
+                    if (parentInfo) {
+                        parentInfo.paths.forEach(scrollContainer => {
+                            const containerInfo = parentMap.get(scrollContainer);
+
+                            containerInfo.points.forEach(pos => {
+                                pos[0] -= offsetX;
+                                pos[1] -= offsetY;
+                            });
+                        });
+                        parentInfo.indexes.forEach(index => {
+                            data.selectablePoints[index].forEach((pos) => {
+                                pos[0] -= offsetX;
+                                pos[1] -= offsetY;
+                            });
+                        });
+                        isMoveInnerScroll = true;
+                    }
+                }
+                if (!isMoveInnerScroll) {
+                    data.selectablePoints.forEach((points: number[][]) => {
+                        points.forEach((pos) => {
+                            pos[0] -= offsetX;
+                            pos[1] -= offsetY;
+                        });
                     });
-                });
+                }
                 this._refreshGroups(data);
 
                 boundArea.left -= offsetX;
@@ -666,7 +729,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                     offsetX,
                     offsetY,
                     inputEvent.inputEvent,
-                    false
+                    // false
                 );
                 this._checkSelected(this.gesto.getCurrentEvent());
             });
@@ -1022,8 +1085,39 @@ class Selecto extends EventEmitter<SelectoEvents> {
             if (type === "touchstart") {
                 inputEvent.preventDefault();
             }
-            const { scrollOptions } = this.options;
-            if (scrollOptions && scrollOptions.container) {
+            const { scrollOptions, innerScrollOptions } = this.options;
+
+            let isInnerScroll = false
+
+            if (innerScrollOptions) {
+                const inputEvent = e.inputEvent;
+                const target = inputEvent.target;
+
+                let innerScrollElement: HTMLElement | null = null;
+                let parentElement = target;
+
+                while (parentElement && parentElement !== document.body) {
+
+                    const overflow = getComputedStyle(parentElement).overflow !== "visible";
+
+                    if (overflow) {
+                        innerScrollElement = parentElement;
+                        break;
+                    }
+                    parentElement = parentElement.parentElement;
+                }
+                if (innerScrollElement) {
+                    data.innerScrollOptions = {
+                        container: innerScrollElement,
+                        checkScrollEvent: true,
+                        ...(innerScrollOptions === true ? {} : innerScrollOptions),
+                    };
+                    this.dragScroll.dragStart(e, data.innerScrollOptions);
+
+                    isInnerScroll = true;
+                }
+            }
+            if (!isInnerScroll && scrollOptions && scrollOptions.container) {
                 this.dragScroll.dragStart(e, scrollOptions);
             }
             if (clickBySelectEnd) {
@@ -1114,9 +1208,11 @@ class Selecto extends EventEmitter<SelectoEvents> {
     private _onDrag = (e: OnDrag) => {
         if (e.data.selectFlag) {
             const scrollOptions = this.scrollOptions;
+            const innerScrollOptions = e.data.innerScrollOptions;
+            const hasScrollOptions = innerScrollOptions || scrollOptions?.container;
 
             // If it is a scrolling position, pass drag
-            if (scrollOptions?.container && this.dragScroll.drag(e, scrollOptions)) {
+            if (hasScrollOptions && !e.isScroll && this.dragScroll.drag(e, innerScrollOptions || scrollOptions)) {
                 return;
             }
         }
@@ -1332,14 +1428,45 @@ class Selecto extends EventEmitter<SelectoEvents> {
     private _refreshGroups(data: any) {
         const innerWidth = data.innerWidth;
         const innerHeight = data.innerHeight;
+        const selectablePoints: number[][][] = data.selectablePoints;
 
+        if (this.options.checkOverflow) {
+            const innerScrollContainer = this.gesto.getEventData().innerScrollOptions?.container;
+            const parentMap: Map<Element, InnerParentInfo> = data.selectableInnerScrollParentMap;
+            const innerScrollPathsList: Element[][] = data.selectableInnerScrollPathsList;
+
+            data.selectableInners = innerScrollPathsList.map((innerScrollPaths, i) => {
+                let isAlwaysTrue = false;
+                return innerScrollPaths.every(target => {
+                    if (isAlwaysTrue) {
+                        return true;
+                    }
+                    if (target === innerScrollContainer) {
+                        isAlwaysTrue = true;
+                        return true;
+                    }
+
+                    const rect = parentMap.get(target);
+
+                    if (rect) {
+                        const points1 = selectablePoints[i];
+                        const points2 = rect.points;
+                        const overlapPoints = getOverlapPoints(points1, points2);
+
+                        if (!overlapPoints.length) {
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+            });
+        }
         if (!innerWidth || !innerHeight) {
             data.innerGroups = null;
         } else {
-            const selectableTargets: Array<HTMLElement | SVGElement> = data.selectableTargets;
             const selectablePoints: number[][][] = data.selectablePoints;
-            const selectableInners: boolean[] = data.selectableInners;
-            const groups: Record<string | number, Record<string | number, InnerGroup>> = {};
+
+            const groups: Record<string | number, Record<string | number, number[]>> = {};
 
             selectablePoints.forEach((points, i) => {
                 let minX = Infinity;
@@ -1360,21 +1487,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 for (let x = minX; x <= maxX; ++x) {
                     for (let y = minY; y <= maxY; ++y) {
                         groups[x] = groups[x] || {};
-                        groups[x][y] = groups[x][y] || {
-                            points: [],
-                            targets: [],
-                            inners: [],
-                        };
+                        groups[x][y] = groups[x][y] || [];
 
-                        const {
-                            targets,
-                            inners,
-                            points: groupPoints,
-                        } = groups[x][y];
-
-                        targets.push(selectableTargets[i]);
-                        groupPoints.push(points);
-                        inners.push(selectableInners[i])
+                        groups[x][y].push(i);
                     }
                 }
             });

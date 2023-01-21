@@ -1916,7 +1916,7 @@
   dependencies:
     prototype-minify "^1.0.0"
 
-"@daybrush/utils@1.6.0", "@daybrush/utils@^0.10.0", "@daybrush/utils@^0.10.1", "@daybrush/utils@^0.11.0", "@daybrush/utils@^1.0.0", "@daybrush/utils@^1.1.1", "@daybrush/utils@^1.3.1", "@daybrush/utils@^1.4.0", "@daybrush/utils@^1.6.0", "@daybrush/utils@^1.7.1":
+"@daybrush/utils@^0.10.0", "@daybrush/utils@^0.10.1", "@daybrush/utils@^0.11.0", "@daybrush/utils@^1.0.0", "@daybrush/utils@^1.1.1", "@daybrush/utils@^1.3.1", "@daybrush/utils@^1.4.0", "@daybrush/utils@^1.6.0", "@daybrush/utils@^1.7.1":
   version "1.7.1"
   resolved "https://registry.npmjs.org/@daybrush/utils/-/utils-1.7.1.tgz"
   integrity sha512-ruVDIfXeVAF4s0RxJoNx5hTjxlIRMnKoJ7N5e2m9eDyluIXB12EvhMPQdoq4a/ohJ+cPgj2MiWS5Lvmpsrx8Gg==
@@ -3306,12 +3306,12 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@scena/dragscroll@^1.0.3", "@scena/dragscroll@^1.1.1", "@scena/dragscroll@^1.2.0", "@scena/dragscroll@^1.2.1":
-  version "1.3.0"
-  resolved "https://registry.npmjs.org/@scena/dragscroll/-/dragscroll-1.3.0.tgz#3a9f30a4153eeb2d25df22004ddf602db6d55583"
-  integrity sha512-UlK/g9IX8fJ8+YczqfUT7WDjx/5KKQMU2/uZLYLXV8FWuzWS2WWpt2u1G6KCIF65380oCnCYOs7nOrYpedsOaQ==
+"@scena/dragscroll@^1.0.3", "@scena/dragscroll@^1.1.1", "@scena/dragscroll@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.npmjs.org/@scena/dragscroll/-/dragscroll-1.4.0.tgz#220b2430c16119cd3e70044ee533a5b9a43cffd7"
+  integrity sha512-3O8daaZD9VXA9CP3dra6xcgt/qrm0mg0xJCwiX6druCteQ9FFsXffkF8PrqxY4Z4VJ58fFKEa0RlKqbsi/XnRA==
   dependencies:
-    "@daybrush/utils" "1.6.0"
+    "@daybrush/utils" "^1.6.0"
     "@scena/event-emitter" "^1.0.2"
 
 "@scena/event-emitter@^1.0.2", "@scena/event-emitter@^1.0.3", "@scena/event-emitter@^1.0.4", "@scena/event-emitter@^1.0.5":
@@ -11267,10 +11267,10 @@ gensync@^1.0.0-beta.1, gensync@^1.0.0-beta.2:
   resolved "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
-gesto@^1.15.0, gesto@^1.2.1, gesto@^1.3.0, gesto@^1.9.0:
-  version "1.15.0"
-  resolved "https://registry.npmjs.org/gesto/-/gesto-1.15.0.tgz#b5f3cbe456ca2016de58bd050a019d339f06dc9c"
-  integrity sha512-al19XPu2TA0KrVTDXIVzFqC/cgZv5hGyLj4IYOf+6iKx7AWag3rvt96C8fP9RaLaptGWgFrhr7c+KVu2F2pEOw==
+gesto@^1.15.1, gesto@^1.2.1, gesto@^1.3.0, gesto@^1.9.0:
+  version "1.15.1"
+  resolved "https://registry.npmjs.org/gesto/-/gesto-1.15.1.tgz#16eb927f5319995abca37bafafe90d423be0becf"
+  integrity sha512-mqdBeVeYpymupHojEEyH33u0KvL/hbG6gKbqoQKoR7aeWrN82CIXYZkAo4Ie81PUhxS5HNDdmJVcSzqOpPm0JQ==
   dependencies:
     "@daybrush/utils" "^1.7.1"
     "@scena/event-emitter" "^1.0.2"

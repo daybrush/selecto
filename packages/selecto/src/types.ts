@@ -97,6 +97,11 @@ export interface SelectoOptions {
      */
     scrollOptions: DragScrollOptions;
     /**
+     * Set the inner scroll options, time, etc. to automatically scroll by dragging.
+     * @default null
+     */
+    innerScrollOptions: boolean | Partial<DragScrollOptions>;
+    /**
      * hecks whether this is an element to input text or contentEditable, and prevents dragging.
      * @default false
      */
@@ -184,6 +189,13 @@ export interface Rect {
     right: number;
     width: number;
     height: number;
+}
+
+export interface InnerParentInfo {
+    parentElement: HTMLElement;
+    points: number[][];
+    indexes: number[];
+    paths: Element[];
 }
 
 export interface Point {
@@ -353,6 +365,7 @@ export interface SelectoEvents {
     keydown: OnKeyEvent;
     keyup: OnKeyEvent;
     scroll: OnScroll;
+    innerScroll: OnScroll;
 }
 export type SelectoProperties = { [P in typeof PROPERTIES[number]]: SelectoOptions[P] };
 export type SelectoMethods = { [P in typeof METHODS[number]]: Selecto[P] };

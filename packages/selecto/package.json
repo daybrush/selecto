@@ -35,12 +35,12 @@
     "dependencies": {
         "@daybrush/utils": "^1.7.1",
         "@egjs/children-differ": "^1.0.1",
-        "@scena/dragscroll": "^1.2.1",
+        "@scena/dragscroll": "^1.4.0",
         "@scena/event-emitter": "^1.0.5",
         "css-styled": "^1.0.0",
         "css-to-mat": "^1.0.3",
         "framework-utils": "^1.1.0",
-        "gesto": "^1.15.0",
+        "gesto": "^1.15.1",
         "keycon": "^1.2.0",
         "overlap-area": "^1.1.0"
     },

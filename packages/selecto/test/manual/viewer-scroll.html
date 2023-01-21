@@ -41,28 +41,28 @@
             height: 500px;
             background: #f5e0e0;
         }
-        
     </style>
 
 <body>
     <div class="button"> Shift </div>
 </body>
+<script src="https://daybrush.com/infinite-viewer/release/latest/dist/infinite-viewer.js"></script>
 <!-- <script src="https://daybrush.com/selecto/release/latest/dist/selecto.js"></script> -->
 <script src="../../dist/selecto.js"></script>
-
-<div class="target" style="top: 50px; left: 50px; width: 50px; height: 50px">T1</div>
-<div class="target" style="top: 50px; left: 150px; width: 150px; height: 50px">T2</div>
-<div class="target" style="top: 150px; left: 50px; width: 100px; height: 50px">T3</div>
-<div class="target" style="top: 300px; left: 250px; width: 50px; height: 150px">T4</div>
-<div class="target" style="top: 700px; left: 250px; width: 50px; height: 150px">T5</div>
+<div class="container">
+    <div class="viewport">
+        <div class="target" style="top: 50px; left: 50px; width: 50px; height: 50px">T1</div>
+        <div class="target" style="top: 50px; left: 150px; width: 150px; height: 50px">T2</div>
+        <div class="target" style="top: 150px; left: 50px; width: 100px; height: 50px">T3</div>
+        <div class="target" style="top: 300px; left: 250px; width: 50px; height: 150px">T4</div>
+    </div>
+</div>
+<div class="hi"></div>
 <script>
-
-document.documentElement.addEventListener("scroll", () => {
-    console.log("DES");
-});
-document.body.addEventListener("scroll", () => {
-    console.log("DES");
-});
+    const viewer = new InfiniteViewer(
+        document.querySelector(".container"),
+        document.querySelector(".viewport"),
+    );
 const selecto = new Selecto({
     container: document.body,
     // boundContainer: document.querySelector(".viewport"),
@@ -71,12 +71,24 @@ const selecto = new Selecto({
     selectFromInside: false,
     toggleContinueSelect: "shift",
     scrollOptions: {
-        container: () => document.documentElement,
+        container: () => document.querySelector(".container"),
+        // useScroll: true,
+        getScrollPosition: () => {
+            return [
+                viewer.getScrollLeft(),
+                viewer.getScrollTop(),
+            ];
+        },
         throttleTime: 20,
-        checkScrollEvent: true,
+        checkScrollEvent: (_, callback) => {
+            viewer.on("scroll", callback);
+            return () => {
+                viewer.off("scroll", callback);
+            };
+        },
     },
 }).on("scroll", ({ direction }) => {
-    document.documentElement.scrollBy(direction[0] * 10, direction[1] * 10);
+    viewer.scrollBy(direction[0] * 10, direction[1] * 10);
 }).on("dragStart", e => {
     console.log("ds", e.inputEvent.target);
 }).on("drag", e => {
