@@ -1,6 +1,6 @@
 {
     "name": "vue-selecto",
-    "version": "1.21.0",
+    "version": "1.22.0",
     "description": "A Vue 2 Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
     "types": "declaration/index.d.ts",
     "main": "dist/selecto.cjs.js",
@@ -36,7 +36,7 @@
         "dist/*"
     ],
     "dependencies": {
-        "selecto": "~1.21.0"
+        "selecto": "~1.22.0"
     },
     "devDependencies": {
         "@daybrush/builder": "^0.1.2",
