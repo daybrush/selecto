@@ -76,7 +76,7 @@ export interface SelectoOptions {
      * Determines which key to continue selecting the next target without deselect via keydown and keyup.
      * The initially set `continueSelectWithoutDeselect` value is the inactive(keyup) value.
      */
-     toggleContinueSelectWithoutDeselect: string[][] | string[] | string | null;
+    toggleContinueSelectWithoutDeselect: string[][] | string[] | string | null;
     /**
      * The container for keydown and keyup events.
      */

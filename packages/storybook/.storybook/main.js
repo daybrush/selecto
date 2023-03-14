@@ -27,7 +27,7 @@ module.exports = {
         "../stories/**/*.stories.@(js|jsx|ts|tsx)"
     ],
     addons: [
-        // "@storybook/addon-knobs/register",
+        "@storybook/addon-google-analytics",
         "@storybook/addon-docs/register",
         "@storybook/addon-controls/register",
         "@storybook/addon-viewport/register",

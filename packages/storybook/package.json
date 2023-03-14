@@ -23,6 +23,7 @@
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-controls": "^6.0.21",
     "@storybook/addon-docs": "^6.0.21",
+    "@storybook/addon-google-analytics": "^6.2.9",
     "@storybook/addon-knobs": "^6.4.0",
     "@storybook/addon-links": "^6.0.21",
     "@storybook/addon-viewport": "^6.0.21",
