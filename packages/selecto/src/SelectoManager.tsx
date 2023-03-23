@@ -260,6 +260,11 @@ class Selecto extends EventEmitter<SelectoEvents> {
         this.dragScroll.dragEnd();
         removeEvent(document, "selectstart", this._onDocumentSelectStart);
 
+        if (!this.options.portalContainer) {
+            this.target.parentElement?.removeChild(this.target);
+        }
+
+
         this.keycon = null;
         this.gesto = null;
         this.injectResult = null;
