@@ -49,10 +49,18 @@
     },
     "workspaces": {
         "nohoist": [
+            "**/vue-tsc",
+            "**/vue-tsc/**",
             "**/@daybrush/builder",
             "**/@daybrush/builder/**",
             "**/rollup-plugin-vue",
-            "**/rollup-plugin-vue/**"
+            "**/rollup-plugin-vue/**",
+            "**/vue-template-compiler",
+            "**/vue-template-compiler/**",
+            "**/@vue/*",
+            "**/@vue/*/**",
+            "**/vue",
+            "**/vue/**"
         ],
         "packages": [
             "packages/*",

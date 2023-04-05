@@ -8,13 +8,17 @@ import VanillaSelecto, {
   EVENTS,
   PROPERTIES,
   METHODS,
+  SelectoMethods,
 } from "selecto";
 import { isUndefined } from "@daybrush/utils";
+import { MethodInterface } from "framework-utils";
+import { defineComponent } from "vue";
+import { VueSelectoEvents } from "./types";
 
 const methods: Record<string, any> = {};
 
 METHODS.forEach((name) => {
-  methods[name] = function(this: any, ...args: any[]) {
+  methods[name] = function (this: any, ...args: any[]) {
     return this.$_selecto[name](...args);
   };
 });
@@ -25,10 +29,19 @@ PROPERTIES.forEach((name) => {
     return this.$_selecto[name] = value;
   };
 });
-export default {
+const VueSelecto = defineComponent<
+  Partial<SelectoOptions>,
+  {},
+  {},
+  {},
+  MethodInterface<SelectoMethods, VanillaSelecto, VueSelecto>,
+  {},
+  {},
+  VueSelectoEvents
+>({
   name: "selecto",
-  methods,
-  props: OPTIONS,
+  methods: methods as any,
+  props: OPTIONS as any,
   watch,
   mounted(this: any) {
     const props = this.$props;
@@ -57,5 +70,10 @@ export default {
   beforeUnmount(this: any) {
     this.$_selecto.destroy();
   },
-};
+});
+interface VueSelecto extends MethodInterface<SelectoMethods, VanillaSelecto, VueSelecto>, Partial<SelectoOptions>  {
+  
+}
+
+export default VueSelecto;
 </script>

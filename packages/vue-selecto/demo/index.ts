@@ -1,5 +1,6 @@
 import Vue from 'vue';
-import App from './InfiniteViewer.vue';
+import App from './App.vue';
+// import App from './InfiniteViewer.vue';
 
 
 new Vue({

@@ -1294,13 +1294,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
             const result = this._sameCombiKey(e, options.toggleContinueSelect);
 
             this._keydownContinueSelect = result;
-            isKeyDown = result;
+            isKeyDown ||= result;
         }
         if (!this._keydownContinueSelectWithoutDeselection) {
             const result = this._sameCombiKey(e, options.toggleContinueSelectWithoutDeselect);
 
             this._keydownContinueSelectWithoutDeselection = result;
-            isKeyDown = isKeyDown || result;
+            isKeyDown ||= result;
         }
         if (!isKeyDown) {
             return;
@@ -1344,13 +1344,13 @@ class Selecto extends EventEmitter<SelectoEvents> {
             const result = this._sameCombiKey(e, options.toggleContinueSelect, true);
             this._keydownContinueSelect = !result;
 
-            isKeyUp = result;
+            isKeyUp ||= result;
         }
         if (this._keydownContinueSelectWithoutDeselection) {
             const result = this._sameCombiKey(e, options.toggleContinueSelectWithoutDeselect, true);
             this._keydownContinueSelectWithoutDeselection = !result;
 
-            isKeyUp = isKeyUp || result;
+            isKeyUp ||= result;
         }
         if (!isKeyUp) {
             return;

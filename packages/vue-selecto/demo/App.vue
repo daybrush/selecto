@@ -91,9 +91,11 @@ export default {
       });
     },
     onKeydown() {
+      console.log("keydown");
       document.querySelector(".button").classList.add("selected");
     },
     onKeyup() {
+      console.log("keyup");
       document.querySelector(".button").classList.remove("selected");
     }
   }
