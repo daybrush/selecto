@@ -1087,9 +1087,10 @@ class Selecto extends EventEmitter<SelectoEvents> {
             }
         } else {
             data.selectFlag = true;
-            if (type === "touchstart") {
-                inputEvent.preventDefault();
-            }
+            // why?
+            // if (type === "touchstart") {
+            //     inputEvent.preventDefault();
+            // }
             const { scrollOptions, innerScrollOptions } = this.options;
 
             let isInnerScroll = false
