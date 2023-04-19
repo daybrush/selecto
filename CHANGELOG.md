@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.22.2](https://github.com/daybrush/selecto/compare/1.22.1...1.22.2) (2023-04-19)
+### :sparkles: Packages
+* `lit-selecto` 1.22.2
+* `preact-selecto` 1.19.2
+* `react-selecto` 1.22.2
+* `selecto` 1.22.2
+* `svelte-selecto` 1.22.2
+* `vue-selecto` 1.22.2
+* `vue3-selecto` 1.8.3
+* `ngx-selecto` 1.22.2
+
+
+### :bug: Bug Fix
+
+* `vue3-selecto`, `vue-selecto`, `selecto`, `react-selecto`, `preact-selecto`, `lit-selecto`
+    * fix declaration config #122 ([165d2e5](https://github.com/daybrush/selecto/commit/165d2e5d85be7d2a496502f77387909cf43f2589))
+* `vue3-selecto`, `vue-selecto`, `selecto`
+    * fix vue3-selecto type #125 ([0cc04be](https://github.com/daybrush/selecto/commit/0cc04be4055f2c1b5fca99a1e17b8fb19f014ff0))
+* `selecto`
+    * fix preventDefault #126 ([fb810d0](https://github.com/daybrush/selecto/commit/fb810d032e69d3eb23edd7f2c7a9ee4899f008fb))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([0db5d0f](https://github.com/daybrush/selecto/commit/0db5d0fc467b2839b0f33303f7d23a1b7b054d7a))
+* `vue3-selecto`
+    * update vue3-selecto version ([5b8ccd3](https://github.com/daybrush/selecto/commit/5b8ccd33e4f8d5fdcce23557354165f894bae139))
+
+
+
 ## [1.22.1](https://github.com/daybrush/selecto/compare/1.22.0...1.22.1) (2023-03-23)
 ### :sparkles: Packages
 * `lit-selecto` 1.22.1
