@@ -987,7 +987,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
         if (!selectFromInside || (selectByClick && !clickBySelectEnd)) {
             const pointTarget = this._findElement(
-                clickedTarget || elementFromPoint(clientX, clientY),
+                clickedTarget || inputEvent.target, // elementFromPoint(clientX, clientY),
                 data.selectableTargets,
             );
             firstPassedTargets = pointTarget ? [pointTarget] : [];
@@ -1254,7 +1254,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         } else if (this.selectByClick && this.clickBySelectEnd) {
             // only clickBySelectEnd
             const pointTarget = this._findElement(
-                elementFromPoint(e.clientX, e.clientY),
+                inputEvent?.target || elementFromPoint(e.clientX, e.clientY),
                 data.selectableTargets,
             );
             this._select(pointTarget ? [pointTarget] : [], rect, e);

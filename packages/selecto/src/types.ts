@@ -31,7 +31,7 @@ export interface SelectoOptions {
      * The area to drag selection element.
      * @default container
      */
-    dragContainer: Element | Window | Element[] | string;
+    dragContainer: Element | Window | Element[] | string | null | undefined;
     /**
      * Targets to select. You can register a queryselector or an Element.
      * @default []
