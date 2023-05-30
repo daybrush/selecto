@@ -1,6 +1,6 @@
 {
     "name": "lit-selecto",
-    "version": "1.22.3",
+    "version": "1.22.4",
     "description": "A Lit Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
     "types": "declaration/index.d.ts",
     "main": "dist/selecto.cjs.js",
@@ -42,6 +42,6 @@
         "typescript": "^4.5.0"
     },
     "dependencies": {
-        "selecto": "~1.22.3"
+        "selecto": "~1.22.4"
     }
 }
