@@ -1,0 +1,77 @@
+
+<iframe width="1000" height="1000" id="iframe"></iframe>
+<script src="../../dist/selecto.js"></script>
+<script>
+    const iframeWindow = iframe.contentWindow;
+    const iframeDocument = iframe.contentDocument;
+
+    iframeDocument.body.innerHTML = `
+    <style>
+
+    .target,
+    .target2 {
+        position: absolute;
+        background: #faa;
+        box-sizing: border-box;
+    }
+
+    .target.selected {
+        border: 4px solid #f55;
+    }
+
+    </style>
+    <div class="target" style="top: 50px; left: 50px; width: 50px; height: 50px">T1</div>
+    <div class="target" style="top: 50px; left: 150px; width: 150px; height: 50px">T2</div>
+    <div class="target" style="top: 150px; left: 50px; width: 100px; height: 50px">T3</div>
+    <div class="target" style="top: 300px; left: 250px; width: 50px; height: 150px">T4</div>
+    <div class="target" style="top: 200px; left: 400px; width: 100px; height: 0px"></div>
+
+    <div class="target2" style="top: 330px; left: 80px; width: 120px; height: 120px" contenteditable="true">T7</div>
+
+    `;
+    
+    const selecto = new Selecto({
+        container: iframeDocument.body,
+        dragContainer: iframeWindow,
+        hitRate: 0,
+        ratio: 0,
+        selectableTargets: [".target"],
+        selectFromInside: false,
+        selectByClick: true,
+        toggleContinueSelect: "shift",
+        // continueSelectWithoutDeselect: true,
+    }).on("dragStart", e => {
+        console.log("ds", e.inputEvent.target);
+    }).on("drag", e => {
+        selecto.findSelectableTargets();
+    }).on("selectStart", e => {
+        console.log("start", e);
+        e.added.forEach(el => {
+            el.classList.add("selected");
+        });
+        e.removed.forEach(el => {
+            el.classList.remove("selected");
+        });
+    }).on("selectStart", () => {
+        setTimeout(() => {
+            document.body.insertAdjacentHTML("beforeend", `<div class="target" style="top: 300px; left: 50px; width: 50px; height: 50px">T6</div>`);
+        });
+    }).on("select", e => {
+        console.log(e.removed, e.added);
+    }).on("selectEnd", e => {
+        if (e.isDouble) {
+            console.log("dblclick");
+        }
+        console.log("end", e);
+        e.afterAdded.forEach(el => {
+            el.classList.add("selected");
+        });
+        e.afterRemoved.forEach(el => {
+            el.classList.remove("selected");
+        });
+    }).on("keydown", () => {
+        document.querySelector(".button").classList.add("selected");
+    }).on("keyup", () => {
+        document.querySelector(".button").classList.remove("selected");
+    });
+</script>

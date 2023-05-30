@@ -1,5 +1,5 @@
 import type { Hypertext, Point, Rect } from "./types";
-import { IObject, addClass, hasClass, calculateBoundSize, getDist } from "@daybrush/utils";
+import { IObject, addClass, hasClass, calculateBoundSize, getDist, getDocument } from "@daybrush/utils";
 import { diff } from "@egjs/children-differ";
 import { getMinMaxs } from "overlap-area";
 
@@ -213,8 +213,4 @@ export function getLineSize(points: number[][]) {
     }
 
     return size;
-}
-
-export function getDocument(el: Node) {
-    return el.ownerDocument || document;
 }

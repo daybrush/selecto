@@ -13,6 +13,8 @@ import {
     between,
     splitUnit,
     isFunction,
+    getWindow,
+    getDocument,
 } from "@daybrush/utils";
 import { diff } from "@egjs/children-differ";
 import DragScroll from "@scena/dragscroll";
@@ -35,7 +37,6 @@ import {
     elementFromPoint,
     filterDuplicated,
     getLineSize,
-    getDocument,
 } from "./utils";
 import {
     SelectoOptions,
@@ -443,7 +444,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             this.keycon = null;
         }
         if (toggleContinueSelect || toggleContinueSelectWithoutDeselect) {
-            this.keycon = new KeyController(keyContainer || window);
+            this.keycon = new KeyController(keyContainer || getWindow(this.container));
             this.keycon
                 .keydown(this._onKeyDown)
                 .keyup(this._onKeyUp)
@@ -544,7 +545,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 : dragContainer || (this.target.parentNode as any);
         this.gesto = new Gesto(this.dragContainer, {
             checkWindowBlur: true,
-            container: window,
+            container: getWindow(container),
             checkInput,
             preventDefault,
             preventClickEventOnDragStart,
@@ -911,8 +912,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
             return;
         }
         data.data = {};
-        data.innerWidth = window.innerWidth;
-        data.innerHeight = window.innerHeight;
+        const win = getWindow(this.container);
+        data.innerWidth = win.innerWidth;
+        data.innerHeight = win.innerHeight;
         this.findSelectableTargets(data);
         data.startSelectedTargets = this.selectedTargets;
         data.scaleMatrix = createMatrix();
@@ -1414,7 +1416,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         }
         let dragContainer = this.dragContainer;
 
-        if (dragContainer === window) {
+        if (dragContainer === getWindow(this.container)) {
             dragContainer = doc.documentElement;
         }
         const containers =
