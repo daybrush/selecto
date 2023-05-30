@@ -1,6 +1,6 @@
 {
     "name": "vue3-selecto",
-    "version": "1.8.5",
+    "version": "1.8.6",
     "description": "A Vue 3 Selecto Component that allows you to select elements in the drag area using the mouse or touch.",
     "types": "declaration/index.d.ts",
     "main": "dist/selecto.cjs.js",
@@ -36,7 +36,7 @@
         "dist/*"
     ],
     "dependencies": {
-        "selecto": "~1.22.4"
+        "selecto": "~1.22.5"
     },
     "devDependencies": {
         "@daybrush/builder": "^0.1.2",

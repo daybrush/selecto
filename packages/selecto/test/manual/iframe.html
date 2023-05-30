@@ -54,7 +54,7 @@
         });
     }).on("selectStart", () => {
         setTimeout(() => {
-            document.body.insertAdjacentHTML("beforeend", `<div class="target" style="top: 300px; left: 50px; width: 50px; height: 50px">T6</div>`);
+            iframeDocument.body.insertAdjacentHTML("beforeend", `<div class="target" style="top: 300px; left: 50px; width: 50px; height: 50px">T6</div>`);
         });
     }).on("select", e => {
         console.log(e.removed, e.added);
@@ -70,8 +70,8 @@
             el.classList.remove("selected");
         });
     }).on("keydown", () => {
-        document.querySelector(".button").classList.add("selected");
+        iframeDocument.querySelector(".button").classList.add("selected");
     }).on("keyup", () => {
-        document.querySelector(".button").classList.remove("selected");
+        iframeDocument.querySelector(".button").classList.remove("selected");
     });
 </script>
