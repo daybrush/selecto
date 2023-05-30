@@ -35,6 +35,7 @@ import {
     elementFromPoint,
     filterDuplicated,
     getLineSize,
+    getDocument,
 } from "./utils";
 import {
     SelectoOptions,
@@ -288,6 +289,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
      * Get all elements set in `selectableTargets`.
      */
     public getSelectableElements() {
+        const container = this.container;
         const selectableElements: Array<HTMLElement | SVGElement> = [];
 
         this.options.selectableTargets.forEach((target) => {
@@ -303,7 +305,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 selectableElements.push(target.value || target.current);
             } else {
                 const elements = [].slice.call(
-                    document.querySelectorAll(target)
+                    (getDocument(container)).querySelectorAll(target)
                 );
 
                 selectableElements.push(...elements);
@@ -347,6 +349,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
         const options = this.options;
         const hasIndexesMap = options.checkOverflow || options.innerScrollOptions;
+        const doc = getDocument(this.container);
 
         if (hasIndexesMap) {
             const parentMap = new Map<Element, InnerParentInfo>();
@@ -358,7 +361,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 let parents: Element[] = [];
                 const paths: Element[] = [];
 
-                while (parentElement && parentElement !== document.body) {
+                while (parentElement && parentElement !== doc.body) {
                     let info: InnerParentInfo = parentMap.get(parentElement);
 
                     if (!info) {
@@ -515,11 +518,14 @@ class Selecto extends EventEmitter<SelectoEvents> {
         this.gesto.options.checkInput = value;
     }
     private initElement() {
+        const container = this.container;
+
         this.target = createElement(
             (<div className={CLASS_NAME}></div>) as any,
             this.target,
-            this.container
+            container,
         );
+
 
         const target = this.target;
 
@@ -534,7 +540,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         } = this.options;
         this.dragContainer =
             typeof dragContainer === "string"
-                ? [].slice.call(document.querySelectorAll(dragContainer))
+                ? [].slice.call(getDocument(container).querySelectorAll(dragContainer))
                 : dragContainer || (this.target.parentNode as any);
         this.gesto = new Gesto(this.dragContainer, {
             checkWindowBlur: true,
@@ -914,6 +920,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         data.containerY = 0;
 
 
+        const container = this.container;
         let boundArea = {
             left: -Infinity,
             top: -Infinity,
@@ -950,7 +957,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
 
             if (boundElement) {
                 if (isString(boundElement)) {
-                    rectElement = document.querySelector(boundElement);
+                    rectElement = getDocument(container).querySelector(boundElement);
                 } else if (boundElement === true) {
                     rectElement = this.container;
                 } else {
@@ -1102,7 +1109,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 let innerScrollElement: HTMLElement | null = null;
                 let parentElement = target;
 
-                while (parentElement && parentElement !== document.body) {
+                while (parentElement && parentElement !== getDocument(container).body) {
 
                     const overflow = getComputedStyle(parentElement).overflow !== "visible";
 
@@ -1228,6 +1235,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const { data, inputEvent } = e;
         const rect = getRect(e, this.options.ratio);
         const selectFlag = data.selectFlag;
+        const container = this.container;
 
         /**
          * When the drag ends (triggers on mouseup or touchend after drag), the dragEnd event is called.
@@ -1254,7 +1262,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         } else if (this.selectByClick && this.clickBySelectEnd) {
             // only clickBySelectEnd
             const pointTarget = this._findElement(
-                inputEvent?.target || elementFromPoint(e.clientX, e.clientY),
+                inputEvent?.target || elementFromPoint(container, e.clientX, e.clientY),
                 data.selectableTargets,
             );
             this._select(pointTarget ? [pointTarget] : [], rect, e);
@@ -1399,13 +1407,15 @@ class Selecto extends EventEmitter<SelectoEvents> {
         }
     };
     private _onDocumentSelectStart = (e: any) => {
+        const doc = getDocument(this.container);
+
         if (!this.gesto.isFlag()) {
             return;
         }
         let dragContainer = this.dragContainer;
 
         if (dragContainer === window) {
-            dragContainer = document.documentElement;
+            dragContainer = doc.documentElement;
         }
         const containers =
             dragContainer instanceof Element

@@ -33,9 +33,13 @@ export function filterDuplicated<T>(arr: T[]): T[] {
         return true;
     });
 }
-export function elementFromPoint(clientX: number, clientY: number): HTMLElement | SVGElement | null {
-    return (document.elementFromPoint && document.elementFromPoint(clientX, clientY)) as any || null;
+
+export function elementFromPoint(baseNode: Node, clientX: number, clientY: number): HTMLElement | SVGElement | null {
+    const doc = getDocument(baseNode);
+
+    return (doc.elementFromPoint && doc.elementFromPoint(clientX, clientY)) as any || null;
 }
+
 export function createElement(
     jsx: Hypertext,
     prevTarget?: HTMLElement | SVGElement,
@@ -209,4 +213,8 @@ export function getLineSize(points: number[][]) {
     }
 
     return size;
+}
+
+export function getDocument(el: Node) {
+    return el.ownerDocument || document;
 }

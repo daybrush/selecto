@@ -1916,7 +1916,7 @@
   dependencies:
     prototype-minify "^1.0.0"
 
-"@daybrush/utils@^0.10.0", "@daybrush/utils@^0.10.1", "@daybrush/utils@^0.11.0", "@daybrush/utils@^1.0.0", "@daybrush/utils@^1.1.1", "@daybrush/utils@^1.3.1", "@daybrush/utils@^1.4.0", "@daybrush/utils@^1.6.0", "@daybrush/utils@^1.7.1":
+"@daybrush/utils@^0.10.0", "@daybrush/utils@^0.10.1", "@daybrush/utils@^0.11.0", "@daybrush/utils@^1.0.0", "@daybrush/utils@^1.1.1", "@daybrush/utils@^1.11.0", "@daybrush/utils@^1.3.1", "@daybrush/utils@^1.4.0", "@daybrush/utils@^1.6.0", "@daybrush/utils@^1.7.1":
   version "1.7.1"
   resolved "https://registry.npmjs.org/@daybrush/utils/-/utils-1.7.1.tgz"
   integrity sha512-ruVDIfXeVAF4s0RxJoNx5hTjxlIRMnKoJ7N5e2m9eDyluIXB12EvhMPQdoq4a/ohJ+cPgj2MiWS5Lvmpsrx8Gg==
@@ -8677,6 +8677,13 @@ css-styled@^1.0.0:
   dependencies:
     "@daybrush/utils" "^1.0.0"
     string-hash "^1.1.3"
+
+css-styled@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/css-styled/-/css-styled-1.0.7.tgz#08bb17676b27e62b3978d1072c3dbbebb96edb51"
+  integrity sha512-ud6VclnjgwWxkxz3vrLTv7oEKP3xP/VeydTj5VAqa8zp5LFqKnHb7oSMgW+Z1R70Oz7sfBNEkv/H+yE9FhM4HQ==
+  dependencies:
+    "@daybrush/utils" "^1.11.0"
 
 css-to-mat@^1.0.3:
   version "1.0.3"
