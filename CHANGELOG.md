@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.22.6](https://github.com/daybrush/selecto/compare/1.22.5...1.22.6) (2023-06-04)
+### :sparkles: Packages
+* `lit-selecto` 1.22.6
+* `preact-selecto` 1.19.6
+* `react-selecto` 1.22.6
+* `selecto` 1.22.6
+* `svelte-selecto` 1.22.7
+* `vue-selecto` 1.22.6
+* `vue3-selecto` 1.8.7
+* `ngx-selecto` 1.22.6
+
+
+### :bug: Bug Fix
+
+* `selecto`
+    * fix node, window condition #132 ([865029d](https://github.com/daybrush/selecto/commit/865029dfbb845775e76f52d332dc2ad940e52466))
+
+
+### :mega: Other
+
+* `vue3-selecto`, `vue-selecto`, `svelte-selecto`, `react-selecto`, `preact-selecto`, `ngx-selecto`, `lit-selecto`
+    * publish packages ([533bd18](https://github.com/daybrush/selecto/commit/533bd18facefe9c6bd5cc4d279756733ef8acf84))
+
+
+
 ## [1.22.5](https://github.com/daybrush/selecto/compare/1.22.3...1.22.5) (2023-06-04)
 ### :sparkles: Packages
 * `lit-selecto` 1.22.5

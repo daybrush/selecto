@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.22.6](https://github.com/daybrush/selecto/compare/selecto@1.22.5...selecto@1.22.6) (2023-06-04)
+
+
+### :bug: Bug Fix
+
+* fix node, window condition #132 ([865029d](https://github.com/daybrush/selecto/commit/865029dfbb845775e76f52d332dc2ad940e52466))
+
+
+
 ## [1.22.5](https://github.com/daybrush/selecto/compare/selecto@1.22.3...selecto@1.22.5) (2023-06-04)
 
 
