@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.22.5](https://github.com/daybrush/selecto/compare/selecto@1.22.3...selecto@1.22.5) (2023-06-04)
+
+
+### :bug: Bug Fix
+
+* fix iframe css ([0d217f1](https://github.com/daybrush/selecto/commit/0d217f183277db95db9f9c18b08551578a7c42cf))
+* fix window, document owner #132 ([aff5069](https://github.com/daybrush/selecto/commit/aff50695a7f4d575692da9ef4ef83422e2acb340))
+
+
+### :mega: Other
+
+* publish packages ([d5da64e](https://github.com/daybrush/selecto/commit/d5da64e0c8e01f658832197a2ad888305c8fafec))
+* publish packages ([11ec4aa](https://github.com/daybrush/selecto/commit/11ec4aab38a176b2386ee8ad93bac8a0f41ecdf2))
+
+
+
 ## [1.22.3](https://github.com/daybrush/selecto/compare/selecto@1.22.2...selecto@1.22.3) (2023-05-04)
 
 

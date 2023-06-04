@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.22.5](https://github.com/daybrush/selecto/compare/1.22.3...1.22.5) (2023-06-04)
+### :sparkles: Packages
+* `lit-selecto` 1.22.5
+* `preact-selecto` 1.19.5
+* `react-selecto` 1.22.5
+* `selecto` 1.22.5
+* `svelte-selecto` 1.22.6
+* `vue-selecto` 1.22.5
+* `vue3-selecto` 1.8.6
+* `ngx-selecto` 1.22.5
+
+
+### :rocket: New Features
+
+* `svelte-selecto`
+    * support svelte types ([58f2e89](https://github.com/daybrush/selecto/commit/58f2e898a03af4cfcb9038c6afc6951c5531f99b))
+
+
+### :bug: Bug Fix
+
+* `selecto`
+    * fix iframe css ([0d217f1](https://github.com/daybrush/selecto/commit/0d217f183277db95db9f9c18b08551578a7c42cf))
+    * fix window, document owner #132 ([aff5069](https://github.com/daybrush/selecto/commit/aff50695a7f4d575692da9ef4ef83422e2acb340))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([d5da64e](https://github.com/daybrush/selecto/commit/d5da64e0c8e01f658832197a2ad888305c8fafec))
+    * publish packages ([11ec4aa](https://github.com/daybrush/selecto/commit/11ec4aab38a176b2386ee8ad93bac8a0f41ecdf2))
+
+
+
 ## [1.22.3](https://github.com/daybrush/selecto/compare/1.22.2...1.22.3) (2023-05-04)
 ### :sparkles: Packages
 * `lit-selecto` 1.22.3
