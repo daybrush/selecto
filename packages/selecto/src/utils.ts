@@ -46,7 +46,7 @@ export function createElement(
     container?: HTMLElement | SVGElement,
 ) {
     const { tag, children, attributes, className, style } = jsx;
-    const el = prevTarget || document.createElement(tag) as HTMLElement | SVGElement;
+    const el = prevTarget || getDocument(container).createElement(tag) as HTMLElement | SVGElement;
 
     for (const name in attributes) {
         el.setAttribute(name, attributes[name]);

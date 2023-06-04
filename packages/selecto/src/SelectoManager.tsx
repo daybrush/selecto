@@ -15,6 +15,7 @@ import {
     isFunction,
     getWindow,
     getDocument,
+    isNode,
 } from "@daybrush/utils";
 import { diff } from "@egjs/children-differ";
 import DragScroll from "@scena/dragscroll";
@@ -300,7 +301,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 if (result) {
                     selectableElements.push(...[].slice.call(result));
                 }
-            } else if (target instanceof Node) {
+            } else if (isNode(target)) {
                 selectableElements.push(target);
             } else if (isObject(target)) {
                 selectableElements.push(target.value || target.current);
@@ -1419,10 +1420,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
         if (dragContainer === getWindow(this.container)) {
             dragContainer = doc.documentElement;
         }
-        const containers =
-            dragContainer instanceof Element
-                ? [dragContainer]
-                : ([].slice.call(dragContainer) as Element[]);
+        const containers = isNode(dragContainer)
+            ? [dragContainer]
+            : ([].slice.call(dragContainer) as Element[]);
         const target = e.target;
 
         containers.some((container) => {
