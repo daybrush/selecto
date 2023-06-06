@@ -12,10 +12,7 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "paths": {
-      "ngx-selecto": [
-        "dist/ngx-selecto/ngx-selecto",
-        "dist/ngx-selecto"
-      ]
+      "ngx-selecto": ["projects/ngx-selecto/src/public-api.ts"]
     },
     "declaration": false,
     "downlevelIteration": true,
@@ -24,10 +21,7 @@
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ]
+    "lib": ["es2020", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
