@@ -85,7 +85,7 @@ export interface SelectoOptions {
      * The rate at which the target overlaps the drag area to be selected. If you want an absolute number, set it to a px value. (ex: 10px)
      * @default 100
      */
-    hitRate: number | string;
+    hitRate: number | string | ((element: Element) => number | string);
     /**
      * Container to bound the selection area. If false, do not bound. If true, it is the container of selecto.
      * @default false
