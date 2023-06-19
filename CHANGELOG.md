@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.0](https://github.com/daybrush/selecto/compare/1.22.6...1.23.0) (2023-06-19)
+### :sparkles: Packages
+* `lit-selecto` 1.23.0
+* `preact-selecto` 1.20.0
+* `react-selecto` 1.23.0
+* `selecto` 1.23.0
+* `svelte-selecto` 1.23.0
+* `vue-selecto` 1.23.0
+* `vue3-selecto` 1.9.0
+* `ngx-selecto` 1.23.0
+
+
+### :rocket: New Features
+
+* `selecto`
+    * let hitRate prop can take function (#139) ([269bcde](https://github.com/daybrush/selecto/commit/269bcde2fd243543adf8c340480dc94bc6126f83))
+
+
+### :bug: Bug Fix
+
+* `ngx-selecto`
+    * **ngx-selecto:** reduce change detection cycles and teardown event listeners once the view is removed (#134) ([491bf10](https://github.com/daybrush/selecto/commit/491bf1019196c1ebabad1d7c8419384faa4f1c5c))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([0b4f3f7](https://github.com/daybrush/selecto/commit/0b4f3f7a55e7a16822c00bb5c2ba3e94fab55af1))
+
+
+
 ## [1.22.6](https://github.com/daybrush/selecto/compare/1.22.5...1.22.6) (2023-06-04)
 ### :sparkles: Packages
 * `lit-selecto` 1.22.6

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.0](https://github.com/daybrush/selecto/blob/master/packages/ngx-selecto/compare/ngx-selecto@1.22.6...ngx-selecto@1.23.0) (2023-06-19)
+
+
+### :bug: Bug Fix
+
+* **ngx-selecto:** reduce change detection cycles and teardown event listeners once the view is removed (#134) ([491bf10](https://github.com/daybrush/selecto/blob/master/packages/ngx-selecto/commit/491bf1019196c1ebabad1d7c8419384faa4f1c5c))
+
+
+### :mega: Other
+
+* publish packages ([0b4f3f7](https://github.com/daybrush/selecto/blob/master/packages/ngx-selecto/commit/0b4f3f7a55e7a16822c00bb5c2ba3e94fab55af1))
+
+
+
 ## [1.22.6](https://github.com/daybrush/selecto/blob/master/packages/ngx-selecto/compare/ngx-selecto@1.22.5...ngx-selecto@1.22.6) (2023-06-04)
 
 

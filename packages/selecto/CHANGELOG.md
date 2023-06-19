@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.0](https://github.com/daybrush/selecto/compare/selecto@1.22.6...selecto@1.23.0) (2023-06-19)
+
+
+### :rocket: New Features
+
+* let hitRate prop can take function (#139) ([269bcde](https://github.com/daybrush/selecto/commit/269bcde2fd243543adf8c340480dc94bc6126f83))
+
+
+### :mega: Other
+
+* publish packages ([0b4f3f7](https://github.com/daybrush/selecto/commit/0b4f3f7a55e7a16822c00bb5c2ba3e94fab55af1))
+
+
+
 ## [1.22.6](https://github.com/daybrush/selecto/compare/selecto@1.22.5...selecto@1.22.6) (2023-06-04)
 
 
