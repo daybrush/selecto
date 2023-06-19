@@ -583,10 +583,15 @@ class Selecto extends EventEmitter<SelectoEvents> {
             [right, bottom],
             [left, bottom],
         ];
-        const hitRateValue = splitUnit(`${hitRate}`);
-
         const isHit = (points: number[][], el: Element) => {
-            const inArea = ignoreClick ? false : isInside([clientX, clientY], points);
+            const hitRateValue =
+                typeof hitRate === "function"
+                    ? splitUnit(`${hitRate(el)}`)
+                    : splitUnit(`${hitRate}`);
+
+            const inArea = ignoreClick
+                ? false
+                : isInside([clientX, clientY], points);
 
             if (selectByClick && inArea) {
                 return true;
