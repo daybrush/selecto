@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+
+
+**Note:** Version bump only for package selecto-root
+
+
+
+
+
 ## [1.24.0](https://github.com/daybrush/selecto/compare/1.23.0...1.24.0) (2023-06-21)
 ### :sparkles: Packages
 * `lit-selecto` 1.24.0

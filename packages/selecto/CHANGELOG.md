@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.0](https://github.com/daybrush/selecto/compare/selecto@1.24.0...selecto@1.24.0) (2023-06-21)
+
+**Note:** Version bump only for package selecto
+
+
+
+
+
 ## [1.24.0](https://github.com/daybrush/selecto/compare/selecto@1.23.0...selecto@1.24.0) (2023-06-21)
 
 

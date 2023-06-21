@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.0](https://github.com/daybrush/selecto/blob/master/packages/preact-selecto/compare/lit-selecto@1.24.0...lit-selecto@1.24.0) (2023-06-21)
+
+**Note:** Version bump only for package lit-selecto
+
+
+
+
+
 ## [1.24.0](https://github.com/daybrush/selecto/blob/master/packages/preact-selecto/compare/lit-selecto@1.23.0...lit-selecto@1.24.0) (2023-06-21)
 
 
