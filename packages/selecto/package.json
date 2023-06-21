@@ -1,6 +1,6 @@
 {
     "name": "selecto",
-    "version": "1.23.0",
+    "version": "1.24.0",
     "description": "Selecto.js is a component that allows you to select elements in the drag area using the mouse or touch.",
     "main": "./dist/selecto.cjs.js",
     "module": "./dist/selecto.esm.js",
