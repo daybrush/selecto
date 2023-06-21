@@ -265,6 +265,10 @@ export interface OnSelect<T = Selecto> extends CurrentTarget<T>, SelectedTargets
      */
     data: Record<string, any>;
     /**
+     * Whether it ends as soon as dragStart(mousedown, touchstart)
+     */
+    isDragStartEnd: boolean;
+    /**
      * Whether or not you directly dragged
      */
     isTrusted: boolean;
@@ -292,6 +296,10 @@ export interface OnSelectEnd<T = Selecto> extends OnSelect<T>, CurrentTarget<T> 
      * Whether it is a mousedown or touchstart event
      */
     isDragStart: boolean;
+    /**
+     * Whether it ends as soon as dragStart(mousedown, touchstart)
+     */
+    isDragStartEnd: boolean;
     /**
      * Whether it is click
      */

@@ -756,7 +756,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
         selectedTargets: Array<HTMLElement | SVGElement>,
         rect: Rect,
         e: OnDragEvent,
-        isStart?: boolean
+        isStart?: boolean,
+        isDragStartEnd = false,
     ) {
         const inputEvent = e.inputEvent;
         const data = e.data;
@@ -799,6 +800,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 inputEvent,
                 data: data.data,
                 isTrusted: e.isTrusted,
+                isDragStartEnd,
             });
         }
         if (result.added.length || result.removed.length) {
@@ -831,6 +833,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 inputEvent,
                 data: data.data,
                 isTrusted: e.isTrusted,
+                isDragStartEnd,
             });
         }
     }
@@ -839,6 +842,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         startPassedTargets: Array<HTMLElement | SVGElement>,
         rect: Rect,
         e: OnDragEvent,
+        isDragStartEnd: boolean = false,
     ) {
         const { inputEvent, isDouble, data } = e;
         const { added, removed, prevList, list } = diff(
@@ -851,8 +855,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
             prevList: afterPrevList,
             list: afterList,
         } = diff(startPassedTargets, this.selectedTargets);
-        const type = inputEvent && inputEvent.type;
-        const isDragStart = type === "mousedown" || type === "touchstart";
 
         /**
          * When the select(dragEnd or click) ends, the selectEnd event is called.
@@ -892,7 +894,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             removed: removed.map((index) => prevList[index]),
             afterAdded: afterAdded.map((index) => afterList[index]),
             afterRemoved: afterRemoved.map((index) => afterPrevList[index]),
-            isDragStart,
+            isDragStart: isDragStartEnd,
+            isDragStartEnd,
             isClick: !!e.isClick,
             isDouble: !!isDouble,
             rect,
@@ -1070,7 +1073,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             firstPassedTargets,
             hitRect,
             e,
-            true
+            true,
+            isPreventSelect && selectByClick && !clickBySelectEnd && preventDragFromInside,
         );
         data.startX = clientX;
         data.startY = clientY;
@@ -1096,7 +1100,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
                     data.startSelectedTargets,
                     data.startPassedTargets,
                     hitRect,
-                    e
+                    e,
+                    true,
                 );
                 data.preventDragFromInside = true;
             }
