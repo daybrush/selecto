@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.0](https://github.com/daybrush/selecto/compare/selecto@1.23.0...selecto@1.24.0) (2023-06-21)
+
+
+### :rocket: New Features
+
+* add isDragStartEnd property in select events ([218f23c](https://github.com/daybrush/selecto/commit/218f23cdae73dd70a326885540c85bc5c2360393))
+
+
+### :mega: Other
+
+* publish packages ([24ccfe3](https://github.com/daybrush/selecto/commit/24ccfe384e3b6868482f7fe9102c3b44a9b9f6ab))
+
+
+
 ## [1.23.0](https://github.com/daybrush/selecto/compare/selecto@1.22.6...selecto@1.23.0) (2023-06-19)
 
 

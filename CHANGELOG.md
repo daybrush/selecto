@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.0](https://github.com/daybrush/selecto/compare/1.23.0...1.24.0) (2023-06-21)
+### :sparkles: Packages
+* `lit-selecto` 1.24.0
+* `preact-selecto` 1.21.0
+* `react-selecto` 1.24.0
+* `selecto` 1.24.0
+* `svelte-selecto` 1.24.0
+* `vue-selecto` 1.24.0
+* `vue3-selecto` 1.10.0
+* `ngx-selecto` 1.24.0
+
+
+### :rocket: New Features
+
+* `selecto`
+    * add isDragStartEnd property in select events ([218f23c](https://github.com/daybrush/selecto/commit/218f23cdae73dd70a326885540c85bc5c2360393))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([24ccfe3](https://github.com/daybrush/selecto/commit/24ccfe384e3b6868482f7fe9102c3b44a9b9f6ab))
+
+
+
 ## [1.23.0](https://github.com/daybrush/selecto/compare/1.22.6...1.23.0) (2023-06-19)
 ### :sparkles: Packages
 * `lit-selecto` 1.23.0
