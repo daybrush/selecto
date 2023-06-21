@@ -149,7 +149,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
      * selectByClick, continueSelect, and continueSelectWithoutDeselect are not applied.
      */
     public setSelectedTargets(
-        selectedTargets: Array<HTMLElement | SVGElement>
+        selectedTargets: Array<HTMLElement | SVGElement>,
     ): SelectedTargets {
         const beforeSelected = this.selectedTargets;
         const { added, removed, prevList, list } = diff(
@@ -762,6 +762,17 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const inputEvent = e.inputEvent;
         const data = e.data;
         const result = this.setSelectedTargets(selectedTargets);
+        const { added, removed, prevList, list } = diff(
+            data.startSelectedTargets,
+            selectedTargets,
+        );
+
+        const startResult = {
+            startSelected: prevList,
+            startAdded: added.map(i => list[i]),
+            startRemoved: removed.map(i => prevList[i]),
+        };
+
 
         if (isStart) {
             /**
@@ -796,6 +807,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
              */
             this.emit("selectStart", {
                 ...result,
+                ...startResult,
                 rect,
                 inputEvent,
                 data: data.data,
@@ -829,6 +841,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
              */
             this.emit("select", {
                 ...result,
+                ...startResult,
                 rect,
                 inputEvent,
                 data: data.data,

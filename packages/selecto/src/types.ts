@@ -255,7 +255,7 @@ export interface SelectedTargetsWithRect extends SelectedTargets {
  * @extends Selecto.SelectedTargetsWithRect
  * @typedef
  */
-export interface OnSelect<T = Selecto> extends CurrentTarget<T>, SelectedTargetsWithRect {
+export interface OnSelectEvent<T = Selecto> extends CurrentTarget<T>, SelectedTargetsWithRect {
     /**
      * inputEvent
      */
@@ -275,11 +275,29 @@ export interface OnSelect<T = Selecto> extends CurrentTarget<T>, SelectedTargets
 }
 /**
  * @memberof Selecto
- * @extends Selecto.OnSelect
- * @extends Selecto.CurrentTarget
+ * @extends Selecto.OnSelectEvent
  * @typedef
  */
-export interface OnSelectEnd<T = Selecto> extends OnSelect<T>, CurrentTarget<T> {
+export interface OnSelect<T = Selecto> extends OnSelectEvent<T> {
+    /**
+     * start selected elements
+     */
+    startSelected: Array<HTMLElement | SVGElement>;
+    /**
+     * added from start selected
+     */
+    startAdded: Array<HTMLElement | SVGElement>;
+    /**
+     * removed from start selected
+     */
+    startRemoved: Array<HTMLElement | SVGElement>;
+}
+/**
+ * @memberof Selecto
+ * @extends Selecto.OnSelectEvent
+ * @typedef
+ */
+export interface OnSelectEnd<T = Selecto> extends OnSelectEvent<T> {
     /**
      * start selected elements
      */
