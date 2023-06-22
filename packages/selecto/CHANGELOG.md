@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.0](https://github.com/daybrush/selecto/compare/selecto@1.24.0...selecto@1.25.0) (2023-06-22)
+
+
+### :rocket: New Features
+
+* add startSelected on select event ([e615626](https://github.com/daybrush/selecto/commit/e6156265144ad22ab10db7460ce1ad5b939384c8))
+
+
+### :mega: Other
+
+* publish packages ([e973375](https://github.com/daybrush/selecto/commit/e97337540d4908e2c7d86c0028997f3729636bff))
+
+
+
 ## [1.24.0](https://github.com/daybrush/selecto/compare/selecto@1.24.0...selecto@1.24.0) (2023-06-21)
 
 **Note:** Version bump only for package selecto

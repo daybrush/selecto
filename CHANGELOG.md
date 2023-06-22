@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.0](https://github.com/daybrush/selecto/compare/1.24.0...1.25.0) (2023-06-22)
+### :sparkles: Packages
+* `lit-selecto` 1.25.0
+* `preact-selecto` 1.22.0
+* `react-selecto` 1.25.0
+* `selecto` 1.25.0
+* `svelte-selecto` 1.25.0
+* `vue-selecto` 1.25.0
+* `vue3-selecto` 1.11.0
+* `ngx-selecto` 1.25.0
+
+
+### :rocket: New Features
+
+* `selecto`
+    * add startSelected on select event ([e615626](https://github.com/daybrush/selecto/commit/e6156265144ad22ab10db7460ce1ad5b939384c8))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([e973375](https://github.com/daybrush/selecto/commit/e97337540d4908e2c7d86c0028997f3729636bff))
+
+
+
 
 
 **Note:** Version bump only for package selecto-root
