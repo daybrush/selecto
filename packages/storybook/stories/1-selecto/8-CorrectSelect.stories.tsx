@@ -9,7 +9,6 @@ import {
     HTML_TEMPLATE, CSS_TEMPLATE,
     PREVIEWS_TEMPLATE, DRAG_EVENT_TEMPLATE
 } from "../../template/CorrectSelect";
-import "../../template/correct.css";
 import { getElementInfo } from "react-moveable";
 import { getAreaSize, getOverlapPoints } from "overlap-area";
 

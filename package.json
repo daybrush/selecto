@@ -37,10 +37,10 @@
         "release": "lerna-helper release --base selecto"
     },
     "devDependencies": {
-        "@daybrush/jsdoc": "^0.4.3",
+        "@daybrush/jsdoc": "^0.4.7",
         "@daybrush/release": "^0.7.1",
         "cpx": "1.5.0",
-        "daybrush-jsdoc-template": "^1.7.0",
+        "daybrush-jsdoc-template": "^1.10.0",
         "gh-pages": "^2.0.1",
         "intercept-stdout": "0.1.2",
         "lerna": "^4.0.0",

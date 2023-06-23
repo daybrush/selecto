@@ -29,7 +29,15 @@
         "declaration": true,
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
+        "paths": {
+            "react-selecto": [
+                "../react-selecto/src/react-selecto/"
+            ],
+            "@/stories/*": [
+                "./stories/*"
+            ],
+        }
     },
     "include": [
         "./",

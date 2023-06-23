@@ -18,3 +18,9 @@ rollup-plugin-visualizer/
 statistics/
 .scene_cache
 *.mp4
+stories/**/vue3/
+stories/**/vue2/
+stories/**/svelte/
+stories/**/script/
+stories/**/lit/
+stories/**/angular/

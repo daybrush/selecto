@@ -17,6 +17,8 @@ module.exports = {
                 transpileOnly: true
             },
         });
+        config.resolve.alias["@/stories"] = path.resolve(__dirname, "../stories");
+        config.resolve.alias["react-selecto"] = path.resolve(__dirname, "../../react-selecto/src/react-selecto");
         // config.plugins.push(new ForkTsCheckerWebpackPlugin());
         // config.resolve.alias["@/stories"] = path.resolve(__dirname, "../stories");
         // config.resolve.alias["moveable-helper"] = path.resolve(__dirname, "../stories/moveable-helper");

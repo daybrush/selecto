@@ -7,10 +7,7 @@ import {
 } from "storybook-addon-preview";
 import { camelize, IObject } from "@daybrush/utils";
 
-import DEFAULT_CSS_TEMPLATE from "!!raw-loader!./index.css";
-import CORRECT_CSS_TEMPLATE from "!!raw-loader!./correct.css";
-
-const CSS_TEMPLATE = DEFAULT_CSS_TEMPLATE + "\n" + CORRECT_CSS_TEMPLATE;
+import CSS_TEMPLATE from "!!raw-loader!./index.css";
 
 export const HTML_TEMPLATE = previewTemplate`
 <div class="app">

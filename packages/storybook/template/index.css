@@ -59,6 +59,7 @@ body {
     margin: 4px;
     background: #eee;
     --color: #4af;
+    line-height: 40px;
 }
 
 h1, .description {
@@ -129,4 +130,37 @@ h1, .description {
 
 .empty.elements {
     border: none;
+}
+
+.correct {
+    position: relative;
+    padding: 20px;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+}
+.correct .target {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    color: #fff;
+    margin: 10px 20px;
+    line-height: 100px;
+    text-align: center;
+    display: inline-block;
+}
+.correct svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.9;
+    transform: translateZ(0px);
+}
+.correct svg path {
+    stroke: #333;
+    stroke-width: 2;
+    fill: transparent;
 }
