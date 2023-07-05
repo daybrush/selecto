@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.2](https://github.com/daybrush/selecto/blob/master/packages/react-selecto/compare/react-selecto@1.25.0...react-selecto@1.25.2) (2023-07-05)
+
+
+### :bug: Bug Fix
+
+* fix react event types ([00cfaba](https://github.com/daybrush/selecto/blob/master/packages/react-selecto/commit/00cfabaaf75693c1f27cf899b5626f8ff63856fe))
+
+
+### :mega: Other
+
+* bump react-selecto version ([7175900](https://github.com/daybrush/selecto/blob/master/packages/react-selecto/commit/717590006f54a468aa8067c5ade3a87ec7fbd9d8))
+* publish packages ([fe8aa72](https://github.com/daybrush/selecto/blob/master/packages/react-selecto/commit/fe8aa72fddf49e90c0e0d69e3764b02ea382ca59))
+
+
+
 ## [1.25.0](https://github.com/daybrush/selecto/blob/master/packages/react-selecto/compare/react-selecto@1.24.0...react-selecto@1.25.0) (2023-06-22)
 
 

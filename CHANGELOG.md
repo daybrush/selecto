@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.1](https://github.com/daybrush/selecto/compare/1.25.0...1.25.1) (2023-07-05)
+### :sparkles: Packages
+* `lit-selecto` 1.25.1
+* `preact-selecto` 1.22.1
+* `react-selecto` 1.25.2
+* `selecto` 1.25.1
+* `svelte-selecto` 1.25.1
+* `vue-selecto` 1.25.1
+* `vue3-selecto` 1.11.1
+* `ngx-selecto` 1.25.1
+
+
+### :bug: Bug Fix
+
+* `selecto`
+    * fix isDragStart condition #141 ([f901416](https://github.com/daybrush/selecto/commit/f901416ec711edbb35bda7072194d8c0b0ba4679))
+* `react-selecto`
+    * fix react event types ([00cfaba](https://github.com/daybrush/selecto/commit/00cfabaaf75693c1f27cf899b5626f8ff63856fe))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([fe8aa72](https://github.com/daybrush/selecto/commit/fe8aa72fddf49e90c0e0d69e3764b02ea382ca59))
+* `react-selecto`
+    * bump react-selecto version ([7175900](https://github.com/daybrush/selecto/commit/717590006f54a468aa8067c5ade3a87ec7fbd9d8))
+
+
+
 ## [1.25.0](https://github.com/daybrush/selecto/compare/1.24.0...1.25.0) (2023-06-22)
 ### :sparkles: Packages
 * `lit-selecto` 1.25.0

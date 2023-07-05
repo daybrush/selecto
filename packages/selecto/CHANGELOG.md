@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.1](https://github.com/daybrush/selecto/compare/selecto@1.25.0...selecto@1.25.1) (2023-07-05)
+
+
+### :bug: Bug Fix
+
+* fix isDragStart condition #141 ([f901416](https://github.com/daybrush/selecto/commit/f901416ec711edbb35bda7072194d8c0b0ba4679))
+
+
+### :mega: Other
+
+* publish packages ([fe8aa72](https://github.com/daybrush/selecto/commit/fe8aa72fddf49e90c0e0d69e3764b02ea382ca59))
+
+
+
 ## [1.25.0](https://github.com/daybrush/selecto/compare/selecto@1.24.0...selecto@1.25.0) (2023-06-22)
 
 
