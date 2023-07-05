@@ -858,6 +858,9 @@ class Selecto extends EventEmitter<SelectoEvents> {
         isDragStartEnd: boolean = false,
     ) {
         const { inputEvent, isDouble, data } = e;
+        const type = inputEvent && inputEvent.type;
+        const isDragStart = type === "mousedown" || type === "touchstart";
+
         const { added, removed, prevList, list } = diff(
             startSelectedTargets,
             this.selectedTargets
@@ -907,8 +910,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             removed: removed.map((index) => prevList[index]),
             afterAdded: afterAdded.map((index) => afterList[index]),
             afterRemoved: afterRemoved.map((index) => afterPrevList[index]),
-            isDragStart: isDragStartEnd,
-            isDragStartEnd,
+            isDragStart: isDragStart && isDragStartEnd,
+            isDragStartEnd: isDragStart && isDragStartEnd,
             isClick: !!e.isClick,
             isDouble: !!isDouble,
             rect,
