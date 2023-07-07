@@ -56,8 +56,8 @@ export function createElement(
         createElement(child, elChildren[i] as HTMLElement | SVGElement, el);
     });
     if (className) {
-        className.split(" ").forEach(name => {
-            if (!hasClass(el, name)) {
+        className.split(/\s+/g).forEach(name => {
+            if (name && !hasClass(el, name)) {
                 addClass(el, name);
             }
         });

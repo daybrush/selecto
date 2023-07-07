@@ -107,6 +107,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         this.target = options.portalContainer;
         let container = options.container;
         this.options = {
+            className: "",
             portalContainer: null,
             container: null,
             dragContainer: null,
@@ -452,6 +453,10 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 .on("blur", this._onBlur);
         }
     }
+    private setClassName(nextClassName: string) {
+        this.options.className = nextClassName;
+        this.target.setAttribute(`class`, `${CLASS_NAME} ${nextClassName || ""}`);
+    }
     private setKeyEvent() {
         const { toggleContinueSelect, toggleContinueSelectWithoutDeselect } = this.options;
         if ((!toggleContinueSelect && !toggleContinueSelectWithoutDeselect) || this.keycon) {
@@ -520,17 +525,6 @@ class Selecto extends EventEmitter<SelectoEvents> {
         this.gesto.options.checkInput = value;
     }
     private initElement() {
-        const container = this.container;
-
-        this.target = createElement(
-            (<div className={CLASS_NAME}></div>) as any,
-            this.target,
-            container,
-        );
-
-
-        const target = this.target;
-
         const {
             dragContainer,
             checkInput,
@@ -539,7 +533,19 @@ class Selecto extends EventEmitter<SelectoEvents> {
             preventClickEventOnDrag,
             preventClickEventByCondition,
             preventRightClick = true,
+            className,
         } = this.options;
+        const container = this.container;
+
+        this.target = createElement(
+            (<div className={`${CLASS_NAME} ${className || ""}`}></div>) as any,
+            this.target,
+            container,
+        );
+
+
+        const target = this.target;
+
         this.dragContainer =
             typeof dragContainer === "string"
                 ? [].slice.call(getDocument(container).querySelectorAll(dragContainer))

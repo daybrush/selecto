@@ -33,6 +33,11 @@ export interface SelectoOptions {
      */
     dragContainer: Element | Window | Element[] | string | null | undefined;
     /**
+     * custom class name of selecto element
+     * @default ""
+     */
+    className: string;
+    /**
      * Targets to select. You can register a queryselector or an Element.
      * @default []
      */
