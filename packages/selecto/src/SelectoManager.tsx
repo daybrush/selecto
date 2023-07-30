@@ -237,7 +237,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     /**
      * You can get the currently selected targets.
      */
-    public getSelectedTargets() {
+    public getSelectedTargets(): ElementType[] {
         return this.selectedTargets;
     }
     /**
