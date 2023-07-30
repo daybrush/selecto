@@ -97,7 +97,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     private container!: HTMLElement;
     private gesto!: Gesto;
     private injectResult!: InjectResult;
-    private selectedTargets: Array<ElementType> = [];
+    private selectedTargets: ElementType[] = [];
     private dragScroll: DragScroll = new DragScroll();
     private keycon!: KeyController;
     private _keydownContinueSelect: boolean;
@@ -153,7 +153,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
      * selectByClick, continueSelect, and continueSelectWithoutDeselect are not applied.
      */
     public setSelectedTargets(
-        selectedTargets: Array<ElementType>,
+        selectedTargets: ElementType[],
     ): SelectedTargets {
         const beforeSelected = this.selectedTargets;
         const { added, removed, prevList, list } = diff(
@@ -237,7 +237,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
     /**
      * You can get the currently selected targets.
      */
-    public getSelectedTargets(): Array<ElementType> {
+    public getSelectedTargets() {
         return this.selectedTargets;
     }
     /**
@@ -296,7 +296,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
      */
     public getSelectableElements() {
         const container = this.container;
-        const selectableElements: Array<ElementType> = [];
+        const selectableElements: ElementType[] = [];
 
         this.options.selectableTargets.forEach((target) => {
             if (isFunction(target)) {
@@ -343,7 +343,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
      * Find for selectableTargets again during drag event
      * You can update selectable targets during an event.
      */
-    public findSelectableTargets(data: IObject<any> = this.gesto.getEventData()): Array<ElementType> {
+    public findSelectableTargets(data: IObject<any> = this.gesto.getEventData()) {
         const selectableTargets = this.getSelectableElements();
         const selectablePoints = selectableTargets.map(
             (target) => this.getElementPoints(target),
@@ -635,7 +635,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 return rate >= Math.min(100, hitRateValue.value);
             }
         };
-        const selectableTargets: Array<ElementType> = data.selectableTargets;
+        const selectableTargets: ElementType[] = data.selectableTargets;
         const selectablePoints: number[][][] = data.selectablePoints;
         const selectableInners: boolean[] = data.selectableInners;
 
@@ -647,7 +647,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 return isHit(selectablePoints[i], selectableTargets[i]);
             });
         }
-        const selectedTargets: Array<ElementType> = [];
+        const selectedTargets: ElementType[] = [];
         const minX = Math.floor(left / innerWidth);
         const maxX = Math.floor(right / innerWidth);
         const minY = Math.floor(top / innerHeight);
@@ -762,7 +762,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             });
     }
     private _select(
-        selectedTargets: Array<ElementType>,
+        selectedTargets: ElementType[],
         rect: Rect,
         e: OnDragEvent,
         isStart?: boolean,
@@ -860,8 +860,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
         }
     }
     private _selectEnd(
-        startSelectedTargets: Array<ElementType>,
-        startPassedTargets: Array<ElementType>,
+        startSelectedTargets: ElementType[],
+        startPassedTargets: ElementType[],
         rect: Rect,
         e: OnDragEvent,
         isDragStartEnd: boolean = false,
@@ -1026,7 +1026,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             width: 0,
             height: 0,
         };
-        let firstPassedTargets: Array<ElementType> = [];
+        let firstPassedTargets: ElementType[] = [];
 
         if (!selectFromInside || (selectByClick && !clickBySelectEnd)) {
             const pointTarget = this._findElement(
@@ -1195,7 +1195,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             width,
             height,
         ]);
-        let selectedTargets: Array<ElementType> = [];
+        let selectedTargets: ElementType[] = [];
         if (selectFlag) {
             this.target.style.cssText +=
                 `display: block;` +
@@ -1467,7 +1467,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             }
         });
     };
-    private _findElement(clickedTarget: ElementType, selectableTargets: Array<Element>) {
+    private _findElement(clickedTarget: ElementType, selectableTargets: Element[]) {
         let pointTarget = clickedTarget;
 
         while (pointTarget) {
