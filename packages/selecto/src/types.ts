@@ -364,6 +364,7 @@ export interface OnScroll {
  */
 export interface OnDragStart<T = Selecto> extends OnParentDragStart<T> {
     stop(): void;
+    isClick: boolean;
 }
 
 /**

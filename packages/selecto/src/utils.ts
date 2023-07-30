@@ -1,4 +1,4 @@
-import type { Hypertext, Point, Rect } from "./types";
+import type { ElementType, Hypertext, Point, Rect } from "./types";
 import { IObject, addClass, hasClass, calculateBoundSize, getDist, getDocument } from "@daybrush/utils";
 import { diff } from "@egjs/children-differ";
 import { getMinMaxs } from "overlap-area";
@@ -34,7 +34,7 @@ export function filterDuplicated<T>(arr: T[]): T[] {
     });
 }
 
-export function elementFromPoint(baseNode: Node, clientX: number, clientY: number): HTMLElement | SVGElement | null {
+export function elementFromPoint(baseNode: Node, clientX: number, clientY: number): ElementType | null {
     const doc = getDocument(baseNode);
 
     return (doc.elementFromPoint && doc.elementFromPoint(clientX, clientY)) as any || null;
@@ -42,18 +42,18 @@ export function elementFromPoint(baseNode: Node, clientX: number, clientY: numbe
 
 export function createElement(
     jsx: Hypertext,
-    prevTarget?: HTMLElement | SVGElement,
-    container?: HTMLElement | SVGElement,
+    prevTarget?: ElementType,
+    container?: ElementType,
 ) {
     const { tag, children, attributes, className, style } = jsx;
-    const el = prevTarget || getDocument(container).createElement(tag) as HTMLElement | SVGElement;
+    const el = prevTarget || getDocument(container).createElement(tag) as ElementType;
 
     for (const name in attributes) {
         el.setAttribute(name, attributes[name]);
     }
     const elChildren = el.children;
     children.forEach((child, i) => {
-        createElement(child, elChildren[i] as HTMLElement | SVGElement, el);
+        createElement(child, elChildren[i] as ElementType, el);
     });
     if (className) {
         className.split(/\s+/g).forEach(name => {
@@ -172,7 +172,7 @@ export function getRect(
     };
 }
 
-export function getDefaultElementRect(el: HTMLElement | SVGElement): Point {
+export function getDefaultElementRect(el: ElementType): Point {
     const rect = el.getBoundingClientRect();
     const { left, top, width, height } = rect;
 
@@ -185,8 +185,8 @@ export function getDefaultElementRect(el: HTMLElement | SVGElement): Point {
 }
 
 export function passTargets(
-    beforeTargets: Array<HTMLElement | SVGElement>,
-    afterTargets: Array<HTMLElement | SVGElement>,
+    beforeTargets: ElementType[],
+    afterTargets: ElementType[],
     continueSelectWithoutDeselect: boolean,
 ) {
     const {
