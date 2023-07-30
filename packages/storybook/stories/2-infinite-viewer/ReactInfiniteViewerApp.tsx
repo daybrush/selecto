@@ -3,14 +3,9 @@ import InfiniteViewer from "react-infinite-viewer";
 import Selecto from "react-selecto";
 
 export default function App(props: Record<string, any>) {
+    const [cubes] = React.useState(Array.from({ length: 210 }, (_, i) => i));
     const viewerRef = React.useRef<InfiniteViewer>(null);
     const selectoRef = React.useRef<Selecto>(null);
-    const cubes: number[] = [];
-
-    for (let i = 0; i < 30 * 7; ++i) {
-        cubes.push(i);
-    }
-
 
     return <div className="app">
         <div className="container">

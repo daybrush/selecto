@@ -5,15 +5,12 @@ import Moveable, { MoveableTargetGroupsType } from "react-moveable";
 import { GroupManager, TargetList } from "@moveable/helper";
 
 export default function App() {
-    const groupManager = React.useMemo<GroupManager>(() => new GroupManager([]), []);
+    const [cubes] = React.useState(Array.from({ length: 30 }, (_, i) => i));
     const [targets, setTargets] = React.useState<MoveableTargetGroupsType>([]);
+    const groupManager = React.useMemo<GroupManager>(() => new GroupManager([]), []);
     const moveableRef = React.useRef<Moveable>(null);
     const selectoRef = React.useRef<Selecto>(null);
-    const cubes: number[] = [];
 
-    for (let i = 0; i < 30; ++i) {
-        cubes.push(i);
-    }
     const setSelectedTargets = React.useCallback((nextTargetes: MoveableTargetGroupsType) => {
         selectoRef.current!.setSelectedTargets(deepFlat(nextTargetes));
         setTargets(nextTargetes);

@@ -8,11 +8,7 @@ import "../../template/index.css";
 
 const story = storiesOf("Selecto", module).addDecorator(withPreview);
 story.add("Welcome", () => {
-    const cubes: number[] = [];
-
-    for (let i = 0; i < 48; ++i) {
-        cubes.push(i);
-    }
+    const [cubes] = React.useState(Array.from({ length: 48 }, (_, i) => i));
 
     React.useEffect(() => {
         new Scene({
@@ -57,6 +53,7 @@ story.add("Welcome", () => {
             selector: true,
         }).playCSS();
     }, []);
+
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">

@@ -75,14 +75,10 @@ import Selecto from "react-selecto";
 `}
 
 export default function App() {
+    const [cubes] = React.useState(Array.from({ length: 210 }, (_, i) => i));
     const [scrollOptions, setScrollOptions] = React.useState({});
     const selectoRef = React.useRef(null);
     const scrollerRef = React.useRef(null);
-    const cubes = [];
-
-    for (let i = 0; i < 30 * 7; ++i) {
-        cubes.push(i);
-    }
 
     React.useEffect(() => {
         setScrollOptions({

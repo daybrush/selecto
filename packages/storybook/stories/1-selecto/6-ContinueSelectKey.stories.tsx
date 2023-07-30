@@ -34,12 +34,10 @@ story.add("Continue to select through the toggle key.", () => {
         ),
     ],
 });
-function App() {
-    const cubes: number[] = [];
 
-    for (let i = 0; i < 60; ++i) {
-        cubes.push(i);
-    }
+function App() {
+    const [cubes] = React.useState(Array.from({ length: 60 }, (_, i) => i));
+
     return <div className="app">
         <div className="container">
             <div className="logo" id="logo">

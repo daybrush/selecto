@@ -94,14 +94,11 @@ import InfiniteViewer from "react-infinite-viewer";
 `}
 
 export default function App() {
+    const [cubes] = React.useState(Array.from({ length: 210 }, (_, i) => i));
     const [scrollOptions, setScrollOptions] = React.useState({});
     const viewerRef = React.useRef(null);
     const selectoRef = React.useRef(null);
     const cubes = [];
-
-    for (let i = 0; i < 30 * 7; ++i) {
-        cubes.push(i);
-    }
 
     React.useEffect(() => {
         setScrollOptions({

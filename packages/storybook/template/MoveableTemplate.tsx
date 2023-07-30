@@ -129,14 +129,10 @@ import Moveable from "react-moveable";
 `}
 
 export default function App() {
+    const [cubes] = React.useState(Array.from({ length: 30 }, (_, i) => i));
     const [targets, setTargets] = React.useState([]);
     const moveableRef = React.useRef(null);
     const selectoRef = React.useRef(null);
-    const cubes = [];
-
-    for (let i = 0; i < 30; ++i) {
-        cubes.push(i);
-    }
 
     return <div className="moveable app">
         <div className="container">

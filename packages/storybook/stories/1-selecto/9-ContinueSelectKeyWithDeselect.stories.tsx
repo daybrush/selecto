@@ -1,6 +1,6 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { withKnobs, number, boolean, array } from "@storybook/addon-knobs";
+import { withKnobs } from "@storybook/addon-knobs";
 import { withPreview } from "storybook-addon-preview";
 import ContinueSelectKeyWithDeselect from "./apps/ContinueSelectKeyWithDeselect";
 import RawContinueSelectKeyWithDeselect from "!!raw-loader!./apps/ContinueSelectKeyWithDeselect";

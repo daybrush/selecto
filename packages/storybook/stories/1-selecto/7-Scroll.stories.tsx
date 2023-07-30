@@ -1,11 +1,9 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { withKnobs, number, boolean, array } from "@storybook/addon-knobs";
-import { withPreview, DEFAULT_REACT_CODESANDBOX, previewTemplate, raw, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
+import { withPreview } from "storybook-addon-preview";
 import Selecto from "react-selecto";
-import InfiniteViewer from "react-infinite-viewer";
-import { DragScrollOptions } from "@scena/dragscroll";
-import { REACT_SELCTO_TEMPLATE, SELECT_EVENT_TEMPLATE, CSS_TEMPLATE, DRAG_START_EVENT_TEMPLATE } from "../../template/SelectoTemlate";
+import { SELECT_EVENT_TEMPLATE, CSS_TEMPLATE, DRAG_START_EVENT_TEMPLATE } from "../../template/SelectoTemlate";
 import {
     SCROLL_HTML_TEMPLATE, SCROLL_VANILLA_TEMPLATE,
     SCROLL_EVENT_TEMPLATE, SCROLL_PREVIEWS_TEMPLATE
@@ -43,13 +41,10 @@ story.add("Select in the scroll area.", () => {
     ],
 });
 function App() {
+    const [cubes] = React.useState(Array.from({ length: 210 }, (_, i) => i));
     const selectoRef = React.useRef<Selecto>(null);
     const scrollerRef = React.useRef<HTMLDivElement>(null);
-    const cubes: number[] = [];
 
-    for (let i = 0; i < 30 * 7; ++i) {
-        cubes.push(i);
-    }
 
     const throttleTime = number("Scroll's throttleTime", 30);
     const threshold = number("Scroll's threshold", 0);
