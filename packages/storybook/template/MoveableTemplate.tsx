@@ -129,7 +129,7 @@ import Moveable from "react-moveable";
 `}
 
 export default function App() {
-    const [cubes] = React.useState(Array.from({ length: 30 }, (_, i) => i));
+    const cubes = Array.from({ length: 30 }, (_, i) => i);
     const [targets, setTargets] = React.useState([]);
     const moveableRef = React.useRef(null);
     const selectoRef = React.useRef(null);

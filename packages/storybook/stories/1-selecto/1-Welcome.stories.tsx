@@ -1,6 +1,6 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { withPreview, DEFAULT_REACT_CODESANDBOX } from "storybook-addon-preview";
+import { withPreview } from "storybook-addon-preview";
 import Selecto from "react-selecto";
 import Scene from "scenejs";
 import "../welcome.css";
@@ -8,7 +8,7 @@ import "../../template/index.css";
 
 const story = storiesOf("Selecto", module).addDecorator(withPreview);
 story.add("Welcome", () => {
-    const [cubes] = React.useState(Array.from({ length: 48 }, (_, i) => i));
+    const cubes = Array.from({ length: 48 }, (_, i) => i);
 
     React.useEffect(() => {
         new Scene({

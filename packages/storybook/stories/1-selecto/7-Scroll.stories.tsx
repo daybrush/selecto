@@ -41,7 +41,7 @@ story.add("Select in the scroll area.", () => {
     ],
 });
 function App() {
-    const [cubes] = React.useState(Array.from({ length: 210 }, (_, i) => i));
+    const cubes = Array.from({ length: 210 }, (_, i) => i);
     const selectoRef = React.useRef<Selecto>(null);
     const scrollerRef = React.useRef<HTMLDivElement>(null);
 

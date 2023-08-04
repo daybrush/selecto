@@ -3,7 +3,7 @@ import InfiniteViewer from "react-infinite-viewer";
 import Selecto from "react-selecto";
 
 export default function App(props: Record<string, any>) {
-    const [cubes] = React.useState(Array.from({ length: 210 }, (_, i) => i));
+    const cubes = Array.from({ length: 210 }, (_, i) => i);
     const scrollerRef = React.useRef<HTMLDivElement>(null);
     const selectoRef = React.useRef<Selecto>(null);
 

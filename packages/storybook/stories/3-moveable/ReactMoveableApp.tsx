@@ -3,7 +3,7 @@ import Moveable from "react-moveable";
 import Selecto from "react-selecto";
 
 export default function App(props: Record<string, any>) {
-    const [cubes] = React.useState(Array.from({ length: 30 }, (_, i) => i));
+    const cubes = Array.from({ length: 30 }, (_, i) => i);
     const [targets, setTargets] = React.useState<Array<HTMLElement | SVGElement>>([]);
     const moveableRef = React.useRef<Moveable>(null);
     const selectoRef = React.useRef<Selecto>(null);

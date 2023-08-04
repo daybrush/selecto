@@ -5,7 +5,7 @@ import Moveable, { MoveableTargetGroupsType } from "react-moveable";
 import { GroupManager, TargetList } from "@moveable/helper";
 
 export default function App() {
-    const [cubes] = React.useState(Array.from({ length: 30 }, (_, i) => i));
+    const cubes = Array.from({ length: 30 }, (_, i) => i);
     const [targets, setTargets] = React.useState<MoveableTargetGroupsType>([]);
     const groupManager = React.useMemo<GroupManager>(() => new GroupManager([]), []);
     const moveableRef = React.useRef<Moveable>(null);

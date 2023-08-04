@@ -36,7 +36,7 @@ story.add("Only select at end.", () => {
 });
 
 function App() {
-    const [cubes] = React.useState(Array.from({ length: 60 }, (_, i) => i));
+    const cubes = Array.from({ length: 60 }, (_, i) => i);
 
     return <div className="app">
         <div className="container">
