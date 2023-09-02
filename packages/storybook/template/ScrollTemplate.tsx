@@ -58,7 +58,7 @@ ${DEFAULT_PROPS_TEMPLATE(props, { indent: 4 })}
 selecto${Object.keys(events).map(name => `.on("${name}", ${events[name](CODE_TYPE.ARROW, "vanilla")})`).join("")};
 
 scroller.addEventListener("scroll", () => {
-    scroller.checkScroll();
+    selecto.checkScroll();
 });
 document.querySelector(".reset").addEventListener("click", () => {
     scroller.scrollTo(0, 0);
