@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.1](https://github.com/daybrush/selecto/blob/master/packages/vue-selecto/compare/vue3-selecto@1.12.0...vue3-selecto@1.12.1) (2023-11-11)
+
+
+### :memo: Documentation
+
+* update Vue 3 npm reference (#158) ([53e5e10](https://github.com/daybrush/selecto/blob/master/packages/vue-selecto/commit/53e5e100264da1def070b27959283650eff957cb))
+
+
+### :mega: Other
+
+* publish packages ([a983d66](https://github.com/daybrush/selecto/blob/master/packages/vue-selecto/commit/a983d66ea87ee392cf12a76369a39fd2968c5464))
+
+
+
 ## [1.12.0](https://github.com/daybrush/selecto/blob/master/packages/vue-selecto/compare/vue3-selecto@1.11.1...vue3-selecto@1.12.0) (2023-07-07)
 
 

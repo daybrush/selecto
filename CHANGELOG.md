@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.1](https://github.com/daybrush/selecto/compare/1.26.0...1.26.1) (2023-11-11)
+### :sparkles: Packages
+* `lit-selecto` 1.26.1
+* `preact-selecto` 1.23.1
+* `react-selecto` 1.26.1
+* `selecto` 1.26.1
+* `svelte-selecto` 1.26.1
+* `vue-selecto` 1.26.1
+* `vue3-selecto` 1.12.1
+* `ngx-selecto` 1.26.1
+
+
+### :bug: Bug Fix
+
+* `selecto`
+    * allow clickBySelectEnd, hitRate #152 ([79b4f94](https://github.com/daybrush/selecto/commit/79b4f94e5078c4a6f7eba747a96efbba796d7561))
+* Other
+    * scroller -> selecto typo fix in ScrollTemplate.tsx (#151) ([5166c0d](https://github.com/daybrush/selecto/commit/5166c0d4af53f4248c822d31d9eeabce9350e295))
+
+
+### :memo: Documentation
+
+* `vue3-selecto`
+    * update Vue 3 npm reference (#158) ([53e5e10](https://github.com/daybrush/selecto/commit/53e5e100264da1def070b27959283650eff957cb))
+
+
+### :house: Code Refactoring
+
+* `selecto`
+    * selecto types (#149) ([677e64c](https://github.com/daybrush/selecto/commit/677e64c0c640a605e4d64bde3dd789976dbdbe08))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([a983d66](https://github.com/daybrush/selecto/commit/a983d66ea87ee392cf12a76369a39fd2968c5464))
+
+
+
 ## [1.26.0](https://github.com/daybrush/selecto/compare/1.25.1...1.26.0) (2023-07-07)
 ### :sparkles: Packages
 * `lit-selecto` 1.26.0

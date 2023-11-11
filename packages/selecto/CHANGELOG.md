@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.1](https://github.com/daybrush/selecto/compare/selecto@1.26.0...selecto@1.26.1) (2023-11-11)
+
+
+### :bug: Bug Fix
+
+* allow clickBySelectEnd, hitRate #152 ([79b4f94](https://github.com/daybrush/selecto/commit/79b4f94e5078c4a6f7eba747a96efbba796d7561))
+
+
+### :house: Code Refactoring
+
+* selecto types (#149) ([677e64c](https://github.com/daybrush/selecto/commit/677e64c0c640a605e4d64bde3dd789976dbdbe08))
+
+
+### :mega: Other
+
+* publish packages ([a983d66](https://github.com/daybrush/selecto/commit/a983d66ea87ee392cf12a76369a39fd2968c5464))
+
+
+
 ## [1.26.0](https://github.com/daybrush/selecto/compare/selecto@1.25.1...selecto@1.26.0) (2023-07-07)
 
 
