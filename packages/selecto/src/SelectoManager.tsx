@@ -192,7 +192,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         const data = { ignoreClick: true };
 
         this.findSelectableTargets(data);
-        const selectedElements = this.hitTest(rect, data);
+        const selectedElements = this.hitTest(rect, data, true, null);
         const result = this.setSelectedTargets(selectedElements);
 
         return {
@@ -576,7 +576,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
     private hitTest(
         selectRect: Rect,
         data: any,
-        gestoEvent?: any,
+        isDrag: boolean,
+        gestoEvent: any,
     ) {
         const { hitRate, selectByClick } = this.options;
         const { left, top, right, bottom } = selectRect;
@@ -602,7 +603,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
                 ? false
                 : isInside([clientX, clientY], points);
 
-            if (selectByClick && inArea) {
+            if (!isDrag && selectByClick && inArea) {
                 return true;
             }
             const overlapPoints = getOverlapPoints(rectPoints, points);
@@ -1028,14 +1029,21 @@ class Selecto extends EventEmitter<SelectoEvents> {
         };
         let firstPassedTargets: ElementType[] = [];
 
-        if (!selectFromInside || (selectByClick && !clickBySelectEnd)) {
+        // allow click on select
+        const allowClickBySelectEnd = selectByClick && !clickBySelectEnd;
+        let hasInsideTargets = false;
+
+        if (!selectFromInside || allowClickBySelectEnd) {
             const pointTarget = this._findElement(
                 clickedTarget || inputEvent.target, // elementFromPoint(clientX, clientY),
                 data.selectableTargets,
             );
-            firstPassedTargets = pointTarget ? [pointTarget] : [];
+
+            hasInsideTargets = !!pointTarget;
+            if (allowClickBySelectEnd) {
+                firstPassedTargets = pointTarget ? [pointTarget] : [];
+            }
         }
-        const hasInsideTargets = firstPassedTargets.length > 0;
         const isPreventSelect = !selectFromInside && hasInsideTargets;
 
         // prevent drag from inside when selectByClick is false
@@ -1094,6 +1102,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
         } else {
             data.startPassedTargets = [];
         }
+
         this._select(
             firstPassedTargets,
             hitRect,
@@ -1171,7 +1180,8 @@ class Selecto extends EventEmitter<SelectoEvents> {
             if (!isInnerScroll && scrollOptions && scrollOptions.container) {
                 this.dragScroll.dragStart(e, scrollOptions);
             }
-            if (clickBySelectEnd) {
+
+            if (isPreventSelect && selectByClick && clickBySelectEnd) {
                 data.selectFlag = false;
                 e.preventDrag();
             }
@@ -1206,6 +1216,7 @@ class Selecto extends EventEmitter<SelectoEvents> {
             const passedTargets = this.hitTest(
                 rect,
                 data,
+                true,
                 e,
             );
             selectedTargets = passTargets(

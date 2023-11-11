@@ -65,12 +65,12 @@
         // boundContainer: true,
         // ratio: 1,
         // dragCondition: () => false,
-        hitRate: 0,
-        ratio: 0,
+        hitRate: 10,
+        // ratio: 0,
         selectableTargets: [".target"],
         selectFromInside: false,
         selectByClick: true,
-        // clickBySelectEnd: true,
+        clickBySelectEnd: true,
         // checkInput: true,
         // preventDragFromInside: false,
         toggleContinueSelect: "shift",
@@ -78,7 +78,7 @@
     }).on("dragStart", e => {
         console.log("ds", e.inputEvent.target);
     }).on("drag", e => {
-        selecto.findSelectableTargets();
+        // selecto.findSelectableTargets();
     }).on("selectStart", e => {
         console.log("start", e);
         e.added.forEach(el => {
