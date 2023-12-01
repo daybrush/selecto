@@ -84,7 +84,7 @@
         "@scena/matrix": "^1.1.1",
         "css-to-mat": "^1.1.1",
         "framework-utils": "^1.1.0",
-        "gesto": "^1.19.1",
+        "gesto": "^1.19.4",
         "overlap-area": "^1.1.0",
         "tslib": "^2.3.0"
     },
@@ -105,7 +105,7 @@
         "@scena/matrix": "^1.1.1",
         "css-to-mat": "^1.1.1",
         "framework-utils": "^1.1.0",
-        "gesto": "^1.19.1",
+        "gesto": "^1.19.4",
         "overlap-area": "^1.1.0",
         "tslib": "^2.3.0"
     }
