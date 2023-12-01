@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.2](https://github.com/daybrush/selecto/compare/1.26.1...1.26.2) (2023-12-01)
+### :sparkles: Packages
+* `lit-selecto` 1.26.2
+* `preact-selecto` 1.23.2
+* `react-selecto` 1.26.2
+* `selecto` 1.26.2
+* `svelte-selecto` 1.26.2
+* `vue-selecto` 1.26.2
+* `vue3-selecto` 1.12.2
+* `ngx-selecto` 1.26.2
+
+
+### :bug: Bug Fix
+
+* `selecto`
+    * update gesto version #126 ([a0e3225](https://github.com/daybrush/selecto/commit/a0e322597c72ae29c8166f4cb9614afb026c01c6))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([514cb9b](https://github.com/daybrush/selecto/commit/514cb9b3e89251cfaa433e5493833b132d97d4d6))
+
+
+
 ## [1.26.1](https://github.com/daybrush/selecto/compare/1.26.0...1.26.1) (2023-11-11)
 ### :sparkles: Packages
 * `lit-selecto` 1.26.1

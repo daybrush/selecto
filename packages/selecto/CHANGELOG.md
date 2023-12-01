@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.2](https://github.com/daybrush/selecto/compare/selecto@1.26.1...selecto@1.26.2) (2023-12-01)
+
+
+### :bug: Bug Fix
+
+* update gesto version #126 ([a0e3225](https://github.com/daybrush/selecto/commit/a0e322597c72ae29c8166f4cb9614afb026c01c6))
+
+
+### :mega: Other
+
+* publish packages ([514cb9b](https://github.com/daybrush/selecto/commit/514cb9b3e89251cfaa433e5493833b132d97d4d6))
+
+
+
 ## [1.26.1](https://github.com/daybrush/selecto/compare/selecto@1.26.0...selecto@1.26.1) (2023-11-11)
 
 
