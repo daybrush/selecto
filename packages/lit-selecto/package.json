@@ -33,8 +33,10 @@
     },
     "files": [
         "./*",
-        "dist/*"
-    ],
+        "src/*",
+        "dist/*",
+        "declaration/*"
+      ],
     "devDependencies": {
         "@daybrush/builder": "^0.1.2",
         "lit-element": "^2.2.1",

@@ -45,6 +45,8 @@
     },
     "files": [
         "./*",
-        "dist/*"
+        "src/*",
+        "dist/*",
+        "declaration/*"
     ]
 }

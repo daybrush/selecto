@@ -50,7 +50,9 @@
   },
   "files": [
     "./*",
-    "dist/*"
+    "src/*",
+    "dist/*",
+    "declaration/*"
   ],
   "browserslist": {
     "production": [

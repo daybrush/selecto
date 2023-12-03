@@ -30,8 +30,10 @@
     "homepage": "https://github.com/daybrush/selecto#readme",
     "files": [
         "./*",
-        "dist/*"
-    ],
+        "src/*",
+        "dist/*",
+        "declaration/*"
+      ],
     "dependencies": {
         "@daybrush/utils": "^1.13.0",
         "@egjs/children-differ": "^1.0.1",

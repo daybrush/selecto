@@ -33,8 +33,10 @@
     "homepage": "https://daybrush.com/selecto",
     "files": [
         "./*",
-        "dist/*"
-    ],
+        "src/*",
+        "dist/*",
+        "declaration/*"
+      ],
     "dependencies": {
         "selecto": "~1.26.2"
     },
