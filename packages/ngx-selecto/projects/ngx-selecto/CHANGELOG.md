@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.3](https://github.com/daybrush/selecto/blob/master/packages/ngx-selecto/compare/ngx-selecto@1.26.2...ngx-selecto@1.26.3) (2023-12-03)
+
+
+### :mega: Other
+
+* publish packages ([984ecb4](https://github.com/daybrush/selecto/blob/master/packages/ngx-selecto/commit/984ecb41d94eb5a305257d91981de6e9ee0e6f74))
+
+
+
 ## [1.26.2](https://github.com/daybrush/selecto/blob/master/packages/ngx-selecto/compare/ngx-selecto@1.26.1...ngx-selecto@1.26.2) (2023-12-01)
 
 
