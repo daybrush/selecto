@@ -38,6 +38,7 @@
         "declaration/*"
     ],
     "dependencies": {
+        "@daybrush/utils": "^1.13.0",
         "selecto": "~1.26.3"
     },
     "devDependencies": {
